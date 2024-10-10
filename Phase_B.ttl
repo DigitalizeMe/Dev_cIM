@@ -1,0 +1,123 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+
+### SHAPES PHASE B - REVIEW
+
+# PHASE ASSIGNMENT
+
+    osh:PhaseBInstantsShape a sh:NodeShape ;
+        sh:targetClass occp:PhaseB_Instant ;
+        sh:property [
+            sh:path occp:hasPhase ;                 #All Phase B Instants belong to Phase B (Review).
+            sh:class occp:PhaseB_Review ;
+            sh:message "Wrong Phase assignment - Instant should belong to Phase B (Review)." ;
+            sh:severity sh:Warning ;
+        ] .
+
+# Instants
+
+    osh:ReviewStartShape a sh:NodeShape ;
+        sh:targetClass occp:ReviewStart ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:SubmissionToReview ;
+            sh:message "Wrong assignment (Review Start/Submission To Review)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Review Start must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path occp:startsCycle ;          #ReviewStart starts a new cycle (PlanningReview).
+            sh:class occp:CycleA_PlanningReview ;
+        ] .
+
+    osh:ReviewApprovalShape a sh:NodeShape ;
+        sh:targetClass occp:ReviewApproval ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:ReviewStart ;
+            sh:message "Wrong assignment (Review Start/Review Approval)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Review Approval must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path occp:endsCycle ;          #ReviewApproval ends an ongoing cycle (PlanningReview).
+            sh:class occp:CycleA_PlanningReview ;
+        ] .
+
+    osh:ReviewRejectionShape a sh:NodeShape ;
+        sh:targetClass occp:ReviewRejection ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:ReviewStart ;
+            sh:message "Wrong assignment (Review Start/Review Rejection)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:before ;
+            sh:class occp:Edit_ASTR ;
+            sh:message "Wrong assignment (Review Rejection/Edit After Submission To Review)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Review Rejection must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path occp:endsCycle ;          #ReviewApproval ends an ongoing cycle (PlanningReview).
+            sh:class occp:CycleA_PlanningReview ;
+        ] .
+
+# Transition
+
+    osh:CompletionOfPlanningShape a sh:NodeShape ;
+        sh:targetClass occp:CompletionOfPlanning ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:PhaseB_Review;
+            sh:message "Wrong assignment (Phase B (Review)/Transition - Completion Of Planning)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:before ;
+            sh:class occp:BeginOfTenderingProcess ;
+            sh:message "Wrong assignment (Transition - Completion Of Planning/Transition - Begin Of Tendering Process)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Review Rejection must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path occp:endsPhase ;            #Completion of Planningmarks the end of Phase B.
+            sh:class occp:PhaseB_Review ;
+        ] .
+
+# Cycles
+
+    osh:CycleAShape a sh:NodeShape ;
+        sh:targetClass occp:CycleA_PlanningReview ;
+        sh:property [
+            sh:path occp:isInPhase ;
+            sh:class occp:PhaseB_Review ;
+        ] .

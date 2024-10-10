@@ -1,0 +1,16 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+
+occp:PhaseA_Planning1 a occp:PhaseA_Planning;
+    time:hasBeginning "2022-01-01"^^xsd:date .
+
+occp:PhaseB_Review1 a occp:PhaseB_Review ;
+    time:hasBeginning "2022-01-02"^^xsd:date .
+

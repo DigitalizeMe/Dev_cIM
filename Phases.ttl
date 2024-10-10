@@ -1,0 +1,82 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix osh: <http://www.occpshape.de/shape#> .
+
+### ORDER OF PHASES
+
+osh:ShapeOfPhaseA a sh:NodeShape ;
+    sh:targetClass occp:PhaseA_Planning ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseC_Construction ;
+        sh:message "Wrong assignment Phase A/C." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Begin date
+      sh:path time:hasBeginning ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Missing or too many dates (Beginning) in Phase A (Planning) - min. & max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # End date
+      sh:path time:hasEnd ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Too many dates (End) in Phase A (Planning)- max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] .
+
+osh:ShapeOfPhaseB a sh:NodeShape ;
+    sh:targetClass occp:PhaseB_Review ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseC_Construction ;
+        sh:message "Wrong assignment Phase B/C." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Begin date
+      sh:path time:hasBeginning ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Missing or too many dates (Beginning) in Phase B (Review) - min. & max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # End date
+      sh:path time:hasEnd ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Too many dates (End) in Phase B (Review) - max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] .
+
+osh:ShapeOfPhaseC a sh:NodeShape ;
+    sh:targetClass occp:PhaseC_Construction ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseD_Usage ;
+        sh:message "Wrong assignment Phase C/D." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Begin date
+      sh:path time:hasBeginning ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Missing or too many dates (Beginning) in Phase C (Construction) - min. & max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # End date
+      sh:path time:hasEnd ;
+      sh:maxCount 1 ;
+      sh:datatype xsd:date ;
+      sh:message "Too many dates (End) in Phase C (Construction) - max. count = 1." ;
+      sh:severity sh:Warning ;
+      ] .

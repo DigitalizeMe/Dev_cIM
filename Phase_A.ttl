@@ -1,0 +1,104 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+### SHAPES PHASE A - PLANNING
+
+# PHASE ASSIGNMENT
+
+    osh:PhaseAInstantsShape a sh:NodeShape ;
+        sh:targetClass occp:PhaseA_Instant ;
+        sh:property [
+            sh:path occp:hasPhase ;                 #All Phase A Instants belong to Phase A (Planning).
+            sh:class occp:PhaseA_Planning ;
+            sh:message "Wrong Phase assignment - Instant should belong to Phase A (Planning)." ;
+            sh:severity sh:Warning ;
+        ] .
+ 
+# Instants
+
+    osh:BeginningOfPlanningShape a sh:NodeShape ;
+        sh:targetClass occp:BeginningOfPlanning ;
+        sh:property [
+            sh:path time:before ;
+            sh:class occp:DataProcurement ;
+            sh:message "Wrong assignment (Beginning Of Planning/Data Procurement)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Beginning Of Planning must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path occp:startsPhase ;          #Instant (Beginning Of Planning) starts a new Phase A (Planning).
+            sh:class occp:PhaseA_Planning ;
+        ] .
+
+    osh:DataProcurementShape a sh:NodeShape ;
+        sh:targetClass occp:DataProcurement ;
+        sh:property [
+            sh:path time:before ;
+            sh:class occp:Edit_BSTR ;
+            sh:message "Wrong assignment (Data Procurement/Edit Before Submission To Review)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Data Procurement must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] .
+
+    osh:Edit_BSTRShape a sh:NodeShape ;
+        sh:targetClass occp:Edit_BSTR ;
+        sh:property [
+            sh:path time:before ;
+            sh:class occp:SubmissionToReview ;
+            sh:message "Wrong assignment (Edit Before Submission To Review/Submission To Review)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Edit Before Submission To Review must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] .
+
+    osh:SubmissionToReviewShape a sh:NodeShape ;
+        sh:targetClass occp:SubmissionToReview ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Submission To Review must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] .
+
+    osh:Edit_ASTRShape a sh:NodeShape ;
+        sh:targetClass occp:Edit_ASTR ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:SubmissionToReview ;
+            sh:message "Wrong assignment (Submission To Review/Edit After Submission To Review)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:after ;
+            sh:class occp:ReviewRejection ;
+            sh:message "Wrong assignment (Edit After Submission To Review/Review Rejection)." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
+            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+            sh:datatype xsd:date ;
+            sh:message "The time stamp of the Edit After Submission To Review must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:severity sh:Warning ;
+        ] .
+
+
