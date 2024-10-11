@@ -9,64 +9,86 @@
 
 ### SHAPES PHASE A - PLANNING
 
-    osh:BeginningOfPlanningShape a sh:NodeShape ;
-        sh:targetClass occp:BeginningOfPlanning ;
-        sh:property [
-            sh:path time:before ;
+    osh:BeginningOfPlanningShape a sh:NodeShape ;   #Instant Beginning Of Planning (Phase A - Planning)
+        sh:targetClass occp:BeginningOfPlanning ;   
+        sh:property [                               #Instant (Beginning Of Planning) starts a new Phase A (Planning).
+            sh:path occp:startsPhase ;              
+            sh:class occp:PhaseA_Planning ;
+        ] ;
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:before ;                   
             sh:class occp:DataProcurement ;
-            sh:minCount 1 ;
-            sh:message "Wrong assignment (Beginning Of Planning/Data Procurement)." ;
+            sh:message "Wrong assignment (chronological order) of Beginning Of Planning or Data Procurement." ;
             sh:severity sh:Warning ;
         ] ;
-        sh:property [
-            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+        sh:property [                               #Instant has a date as time stamp.
+            sh:path time:hasTime ;                  
+            sh:minCount 1 ;
             sh:datatype xsd:date ;
-            sh:message "The time stamp of the Beginning Of Planning must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:message "Missing date for Beginning Of Planning or wrong format - min. count = 1, format = YYYY-MM-DD." ;
             sh:severity sh:Warning ;
         ] .
 
-    osh:DataProcurementShape a sh:NodeShape ;
-        sh:targetClass occp:DataProcurement ;
-        sh:property [
-            sh:path time:before ;
-            sh:class occp:Edit_BSTR ;
-            sh:minCount 1 ;
-            sh:message "Wrong assignment (Data Procurement/Edit Before Submission To Review)." ;
+    osh:DataProcurementShape a sh:NodeShape ;       #Instant Data Procurement (Phase A - Planning)
+        sh:targetClass occp:DataProcurement ;       
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:after ;                    
+            sh:class occp:BeginningOfPlanning ;
+            sh:message "Wrong assignment (chronological order) of Data Procurement or Beginning Of Planning." ;
             sh:severity sh:Warning ;
         ] ;
-        sh:property [
-            sh:path time:hasTime ;              #Instant needs a date as time stamp.
-            sh:datatype xsd:date ;
-            sh:message "The time stamp of the Data Procurement must be in xsd:date format (YYYY-MM-DD)." ;
-            sh:severity sh:Warning ;
-        ] .
-
-    osh:Edit_BSTRShape a sh:NodeShape ;
-        sh:targetClass occp:Edit_BSTR ;
-        sh:property [
-            sh:path time:before ;
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:before ;                   
             sh:class occp:SubmissionToReview ;
-            sh:minCount 1 ;
-            sh:message "Wrong assignment (Edit Before Submission To Review/Submission To Review)." ;
+            sh:message "Wrong assignment (chronological order) of Data Procurement or Submission To Review." ;
             sh:severity sh:Warning ;
         ] ;
-        sh:property [
-            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+        sh:property [                               #Instant has a date as time stamp.
+            sh:path time:hasTime ;                  
             sh:datatype xsd:date ;
-            sh:message "The time stamp of the Edit Before Submission To Review must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:message "Missing date for Data Procurement or wrong format - min. count = 1, format = YYYY-MM-DD." ;
             sh:severity sh:Warning ;
         ] .
 
-    osh:SubmissionToReviewShape a sh:NodeShape ;
+    osh:Edit_BSTRShape a sh:NodeShape ;             #Instant Edit Before Submission To Review (Phase A - Planning)
+        sh:targetClass occp:Edit_BSTR ; 
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:after ;                    
+            sh:class occp:BeginningOfPlanning ;
+            sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Beginning Of Planning." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:before ;                   
+            sh:class occp:SubmissionToReview ;
+            sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Submission To Review." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [                               #Instant has a date as time stamp.
+            sh:path time:hasTime ;                  
+            sh:datatype xsd:date ;
+            sh:minCount 1 ;
+            sh:message "Missing date for Edit Before Submission To Review or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+            sh:severity sh:Warning ;
+        ] .
+
+    osh:SubmissionToReviewShape a sh:NodeShape ;    #Instant Submission To Review (Phase A - Planning)
         sh:targetClass occp:SubmissionToReview ;
-        sh:property [
-            sh:path time:hasTime ;              #Instant needs a date as time stamp.
+        sh:property [                               #Instant's chronological order within the Phase
+            sh:path time:after ;                    
+            sh:class occp:Edit_BSTR ;
+            sh:message "Wrong assignment (chronological order) of Submission To Review or Edit Before Submission To Review." ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [                               #Instant has a date as time stamp.
+            sh:path time:hasTime ;              
             sh:datatype xsd:date ;
-            sh:message "The time stamp of the Submission To Review must be in xsd:date format (YYYY-MM-DD)." ;
+            sh:minCount 1 ;
+            sh:message "Missing date for Submission To Review or wrong format - min. count = 1, format = YYYY-MM-DD." ;
             sh:severity sh:Warning ;
         ] .
 
-    osh:Edit_ASTRShape a sh:NodeShape ;
+    osh:Edit_ASTRShape a sh:NodeShape ;             #Instant Edit After Submission To Review (Phase A - Planning)
         sh:targetClass occp:Edit_ASTR ;
         sh:property [
             sh:path time:after ;
