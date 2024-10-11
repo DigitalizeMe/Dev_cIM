@@ -1,0 +1,123 @@
+    To Do 1 (11.10.24)
+        1. timeafter und überlappende Phasen
+        Wenn du die timeafter-Beziehung verwendest, bedeutet dies streng genommen, dass der Anfang der nachfolgenden Phase erst nach dem Ende der vorherigen Phase liegen muss. Das schließt eine Überlappung aus. Bei einer Überlappung wäre also die Regel "timeafter" verletzt, da diese Regel verlangt, dass Phase 2 erst beginnt, nachdem Phase 1 vollständig abgeschlossen ist.
+
+        Wenn du die Möglichkeit von überlappenden Phasen modellieren möchtest, benötigst du eine flexiblere Modellierung, die eine gleichzeitige Existenz oder teilweise Überlappung von Phasen zulässt.
+
+        2. Modellierung von Phasenüberlappungen
+        Um sowohl den Fall zu berücksichtigen, in dem Phasen strikt aufeinander folgen, als auch den Fall, in dem sie überlappen, kannst du unterschiedliche Beziehungen verwenden. Hier einige Optionen:
+
+        time
+        / time
+        : Diese Beziehungen verlangen, dass ein Zeitintervall strikt vor oder nach einem anderen liegt, was eine Überlappung ausschließt.
+        time
+        / time
+        : Diese Beziehungen beschreiben, dass zwei Intervalle sich überlappen, also einen gemeinsamen Zeitraum haben.
+        time
+        : Diese Beziehung beschreibt, dass ein Zeitintervall endet und das nächste sofort beginnt, ohne dass eine Lücke dazwischen existiert.
+        3. Kombination von Beziehungen für beide Fälle
+        Wenn du Phasen hast, die entweder überlappen können oder sich strikt abwechseln, könntest du eine Kombination von SHACL-Regeln einsetzen, um beide Möglichkeiten zu modellieren. Zum Beispiel:
+
+        turtle
+        Code kopieren
+        @prefix sh: <http://www.w3.org/ns/shacl#> .
+        @prefix time: <http://www.w3.org/2006/time#> .
+        @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+        @prefix osh: <http://www.occpshape.de/shape#> .
+
+        # Regel für strikt aufeinander folgende Phasen
+        osh:StrictPhaseOrderShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseC_Construction ;  # Ziel: Bauphase
+            sh:or (                                     # Entweder strikt danach oder eine Überlappung
+                [
+                    sh:path time:after ;                # Phase muss nach einer anderen kommen
+                    sh:class occp:PhaseA_Planning ;     # Nach der Planungsphase
+                    sh:message "Construction phase must strictly follow the planning phase." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:overlaps ;             # Oder die Phasen überlappen sich
+                    sh:class occp:PhaseA_Planning ;
+                    sh:message "Construction phase overlaps with planning phase." ;
+                    sh:severity sh:Warning ;
+                ]
+            ) .
+        Erklärung:
+        sh
+        : Mit dieser Regel kannst du eine logische "ODER"-Verknüpfung nutzen. Dadurch kannst du ausdrücken, dass entweder die Beziehung timeafter gelten muss (für strikt aufeinander folgende Phasen) oder dass die Phasen sich überlappen können (timeoverlaps).
+        sh
+        : Je nachdem, ob Überlappung zugelassen wird, könntest du für die Überlappung eine weniger strenge Schwere wie Warning wählen und für eine strikte Reihenfolge Violation.
+        Auf diese Weise kannst du flexibel modellieren, ob die Phasen sauber getrennt oder überlappend sein können. Du solltest die gewünschte Regel basierend auf deinem spezifischen Anwendungsfall anwenden, um sicherzustellen, dass deine zeitlichen Zusammenhänge korrekt modelliert werden.
+
+    TO DO 2 (11.10.24) - CommonDatePropertyShape
+        Deine SHACL-Shapes sind sehr detailliert, und durch die Verwendung von shpropertyShape könntest du einige Wiederholungen vermeiden und Regeln vereinfachen, die in mehreren Phasen ähnlich sind. shpropertyShape ermöglicht es, wiederverwendbare Eigenschaften für mehrere shNodeShape-Definitionen zu erstellen, was die Wartbarkeit und Lesbarkeit deiner Ontologie verbessert.
+
+        1. Identifikation wiederkehrender Muster
+        Es gibt einige wiederkehrende Eigenschaften in deinen SHACL-Shapes, die durch die Verwendung von shpropertyShape vereinfacht werden könnten. Dazu gehören:
+
+        Beginndaten und Enddaten (sowohl geschätzt als auch tatsächlich).
+        Die Phase sollte nach einer anderen Phase kommen (timeafter).
+        Zeitpunkt der Übergänge (timehasTime mit shmaxCount 1).
+        2. Vorschlag für wiederverwendbare Property Shapes
+        Hier sind einige Vorschläge für mögliche shpropertyShape, die du definieren könntest:
+
+        a. Gemeinsame Property Shape für Anfangs- und Enddaten (geschätzt und tatsächlich)
+        Diese Property Shape stellt sicher, dass eine Phase mindestens ein Anfangsdatum und Enddatum in einem korrekten Format hat.
+
+        turtle
+        Code kopieren
+        osh:CommonDatePropertyShape a sh:PropertyShape ;
+            sh:path [ sh:alternativePath ( time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
+            sh:datatype xsd:date ;
+            sh:message "The date must be in the format YYYY-MM-DD." ;
+            sh:severity sh:Warning .
+        sh
+        : Mit shalternativePath kannst du verschiedene Pfade angeben, die die Regel erfüllt. Hier werden die Pfade für Anfangs- und Enddaten in den verschiedenen Formen angegeben.
+        sh
+        xsd
+        : Überprüft das Datenformat für alle angegebenen Pfade.
+        b. Property Shape für die Überprüfung der Phase-Reihenfolge (timeafter)
+        Eine Property Shape zur Validierung der korrekten Reihenfolge von Phasen.
+
+        turtle
+        Code kopieren
+        osh:PhaseOrderPropertyShape a sh:PropertyShape ;
+            sh:path time:after ;
+            sh:class occp:PhaseA_Planning ; # Beispiel: Kann flexibel für andere Klassen verwendet werden
+            sh:message "This phase must come after the specified previous phase." ;
+            sh:severity sh:Violation .
+        Diese Property Shape kann dann in jeder Phase verwendet werden, die sicherstellen muss, dass sie nach einer anderen Phase kommt.
+
+        c. Property Shape für den Übergangszeitpunkt
+        Diese Property Shape stellt sicher, dass der Zeitpunkt eines Übergangs korrekt angegeben ist und nur eine Instanz davon existiert.
+
+        turtle
+        Code kopieren
+        osh:TransitionTimePropertyShape a sh:PropertyShape ;
+            sh:path time:hasTime ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:date ;
+            sh:message "There must be exactly one time point for this transition, in the format YYYY-MM-DD." ;
+            sh:severity sh:Violation .
+        3. Verwendung der Property Shapes in Node Shapes
+        Nachdem du die Property Shapes erstellt hast, kannst du sie einfach in deine bestehenden Node Shapes einfügen, um Redundanz zu vermeiden.
+
+        Ein Beispiel für eine Node Shape, die die wiederverwendbaren Property Shapes verwendet:
+
+        turtle
+        Code kopieren
+        osh:ShapeOfPhaseA a sh:NodeShape ;
+            sh:targetClass occp:PhaseA_Planning ;
+            sh:property osh:CommonDatePropertyShape ;
+            sh:property [
+                sh:path time:after ;
+                sh:class occp:PhaseC_Construction ;
+                sh:message "Wrong assignment Phase A (Planning) or Phase C (Construction)." ;
+                sh:severity sh:Warning ;
+            ] ;
+            sh:property osh:PhaseOrderPropertyShape .
+        Vorteile der Vereinfachung
+        Wiederverwendbarkeit: Einmal definierte Property Shapes können von mehreren Node Shapes genutzt werden, was Redundanzen verringert.
+        Konsistenz: Die Verwendung von Property Shapes stellt sicher, dass ähnliche Regeln in allen Phasen konsistent sind.
+        Wartbarkeit: Wenn sich eine Regel ändert (z.B. das Format von Daten), musst du die Änderung nur in der Property Shape anpassen, statt in jeder Node Shape.
+        Durch den Einsatz von shpropertyShape kannst du deine SHACL-Regeln effizienter gestalten und die Wartbarkeit verbessern. Falls du weitere Details oder eine spezifische Anpassung benötigst, lass es mich wissen!
