@@ -7,10 +7,20 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix osh: <http://www.occpshape.de/shape#> .
 
+### GENERAL SHAPE RULES
+
+osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
+    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
+    sh:datatype xsd:date ;
+    sh:message "The date must be in the format YYYY-MM-DD." ;
+    sh:severity sh:Warning .
+
+
 ### ORDER OF PHASES AND TRANSITIONS
 
 osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
     sh:targetClass occp:PhaseA_Planning ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:before ;
         sh:class occp:PhaseC_Construction ;
@@ -20,37 +30,27 @@ osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (estimated or actual beginning) in Phase A (Planning)  - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
-      sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase A (Planning) - format = YYYY-MM-DD." ;
+      sh:path occp:hasEstimatedBeginning ; 
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase A (Planning) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format (End) in Phase A (Planning) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
-      sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase A (Planning) - format = YYYY-MM-DD." ;
+      sh:path occp:hasEstimatedEnd ; ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase A (Planning) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase A (Planning) - max. count = 1." ;
       ] .
 
 osh:ShapeOfPhaseB a sh:NodeShape ;        # Phase B (Review)
@@ -61,6 +61,12 @@ osh:ShapeOfPhaseB a sh:NodeShape ;        # Phase B (Review)
         sh:message "Wrong assignment Phase B (Review) or Phase C (Construction)." ;
         sh:severity sh:Warning ;
       ] ;
+    sh:property [                         # Phase B (Review) ends with Phase A (Planning)
+        sh:path time:intervalFinishes ;
+        sh:class occp:PhaseA_Planning ;
+        sh:message "Wrong assignment of the end of Phase B (Review) or Phase A (Planning)." ;
+        sh:severity sh:Warning ;
+    ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
