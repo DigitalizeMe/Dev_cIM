@@ -61,29 +61,65 @@ occp:startsPhase rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
              rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en .
 
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
+occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+             rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant."@en .
+
+
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
 occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
-             rdfs:comment "The object property \"hasEstimatedBeginning\" is used to mark the estimated beginning of an Instant or Phase."@en .
+             rdfs:comment "The object property \"hasEstimatedBeginning\" is used to mark the estimated beginning of a Phase."@en .
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
 occp:hasActualBeginning rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
-             rdfs:comment "The object property \"hasActualBeginning\" is used to mark the actual beginning of an Instant or Phase."@en .             
+             rdfs:comment "The object property \"hasActualBeginning\" is used to mark the actual beginning of a Phase."@en .             
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedEnd
 occp:hasEstimatedEnd rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
-             rdfs:comment "The object property \"hasEstimatedEnd\" is used to mark the estimated end of an Instant or Phase."@en .
+             rdfs:comment "The object property \"hasEstimatedEnd\" is used to mark the estimated end of a Phase."@en .
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualEnd
 occp:hasActualEnd rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
-             rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of an Instant or Phase."@en .
+             rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en .
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasMilestone
 occp:hasMilestone rdf:type owl:ObjectProperty ;
               rdfs:comment "The property \"hasMilestone\" is used to connect Individuals to certain Instants (Phase Instants or Transitions)."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
+occp:beginsBefore rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:comment "The object property \"beginsBefore\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsBefore\" T2, it only describes, that the beginning of T1 happens before the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsWith
+occp:beginsWith rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:comment "The object property \"beginsWith\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsWith\" T2, it only describes, that the beginning of T1 happens on the same day with the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsAfter
+occp:beginsAfter rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:comment "The object property \"beginsAfter\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsAfter\" T2, it only describes, that the beginning of T1 happens after the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsBefore
+occp:endsBefore rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+              rdfs:comment "The object property \"endsBefore\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsBefore\" T2, it only describes, that the end of T1 happens before the end of T2 without defining the order of the beginnings of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
+occp:endsWith rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+              rdfs:comment "The object property \"endsWith\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsWith\" T2, it only describes, that the ends of T1 happens on the same day as (the end of) T2 without defining the order of the beginnings or points in time of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsAfter
+occp:endsAfter rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+              rdfs:comment "The object property \"endsAfter\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsAfter\" T2, it only describes, that the ends of T1 happens after the end of T2 without defining the order of the beginnings of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
 
 
 #################################################################

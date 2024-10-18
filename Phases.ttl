@@ -13,7 +13,7 @@ osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-
     sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
     sh:datatype xsd:date ;
     sh:message "The date must be in the format YYYY-MM-DD." ;
-    sh:severity sh:Warning .
+    sh:severity sh:Violation .
 
 
 ### ORDER OF PHASES AND TRANSITIONS
@@ -21,12 +21,38 @@ osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-
 osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
     sh:targetClass occp:PhaseA_Planning ;
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-    sh:property [                         # Phase order
-        sh:path time:before ;
-        sh:class occp:PhaseC_Construction ;
-        sh:message "Wrong assignment Phase A (Planning) or Phase C (Construction)." ;
-        sh:severity sh:Warning ;
-      ] ;
+    sh:or (                                     # Phase order options
+      [
+        sh:property [
+          sh:path time:before ;                 # Phase A usually starts and ends before Phase C
+          sh:class occp:PhaseC_Construction ;
+          ]
+      ]
+      [
+        sh:property [
+          sh:path time:before ;                 # Phase A usually starts and ends before Phase B
+          sh:class occp:PhaseB_Review ;
+          sh:message "Wrong assignment of Phase A (Planning). Phase A usually starts and ends before Phases B (Review) and C (Construction)." ;
+          sh:severity sh:Warning ;
+          ]
+      ] 
+    ) ;
+    sh:and (                                    # Phase order options
+      [
+        sh:property [
+          sh:path occp:beginsBefore ;           # Phase A must start before Phase B   
+          sh:class occp:PhaseB_Review ;
+          ]
+      ]
+      [
+        sh:property [
+          sh:path occp:beginsBefore ;           # Phase A must start before Phase C  
+          sh:class occp:PhaseC_Construction ;
+          sh:message "Wrong assignment of Phase A (Planning). Phase A must start before Phases B (Review) and C (Construction)." ;
+          sh:severity sh:Violation ;
+          ]
+      ]
+    ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
@@ -40,112 +66,135 @@ osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
       sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
+      sh:minCount 1 ;
+      sh:message "Missing date (estimated or actual end) in Phase A (Planning)  - min. count = 1." ;
+      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
-      sh:path occp:hasEstimatedEnd ; ;
+      sh:path occp:hasEstimatedEnd ; 
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
       sh:message "Too many dates for actual End in Phase A (Planning) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseB a sh:NodeShape ;        # Phase B (Review)
     sh:targetClass occp:PhaseB_Review ;
-    sh:property [                         # Phase order
-        sh:path time:before ;
-        sh:class occp:PhaseC_Construction ;
-        sh:message "Wrong assignment Phase B (Review) or Phase C (Construction)." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                         # Phase B (Review) ends with Phase A (Planning)
-        sh:path time:intervalFinishes ;
-        sh:class occp:PhaseA_Planning ;
-        sh:message "Wrong assignment of the end of Phase B (Review) or Phase A (Planning)." ;
-        sh:severity sh:Warning ;
-    ] ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+    sh:or (                                     # Phase order options - Phase C (Construction)
+      [
+        sh:property [
+          sh:path time:before ;                 # Phase B usually starts and ends before Phase C
+          sh:class occp:PhaseC_Construction ;
+          ]
+      ]
+      [
+        sh:property [
+          sh:path occp:beginsBefore ;           # Phase B must start before Phase C (Construction)   
+          sh:class occp:PhaseC_Construction ;
+          sh:message "Wrong assignment pf Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
+          sh:severity sh:Violation ;
+          ]
+      ]
+      ) ;
+    sh:or (                                     # Phase order options - Transition A (Completion of Planning)
+          [
+            sh:property [        
+              sh:path time:before ;                 # Phase B should end before the Completion of Planning
+              sh:class occp:CompletionOfPlanning ;
+              ]
+          ]
+          [
+            sh:property [
+              sh:path occp:endsWith ;               # Phase B must end with the Completion of Planning
+              sh:class occp:CompletionOfPlanning ;
+              sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
+              sh:severity sh:Violation ;
+            ]
+          ]
+        ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (estimated or actual beginning) in Phase B (Review) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (estimated or actual beginning) in Phase B (Review) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase B (Review) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase B (Review) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase B (Review) - max. count = 1." ;
+      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format (End) in Phase B (Review) - format = YYYY-MM-DD." ;
+      sh:minCount 1 ;
+      sh:message "Missing date (estimated or actual end) in Phase B (Review) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase B (Review) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase B (Review) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase B (Review) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfTransitionA a sh:NodeShape ;   # Transition A (Completion of Planning)
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD     
     sh:targetClass occp:CompletionOfPlanning ;
     sh:property [                         # Transition order
-      sh:path time:after ;
-      sh:class occp:PhaseB_Review ;
-      sh:message "Wrong assignment Transition A (Completion of Planning)." ;
+      sh:path time:before ;
+      sh:class occp:BeginOfTenderingProcess ;
+      sh:message "Wrong assignment of Transition A (Completion of Planning) or Transition B (Begin of Tendering Process). Transition A usually occurs before Transition B." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for Transition A (Completion of Planning) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for Transition A (Completion of Planning) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfTransitionB a sh:NodeShape ;   # Transition B (Begin Of Tendering Process)
     sh:targetClass occp:BeginOfTenderingProcess ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD       
     sh:property [                         # Transition order
-      sh:path time:after ;                
-      sh:class occp:CompletionOfPlanning ;
-      sh:message "Wrong assignment Transition B (Begin of Tendering Process)." ;
+      sh:path time:before ;                
+      sh:class occp:Submission ;
+      sh:message "Wrong assignment of Transition B (Begin of Tendering Process) or Transition C (Submission). Transition B usually occurs before Transition C." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for Transition B (Begin of Tendering Process) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for Transition B (Begin of Tendering Process) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfTransitionC a sh:NodeShape ;   # Transition C (Submission)
     sh:targetClass occp:Submission ;
     sh:property [                         # Transition order
-      sh:path time:after ;                
-      sh:class occp:BeginOfTenderingProcess ;
-      sh:message "Wrong assignment Transition C (Submission)." ;
+      sh:path time:before ;                
+      sh:class occp:PhaseC_Construction ;
+      sh:message "Wrong assignment of Transition C (Submission) or Phase C (Construction). Transition C usually occurs before Phase C." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for Transition C (Submission) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for Transition C (Submission) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseC a sh:NodeShape ;        # Phase C (Construction)
@@ -153,348 +202,392 @@ osh:ShapeOfPhaseC a sh:NodeShape ;        # Phase C (Construction)
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfPlanning ;
-        sh:message "Wrong assignment Phase C (Construction) or Transition A (Completion of Planning)." ;
+        sh:message "Wrong assignment of Phase C (Construction) or Transition A (Completion of Planning). Phase C usually starts and ends after Transition A." ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:Submission ;
-        sh:message "Wrong assignment Phase C (Construction) or Transition C (Submission)." ;
+        sh:message "Wrong assignment of Phase C (Construction) or Transition C (Submission). Phase C usually starts and ends after Transition C" ;
         sh:severity sh:Warning ;
       ] ;
+    sh:or (                               # Phase order options
+      [
+        sh:property [                         
+          sh:path time:before ;                
+          sh:class occp:CompletionOfConstruction ;
+          ] 
+      ]
+      [
+        sh:property [
+          sh:path occp:endsWith ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment of Phase C (Construction) or Transition D (Completion of Construction). Phase C must end before or with Transition D." ;
+          sh:severity sh:Violation ;
+        ]
+      ]
+    ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (estimated or actual beginning) in Phase C (Construction) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (estimated or actual beginning) in Phase C (Construction) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase C (Construction) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase C (Construction) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase C (Construction) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format (End) in Phase C (Construction) - format = YYYY-MM-DD." ;
+      sh:minCount 1 ;
+      sh:message "Missing date (estimated or actual end) in Phase C (Construction) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase C (Construction) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase C (Construction) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase C (Construction) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfTransitionD a sh:NodeShape ;   # Transition D (Completion Of Construction)
     sh:targetClass occp:CompletionOfConstruction ;
-    sh:property [                         # Transition order
-      sh:path time:after ;                
-      sh:class occp:PhaseC_Construction ;
-      sh:message "Wrong assignment Transition D (Completion of Construction)." ;
-      sh:severity sh:Warning ;
-      ] ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for Transition D (Completion of Construction) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for Transition D (Completion of Construction) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseD a sh:NodeShape ;        # Phase D (Usage)
     sh:targetClass occp:PhaseD_Usage ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase D (Usage) or Transition D (Completion of Construction)." ;
+        sh:message "Wrong assignment Phase D (Usage) or Transition D (Completion of Construction). Phase D usually starts and ends after Transition D." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseM_Deconstruction ;
+        sh:message "Wrong assignment Phase D (Usage) or Phase M (Deconstruction). Phase D usually starts and ends before Phase M. We don't want anyone to get hurt, do we?" ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (estimated or actual beginning) in Phase D (Usage) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (estimated or actual beginning) in Phase D (Usage) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase D (Usage) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase D (Usage) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase D (Usage) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format (End) in Phase D (Usage) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase D (Usage) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase D (Usage) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase D (Usage) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseE a sh:NodeShape ;        # Phase E (Warranty)
     sh:targetClass occp:PhaseE_Warranty ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase E (Warranty) or Transition D (Completion of Construction)." ;
+        sh:message "Wrong assignment Phase E (Warranty) or Transition D (Completion of Construction). Phase E should start and end after Transition D." ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Begin date
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (Beginning) in Phase E (Warranty) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (Beginning) in Phase E (Warranty) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # End date
       sh:path time:hasEnd ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (End) in Phase E (Warranty) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (End) in Phase E (Warranty) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] .
 
 osh:ShapeOfPhaseF a sh:NodeShape ;        # Phase F (DesignLife)
     sh:targetClass occp:PhaseF_DesignLife ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD       
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase F (DesignLife) or Transition D (Completion of Construction)." ;
+        sh:message "Wrong assignment of Phase F (Design Life) or Transition D (Completion of Construction). Phase F should start and end after Transition D." ;
         sh:severity sh:Warning ;
       ] ;
+    sh:or (                               # Phase order options - Phase D
+      [
+      sh:property [
+          sh:path occp:beginsBefore ;
+          sh:class occp:PhaseD_Usage ;
+        ] 
+      ]
+      [
+      sh:property [
+          sh:path occp:beginsWith ;
+          sh:class occp:PhaseD_Usage ;
+          sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D."
+          sh:severity sh:Warning ;
+        ] 
+      ]
+    ) ;
+    sh:property [
+      sh:path time:before ;
+      sh:class occp:PhaseM_Deconstruction ;
+      sh:message "Wrong assignment of Phase F (Design Life) or Phase M (Deconstruction). Phase F should begin and end before Phase M."
+      sh:severity sh:Warning ;
+    ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (estimated or actual beginning) in Phase F (DesignLife) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing date (estimated or actual beginning) in Phase F (DesignLife) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase F (DesignLife) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase F (DesignLife) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase F (DesignLife) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format or missing date for (estimated or actual) End in Phase F (DesignLife) - format = YYYY-MM-DD." ;
+      sh:message "Missing date for (estimated or actual) End in Phase F (DesignLife) - min. count = 1." ;
       sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format or missing date for estimated End in Phase F (DesignLife) - format = YYYY-MM-DD." ;
+      sh:message "Missing date for estimated End in Phase F (DesignLife) - min. count = 1." ;
+      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase F (DesignLife) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase F (DesignLife) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseG a sh:NodeShape ;        # Phase G (Inspection)
     sh:targetClass occp:PhaseG_Inspection ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase G (Inspection) or Transition D (Completion of Construction)." ;
+        sh:message "Wrong assignment Phase G (Inspection) or Transition D (Completion of Construction). Phase G should start and end after Transition D." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseM_Deconstruction ;
+        sh:message "Wrong assignment Phase G (Inspection) or Phase M (Deconstruction). Phase G should begin and end before Phase M." ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Begin date - either estimated or actual or both
       sh:path time:hasBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for Beginning in Phase G (Inspection) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase G (Inspection) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for actual Beginning in Phase G (Inspection) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for End in Phase G (Inspection) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase G (Inspection) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for actual End in Phase G (Inspection) - format = YYYY-MM-DD." ;
       ] .
 
-osh:ShapeOfPhaseH a sh:NodeShape .        # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occure during or after the construction's life cycle.
-    sh:property [                         # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for Time in Phase H (SpecialEvents) - format = YYYY-MM-DD." ;
-      ] .
+osh:ShapeOfPhaseH a sh:NodeShape ;        # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occure during or after the construction's life cycle.
+    sh:targetClass occp:PhaseH_SpecialEvents ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+    sh:or (                                   # A special event is either happening on a single day or point in time or is a time interval.
+      [
+        sh:property [                         # Event time (single point in time)
+        sh:path time:hasTime ;
+        ] 
+      ]
+      [
+        sh:and (                              # Special event interval (beginning AND end)
+          [
+            sh:property [
+              sh:path time:hasBeginning ;
+            ]
+          ]
+          [
+            sh:property [
+              sh:path time:hasEnd ;
+            ]
+          ]
+        )
+      ]
+    ) .
 
 osh:ShapeOfPhaseK a sh:NodeShape ;        # Phase K (Damage)
     sh:targetClass occp:PhaseK_Damage ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:Submission ;
-        sh:message "Wrong assignment Phase K (Damage) or Transition C (Submission)." ;
+        sh:message "Wrong assignment Phase K (Damage) or Transition C (Submission). Phase K should be after Transition C." ;
         sh:severity sh:Warning ;
       ] ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:CompletionOfDeconstruction ;
+        sh:message "Wrong assignment Phase K (Damage) or Transition E (Completion of Deconstruction). Phase K should start and end before Transition E." ;
+        sh:severity sh:Warning ;
+      ] ;      
     sh:property [                         # Begin date 
       sh:path time:hasBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for Beginning in Phase K (Damage) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] ;
     sh:property [                         # End date 
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for End in Phase K (Damage) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
       ] .
 
 osh:ShapeOfPhaseL a sh:NodeShape ;        # Phase L (Repair)
     sh:targetClass occp:PhaseL_Repair ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:Submission ;
-        sh:message "Wrong assignment Phase L (Repair) or Transition C (Submission)." ;
+        sh:message "Wrong assignment Phase L (Repair) or Transition C (Submission). Phase L should start and end after Transition C." ;
+        sh:severity sh:Warning ;
+      ] ;
+    sh:property [                         # Phase order
+        sh:path time:before ;
+        sh:class occp:PhaseM_Deconstruction ;
+        sh:message "Wrong assignment Phase L (Repair) or Phase M (Deconstruction). Phase L should start and end before Phase M." ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (Beginning) in Phase L (Repair) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
+      sh:message "Missing date for Beginning (actual or estimated) of Phase L (Repair) - min. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase L (Repair) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase L (Repair) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning for Phase L (Repair) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for End in Phase L (Repair) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
+      sh:minCount 1 ;
+      sh:message "Missing date for End (actual or estimated) of Phase L (Repair) - min. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase L (Repair) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase L (Repair) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase L (Repair) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfPhaseM a sh:NodeShape ;        # Phase M (Deconstruction)
     sh:targetClass occp:PhaseM_Deconstruction ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD       
     sh:property [                         # Phase order
         sh:path time:after ;
         sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase M (Deconstruction) or Transition D (Completion Of Construction)." ;
+        sh:message "Wrong assignment Phase M (Deconstruction) or Transition D (Completion Of Construction). Phase M should start and end after Transition D." ;
         sh:severity sh:Warning ;
       ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing date (Beginning) in Phase M (Deconstruction) or wrong format - min. count = 1, format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
+      sh:message "Missing date for Beginning (acutal or estimated) of Phase M (Deconstruction) - min. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated Begin date
       sh:path occp:hasEstimatedBeginning ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated Beginning in Phase M (Deconstruction) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual Begin date
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual Beginning in Phase M (Deconstruction) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual Beginning in Phase M (Deconstruction) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for End in Phase M (Deconstruction) - format = YYYY-MM-DD." ;
-      sh:severity sh:Warning ;
+      sh:minCount 1 ;
+      sh:message "Missing date for End (acutal or estimated) of Phase M (Deconstruction) - min. count = 1." ;
+      sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated End date
       sh:path occp:hasEstimatedEnd ;
-      sh:datatype xsd:date ;
-      sh:message "Wrong format for estimated End in Phase M (Deconstruction) - format = YYYY-MM-DD." ;
       ] ;
     sh:property [                         # Actual End date
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Too many dates or wrong format for actual End in Phase M (Deconstruction) - max. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
 
 osh:ShapeOfTransitionE a sh:NodeShape ;   # Transition E (Completion Of Deconstruction)
     sh:targetClass occp:CompletionOfDeconstruction ;
-    sh:property [                         # Transition order
-      sh:path time:after ;                
-      sh:class occp:PhaseM_Deconstruction ;
-      sh:message "Wrong assignment Transition E (Completion Of Deconstruction) or Phase M (Deconstruction)." ;
-      sh:severity sh:Warning ;
-      ] ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD       
+    sh:or (                               # Transition order options
+      [
+        sh:property [                         
+          sh:path time:after ;                
+          sh:class occp:PhaseM_Deconstruction ;
+          ]         
+      ]
+      [
+        sh:property [                         
+          sh:path occp:endsWith ;                
+          sh:class occp:PhaseM_Deconstruction ;
+          sh:message "Wrong assignment of Transition E (Completion Of Deconstruction) or Phase M (Deconstruction). Transition E must occur after or end with Phase M." ;
+          sh:severity sh:Violation ;
+          ]    
+      ]
+    ) ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:minCount 1 ;
       sh:maxCount 1 ;
-      sh:datatype xsd:date ;
-      sh:message "Missing or too many date(s) or wrong format for Transition E (Completion Of Deconstruction) - max./min. count = 1, format = YYYY-MM-DD." ;
+      sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max./min. count = 1." ;
+      sh:severity sh:Violation ;
       ] .
