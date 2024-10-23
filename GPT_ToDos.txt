@@ -1,4 +1,4 @@
-    To Do 1 (11.10.24)
+    To Do 1 (11.10.24) - sh:or und sh:and einbauen - STATUS: Erledigt
         1. timeafter und überlappende Phasen
         Wenn du die timeafter-Beziehung verwendest, bedeutet dies streng genommen, dass der Anfang der nachfolgenden Phase erst nach dem 
         Ende der vorherigen Phase liegen muss. Das schließt eine Überlappung aus. Bei einer Überlappung wäre also die Regel "timeafter" 
