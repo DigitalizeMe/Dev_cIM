@@ -1,11 +1,11 @@
-@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix sh:    <http://www.w3.org/ns/shacl#> .
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl:   <http://www.w3.org/2002/07/owl#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix time: <http://www.w3.org/2006/time#> .
-@prefix osh: <http://www.occpshape.de/shape#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix occp:   <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:   <http://www.w3.org/2006/time#> .
+@prefix osh:    <http://www.occpshape.de/shape#> .
 
 ### GENERAL SHAPE RULES
 
@@ -23,34 +23,26 @@ osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:or (                                     # Phase order options
       [
-        sh:property [
-          sh:path time:before ;                 # Phase A usually starts and ends before Phase C
-          sh:class occp:PhaseC_Construction ;
-          ]
+        sh:path time:before ;                 # Phase A usually starts and ends before Phase C
+        sh:class occp:PhaseC_Construction ;
       ]
       [
-        sh:property [
-          sh:path time:before ;                 # Phase A usually starts and ends before Phase B
-          sh:class occp:PhaseB_Review ;
-          sh:message "Wrong assignment of Phase A (Planning). Phase A usually starts and ends before Phases B (Review) and C (Construction)." ;
-          sh:severity sh:Warning ;
-          ]
+        sh:path time:before ;                 # Phase A usually starts and ends before Phase B
+        sh:class occp:PhaseB_Review ;
+        sh:message "Wrong assignment of Phase A (Planning). Phase A usually starts and ends before Phases B (Review) and C (Construction)." ;
+        sh:severity sh:Warning ;
       ] 
     ) ;
     sh:and (                                    # Phase order options
       [
-        sh:property [
-          sh:path occp:beginsBefore ;           # Phase A must start before Phase B   
-          sh:class occp:PhaseB_Review ;
-          ]
+        sh:path occp:beginsBefore ;           # Phase A must start before Phase B   
+        sh:class occp:PhaseB_Review ;
       ]
       [
-        sh:property [
-          sh:path occp:beginsBefore ;           # Phase A must start before Phase C  
-          sh:class occp:PhaseC_Construction ;
-          sh:message "Wrong assignment of Phase A (Planning). Phase A must start before Phases B (Review) and C (Construction)." ;
-          sh:severity sh:Violation ;
-          ]
+        sh:path occp:beginsBefore ;           # Phase A must start before Phase C  
+        sh:class occp:PhaseC_Construction ;
+        sh:message "Wrong assignment of Phase A (Planning). Phase A must start before Phases B (Review) and C (Construction)." ;
+        sh:severity sh:Violation ;
       ]
     ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
@@ -89,34 +81,26 @@ osh:ShapeOfPhaseB a sh:NodeShape ;        # Phase B (Review)
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:or (                                     # Phase order options - Phase C (Construction)
       [
-        sh:property [
-          sh:path time:before ;                 # Phase B usually starts and ends before Phase C
-          sh:class occp:PhaseC_Construction ;
-          ]
+        sh:path time:before ;                 # Phase B usually starts and ends before Phase C
+        sh:class occp:PhaseC_Construction ;
       ]
       [
-        sh:property [
-          sh:path occp:beginsBefore ;           # Phase B must start before Phase C (Construction)   
-          sh:class occp:PhaseC_Construction ;
-          sh:message "Wrong assignment pf Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
-          sh:severity sh:Violation ;
-          ]
+        sh:path occp:beginsBefore ;           # Phase B must start before Phase C (Construction)   
+        sh:class occp:PhaseC_Construction ;
+        sh:message "Wrong assignment pf Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
+        sh:severity sh:Violation ;
       ]
       ) ;
     sh:or (                                     # Phase order options - Transition A (Completion of Planning)
-          [
-            sh:property [        
-              sh:path time:before ;                 # Phase B should end before the Completion of Planning
-              sh:class occp:CompletionOfPlanning ;
-              ]
+          [     
+            sh:path time:before ;                 # Phase B should end before the Completion of Planning
+            sh:class occp:CompletionOfPlanning ;
           ]
           [
-            sh:property [
-              sh:path occp:endsWith ;               # Phase B must end with the Completion of Planning
-              sh:class occp:CompletionOfPlanning ;
-              sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
-              sh:severity sh:Violation ;
-            ]
+            sh:path occp:endsWith ;               # Phase B must end with the Completion of Planning
+            sh:class occp:CompletionOfPlanning ;
+            sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
+            sh:severity sh:Violation ;
           ]
         ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
@@ -212,19 +196,15 @@ osh:ShapeOfPhaseC a sh:NodeShape ;        # Phase C (Construction)
         sh:severity sh:Warning ;
       ] ;
     sh:or (                               # Phase order options
-      [
-        sh:property [                         
-          sh:path time:before ;                
-          sh:class occp:CompletionOfConstruction ;
-          ] 
+      [                      
+        sh:path time:before ;                
+        sh:class occp:CompletionOfConstruction ;
       ]
       [
-        sh:property [
-          sh:path occp:endsWith ;
-          sh:class occp:CompletionOfConstruction ;
-          sh:message "Wrong assignment of Phase C (Construction) or Transition D (Completion of Construction). Phase C must end before or with Transition D." ;
-          sh:severity sh:Violation ;
-        ]
+        sh:path occp:endsWith ;
+        sh:class occp:CompletionOfConstruction ;
+        sh:message "Wrong assignment of Phase C (Construction) or Transition D (Completion of Construction). Phase C must end before or with Transition D." ;
+        sh:severity sh:Violation ;
       ]
     ) ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
@@ -344,18 +324,14 @@ osh:ShapeOfPhaseF a sh:NodeShape ;        # Phase F (DesignLife)
       ] ;
     sh:or (                               # Phase order options - Phase D
       [
-      sh:property [
-          sh:path occp:beginsBefore ;
-          sh:class occp:PhaseD_Usage ;
-        ] 
+        sh:path occp:beginsBefore ;
+        sh:class occp:PhaseD_Usage ;
       ]
       [
-      sh:property [
-          sh:path occp:beginsWith ;
-          sh:class occp:PhaseD_Usage ;
-          sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D."
-          sh:severity sh:Warning ;
-        ] 
+        sh:path occp:beginsWith ;
+        sh:class occp:PhaseD_Usage ;
+        sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D."
+        sh:severity sh:Warning ;
       ]
     ) ;
     sh:property [
@@ -436,22 +412,16 @@ osh:ShapeOfPhaseH a sh:NodeShape ;        # Phase H (SpecialEvents) - Special ev
     sh:targetClass occp:PhaseH_SpecialEvents ;
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:or (                                   # A special event is either happening on a single day or point in time or is a time interval.
-      [
-        sh:property [                         # Event time (single point in time)
-        sh:path time:hasTime ;
-        ] 
-      ]
+      [                   
+        sh:path time:hasTime ;                # Event time (single point in time)
+      ] 
       [
         sh:and (                              # Special event interval (beginning AND end)
           [
-            sh:property [
-              sh:path time:hasBeginning ;
-            ]
+            sh:path time:hasBeginning ;
           ]
           [
-            sh:property [
-              sh:path time:hasEnd ;
-            ]
+            sh:path time:hasEnd ;
           ]
         )
       ]
@@ -569,19 +539,15 @@ osh:ShapeOfTransitionE a sh:NodeShape ;   # Transition E (Completion Of Deconstr
     sh:targetClass occp:CompletionOfDeconstruction ;
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD       
     sh:or (                               # Transition order options
-      [
-        sh:property [                         
-          sh:path time:after ;                
-          sh:class occp:PhaseM_Deconstruction ;
-          ]         
+      [                       
+        sh:path time:after ;                
+        sh:class occp:PhaseM_Deconstruction ;     
       ]
-      [
-        sh:property [                         
-          sh:path occp:endsWith ;                
-          sh:class occp:PhaseM_Deconstruction ;
-          sh:message "Wrong assignment of Transition E (Completion Of Deconstruction) or Phase M (Deconstruction). Transition E must occur after or end with Phase M." ;
-          sh:severity sh:Violation ;
-          ]    
+      [                       
+        sh:path occp:endsWith ;                
+        sh:class occp:PhaseM_Deconstruction ;
+        sh:message "Wrong assignment of Transition E (Completion Of Deconstruction) or Phase M (Deconstruction). Transition E must occur after or end with Phase M." ;
+        sh:severity sh:Violation ;
       ]
     ) ;
     sh:property [                         # Transition time (single point in time)
