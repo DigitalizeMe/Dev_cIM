@@ -15,7 +15,6 @@ osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-
     sh:message "The date must be in the format YYYY-MM-DD." ;
     sh:severity sh:Violation .
 
-
 ### ORDER OF PHASES AND TRANSITIONS
 
 osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
@@ -87,7 +86,7 @@ osh:ShapeOfPhaseB a sh:NodeShape ;        # Phase B (Review)
       [
         sh:path occp:beginsBefore ;           # Phase B must start before Phase C (Construction)   
         sh:class occp:PhaseC_Construction ;
-        sh:message "Wrong assignment pf Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
+        sh:message "Wrong assignment of Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
         sh:severity sh:Violation ;
       ]
       ) ;
@@ -145,8 +144,9 @@ osh:ShapeOfTransitionA a sh:NodeShape ;   # Transition A (Completion of Planning
       ] ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
+      sh:minCount 1 ;
       sh:maxCount 1 ;
-      sh:message "Too many dates for Transition A (Completion of Planning) - max. count = 1." ;
+      sh:message "Missing or too many dates for Transition A (Completion of Planning) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
 
@@ -161,8 +161,9 @@ osh:ShapeOfTransitionB a sh:NodeShape ;   # Transition B (Begin Of Tendering Pro
       ] ;
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
+      sh:minCount 1 ;
       sh:maxCount 1 ;
-      sh:message "Too many dates for Transition B (Begin of Tendering Process) - max. count = 1." ;
+      sh:message "Missing or too many dates for Transition B (Begin of Tendering Process) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
 
@@ -177,7 +178,8 @@ osh:ShapeOfTransitionC a sh:NodeShape ;   # Transition C (Submission)
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
       sh:maxCount 1 ;
-      sh:message "Too many dates for Transition C (Submission) - max. count = 1." ;
+      sh:minCount 1 ;      
+      sh:message "Missing or too many dates for Transition C (Submission) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
 
@@ -243,8 +245,9 @@ osh:ShapeOfTransitionD a sh:NodeShape ;   # Transition D (Completion Of Construc
     sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
     sh:property [                         # Transition time (single point in time)
       sh:path time:hasTime ;
+      sh:minCount 1 ;
       sh:maxCount 1 ;
-      sh:message "Too many dates for Transition D (Completion of Construction) - max. count = 1." ;
+      sh:message "Missing or too many dates for Transition D (Completion of Construction) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
 
@@ -330,14 +333,14 @@ osh:ShapeOfPhaseF a sh:NodeShape ;        # Phase F (DesignLife)
       [
         sh:path occp:beginsWith ;
         sh:class occp:PhaseD_Usage ;
-        sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D."
+        sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D." ;
         sh:severity sh:Warning ;
       ]
     ) ;
     sh:property [
       sh:path time:before ;
       sh:class occp:PhaseM_Deconstruction ;
-      sh:message "Wrong assignment of Phase F (Design Life) or Phase M (Deconstruction). Phase F should begin and end before Phase M."
+      sh:message "Wrong assignment of Phase F (Design Life) or Phase M (Deconstruction). Phase F should begin and end before Phase M." ;
       sh:severity sh:Warning ;
     ] ;
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
@@ -507,7 +510,7 @@ osh:ShapeOfPhaseM a sh:NodeShape ;        # Phase M (Deconstruction)
     sh:property [                         # Begin date - either estimated or actual or both, but min. 1
       sh:path time:hasBeginning ;
       sh:minCount 1 ;
-      sh:message "Missing date for Beginning (acutal or estimated) of Phase M (Deconstruction) - min. count = 1." ;
+      sh:message "Missing date for Beginning (actual or estimated) of Phase M (Deconstruction) - min. count = 1." ;
       sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated Begin date
@@ -522,7 +525,7 @@ osh:ShapeOfPhaseM a sh:NodeShape ;        # Phase M (Deconstruction)
     sh:property [                         # End date - either estimated or actual or both
       sh:path time:hasEnd ;
       sh:minCount 1 ;
-      sh:message "Missing date for End (acutal or estimated) of Phase M (Deconstruction) - min. count = 1." ;
+      sh:message "Missing date for End (actual or estimated) of Phase M (Deconstruction) - min. count = 1." ;
       sh:severity sh:Violation ;
       ] ;
     sh:property [                         # Estimated End date
@@ -554,6 +557,6 @@ osh:ShapeOfTransitionE a sh:NodeShape ;   # Transition E (Completion Of Deconstr
       sh:path time:hasTime ;
       sh:minCount 1 ;
       sh:maxCount 1 ;
-      sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max./min. count = 1." ;
+      sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
