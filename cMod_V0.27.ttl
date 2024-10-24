@@ -184,6 +184,12 @@ occp:Cycle rdf:type owl:Class ;
            rdfs:comment "A cycle is a time span with recurring periods, defined by a starting point in time, a period and a duration. The duration must be greater than the period and the duration must be an integer multiple of the period. Cycles are always within phases. They are used to keep track of interating processes, like multiple reviews during the planning phase, where each rejection of the reviewer causes another planning (and reviewing) cycle."^^rdfs:Literal .
 
 
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CycleA_PlanningReview
+occp:CycleA_PlanningReview rdf:type owl:Class ;
+           rdfs:subClassOf occp:Cycle ;
+           rdfs:comment "The CycleA_PlanningReview starts with the submission of a plan to review and ends with either the approval or the rejection of the plan. If the plan is rejected, a new cycle begins. Only the approval of a plan ends the CycleA_PlanningReview without starting another."^^rdfs:Literal .
+
+
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageDetection
 occp:DamageDetection rdf:type owl:Class ;
                      rdfs:subClassOf occp:PhaseK_Instant ;
