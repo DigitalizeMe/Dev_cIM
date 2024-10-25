@@ -7,10 +7,13 @@
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
+### PHASE VALIDATION
 
 occp:PhaseA_Planning1 a occp:PhaseA_Planning;
-    time:hasBeginning "2022-01-01"^^xsd:date .
+    # time:hasBeginning "2022-01-01"^^xsd:date ;
+    occp:hasActualBeginning "2022-01-02"^^xsd:date ;
+    occp:hasEstimatedBeginning "2022-01-01"^^xsd:date .
 
-occp:PhaseB_Review1 a occp:PhaseB_Review ;
-    time:hasBeginning "2022-01-02"^^xsd:date .
+occp:PhaseB_Review1 a occp:PhaseB_Review;
+    time:hasBeginning "2022-02-01"^^xsd:date .
 
