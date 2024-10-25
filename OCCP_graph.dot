@@ -1,0 +1,44 @@
+digraph OCCP_PhaseA {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightgrey];
+
+    # Main phases and cycles
+    PhaseA_Planning [label="Phase A (Planning)", shape=ellipse, color=lightblue];
+    CycleA_PlanningReview [label="Cycle A (Planning and Review)", shape=ellipse, color=lightgreen];
+
+    # Instants within Phase A
+    BeginningOfPlanning [label="Beginning of Planning", color=lightyellow];
+    DataProcurement [label="Data Procurement", color=lightyellow];
+    Edit_BSTR [label="Edit Before Submission To Review", color=lightyellow];
+    SubmissionToReview [label="Submission To Review", color=lightyellow];
+    Edit_ASTR [label="Edit After Submission To Review", color=lightyellow];
+    ReviewRejection [label="Review Rejection", color=lightcoral];
+
+    # Relationships
+    BeginningOfPlanning -> PhaseA_Planning [label="starts Phase"];
+    DataProcurement -> BeginningOfPlanning [label="after"];
+    DataProcurement -> SubmissionToReview [label="before"];
+    Edit_BSTR -> BeginningOfPlanning [label="after"];
+    Edit_BSTR -> SubmissionToReview [label="before"];
+    SubmissionToReview -> Edit_BSTR [label="after (option)"];
+    SubmissionToReview -> Edit_ASTR [label="after (option)"];
+    Edit_ASTR -> SubmissionToReview [label="after"];
+    Edit_ASTR -> ReviewRejection [label="after"];
+    SubmissionToReview -> CycleA_PlanningReview [label="starts Cycle"];
+
+    # Phase and cycle relationships
+    PhaseA_Planning -> CycleA_PlanningReview [label="contains Cycle"];
+
+    # Date properties
+    GeneralDatePropertyShape [label="General Date Property Shape", shape=box, color=lightgrey];
+    BeginningOfPlanning -> GeneralDatePropertyShape [label="date"];
+    DataProcurement -> GeneralDatePropertyShape [label="date"];
+    Edit_BSTR -> GeneralDatePropertyShape [label="date"];
+    SubmissionToReview -> GeneralDatePropertyShape [label="date"];
+    Edit_ASTR -> GeneralDatePropertyShape [label="date"];
+    CycleA_PlanningReview -> GeneralDatePropertyShape [label="date"];
+
+    # Cyclic relationships
+    CycleA_PlanningReview -> BeginningOfPlanning [label="has Beginning"];
+    CycleA_PlanningReview -> Edit_ASTR [label="has Actual End (option)"];
+} 
