@@ -25,11 +25,11 @@ occp:Milestone4 a occp:SubmissionToReview ;
     time:hasTime "2022-01-04"^^xsd:date ;
     occp:startsCycle occp:CycleA_PlanningReview .
 
-occp:Milestone5 a occp:Edit_ASTR ;
+occp:Milestone5 a occp:ReviewRejection ;
     time:after occp:Milestone4 ;
     time:hasTime "2022-01-05"^^xsd:date .
 
-occp:Milestone6 a occp:ReviewRejection ;
+occp:Milestone6 a occp:Edit_ASTR ;
     time:after occp:Milestone5 ;
     time:hasTime "2022-01-06"^^xsd:date .
 
