@@ -4,35 +4,36 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
+@prefix EX: <http://www.example.de/example#> .
 
 # Phase A (Planning) valid data
 
-occp:Milestone1 a occp:BeginningOfPlanning ;
+EX:Milestone1 a occp:BeginningOfPlanning ;
     time:hasTime "2022-01-01"^^xsd:date ;
     occp:startsPhase occp:PhaseA_Planning .
 
-occp:Milestone2 a occp:DataProcurement ;
-    time:after occp:Milestone1 ;
+EX:Milestone2 a occp:DataProcurement ;
+    time:after EX:Milestone1;
     time:hasTime "2022-01-02"^^xsd:date .
 
-occp:Milestone3 a occp:Edit_BSTR ;
-    time:after occp:Milestone1 ;
-    time:before occp:Milestone4 ;
+EX:Milestone3 a occp:Edit_BSTR ;
+    time:after EX:Milestone1 ;
+    time:before EX:Milestone4 ;
     time:hasTime "2022-01-03"^^xsd:date .
 
-occp:Milestone4 a occp:SubmissionToReview ;
-    time:after occp:Milestone3 ;
+EX:Milestone4 a occp:SubmissionToReview ;
     time:hasTime "2022-01-04"^^xsd:date ;
+    time:after EX:Milestone3 ;
     occp:startsCycle occp:CycleA_PlanningReview .
 
-occp:Milestone5 a occp:ReviewRejection ;
-    time:after occp:Milestone4 ;
+EX:Milestone5 a occp:ReviewRejection ;
+    time:after EX:Milestone4 ;
     time:hasTime "2022-01-05"^^xsd:date .
 
-occp:Milestone6 a occp:Edit_ASTR ;
-    time:after occp:Milestone5 ;
+EX:Milestone6 a occp:Edit_ASTR ;
+    time:after EX:Milestone5 ;
     time:hasTime "2022-01-06"^^xsd:date .
 
-occp:CycleA_PlanningReview a occp:CycleA_PlanningReview ;
-    time:hasBeginning occp:Milestone4 ;
-    time:hasEnd occp:Milestone6 .
+EX:CycleA_PlanningReview a occp:CycleA_PlanningReview ;
+    time:hasBeginning "2022-01-04"^^xsd:date ;
+    time:hasEnd "2022-01-06"^^xsd:date .
