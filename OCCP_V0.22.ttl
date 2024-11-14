@@ -15,7 +15,6 @@
                                                                         rdfs:comment "First workaround to implement time tracking features to models"@en .
 
 
-
 #################################################################
 #    Object Properties
 #################################################################
@@ -23,17 +22,20 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsCycle
   occp:endsCycle rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+            rdfs:domain <http://www.w3.org/2006/time#Instant> ;
             rdfs:comment "The object property \"endsCycle\" is used to mark instants that end an ongoing cycle within a phase."@en .
 
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsPhase
   occp:endsPhase rdf:type owl:ObjectProperty ;
             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+            rdfs:domain <http://www.w3.org/2006/time#Instant> ;
             rdfs:comment "The object property \"endsPhase\" is used to mark instants that end an ongoing phase."@en .
 
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
   occp:hasPhase rdf:type owl:ObjectProperty ;
+                rdfs:domain <http://www.w3.org/2006/time#Instant> ;
                 rdfs:comment "The property \"hasPhase\" is used to connect time instants to certain phases."@en .
 
 
@@ -42,53 +44,47 @@
                 rdfs:comment "The property \"isInPhase\" is used for new life cycles that evolve e.g., from complex repair measures. Example: Part of a building in use is damaged and needs to be replaced. The repair measures need to be planned and so forth and thus start a new life cycle for the replacement element. This new life cycle is taking place within the repair phase of the damaged elements (\"is in Phase of the Repair Phase of said elements\"), as the rest of the building stays intact."@en .
 
 
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#phaseAfter
-  occp:phaseAfter rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://www.w3.org/2006/time#intervalAfter> ;
-              rdfs:comment "The property \"phase_after\" is used to define the correct chronological order and dependencies of phases and transitions within the OCCP."@en .
-
-
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#phaseBefore
-  occp:phaseBefore rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://www.w3.org/2006/time#intervalBefore> ;
-              rdfs:comment "The property \"phase_before\" is used to define the correct chronological order and dependencies of phases and transitions within the OCCP."@en .
-
-
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#startsCycle
   occp:startsCycle rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "The object property \"startsCycle\" is used to mark instants that start a new cycle within a phase."@en .
 
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#startsPhase
   occp:startsPhase rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
   occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-              rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant."@en .
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;       
+              rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant or Phase."@en .
 
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
   occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasEstimatedBeginning\" is used to mark the estimated beginning of a Phase."@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
   occp:hasActualBeginning rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+              rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualBeginning\" is used to mark the actual beginning of a Phase."@en .             
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedEnd
   occp:hasEstimatedEnd rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+              rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasEstimatedEnd\" is used to mark the estimated end of a Phase."@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualEnd
   occp:hasActualEnd rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+              rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasMilestone
@@ -125,6 +121,7 @@
                 rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
                 rdfs:comment "The object property \"endsAfter\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsAfter\" T2, it only describes, that the ends of T1 happens after the end of T2 without defining the order of the beginnings of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
 
+              
 
 #################################################################
 #    Classes

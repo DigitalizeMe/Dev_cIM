@@ -9,12 +9,12 @@
 # Phase A (Planning) valid data
 
 EX:PhaseA_Planning a occp:PhaseA_Planning ; 
-    time:hasBeginning "2022-01-01"^^xsd:date ;
+    time:hasActualBeginning "2022-01-01"^^xsd:date ;
     occp:hasEstimatedEnd "2022-12-01"^^xsd:date .
 
 EX:Milestone1 a occp:BeginningOfPlanning ;
     time:hasTime "2022-01-01"^^xsd:date ;
-    occp:startsPhase EX:PhaseA_Planning .
+    occp:startsPhase occp:PhaseA_Planning_IND .
 
 EX:Milestone2 a occp:DataProcurement ;
     time:after EX:Milestone1;
@@ -28,7 +28,7 @@ EX:Milestone3 a occp:Edit_BSTR ;
 EX:Milestone4 a occp:SubmissionToReview ;
     time:hasTime "2022-01-04"^^xsd:date ;
     time:after EX:Milestone3 ;
-    occp:startsCycle occp:CycleA_PlanningReview .
+    occp:startsCycle occp:CycleA_PlanningReview_IND .
 
 EX:Milestone5 a occp:ReviewRejection ;
     time:after EX:Milestone4 ;
