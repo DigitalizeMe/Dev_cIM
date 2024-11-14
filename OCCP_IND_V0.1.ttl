@@ -1,0 +1,140 @@
+
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> .
+@prefix osh:    <http://www.occpshape.de/shape#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+
+
+<http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
+                                                                        owl:imports <http://www.w3.org/2006/time#2016> ;
+                                                                        rdfs:comment "First workaround to implement time tracking features to models"@en .
+
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+  # This section defines an individual (IND) for each class defined in the section above. It is used for testing and validation purposes and represents the logic in which additional individuals are to be defined / created if necessary. I recommend numbering the additional individuals (e.g. Cycle_IND_1 oder Cycle_IND_A_1 - depending on how many individuals are expected to be needed).
+ 
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginOfTenderingProcess_IND
+  occp:BeginOfTenderingProcess_IND rdf:type occp:BeginOfTenderingProcess ;
+                              rdf:type occp:Transition ;
+                              rdfs:label "Individual (instance) of Beginning Of Tendering Process"@en .
+
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginningOfPlanning_IND
+  occp:BeginningOfPlanning_IND rdf:type occp:BeginningOfPlanning ;
+                                rdf:type occp:PhaseA_Instant ;
+                                rdfs:label "Individual (instance) of Beginning of Planning"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfConstruction_IND
+  occp:CompletionOfConstruction_IND rdf:type occp:CompletionOfConstruction ;
+                                    rdf:type occp:Transition ;
+                                    rdfs:label "Individual (instance) of Completion of Construction"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfDeconstruction_IND
+  occp:CompletionOfDeconstruction_IND rdf:type occp:CompletionOfDeconstruction ;
+                                      rdf:type occp:Transition ;
+                                      rdfs:label "Individual (instance) of Completion of Deconstruction"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfPlanning_IND
+  occp:CompletionOfPlanning_IND rdf:type occp:CompletionOfPlanning ;
+                                rdf:type occp:Transition ;
+                                rdfs:label "Individual (instance) of Completion of Planning"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionAcceptance_IND
+  occp:ConstructionAcceptance_IND rdf:type occp:ConstructionAcceptance ;
+                                  rdf:type occp:PhaseC_Instant ;
+                                  rdfs:label "Individual (instance) of Construction Acceptance"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionCompletion_IND
+  occp:ConstructionCompletion_IND rdf:type occp:ConstructionCompletion ;
+                                  rdf:type occp:PhaseC_Instant ;
+                                  rdfs:label "Individual (instance) of Construction Completion"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionStart_IND
+  occp:ConstructionStart_IND rdf:type occp:ConstructionStart ;
+                              rdf:type occp:PhaseC_Instant ;
+                              rdfs:label "Individual (instance) of Construction Start"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Cycle_IND
+  occp:Cycle_IND rdf:type occp:Cycle ;
+                rdf:type <http://www.w3.org/2006/time#Interval> ;
+                rdfs:label "Individual (instance) of Cycle"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CycleA_PlanningReview_IND
+  occp:CycleA_PlanningReview_IND rdf:type occp:CycleA_PlanningReview ;
+                                rdf:type occp:Cycle ;
+                                rdfs:label "Individual (instance) of Cycle A Planning Review"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageDetection_IND
+  occp:DamageDetection_IND rdf:type occp:DamageDetection ;
+                          rdf:type occp:PhaseK_Instant ;
+                          rdfs:label "Individual (instance) of Damage Detection"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageObservation_IND
+  occp:DamageObservation_IND rdf:type occp:DamageObservation ;
+                            rdf:type occp:PhaseK_Instant ;
+                            rdfs:label "Individual (instance) of Damage Observation"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageRepair_IND
+  occp:DamageRepair_IND rdf:type occp:DamageRepair ;
+                        rdf:type occp:PhaseK_Instant ;
+                        rdfs:label "Individual (instance) of Damage Repair"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DataProcurement_IND
+  occp:DataProcurement_IND rdf:type occp:DataProcurement ;
+                          rdf:type occp:PhaseA_Instant ;
+                          rdfs:label "Individual (instance) of Data Procurement"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionCompletion_IND
+  occp:DeconstructionCompletion_IND rdf:type occp:DeconstructionCompletion ;
+                                    rdf:type occp:PhaseM_Instant ;
+                                    rdfs:label "Individual (instance) of Deconstruction Completion"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionStart_IND
+  occp:DeconstructionStart_IND rdf:type occp:DeconstructionStart ;
+                                rdf:type occp:PhaseM_Instant ;
+                                rdfs:label "Individual (instance) of Deconstruction Start"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimCompletion_IND
+  occp:DefectElimCompletion_IND rdf:type occp:DefectElimCompletion ;
+                                rdf:type occp:PhaseC_Instant ;
+                                rdfs:label "Individual (instance) of Defect Elimination Completion"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimStart_IND
+  occp:DefectElimStart_IND rdf:type occp:DefectElimStart ;
+                          rdf:type occp:PhaseC_Instant ;
+                          rdfs:label "Individual (instance) of Defect Elimination Start"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeChange_IND
+  occp:DesignLifeChange_IND rdf:type occp:DesignLifeChange ;
+                            rdf:type occp:PhaseF_Instant ;
+                            rdfs:label "Individual (instance) of Design Life Change"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeEnd_IND
+  occp:DesignLifeEnd_IND rdf:type occp:DesignLifeEnd ;
+                        rdf:type occp:PhaseF_Instant ;
+                        rdfs:label "Individual (instance) of Design Life End"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeStart_IND
+  occp:DesignLifeStart_IND rdf:type occp:DesignLifeStart ;
+                          rdf:type occp:PhaseF_Instant ;
+                          rdfs:label "Individual (instance) of Design Life Start"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_ASTR_IND
+  occp:Edit_ASTR_IND rdf:type occp:Edit_ASTR ;
+                    rdf:type occp:PhaseA_Instant ;
+                    rdfs:label "Individual (instance) of Edit After Submission to Review"@en .
+
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_BSTR_IND
+  occp:Edit_BSTR_IND rdf:type occp:Edit_BSTR ;
+                    rdf:type occp:PhaseA_Instant ;
+                    rdfs:label "Individual (instance) of Edit Before Submission to Review"@en .
