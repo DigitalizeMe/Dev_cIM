@@ -8,9 +8,13 @@
 
 # Phase A (Planning) valid data
 
+EX:PhaseA_Planning a occp:PhaseA_Planning ; 
+    time:hasBeginning "2022-01-01"^^xsd:date ;
+    occp:hasEstimatedEnd "2022-12-01"^^xsd:date .
+
 EX:Milestone1 a occp:BeginningOfPlanning ;
     time:hasTime "2022-01-01"^^xsd:date ;
-    occp:startsPhase occp:PhaseA_Planning .
+    occp:startsPhase EX:PhaseA_Planning .
 
 EX:Milestone2 a occp:DataProcurement ;
     time:after EX:Milestone1;
