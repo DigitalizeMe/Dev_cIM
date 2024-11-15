@@ -44,53 +44,37 @@ osh:ShapeOfPhaseA a sh:NodeShape ;        # Phase A (Planning)
         sh:severity sh:Violation ;
       ]
     ) ;
-    sh:or (                                   # Begin date options
-      [
-        sh:path time:hasBeginning ;
+    sh:property [                                   # Begin date options
+      sh:path time:hasBeginning ;
+      sh:qualifiedValueShape [
+        sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+        ) ;
         sh:minCount 1 ;
-        sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-      [
-        sh:path occp:hasEstimatedBeginning ;
-        sh:minCount 1 ;
-        sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-      [
-        sh:path occp:hasActualBeginning ;
-        sh:minCount 1 ;
-        sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-    ) ;
-    sh:property [                         # Actual Begin date - limitation
+        ] ;
+      sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
+      sh:severity sh:Violation ;
+      ] ;
+    sh:property [                                 # Actual Begin date - limitation
       sh:path occp:hasActualBeginning ;
       sh:maxCount 1 ;
       sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
       sh:severity sh:Violation ;
       ] ;
-    sh:or (                               # End date options
-      [
-        sh:path time:hasEnd ;
+    sh:property [                                 # End date options
+      sh:path time:hasEnd ;
+      sh:qualifiedValueShape [
+        sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+        ) ;
         sh:minCount 1 ;
-        sh:message "Missing date (end) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-      [
-        sh:path occp:hasEstimatedEnd ;
-        sh:minCount 1 ;
-        sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-      [
-        sh:path occp:hasActualEnd ;
-        sh:minCount 1 ;
-        sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
-        sh:severity sh:Violation ;
-      ]
-    ) ;
-    sh:property [                         # Actual End date - limitation
+        ] ;
+      sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
+      sh:severity sh:Violation ;
+      ] ;
+    sh:property [                                 # Actual End date - limitation
       sh:path occp:hasActualEnd ;
       sh:maxCount 1 ;
       sh:message "Too many dates for actual End in Phase A (Planning) - max. count = 1." ;
