@@ -13,8 +13,7 @@ EX:PhaseA_Planning a occp:PhaseA_Planning ;
     occp:hasEstimatedEnd "2022-12-01"^^xsd:date .
 
 EX:Milestone1 a occp:BeginningOfPlanning ;
-    time:hasTime "2022-01-01"^^xsd:date ;
-    occp:startsPhase occp:PhaseA_Planning_IND .
+    time:hasTime "2022-01-01"^^xsd:date .
 
 EX:Milestone2 a occp:DataProcurement ;
     time:after EX:Milestone1;
@@ -22,13 +21,15 @@ EX:Milestone2 a occp:DataProcurement ;
 
 EX:Milestone3 a occp:Edit_BSTR ;
     time:after EX:Milestone1 ;
-    time:before EX:Milestone4 ;
+    time:before EX:Milestone41 ;
     time:hasTime "2022-01-03"^^xsd:date .
 
-EX:Milestone4 a occp:SubmissionToReview ;
+EX:Milestone41 a occp:SubmissionToReview ;
     time:hasTime "2022-01-04"^^xsd:date ;
-    time:after EX:Milestone3 ;
-    occp:startsCycle occp:CycleA_PlanningReview_IND .
+    time:after EX:Milestone3 .
+
+EX:Milestone42 a occp:CycleA_PlanningReview ;
+    time:hasBeginning "2022-01-04"^^xsd:date .
 
 EX:Milestone5 a occp:ReviewRejection ;
     time:after EX:Milestone4 ;

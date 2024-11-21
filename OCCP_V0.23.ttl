@@ -56,6 +56,7 @@
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
   occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;       
@@ -68,11 +69,13 @@
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasEstimatedBeginning\" is used to mark the estimated beginning of a Phase."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
   occp:hasActualBeginning rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualBeginning\" is used to mark the actual beginning of a Phase."@en .             
+
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedEnd
   occp:hasEstimatedEnd rdf:type owl:ObjectProperty ;
@@ -80,40 +83,48 @@
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasEstimatedEnd\" is used to mark the estimated end of a Phase."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualEnd
   occp:hasActualEnd rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasMilestone
   occp:hasMilestone rdf:type owl:ObjectProperty ;
               rdfs:comment "The property \"hasMilestone\" is used to connect Individuals to certain Instants (Phase Instants or Transitions)."@en .
+
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
   occp:beginsBefore rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
               rdfs:comment "The object property \"beginsBefore\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsBefore\" T2, it only describes, that the beginning of T1 happens before the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsWith
   occp:beginsWith rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
               rdfs:comment "The object property \"beginsWith\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsWith\" T2, it only describes, that the beginning of T1 happens on the same day with the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
+
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsAfter
   occp:beginsAfter rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
               rdfs:comment "The object property \"beginsAfter\" is used with time:intervals or time:instants to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsAfter\" T2, it only describes, that the beginning of T1 happens after the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsBefore
   occp:endsBefore rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
               rdfs:comment "The object property \"endsBefore\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsBefore\" T2, it only describes, that the end of T1 happens before the end of T2 without defining the order of the beginnings of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
 
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
   occp:endsWith rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
               rdfs:comment "The object property \"endsWith\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsWith\" T2, it only describes, that the ends of T1 happens on the same day as (the end of) T2 without defining the order of the beginnings or points in time of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en .
+
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsAfter
   occp:endsAfter rdf:type owl:ObjectProperty ;
@@ -539,7 +550,6 @@
                 rdf:type occp:Transition ;
                 rdfs:label "Individual (instance) of Beginning Of Tendering Process"@en .
 
-
   ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginningOfPlanning_IND
   occp:BeginningOfPlanning_IND rdf:type occp:BeginningOfPlanning ;
                 rdf:type occp:PhaseA_Instant ;
@@ -650,991 +660,981 @@
                 rdf:type occp:PhaseA_Instant ;
                 rdfs:label "Individual (instance) of Edit Before Submission to Review"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#GeologicalEvent_IND
-occp:GeologicalEvent_IND rdf:type occp:GeologicalEvent ;
-                rdf:type occp:PhaseH_Instant ;
-                rdfs:label "Individual (instance) of Geological Event"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#GeologicalEvent_IND
+  occp:GeologicalEvent_IND rdf:type occp:GeologicalEvent ;
+                  rdf:type occp:PhaseH_Instant ;
+                  rdfs:label "Individual (instance) of Geological Event"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#InspectionExecution_IND
-occp:InspectionExecution_IND rdf:type occp:InspectionExecution ;
-                rdf:type occp:PhaseG_Instant ;
-                rdfs:label "Individual (instance) of Inspection Execution"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#InspectionExecution_IND
+  occp:InspectionExecution_IND rdf:type occp:InspectionExecution ;
+                  rdf:type occp:PhaseG_Instant ;
+                  rdfs:label "Individual (instance) of Inspection Execution"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#IrregularInspection_IND
-occp:IrregularInspection_IND rdf:type occp:IrregularInspection ;
-                rdf:type occp:PhaseG_Instant ;
-                rdfs:label "Individual (instance) of Irregular Inspection"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#IrregularInspection_IND
+  occp:IrregularInspection_IND rdf:type occp:IrregularInspection ;
+                  rdf:type occp:PhaseG_Instant ;
+                  rdfs:label "Individual (instance) of Irregular Inspection"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent_IND
-occp:LoadEvent_IND rdf:type occp:LoadEvent ;
-                rdf:type occp:PhaseH_Instant ;
-                rdfs:label "Individual (instance) of Load Event"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent_IND
+  occp:LoadEvent_IND rdf:type occp:LoadEvent ;
+                  rdf:type occp:PhaseH_Instant ;
+                  rdfs:label "Individual (instance) of Load Event"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NewComponent_IND
-occp:NewComponent_IND rdf:type occp:NewComponent ;
-                rdf:type occp:PhaseL_Instant ;
-                rdfs:label "Individual (instance) of New Component"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NewComponent_IND
+  occp:NewComponent_IND rdf:type occp:NewComponent ;
+                  rdf:type occp:PhaseL_Instant ;
+                  rdfs:label "Individual (instance) of New Component"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NextRegularInspection_IND
-occp:NextRegularInspection_IND rdf:type occp:NextRegularInspection ;
-                rdf:type occp:PhaseG_Instant ;
-                rdfs:label "Individual (instance) of Next Regular Inspection"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NextRegularInspection_IND
+  occp:NextRegularInspection_IND rdf:type occp:NextRegularInspection ;
+                  rdf:type occp:PhaseG_Instant ;
+                  rdfs:label "Individual (instance) of Next Regular Inspection"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Phase_IND
-occp:Phase_IND rdf:type occp:Phase ;
-                rdf:type <http://www.w3.org/2006/time#Interval> ;
-                rdfs:label "Individual (instance) of Phase"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Phase_IND
+  occp:Phase_IND rdf:type occp:Phase ;
+                  rdf:type <http://www.w3.org/2006/time#Interval> ;
+                  rdfs:label "Individual (instance) of Phase"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Instant_IND
-occp:PhaseA_Instant_IND rdf:type occp:PhaseA_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase A Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Instant_IND
+  occp:PhaseA_Instant_IND rdf:type occp:PhaseA_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase A Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Planning_IND
-occp:PhaseA_Planning_IND rdf:type occp:PhaseA_Planning ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase A Planning"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Planning_IND
+  occp:PhaseA_Planning_IND rdf:type occp:PhaseA_Planning ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase A Planning"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Instant_IND
-occp:PhaseB_Instant_IND rdf:type occp:PhaseB_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase B Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Instant_IND
+  occp:PhaseB_Instant_IND rdf:type occp:PhaseB_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase B Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Review_IND
-occp:PhaseB_Review_IND rdf:type occp:PhaseB_Review ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase B Review"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Review_IND
+  occp:PhaseB_Review_IND rdf:type occp:PhaseB_Review ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase B Review"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Construction_IND
-occp:PhaseC_Construction_IND rdf:type occp:PhaseC_Construction ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase C Construction"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Construction_IND
+  occp:PhaseC_Construction_IND rdf:type occp:PhaseC_Construction ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase C Construction"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Instant_IND
-occp:PhaseC_Instant_IND rdf:type occp:PhaseC_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase C Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Instant_IND
+  occp:PhaseC_Instant_IND rdf:type occp:PhaseC_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase C Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Instant_IND
-occp:PhaseD_Instant_IND rdf:type occp:PhaseD_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase D Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Instant_IND
+  occp:PhaseD_Instant_IND rdf:type occp:PhaseD_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase D Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Usage_IND
-occp:PhaseD_Usage_IND rdf:type occp:PhaseD_Usage ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase D Usage"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Usage_IND
+  occp:PhaseD_Usage_IND rdf:type occp:PhaseD_Usage ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase D Usage"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Instant_IND
-occp:PhaseE_Instant_IND rdf:type occp:PhaseE_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase E Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Instant_IND
+  occp:PhaseE_Instant_IND rdf:type occp:PhaseE_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase E Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty_IND
-occp:PhaseE_Warranty_IND rdf:type occp:PhaseE_Warranty ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase E Warranty"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty_IND
+  occp:PhaseE_Warranty_IND rdf:type occp:PhaseE_Warranty ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase E Warranty"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_DesignLife_IND
-occp:PhaseF_DesignLife_IND rdf:type occp:PhaseF_DesignLife ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase F Design Life"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_DesignLife_IND
+  occp:PhaseF_DesignLife_IND rdf:type occp:PhaseF_DesignLife ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase F Design Life"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_Instant_IND
-occp:PhaseF_Instant_IND rdf:type occp:PhaseF_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase F Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_Instant_IND
+  occp:PhaseF_Instant_IND rdf:type occp:PhaseF_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase F Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection_IND
-occp:PhaseG_Inspection_IND rdf:type occp:PhaseG_Inspection ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase G Inspection"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection_IND
+  occp:PhaseG_Inspection_IND rdf:type occp:PhaseG_Inspection ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase G Inspection"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Instant_IND
-occp:PhaseG_Instant_IND rdf:type occp:PhaseG_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase G Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Instant_IND
+  occp:PhaseG_Instant_IND rdf:type occp:PhaseG_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase G Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_Instant_IND
-occp:PhaseH_Instant_IND rdf:type occp:PhaseH_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase H Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_Instant_IND
+  occp:PhaseH_Instant_IND rdf:type occp:PhaseH_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase H Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_SpecialEvents_IND
-occp:PhaseH_SpecialEvents_IND rdf:type occp:PhaseH_SpecialEvents ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase H Special Events"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_SpecialEvents_IND
+  occp:PhaseH_SpecialEvents_IND rdf:type occp:PhaseH_SpecialEvents ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase H Special Events"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Damage_IND
-occp:PhaseK_Damage_IND rdf:type occp:PhaseK_Damage ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase K Damage"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Damage_IND
+  occp:PhaseK_Damage_IND rdf:type occp:PhaseK_Damage ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase K Damage"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Instant_IND
-occp:PhaseK_Instant_IND rdf:type occp:PhaseK_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase K Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Instant_IND
+  occp:PhaseK_Instant_IND rdf:type occp:PhaseK_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase K Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Instant_IND
-occp:PhaseL_Instant_IND rdf:type occp:PhaseL_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase L Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Instant_IND
+  occp:PhaseL_Instant_IND rdf:type occp:PhaseL_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase L Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair_IND
-occp:PhaseL_Repair_IND rdf:type occp:PhaseL_Repair ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase L Repair"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair_IND
+  occp:PhaseL_Repair_IND rdf:type occp:PhaseL_Repair ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase L Repair"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Deconstruction_IND
-occp:PhaseM_Deconstruction_IND rdf:type occp:PhaseM_Deconstruction ;
-                rdf:type occp:Phase ;
-                rdfs:label "Individual (instance) of Phase M Deconstruction"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Deconstruction_IND
+  occp:PhaseM_Deconstruction_IND rdf:type occp:PhaseM_Deconstruction ;
+                  rdf:type occp:Phase ;
+                  rdfs:label "Individual (instance) of Phase M Deconstruction"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Instant_IND
-occp:PhaseM_Instant_IND rdf:type occp:PhaseM_Instant ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Phase M Instant"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Instant_IND
+  occp:PhaseM_Instant_IND rdf:type occp:PhaseM_Instant ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Phase M Instant"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion_IND
-occp:RepairCompletion_IND rdf:type occp:RepairCompletion ;
-                rdf:type occp:PhaseL_Instant ;
-                rdfs:label "Individual (instance) of Repair Completion"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion_IND
+  occp:RepairCompletion_IND rdf:type occp:RepairCompletion ;
+                  rdf:type occp:PhaseL_Instant ;
+                  rdfs:label "Individual (instance) of Repair Completion"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairStart_IND
-occp:RepairStart_IND rdf:type occp:RepairStart ;
-                rdf:type occp:PhaseL_Instant ;
-                rdfs:label "Individual (instance) of Repair Start"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairStart_IND
+  occp:RepairStart_IND rdf:type occp:RepairStart ;
+                  rdf:type occp:PhaseL_Instant ;
+                  rdfs:label "Individual (instance) of Repair Start"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewApproval_IND
-occp:ReviewApproval_IND rdf:type occp:ReviewApproval ;
-                rdf:type occp:PhaseB_Instant ;
-                rdfs:label "Individual (instance) of Review Approval"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewApproval_IND
+  occp:ReviewApproval_IND rdf:type occp:ReviewApproval ;
+                  rdf:type occp:PhaseB_Instant ;
+                  rdfs:label "Individual (instance) of Review Approval"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewRejection_IND
-occp:ReviewRejection_IND rdf:type occp:ReviewRejection ;
-                rdf:type occp:PhaseB_Instant ;
-                rdfs:label "Individual (instance) of Review Rejection"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewRejection_IND
+  occp:ReviewRejection_IND rdf:type occp:ReviewRejection ;
+                  rdf:type occp:PhaseB_Instant ;
+                  rdfs:label "Individual (instance) of Review Rejection"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewStart_IND
-occp:ReviewStart_IND rdf:type occp:ReviewStart ;
-                rdf:type occp:PhaseB_Instant ;
-                rdfs:label "Individual (instance) of Review Start"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewStart_IND
+  occp:ReviewStart_IND rdf:type occp:ReviewStart ;
+                  rdf:type occp:PhaseB_Instant ;
+                  rdfs:label "Individual (instance) of Review Start"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Submission_IND
-occp:Submission_IND rdf:type occp:Submission ;
-                rdf:type occp:Transition ;
-                rdfs:label "Individual (instance) of Submission"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Submission_IND
+  occp:Submission_IND rdf:type occp:Submission ;
+                  rdf:type occp:Transition ;
+                  rdfs:label "Individual (instance) of Submission"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#SubmissionToReview_IND
-occp:SubmissionToReview_IND rdf:type occp:SubmissionToReview ;
-                rdf:type occp:PhaseA_Instant ;
-                rdfs:label "Individual (instance) of Submission to Review"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#SubmissionToReview_IND
+  occp:SubmissionToReview_IND rdf:type occp:SubmissionToReview ;
+                  rdf:type occp:PhaseA_Instant ;
+                  rdfs:label "Individual (instance) of Submission to Review"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition_IND
-occp:Transition_IND rdf:type occp:Transition ;
-                rdf:type <http://www.w3.org/2006/time#Instant> ;
-                rdfs:label "Individual (instance) of Transition"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition_IND
+  occp:Transition_IND rdf:type occp:Transition ;
+                  rdf:type <http://www.w3.org/2006/time#Instant> ;
+                  rdfs:label "Individual (instance) of Transition"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange_IND
-occp:UsageChange_IND rdf:type occp:UsageChange ;
-                rdf:type occp:PhaseD_Instant ;
-                rdfs:label "Individual (instance) of Usage Change"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange_IND
+  occp:UsageChange_IND rdf:type occp:UsageChange ;
+                  rdf:type occp:PhaseD_Instant ;
+                  rdfs:label "Individual (instance) of Usage Change"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageEnd_IND
-occp:UsageEnd_IND rdf:type occp:UsageEnd ;
-                rdf:type occp:PhaseD_Instant ;
-                rdfs:label "Individual (instance) of Usage End"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageEnd_IND
+  occp:UsageEnd_IND rdf:type occp:UsageEnd ;
+                  rdf:type occp:PhaseD_Instant ;
+                  rdfs:label "Individual (instance) of Usage End"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageStart_IND
-occp:UsageStart_IND rdf:type occp:UsageStart ;
-                rdf:type occp:PhaseD_Instant ;
-                rdfs:label "Individual (instance) of Usage Start"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageStart_IND
+  occp:UsageStart_IND rdf:type occp:UsageStart ;
+                  rdf:type occp:PhaseD_Instant ;
+                  rdfs:label "Individual (instance) of Usage Start"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyChange_IND
-occp:WarrantyChange_IND rdf:type occp:WarrantyChange ;
-                rdf:type occp:PhaseE_Instant ;
-                rdfs:label "Individual (instance) of Warranty Change"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyChange_IND
+  occp:WarrantyChange_IND rdf:type occp:WarrantyChange ;
+                  rdf:type occp:PhaseE_Instant ;
+                  rdfs:label "Individual (instance) of Warranty Change"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyEnd_IND
-occp:WarrantyEnd_IND rdf:type occp:WarrantyEnd ;
-                rdf:type occp:PhaseE_Instant ;
-                rdfs:label "Individual (instance) of Warranty End"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyEnd_IND
+  occp:WarrantyEnd_IND rdf:type occp:WarrantyEnd ;
+                  rdf:type occp:PhaseE_Instant ;
+                  rdfs:label "Individual (instance) of Warranty End"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyStart_IND
-occp:WarrantyStart_IND rdf:type occp:WarrantyStart ;
-                rdf:type occp:PhaseE_Instant ;
-                rdfs:label "Individual (instance) of Warranty Start"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyStart_IND
+  occp:WarrantyStart_IND rdf:type occp:WarrantyStart ;
+                  rdf:type occp:PhaseE_Instant ;
+                  rdfs:label "Individual (instance) of Warranty Start"@en .
 
-### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WeatherEvent_IND
-occp:WeatherEvent_IND rdf:type occp:WeatherEvent ;
-                rdf:type occp:PhaseH_Instant ;
-                rdfs:label "Individual (instance) of Weather Event"@en .
+  ### http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WeatherEvent_IND
+  occp:WeatherEvent_IND rdf:type occp:WeatherEvent ;
+                  rdf:type occp:PhaseH_Instant ;
+                  rdfs:label "Individual (instance) of Weather Event"@en .
 
 
+#################################################################
+#    Instants
+#################################################################
 
-### GENERAL SHAPE RULES
+  ### GENERAL SHAPE RULES
 
-  osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
-      sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
-      sh:datatype xsd:date ;
-      sh:message "The date must be in the format YYYY-MM-DD." ;
-      sh:severity sh:Violation .
+    osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
+        sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
+        sh:datatype xsd:date ;
+        sh:message "The date must be in the format YYYY-MM-DD." ;
+        sh:severity sh:Violation .
 
-### ORDER OF PHASES AND TRANSITIONS
+  ### ORDER OF PHASES AND TRANSITIONS
 
-  osh:ShapeOfPhaseA a sh:NodeShape ;              # Phase A (Planning)
-    sh:targetClass occp:PhaseA_Planning ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:or (                                       # Phase order options
-      [
-        sh:path time:before ;                     # Phase A usually starts and ends before Phase C
-        sh:class occp:PhaseC_Construction ;
-      ]
-      [
-        sh:path time:before ;                     # Phase A usually starts and ends before Phase B
-        sh:class occp:PhaseB_Review ;
-        sh:message "Wrong assignment of Phase A (Planning). Phase A usually starts and ends before Phases B (Review) and C (Construction)." ;
-        sh:severity sh:Warning ;
-      ] 
-    ) ;
-    sh:and (                                      # Phase order options
-      [
-        sh:path occp:beginsBefore ;               # Phase A must start before Phase B   
-        sh:class occp:PhaseB_Review ;
-      ]
-      [
-        sh:path occp:beginsBefore ;               # Phase A must start before Phase C  
-        sh:class occp:PhaseC_Construction ;
-        sh:message "Wrong assignment of Phase A (Planning). Phase A must start before Phases B (Review) and C (Construction)." ;
-        sh:severity sh:Violation ;
-      ]
-    ) ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # End date options
-      sh:path time:hasEnd ;                       # End date has to be set (hasEnd)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase A (Planning) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseB a sh:NodeShape ;                # Phase B (Review)
-    sh:targetClass occp:PhaseB_Review ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:or (                                       # Phase order options - Phase C (Construction)
-      [
-        sh:path time:before ;                     # Phase B usually starts and ends before Phase C
-        sh:class occp:PhaseC_Construction ;
-      ]
-      [
-        sh:path occp:beginsBefore ;               # Phase B must start before Phase C (Construction)   
-        sh:class occp:PhaseC_Construction ;
-        sh:message "Wrong assignment of Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
-        sh:severity sh:Violation ;
-      ]
+    osh:ShapeOfPhaseA a sh:NodeShape ;              # Phase A (Planning)
+      sh:targetClass occp:PhaseA_Planning ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:or (                                       # Phase order options
+        [
+          sh:path time:before ;                     # Phase A usually starts and ends before Phase C
+          sh:class occp:PhaseC_Construction ;
+        ]
+        [
+          sh:path time:before ;                     # Phase A usually starts and ends before Phase B
+          sh:class occp:PhaseB_Review ;
+          sh:message "Wrong assignment of Phase A (Planning). Phase A usually starts and ends before Phases B (Review) and C (Construction)." ;
+          sh:severity sh:Warning ;
+        ] 
       ) ;
-    sh:or (                                       # Phase order options - Transition A (Completion of Planning)
-      [     
-        sh:path time:before ;                     # Phase B should end before the Completion of Planning
-        sh:class occp:CompletionOfPlanning ;
-      ]
-      [
-        sh:path occp:endsWith ;                   # Phase B must end with the Completion of Planning
-        sh:class occp:CompletionOfPlanning ;
-        sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
-        sh:severity sh:Violation ;
-      ]
+      sh:and (                                      # Phase order options
+        [
+          sh:path occp:beginsBefore ;               # Phase A must start before Phase B   
+          sh:class occp:PhaseB_Review ;
+        ]
+        [
+          sh:path occp:beginsBefore ;               # Phase A must start before Phase C  
+          sh:class occp:PhaseC_Construction ;
+          sh:message "Wrong assignment of Phase A (Planning). Phase A must start before Phases B (Review) and C (Construction)." ;
+          sh:severity sh:Violation ;
+        ]
       ) ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
+        sh:severity sh:Violation ;
         ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase B (Review) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase B (Review) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
+        sh:severity sh:Violation ;
         ] ;
-      sh:message "Missing date (estimated or actual end) in Phase B (Review) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase B (Review) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
+      sh:property [                                 # End date options
+        sh:path time:hasEnd ;                       # End date has to be set (hasEnd)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase A (Planning) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-  osh:ShapeOfTransitionA a sh:NodeShape ;         # Transition A (Completion of Planning)
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD     
-    sh:targetClass occp:CompletionOfPlanning ;
-    sh:property [                                 # Transition order
-      sh:path time:before ;
-      sh:class occp:BeginOfTenderingProcess ;
-      sh:message "Wrong assignment of Transition A (Completion of Planning) or Transition B (Begin of Tendering Process). Transition A usually occurs before Transition B." ;
-      sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:minCount 1 ;
-      sh:maxCount 1 ;
-      sh:message "Missing or too many dates for Transition A (Completion of Planning) - max. & min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
+    osh:ShapeOfPhaseB a sh:NodeShape ;              # Phase B (Review)
+      sh:targetClass occp:PhaseB_Review ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:or (                                       # Phase order options - Phase C (Construction)
+        [
+          sh:path time:before ;                     # Phase B usually starts and ends before Phase C
+          sh:class occp:PhaseC_Construction ;
+        ]
+        [
+          sh:path occp:beginsBefore ;               # Phase B must start before Phase C (Construction)   
+          sh:class occp:PhaseC_Construction ;
+          sh:message "Wrong assignment of Phase B (Planning). Phase B usually starts and ends before Phase C (Construction). Phase B must start before Phase C." ;
+          sh:severity sh:Violation ;
+        ]
+        ) ;
+      sh:or (                                       # Phase order options - Transition A (Completion of Planning)
+        [     
+          sh:path time:before ;                     # Phase B should end before the Completion of Planning
+          sh:class occp:CompletionOfPlanning ;
+        ]
+        [
+          sh:path occp:endsWith ;                   # Phase B must end with the Completion of Planning
+          sh:class occp:CompletionOfPlanning ;
+          sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
+          sh:severity sh:Violation ;
+        ]
+        ) ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase B (Review) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase B (Review) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase B (Review) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase B (Review) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-  osh:ShapeOfTransitionB a sh:NodeShape ;         # Transition B (Begin Of Tendering Process)
-    sh:targetClass occp:BeginOfTenderingProcess ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
-    sh:property [                                 # Transition order
-      sh:path time:before ;                
-      sh:class occp:Submission ;
-      sh:message "Wrong assignment of Transition B (Begin of Tendering Process) or Transition C (Submission). Transition B usually occurs before Transition C." ;
-      sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:minCount 1 ;
-      sh:maxCount 1 ;
-      sh:message "Missing or too many dates for Transition B (Begin of Tendering Process) - max. & min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfTransitionC a sh:NodeShape ;         # Transition C (Submission)
-    sh:targetClass occp:Submission ;
-    sh:property [                                 # Transition order
-      sh:path time:before ;                
-      sh:class occp:PhaseC_Construction ;
-      sh:message "Wrong assignment of Transition C (Submission) or Phase C (Construction). Transition C usually occurs before Phase C." ;
-      sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:maxCount 1 ;
-      sh:minCount 1 ;      
-      sh:message "Missing or too many dates for Transition C (Submission) - max. & min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseC a sh:NodeShape ;              # Phase C (Construction)
-    sh:targetClass occp:PhaseC_Construction ;
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfPlanning ;
-        sh:message "Wrong assignment of Phase C (Construction) or Transition A (Completion of Planning). Phase C usually starts and ends after Transition A." ;
+    osh:ShapeOfTransitionA a sh:NodeShape ;         # Transition A (Completion of Planning)
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD     
+      sh:targetClass occp:CompletionOfPlanning ;
+      sh:property [                                 # Transition order
+        sh:path time:before ;
+        sh:class occp:BeginOfTenderingProcess ;
+        sh:message "Wrong assignment of Transition A (Completion of Planning) or Transition B (Begin of Tendering Process). Transition A usually occurs before Transition B." ;
         sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:Submission ;
-        sh:message "Wrong assignment of Phase C (Construction) or Transition C (Submission). Phase C usually starts and ends after Transition C" ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:or (                                       # Phase order options
-      [                      
+        ] ;
+      sh:property [                                 # Transition time (single point in time)
+        sh:path time:hasTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Missing or too many dates for Transition A (Completion of Planning) - max. & min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
+
+    osh:ShapeOfTransitionB a sh:NodeShape ;         # Transition B (Begin Of Tendering Process)
+      sh:targetClass occp:BeginOfTenderingProcess ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
+      sh:property [                                 # Transition order
         sh:path time:before ;                
-        sh:class occp:CompletionOfConstruction ;
-      ]
-      [
-        sh:path occp:endsWith ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment of Phase C (Construction) or Transition D (Completion of Construction). Phase C must end before or with Transition D." ;
-        sh:severity sh:Violation ;
-      ]
-    ) ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase C (Construction) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase C (Construction) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase C (Construction) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase C (Construction) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfTransitionD a sh:NodeShape ;         # Transition D (Completion Of Construction)
-    sh:targetClass occp:CompletionOfConstruction ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:minCount 1 ;
-      sh:maxCount 1 ;
-      sh:message "Missing or too many dates for Transition D (Completion of Construction) - max. & min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseD a sh:NodeShape ;              # Phase D (Usage)
-    sh:targetClass occp:PhaseD_Usage ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase D (Usage) or Transition D (Completion of Construction). Phase D usually starts and ends after Transition D." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Phase order
-        sh:path time:before ;
-        sh:class occp:PhaseM_Deconstruction ;
-        sh:message "Wrong assignment Phase D (Usage) or Phase M (Deconstruction). Phase D usually starts and ends before Phase M. We don't want anyone to get hurt, do we?" ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase D (Usage) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase D (Usage) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase D (Usage) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase D (Usage) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseE a sh:NodeShape ;              # Phase E (Warranty)
-    sh:targetClass occp:PhaseE_Warranty ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase E (Warranty) or Transition D (Completion of Construction). Phase E should start and end after Transition D." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Begin date
-      sh:path time:hasBeginning ;
-      sh:minCount 1 ;
-      sh:message "Missing date (Beginning) in Phase E (Warranty) - min. count = 1." ;
-      sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # End date
-      sh:path time:hasEnd ;
-      sh:minCount 1 ;
-      sh:message "Missing date (End) in Phase E (Warranty) - min. count = 1." ;
-      sh:severity sh:Warning ;
-      ] .
-
-  osh:ShapeOfPhaseF a sh:NodeShape ;              # Phase F (DesignLife)
-    sh:targetClass occp:PhaseF_DesignLife ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment of Phase F (Design Life) or Transition D (Completion of Construction). Phase F should start and end after Transition D." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:or (                                       # Phase order options - Phase D
-      [
-        sh:path occp:beginsBefore ;
-        sh:class occp:PhaseD_Usage ;
-      ]
-      [
-        sh:path occp:beginsWith ;
-        sh:class occp:PhaseD_Usage ;
-        sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D." ;
-        sh:severity sh:Warning ;
-      ]
-    ) ;
-    sh:property [
-      sh:path time:before ;
-      sh:class occp:PhaseM_Deconstruction ;
-      sh:message "Wrong assignment of Phase F (Design Life) or Phase M (Deconstruction). Phase F should begin and end before Phase M." ;
-      sh:severity sh:Warning ;
-    ] ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase F (Design Life) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase F (Design Life) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase F (Design Life) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase F (Design Life) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
-    sh:targetClass occp:PhaseG_Inspection ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase G (Inspection) or Transition D (Completion of Construction). Phase G should start and end after Transition D." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Phase order
-        sh:path time:before ;
-        sh:class occp:PhaseM_Deconstruction ;
-        sh:message "Wrong assignment Phase G (Inspection) or Phase M (Deconstruction). Phase G should begin and end before Phase M." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        ] ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        ] ;
-      ] .
-
-
-  osh:ShapeOfPhaseH a sh:NodeShape ;              # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occure during or after the construction's life cycle.
-    sh:targetClass occp:PhaseH_SpecialEvents ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:or (                                       # A special event is either happening on a single day or point in time or is a time interval.
-      [                   
-        sh:path time:hasTime ;                    # Event time (single point in time)
-      ] 
-      [
-        sh:and (                                  # Special event interval (beginning AND end)
-          [
-            sh:path time:hasBeginning ;
-          ]
-          [
-            sh:path time:hasEnd ;
-          ]
-        )
-      ]
-    ) .
-
-  osh:ShapeOfPhaseK a sh:NodeShape ;              # Phase K (Damage)
-    sh:targetClass occp:PhaseK_Damage ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Phase order
-        sh:path time:after ;
         sh:class occp:Submission ;
-        sh:message "Wrong assignment Phase K (Damage) or Transition C (Submission). Phase K should be after Transition C." ;
+        sh:message "Wrong assignment of Transition B (Begin of Tendering Process) or Transition C (Submission). Transition B usually occurs before Transition C." ;
         sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Phase order
-        sh:path time:before ;
-        sh:class occp:CompletionOfDeconstruction ;
-        sh:message "Wrong assignment Phase K (Damage) or Transition E (Completion of Deconstruction). Phase K should start and end before Transition E." ;
-        sh:severity sh:Warning ;
-      ] ;      
-    sh:property [                                 # Begin date 
-      sh:path time:hasBeginning ;
-      ] ;
-    sh:property [                                 # End date 
-      sh:path time:hasEnd ;
-      ] .
-
-  osh:ShapeOfPhaseL a sh:NodeShape ;              # Phase L (Repair)
-    sh:targetClass occp:PhaseL_Repair ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:Submission ;
-        sh:message "Wrong assignment Phase L (Repair) or Transition C (Submission). Phase L should start and end after Transition C." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Phase order
-        sh:path time:before ;
-        sh:class occp:PhaseM_Deconstruction ;
-        sh:message "Wrong assignment Phase L (Repair) or Phase M (Deconstruction). Phase L should start and end before Phase M." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
         ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase L (Repair) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase L (Repair) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
+      sh:property [                                 # Transition time (single point in time)
+        sh:path time:hasTime ;
         sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase L (Repair) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase L (Repair) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfPhaseM a sh:NodeShape ;              # Phase M (Deconstruction)
-    sh:targetClass occp:PhaseM_Deconstruction ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
-    sh:property [                                 # Phase order
-        sh:path time:after ;
-        sh:class occp:CompletionOfConstruction ;
-        sh:message "Wrong assignment Phase M (Deconstruction) or Transition D (Completion Of Construction). Phase M should start and end after Transition D." ;
-        sh:severity sh:Warning ;
-      ] ;
-    sh:property [                                 # Begin date options
-      sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
-      sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
-        sh:path (
-          occp:hasEstimatedBeginning
-          occp:hasActualBeginning
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual beginning) in Phase M (Deconstruction) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual Begin date - limitation
-      sh:path occp:hasActualBeginning ;
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual Beginning in Phase M (Deconstruction) - max. count = 1" ;
-      sh:severity sh:Violation ;
-      ] ;
-      sh:property [                               # End date options
-        sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
-        sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
-        sh:path (
-          occp:hasEstimatedEnd
-          occp:hasActualEnd
-        ) ;
-        sh:minCount 1 ;
-        ] ;
-      sh:message "Missing date (estimated or actual end) in Phase M (Deconstruction) - min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] ;
-    sh:property [                                 # Actual End date - limitation
-      sh:path occp:hasActualEnd ; 
-      sh:maxCount 1 ;
-      sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
-
-  osh:ShapeOfTransitionE a sh:NodeShape ;         # Transition E (Completion Of Deconstruction)
-    sh:targetClass occp:CompletionOfDeconstruction ;
-    sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
-    sh:or (                                       # Transition order options
-      [                       
-        sh:path time:after ;                
-        sh:class occp:PhaseM_Deconstruction ;     
-      ]
-      [                       
-        sh:path occp:endsWith ;                
-        sh:class occp:PhaseM_Deconstruction ;
-        sh:message "Wrong assignment of Transition E (Completion Of Deconstruction) or Phase M (Deconstruction). Transition E must occur after or end with Phase M." ;
+        sh:maxCount 1 ;
+        sh:message "Missing or too many dates for Transition B (Begin of Tendering Process) - max. & min. count = 1." ;
         sh:severity sh:Violation ;
-      ]
-    ) ;
-    sh:property [                                 # Transition time (single point in time)
-      sh:path time:hasTime ;
-      sh:minCount 1 ;
-      sh:maxCount 1 ;
-      sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max. & min. count = 1." ;
-      sh:severity sh:Violation ;
-      ] .
+        ] .
 
-### INSTANTS
+    osh:ShapeOfTransitionC a sh:NodeShape ;         # Transition C (Submission)
+      sh:targetClass occp:Submission ;
+      sh:property [                                 # Transition order
+        sh:path time:before ;                
+        sh:class occp:PhaseC_Construction ;
+        sh:message "Wrong assignment of Transition C (Submission) or Phase C (Construction). Transition C usually occurs before Phase C." ;
+        sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Transition time (single point in time)
+        sh:path time:hasTime ;
+        sh:maxCount 1 ;
+        sh:minCount 1 ;      
+        sh:message "Missing or too many dates for Transition C (Submission) - max. & min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-  ### PHASE A INSTANTS
-    # PHASE ASSIGNMENT
+    osh:ShapeOfPhaseC a sh:NodeShape ;              # Phase C (Construction)
+      sh:targetClass occp:PhaseC_Construction ;
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfPlanning ;
+          sh:message "Wrong assignment of Phase C (Construction) or Transition A (Completion of Planning). Phase C usually starts and ends after Transition A." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:Submission ;
+          sh:message "Wrong assignment of Phase C (Construction) or Transition C (Submission). Phase C usually starts and ends after Transition C" ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:or (                                       # Phase order options
+        [                      
+          sh:path time:before ;                
+          sh:class occp:CompletionOfConstruction ;
+        ]
+        [
+          sh:path occp:endsWith ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment of Phase C (Construction) or Transition D (Completion of Construction). Phase C must end before or with Transition D." ;
+          sh:severity sh:Violation ;
+        ]
+      ) ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase C (Construction) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase C (Construction) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase C (Construction) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase C (Construction) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-        osh:PhaseAInstantShape a sh:NodeShape ;
-            sh:targetClass occp:PhaseA_Instant ;
-            sh:property [
-                sh:path occp:hasPhase ;
-                sh:class occp:PhaseA_Planning ;
-                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase B A (Planning)." ;
-                sh:severity sh:Violation ;
-            ] .
+    osh:ShapeOfTransitionD a sh:NodeShape ;         # Transition D (Completion Of Construction)
+      sh:targetClass occp:CompletionOfConstruction ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Transition time (single point in time)
+        sh:path time:hasTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Missing or too many dates for Transition D (Completion of Construction) - max. & min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-    ### SHAPES PHASE A - PLANNING
+    osh:ShapeOfPhaseD a sh:NodeShape ;              # Phase D (Usage)
+      sh:targetClass occp:PhaseD_Usage ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment Phase D (Usage) or Transition D (Completion of Construction). Phase D usually starts and ends after Transition D." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Phase order
+          sh:path time:before ;
+          sh:class occp:PhaseM_Deconstruction ;
+          sh:message "Wrong assignment Phase D (Usage) or Phase M (Deconstruction). Phase D usually starts and ends before Phase M. We don't want anyone to get hurt, do we?" ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase D (Usage) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase D (Usage) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase D (Usage) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase D (Usage) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-        osh:BeginningOfPlanningShape a sh:NodeShape ;   #Instant Beginning Of Planning (Phase A - Planning)
-            sh:targetClass occp:BeginningOfPlanning ;   
-            sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-            sh:property [                               #Instant (Beginning Of Planning) starts a new Phase A (Planning).
-                sh:path occp:startsPhase ;              
-                sh:class occp:PhaseA_Planning ;
-            ] ;
-            sh:property [                               #Instant's chronological order within the Phase
-                sh:path time:before ;                   
-                sh:class occp:DataProcurement ;
-                sh:message "Wrong assignment (chronological order) of Beginning Of Planning or Data Procurement." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [                               #Instant has a date as time stamp.
-                sh:path time:hasTime ;                  
-                sh:minCount 1 ;
-                sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Beginning Of Planning or wrong format - max. & min. count = 1." ;
-                sh:severity sh:Violation ;
-            ] .
+    osh:ShapeOfPhaseE a sh:NodeShape ;              # Phase E (Warranty)
+      sh:targetClass occp:PhaseE_Warranty ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment Phase E (Warranty) or Transition D (Completion of Construction). Phase E should start and end after Transition D." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Begin date
+        sh:path time:hasBeginning ;
+        sh:minCount 1 ;
+        sh:message "Missing date (Beginning) in Phase E (Warranty) - min. count = 1." ;
+        sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # End date
+        sh:path time:hasEnd ;
+        sh:minCount 1 ;
+        sh:message "Missing date (End) in Phase E (Warranty) - min. count = 1." ;
+        sh:severity sh:Warning ;
+        ] .
 
-        osh:DataProcurementShape a sh:NodeShape ;       #Instant Data Procurement (Phase A - Planning)
-            sh:targetClass occp:DataProcurement ;       
-            sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-            sh:property [                               #Instant's chronological order within the Phase
-                sh:path time:after ;                    
-                sh:class occp:BeginningOfPlanning ;
-                sh:message "Wrong assignment (chronological order) of Data Procurement or Beginning Of Planning." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [                               #Instant's chronological order within the Phase
-                sh:path time:before ;                   
-                sh:class occp:SubmissionToReview ;
-                sh:message "Wrong assignment (chronological order) of Data Procurement or Submission To Review." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [                               #Instant has a date as time stamp.
-                sh:path time:hasTime ;      
-                sh:minCount 1 ;            
-                sh:message "Missing date for Data Procurement - min. count = 1." ;
-                sh:severity sh:Violation ;
-            ] .
+    osh:ShapeOfPhaseF a sh:NodeShape ;              # Phase F (DesignLife)
+      sh:targetClass occp:PhaseF_DesignLife ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment of Phase F (Design Life) or Transition D (Completion of Construction). Phase F should start and end after Transition D." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:or (                                       # Phase order options - Phase D
+        [
+          sh:path occp:beginsBefore ;
+          sh:class occp:PhaseD_Usage ;
+        ]
+        [
+          sh:path occp:beginsWith ;
+          sh:class occp:PhaseD_Usage ;
+          sh:message "Wrong assignment of Phase F (Design Life) or Phase D (Usage). Phase F should begin before or with Phase D." ;
+          sh:severity sh:Warning ;
+        ]
+      ) ;
+      sh:property [
+        sh:path time:before ;
+        sh:class occp:PhaseM_Deconstruction ;
+        sh:message "Wrong assignment of Phase F (Design Life) or Phase M (Deconstruction). Phase F should begin and end before Phase M." ;
+        sh:severity sh:Warning ;
+      ] ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase F (Design Life) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase F (Design Life) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase F (Design Life) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase F (Design Life) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
 
-        osh:Edit_BSTRShape a sh:NodeShape ;             #Instant Edit Before Submission To Review (Phase A - Planning)
-            sh:targetClass occp:Edit_BSTR ; 
-            sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-            sh:property [                               #Instant's chronological order within the Phase
-                sh:path time:after ;                    
-                sh:class occp:BeginningOfPlanning ;
-                sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Beginning Of Planning." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [                               #Instant's chronological order within the Phase
-                sh:path time:before ;                   
-                sh:class occp:SubmissionToReview ;
-                sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Submission To Review." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [                               #Instant has a date as time stamp.
-                sh:path time:hasTime ;                  
-                sh:minCount 1 ;
-                sh:message "Missing date for Edit Before Submission To Review - min. count = 1." ;
-                sh:severity sh:Violation ;
-            ] .
+    osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
+      sh:targetClass occp:PhaseG_Inspection ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment Phase G (Inspection) or Transition D (Completion of Construction). Phase G should start and end after Transition D." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Phase order
+          sh:path time:before ;
+          sh:class occp:PhaseM_Deconstruction ;
+          sh:message "Wrong assignment Phase G (Inspection) or Phase M (Deconstruction). Phase G should begin and end before Phase M." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          ] ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          ] ;
+        ] .
 
-        osh:SubmissionToReviewShape a sh:NodeShape ;    #Instant Submission To Review (Phase A - Planning)
-            sh:targetClass occp:SubmissionToReview ;
-            sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-            sh:or (                                     #Instant's chronological order within the Phase - 2 Options
-                [
-                    sh:path time:after ;                    
-                    sh:class occp:Edit_BSTR ;
-                ]
-                [
-                    sh:path time:after ;                    
-                    sh:class occp:Edit_ASTR ;
-                    sh:message "Wrong assignment (chronological order) of Submission To Review or Edit Before/After Submission To Review." ;
-                    sh:severity sh:Violation ;
-                ]
-            ) ;
-            sh:property [
-                sh:path occp:startsCycle ;
-                sh:class occp:CycleA_PlanningReview ;
-            ] ;
-            sh:property [                               #Instant has a date as time stamp.
-                sh:path time:hasTime ;              
-                sh:minCount 1 ;
-                sh:message "Missing date for Submission To Review - min. count = 1." ;
-                sh:severity sh:Violation ;
-            ] .
 
-        osh:Edit_ASTRShape a sh:NodeShape ;             #Instant Edit After Submission To Review (Phase A - Planning)
+    osh:ShapeOfPhaseH a sh:NodeShape ;              # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occure during or after the construction's life cycle.
+      sh:targetClass occp:PhaseH_SpecialEvents ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:or (                                       # A special event is either happening on a single day or point in time or is a time interval.
+        [                   
+          sh:path time:hasTime ;                    # Event time (single point in time)
+        ] 
+        [
+          sh:and (                                  # Special event interval (beginning AND end)
+            [
+              sh:path time:hasBeginning ;
+            ]
+            [
+              sh:path time:hasEnd ;
+            ]
+          )
+        ]
+      ) .
+
+    osh:ShapeOfPhaseK a sh:NodeShape ;              # Phase K (Damage)
+      sh:targetClass occp:PhaseK_Damage ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:Submission ;
+          sh:message "Wrong assignment Phase K (Damage) or Transition C (Submission). Phase K should be after Transition C." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Phase order
+          sh:path time:before ;
+          sh:class occp:CompletionOfDeconstruction ;
+          sh:message "Wrong assignment Phase K (Damage) or Transition E (Completion of Deconstruction). Phase K should start and end before Transition E." ;
+          sh:severity sh:Warning ;
+        ] ;      
+      sh:property [                                 # Begin date 
+        sh:path time:hasBeginning ;
+        ] ;
+      sh:property [                                 # End date 
+        sh:path time:hasEnd ;
+        ] .
+
+    osh:ShapeOfPhaseL a sh:NodeShape ;              # Phase L (Repair)
+      sh:targetClass occp:PhaseL_Repair ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:Submission ;
+          sh:message "Wrong assignment Phase L (Repair) or Transition C (Submission). Phase L should start and end after Transition C." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Phase order
+          sh:path time:before ;
+          sh:class occp:PhaseM_Deconstruction ;
+          sh:message "Wrong assignment Phase L (Repair) or Phase M (Deconstruction). Phase L should start and end before Phase M." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase L (Repair) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase L (Repair) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase L (Repair) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase L (Repair) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
+
+    osh:ShapeOfPhaseM a sh:NodeShape ;              # Phase M (Deconstruction)
+      sh:targetClass occp:PhaseM_Deconstruction ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
+      sh:property [                                 # Phase order
+          sh:path time:after ;
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Wrong assignment Phase M (Deconstruction) or Transition D (Completion Of Construction). Phase M should start and end after Transition D." ;
+          sh:severity sh:Warning ;
+        ] ;
+      sh:property [                                 # Begin date options
+        sh:path time:hasBeginning ;                 # Begin date has to be set (hasBeginning)
+        sh:qualifiedValueShape [                    # The following object properties are valid options to set begin date
+          sh:path (
+            occp:hasEstimatedBeginning
+            occp:hasActualBeginning
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual beginning) in Phase M (Deconstruction) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual Begin date - limitation
+        sh:path occp:hasActualBeginning ;
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual Beginning in Phase M (Deconstruction) - max. count = 1" ;
+        sh:severity sh:Violation ;
+        ] ;
+        sh:property [                               # End date options
+          sh:path time:hasEnd ;                     # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                  # The following object properties are valid options to set end date
+          sh:path (
+            occp:hasEstimatedEnd
+            occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+        sh:message "Missing date (estimated or actual end) in Phase M (Deconstruction) - min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] ;
+      sh:property [                                 # Actual End date - limitation
+        sh:path occp:hasActualEnd ; 
+        sh:maxCount 1 ;
+        sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
+
+    osh:ShapeOfTransitionE a sh:NodeShape ;         # Transition E (Completion Of Deconstruction)
+      sh:targetClass occp:CompletionOfDeconstruction ;
+      sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD       
+      sh:or (                                       # Transition order options
+        [                       
+          sh:path time:after ;                
+          sh:class occp:PhaseM_Deconstruction ;     
+        ]
+        [                       
+          sh:path occp:endsWith ;                
+          sh:class occp:PhaseM_Deconstruction ;
+          sh:message "Wrong assignment of Transition E (Completion Of Deconstruction) or Phase M (Deconstruction). Transition E must occur after or end with Phase M." ;
+          sh:severity sh:Violation ;
+        ]
+      ) ;
+      sh:property [                                 # Transition time (single point in time)
+        sh:path time:hasTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max. & min. count = 1." ;
+        sh:severity sh:Violation ;
+        ] .
+
+  ### INSTANTS
+
+    ### PHASE A INSTANTS
+      # PHASE ASSIGNMENT
+
+          osh:PhaseAInstantShape a sh:NodeShape ;
+              sh:targetClass occp:PhaseA_Instant ;
+              sh:property [
+                  sh:path occp:hasPhase ;
+                  sh:class occp:PhaseA_Planning ;
+                  sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase B A (Planning)." ;
+                  sh:severity sh:Violation ;
+              ] .
+
+      ### INSTANT SHAPES PHASE A - PLANNING
+
+          osh:BeginningOfPlanningShape a sh:NodeShape ;   #Instant Beginning Of Planning (Phase A - Planning)
+              sh:targetClass occp:BeginningOfPlanning ;   
+              sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+              sh:property [                               #Instant (Beginning Of Planning) starts a new Phase A (Planning).
+                  sh:path occp:startsPhase ;              
+                  sh:class occp:PhaseA_Planning ;
+              ] ;
+              sh:property [                               #Instant's chronological order within the Phase
+                  sh:path time:before ;                   
+                  sh:class occp:DataProcurement ;
+                  sh:message "Wrong assignment (chronological order) of Beginning Of Planning or Data Procurement." ;
+                  sh:severity sh:Violation ;
+              ] ;
+              sh:property [                               #Instant has a date as time stamp.
+                  sh:path time:hasTime ;                  
+                  sh:minCount 1 ;
+                  sh:maxCount 1 ;
+                  sh:message "Missing or too many dates for Beginning Of Planning or wrong format - max. & min. count = 1." ;
+                  sh:severity sh:Violation ;
+              ] .
+
+          osh:DataProcurementShape a sh:NodeShape ;       #Instant Data Procurement (Phase A - Planning)
+              sh:targetClass occp:DataProcurement ;       
+              sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+              sh:property [                               #Instant's chronological order within the Phase
+                  sh:path time:after ;                    
+                  sh:class occp:BeginningOfPlanning ;
+                  sh:message "Wrong assignment (chronological order) of Data Procurement or Beginning Of Planning." ;
+                  sh:severity sh:Violation ;
+              ] ;
+              sh:property [                               #Instant's chronological order within the Phase
+                  sh:path time:before ;                   
+                  sh:class occp:SubmissionToReview ;
+                  sh:message "Wrong assignment (chronological order) of Data Procurement or Submission To Review." ;
+                  sh:severity sh:Violation ;
+              ] ;
+              sh:property [                               #Instant has a date as time stamp.
+                  sh:path time:hasTime ;      
+                  sh:minCount 1 ;            
+                  sh:message "Missing date for Data Procurement - min. count = 1." ;
+                  sh:severity sh:Violation ;
+              ] .
+
+          osh:Edit_BSTRShape a sh:NodeShape ;             #Instant Edit Before Submission To Review (Phase A - Planning)
+              sh:targetClass occp:Edit_BSTR ; 
+              sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+              sh:property [                               #Instant's chronological order within the Phase
+                  sh:path time:after ;                    
+                  sh:class occp:BeginningOfPlanning ;
+                  sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Beginning Of Planning." ;
+                  sh:severity sh:Violation ;
+              ] ;
+              sh:property [                               #Instant's chronological order within the Phase
+                  sh:path time:before ;                   
+                  sh:class occp:SubmissionToReview ;
+                  sh:message "Wrong assignment (chronological order) of Edit Before Submission To Review or Submission To Review." ;
+                  sh:severity sh:Violation ;
+              ] ;
+              sh:property [                               #Instant has a date as time stamp.
+                  sh:path time:hasTime ;                  
+                  sh:minCount 1 ;
+                  sh:message "Missing date for Edit Before Submission To Review - min. count = 1." ;
+                  sh:severity sh:Violation ;
+              ] .
+
+          osh:SubmissionToReviewShape a sh:NodeShape ;    #Instant Submission To Review (Phase A - Planning)
+              sh:targetClass occp:SubmissionToReview ;
+              sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+              sh:or (                                     #Instant's chronological order within the Phase - 2 Options
+                  [
+                      sh:path time:after ;                    
+                      sh:class occp:Edit_BSTR ;
+                  ]
+                  [
+                      sh:path time:after ;                    
+                      sh:class occp:Edit_ASTR ;
+                      sh:message "Wrong assignment (chronological order) of Submission To Review or Edit Before/After Submission To Review." ;
+                      sh:severity sh:Violation ;
+                  ]
+              ) ;
+              sh:property [
+                  sh:path occp:startsCycle ;
+                  sh:class occp:CycleA_PlanningReview ;
+              ] ;
+              sh:property [                               #Instant has a date as time stamp.
+                  sh:path time:hasTime ;              
+                  sh:minCount 1 ;
+                  sh:message "Missing date for Submission To Review - min. count = 1." ;
+                  sh:severity sh:Violation ;
+              ] .
+
+          osh:Edit_ASTRShape a sh:NodeShape ;             #Instant Edit After Submission To Review (Phase A - Planning)
             sh:targetClass occp:Edit_ASTR ;
             sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
             sh:property [
                 sh:path time:after ;
                 sh:qualifiedValueShape [
-                    sh:class occp:SubmissionToReview ;
+                    sh:path (
+                        sh:class occp:SubmissionToReview 
+                        sh:class occp:ReviewRejection
+                    ) ;
                 ] ;
                 sh:qualifiedMinCount 1 ;
                 sh:message "Wrong assignment (Submission To Review/Edit After Submission To Review)." ;
                 sh:severity sh:Violation ;
             ] ;
             sh:property [
-                sh:path time:after ;
-                sh:qualifiedValueShape [
-                    sh:class occp:ReviewRejection ;
-                ] ;
-                sh:qualifiedMinCount 1 ;
-                sh:message "Wrong assignment (Edit After Submission To Review/Review Rejection)." ;
-                sh:severity sh:Violation ;
-            ] ;
-            sh:property [
                 sh:path time:hasTime ;              #Instant needs a date as time stamp.
             ] .
 
-    ### CYCLE SHAPE
+      ### CYCLE SHAPE
 
-    osh:CycleAShape a sh:NodeShape ;
-        sh:targetClass occp:CycleA_PlanningReview ;
-        sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-        sh:property [                         # Begin date - either estimated or actual or both, but min. 1
-            sh:path time:hasBeginning ;
-            sh:minCount 1 ;
-            sh:message "Missing date (estimated or actual beginning) of Cycle A (Planning and Review) - min. count = 1." ;
-            sh:severity sh:Warning ;
-        ] ;
-        sh:or(
-            [
-                sh:path occp:hasEstimatedBeginning ;    # Estimated Begin date
-            ]
-            [
-                sh:path occp:hasActualBeginning ;       # Actual Begin date
+      osh:CycleAShape a sh:NodeShape ;
+            sh:targetClass occp:CycleA_PlanningReview ;
+            sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+            sh:property [                               # Actual Begin date - limitation
+                sh:path occp:hasActualBeginning ;
                 sh:maxCount 1 ;
-                sh:message "Too many dates for actual Beginning of Cycle A (Planning and Review) - max. count = 1." ;
-                sh:severity sh:Violation ;   
-            ]
-        ) ;
-        sh:property [                           # End date - either estimated or actual or both
-            sh:path time:hasEnd ;
-        ] ;
-        sh:or (
-            [
-                sh:path occp:hasEstimatedEnd ;  # Estimated End date
-            ]
-            [
-                sh:path occp:hasActualEnd ;
-                sh:maxCount 1 ;
-                sh:message "Too many dates for actual End of Cycle A (Planning and Review) - max. count = 1." ;
+                sh:message "Too many dates for actual Beginning for Cycle A (Planning and Review) - max. count = 1" ;
                 sh:severity sh:Violation ;
-            ]
-        ) .
-  
+            ] ;
+            sh:property [                               # End date options
+                sh:path time:hasEnd ;                   # End date has to be set (hasEnd)
+                sh:qualifiedValueShape [                # The following object properties are valid options to set end date
+                sh:path (
+                    occp:hasEstimatedEnd
+                    occp:hasActualEnd
+                ) ;
+                sh:minCount 1 ;
+                ] ;
+                sh:message "Missing date (estimated or actual end) for Cycle A (Planning and Review) - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Actual End date - limitation
+                sh:path occp:hasActualEnd ; 
+                sh:maxCount 1 ;
+                sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+    
