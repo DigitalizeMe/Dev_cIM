@@ -10,10 +10,10 @@
 
 EX:PhaseA_Planning a occp:PhaseA_Planning ; 
     occp:hasActualBeginning "2022-01-01"^^xsd:date ;
-    occp:hasEstimatedEnd "2022-12-01"^^xsd:date .
+    occp:hasEstimatedEnd "2021-12-01"^^xsd:date .
 
 EX:Milestone1 a occp:BeginningOfPlanning ;
-    time:hasTime "2022-01-01"^^xsd:date .
+    time:hasTime "2022-01-20"^^xsd:date .
 
 EX:Milestone2 a occp:DataProcurement ;
     time:after EX:Milestone1;

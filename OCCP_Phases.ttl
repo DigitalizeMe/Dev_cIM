@@ -81,7 +81,7 @@
       sh:severity sh:Violation ;
       ] .
 
-  osh:ShapeOfPhaseB a sh:NodeShape ;                # Phase B (Review)
+  osh:ShapeOfPhaseB a sh:NodeShape ;              # Phase B (Review)
     sh:targetClass occp:PhaseB_Review ;
     sh:property osh:GeneralDatePropertyShape ;    # Date format YYYY-MM-DD 
     sh:or (                                       # Phase order options - Phase C (Construction)
