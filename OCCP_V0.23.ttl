@@ -1608,6 +1608,7 @@
                 sh:path time:hasTime ;              #Instant needs a date as time stamp.
             ] .
 
+
       ### CYCLE SHAPE
 
       osh:CycleAShape a sh:NodeShape ;
