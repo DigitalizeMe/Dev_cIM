@@ -382,6 +382,20 @@
                 sh:message "Wrong assignment (chronological order) of Construction Acceptance or Usage Start." ;
                 sh:severity sh:Warning ;
             ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path time:after ;
+                    sh:class occp:ConstructionCompletion ;
+                    sh:message "Wrong assignment (chronological order) of Construction Acceptance or Construction Completion." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:after ;
+                    sh:class occp:DefectElimCompletion ;
+                    sh:message "Wrong assignment (chronological order) of Construction Acceptance or Defect Elimination Completion." ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;
                 sh:minCount 1 ;
