@@ -46,29 +46,22 @@
                 sh:message "Wrong assignment (chronological order) of Beginning Of Planning or Data Procurement." ;
                 sh:severity sh:Violation ;
             ] ;
-            sh:property [                              # Instant has a date as time stamp.
-                sh:path time:hasTime ;                 # Time stamp has to be set 
-                sh:qualifiedValueShape [                    # The following object properties are valid options to set sime stamp
+            sh:property [                               # Instant has a date as time stamp.
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
                     sh:path (
                     occp:hasEstimatedTime
-                    occp:hasTime
+                    occp:hasActualTime
                     ) ;
                     sh:minCount 1 ;
                     ] ;
-                sh:message "Missing time stamp (estimated or actual time) for Beginning Of Planning - min. count = 1." ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Beginning of Planning - min. count = 1." ;
                 sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                 # Actual Begin date - limitation
-                sh:path occp:hasActualBeginning ;
+            sh:property [                               # Actual Time stamp - limitation
+                sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
-                sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
-                sh:severity sh:Violation ;
-                ] ;
-            sh:property [                               # Instant has a date as time stamp.
-                sh:path time:hasTime ;                  
-                sh:minCount 1 ;
-                sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Beginning Of Planning or wrong format - max. & min. count = 1." ;
+                sh:message "Too many dates for Actual Time stamp for Beginning of Planning - max. count = 1" ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -132,9 +125,15 @@
                 ]
             ) ;
             sh:property [                               # Instant has a date as time stamp.
-                sh:path time:hasTime ;              
-                sh:minCount 1 ;
-                sh:message "Missing date for Submission To Review - min. count = 1." ;
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Submission to Review - min. count = 1." ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -233,11 +232,16 @@
                 sh:message "Wrong assignment (chronological order) of Review Start or Submission to Review." ;
                 sh:severity sh:Violation ;
             ] ;
-            sh:property [
-                sh:path time:hasTime ;
-                sh:minCount 1 ;
-                sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Review Start - max. & min. count = 1." ;
+            sh:property [                               # Instant has a date as time stamp.
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Review Start - min. count = 1." ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -260,9 +264,8 @@
             ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;
-                sh:minCount 1 ;
                 sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Review Approval - max. & min. count = 1." ;
+                sh:message "Too many dates for Review Approval - max. count = 1." ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -310,11 +313,22 @@
                 sh:message "Wrong assignment (chronological order) of Construction Start or Construction Completion." ;
                 sh:severity sh:Violation ;
             ] ;
-            sh:property [                                # Instant has a date as time stamp.
-                sh:path time:hasTime ;
-                sh:minCount 1 ;
+            sh:property [                               # Instant has a date as time stamp.
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Construction Start - min. count = 1." ;
+                sh:severity sh:Violation ;
+                ] ;
+            sh:property [                               # Actual Time stamp - limitation
+                sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Construction Start - max. & min. count = 1." ;
+                sh:message "Too many dates for Actual Time stamp for Construction Start - max. count = 1" ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -342,10 +356,21 @@
                 ]
             ) ;
             sh:property [                               # Instant has a date as time stamp.
-                sh:path time:hasTime ;
-                sh:minCount 1 ;
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Construction Completion - min. count = 1." ;
+                sh:severity sh:Violation ;
+                ] ;
+            sh:property [                               # Actual Time stamp - limitation
+                sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Construction Completion - max. & min. count = 1." ;
+                sh:message "Too many dates for Actual Time stamp for Construction Completion - max. count = 1" ;
                 sh:severity sh:Violation ;
             ] .
 
@@ -365,7 +390,16 @@
                 sh:severity sh:Violation ;
             ] ;            
             sh:property [                               # Instant has a date as time stamp.
-                sh:path time:hasTime ;
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Start - min. count = 1." ;
+                sh:severity sh:Violation ;
             ] .
 
         osh:DefectElimCompletionShape a sh:NodeShape ;        # Instant Defect Elimination Completion (Phase C - Construction)
@@ -384,7 +418,16 @@
                 sh:severity sh:Violation ;
             ] ;            
             sh:property [                               # Instant has a date as time stamp.
-                sh:path time:hasTime ;
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Completion - min. count = 1." ;
+                sh:severity sh:Violation ;
             ] .
 
         osh:ConstructionAcceptanceShape a sh:NodeShape ;      # Instant Construction Acceptance (Phase C - Construction)
@@ -414,10 +457,21 @@
                     sh:severity sh:Violation ;
                 ]
             ) ;
-            sh:property [                                # Instant has a date as time stamp.
-                sh:path time:hasTime ;
-                sh:minCount 1 ;
+            sh:property [                               # Instant has a date as time stamp.
+                sh:path time:hasTime ;                  # Time stamp has to be set 
+                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Construction Acceptance - min. count = 1." ;
+                sh:severity sh:Violation ;
+                ] ;
+            sh:property [                               # Actual Time stamp - limitation
+                sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
-                sh:message "Missing or too many dates for Construction Start - max. & min. count = 1." ;
+                sh:message "Too many dates for Actual Time stamp for Construction Acceptance - max. count = 1" ;
                 sh:severity sh:Violation ;
             ] .
