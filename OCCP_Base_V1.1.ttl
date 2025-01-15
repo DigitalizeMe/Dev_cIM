@@ -53,11 +53,15 @@
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en .
 
+   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualTime
+  occp:hasActualTime rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;       
+              rdfs:comment "The object property \"hasActualTime\" is used to mark the actual points in time of an Instant."@en .
+ 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
   occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;       
-              rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant or Phase."@en .
-
+              rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant."@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
   occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
