@@ -46,6 +46,24 @@
                 sh:message "Wrong assignment (chronological order) of Beginning Of Planning or Data Procurement." ;
                 sh:severity sh:Violation ;
             ] ;
+            sh:property [                              # Instant has a date as time stamp.
+                sh:path time:hasTime ;                 # Time stamp has to be set 
+                sh:qualifiedValueShape [                    # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (estimated or actual time) for Beginning Of Planning - min. count = 1." ;
+                sh:severity sh:Violation ;
+                ] ;
+                sh:property [                                 # Actual Begin date - limitation
+                sh:path occp:hasActualBeginning ;
+                sh:maxCount 1 ;
+                sh:message "Too many dates for actual Beginning in Phase A (Planning) - max. count = 1" ;
+                sh:severity sh:Violation ;
+                ] ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  
                 sh:minCount 1 ;
