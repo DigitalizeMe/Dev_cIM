@@ -57,7 +57,7 @@
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Beginning of Planning - min. count = 1." ;
                 sh:severity sh:Violation ;
-                ] ;
+            ] ;
             sh:property [                               # Actual Time stamp - limitation
                 sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
@@ -324,7 +324,7 @@
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Construction Start - min. count = 1." ;
                 sh:severity sh:Violation ;
-                ] ;
+            ] ;
             sh:property [                               # Actual Time stamp - limitation
                 sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
@@ -366,7 +366,7 @@
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Construction Completion - min. count = 1." ;
                 sh:severity sh:Violation ;
-                ] ;
+            ] ;
             sh:property [                               # Actual Time stamp - limitation
                 sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
@@ -468,10 +468,224 @@
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Construction Acceptance - min. count = 1." ;
                 sh:severity sh:Violation ;
-                ] ;
+            ] ;
             sh:property [                               # Actual Time stamp - limitation
                 sh:path occp:hasActualTime ;
                 sh:maxCount 1 ;
                 sh:message "Too many dates for Actual Time stamp for Construction Acceptance - max. count = 1" ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE D INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseDInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseD_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseD_Usage ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase D (Usage)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE D - USAGE
+        osh:UsageChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase D - Usage)
+            sh:targetClass occp:UsageChange ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Usage Phase is ended with a Change of Usage. 
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseD_Usage ;
+            ] ;
+            sh:property [                                # A new Usage Phase is started with a Change of Usage.
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseD_Usage ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Wrong assignment (chronological order) of Change of Usage or Construction Acceptance." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path time:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Wrong assignment (chronological order) of Change of Usage or Usage Start." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Usage Change." ;
+                sh:severity sh:Warning ;
+            ] .
+
+        osh:UsageEndShape a sh:NodeShape ;      # Instant Usage End (Phase D - Usage)
+            sh:targetClass occp:UsageEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Usage Phase is ended with Usage End
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseD_Usage ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path time:after ;
+                    sh:class occp:UsageStart ;
+                    sh:message "Wrong assignment (chronological order) of Usage End or Usage Start." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:after ;
+                    sh:class occp:UsageChange ;
+                    sh:message "Wrong assignment (chronological order) of Usage End or Usage Change." ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Usage End - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:UsageStartShape a sh:NodeShape ;      # Instant Usage Start (Phase D - Usage)
+            sh:targetClass occp:UsageEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # A new Usage Phase is started with Usage Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseD_Usage ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                    sh:path time:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "Wrong assignment (chronological order) of Usage Start or Construction Acceptance." ;
+                    sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Usage Start - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE E INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseEInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseE_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseE_Warranty ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase E (Warranty)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE E - WARRANTY
+        osh:WarrantyChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase E - Warranty)
+            sh:targetClass occp:WarrantyChange ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Warranty Phase is ended with a Change of Warranty. 
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+            ] ;
+            sh:property [                                # A new Warranty Phase is started with a Change of Warranty.
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseE_Warranty ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Wrong assignment (chronological order) of Change of Warranty or Construction Acceptance." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path time:after ;
+                sh:class occp:WarrantyStart ;
+                sh:message "Wrong assignment (chronological order) of Change of Warranty or Warranty Start." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Change." ;
+                sh:severity sh:Warning ;
+            ] .
+
+        osh:WarrantyEndShape a sh:NodeShape ;            # Instant Warranty End (Phase E - Warranty)
+            sh:targetClass occp:WarrantyEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Warranty Phase is ended with Warranty End
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path time:after ;
+                    sh:class occp:WarrantyStart ;
+                    sh:message "Wrong assignment (chronological order) of Warranty End or Warranty Start." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:after ;
+                    sh:class occp:WarrantyChange ;
+                    sh:message "Wrong assignment (chronological order) of Warranty End or Warranty Change." ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Warranty End - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:WarrantyStartShape a sh:NodeShape ;      # Instant Warranty Start (Phase E - Warranty)
+            sh:targetClass occp:WarrantyEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # A new Warranty Phase is started with Warranty Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                    sh:path time:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "Wrong assignment (chronological order) of Warranty Start or Construction Acceptance." ;
+                    sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Start - min. count = 1." ;
                 sh:severity sh:Violation ;
             ] .
