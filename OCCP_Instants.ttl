@@ -664,7 +664,7 @@
                 sh:severity sh:Violation ;
             ] .
 
-        osh:WarrantyStartShape a sh:NodeShape ;      # Instant Warranty Start (Phase E - Warranty)
+        osh:WarrantyStartShape a sh:NodeShape ;          # Instant Warranty Start (Phase E - Warranty)
             sh:targetClass occp:WarrantyEnd ;
             sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
             sh:property [                                # A new Warranty Phase is started with Warranty Start
@@ -687,5 +687,192 @@
                     sh:minCount 1 ;
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Start - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE F INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseFInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseF_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase F (Design Life)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE F - DESIGN LIFE
+        osh:DesignLifeChangeShape a sh:NodeShape ;       # Instant Design Life Change (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeChange ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Design Life Phase is ended with a Change of Design Life. 
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseF_DesignLife ;
+            ] ;
+            sh:property [                                # A new Design Life Phase is started with a Change of Design Life.
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Wrong assignment (chronological order) of Change of Design Life or Construction Acceptance." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path time:after ;
+                sh:class occp:DesignLifeStart ;
+                sh:message "Wrong assignment (chronological order) of Change of Design Life or Design Life Start." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Change." ;
+                sh:severity sh:Warning ;
+            ] .
+
+        osh:DesignLifeEndShape a sh:NodeShape ;          # Instant Design Life End (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # The current Design Life Phase is ended with Design Life End
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseF_DesignLife ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path time:after ;
+                    sh:class occp:DesignLifeStart ;
+                    sh:message "Wrong assignment (chronological order) of Design Life End or Design Life Start." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:after ;
+                    sh:class occp:DesignLifeChange ;
+                    sh:message "Wrong assignment (chronological order) of Design Life End or Design Life Change." ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Design Life End - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeEnd ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # A new Design Life Phase is started with Design Life Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseF_DesignLife ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                    sh:path time:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "Wrong assignment (chronological order) of Design Life Start or Construction Acceptance." ;
+                    sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    sh:minCount 1 ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Start - min. count = 1." ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE G INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseGInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseG_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseG_Inspection ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase G (Inspection)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE G - INSPECTION
+        osh:InspectionExecutionShape a sh:NodeShape ;    # Instant Inspection Execution (Phase G - Inspection)
+            sh:targetClass occp:InspectionExecution ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Wrong assignment (chronological order) of Inspection Execution or Construction Acceptance." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order - 2 Options
+                [
+                    sh:path time:after ;
+                    sh:class occp:UsageStart ;
+                    sh:message "Wrong assignment (chronological order) of Inspection Execution or Usage Start." ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path time:after ;
+                    sh:class occp:UsageChange ;
+                    sh:message "Wrong assignment (chronological order) of Inspection Execution or Usage Change." ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [                                # Instant's chronological order within phase
+                sh:path time:before ;
+                sh:class occp:NextRegularInspection ;
+                sh:message "Wrong assignment (chronological order) of Inspection Execution or Next Regular Inspection." ;
+                sh:severity sh:Warning ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Inspection Execution." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:IrregularInspectionShape a sh:NodeShape ;    # Instant Irregular Inspection (Phase G - Inspection)
+            sh:targetClass occp:IrregularInspection ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Wrong assignment (chronological order) of Irregular Inspection or Usage Start." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path time:before ;
+                sh:class occp:NextRegularInspection ;
+                sh:message "Wrong assignment (chronological order) of Irregular Inspection or Next Regular Inspection." ;
+                sh:severity sh:Violation ;
+             ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Irregular Inspection." ;
                 sh:severity sh:Violation ;
             ] .
