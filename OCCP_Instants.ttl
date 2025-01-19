@@ -48,7 +48,7 @@
             ] ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -126,7 +126,7 @@
             ) ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -234,7 +234,7 @@
             ] ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -315,7 +315,7 @@
             ] ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -357,7 +357,7 @@
             ) ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -391,7 +391,7 @@
             ] ;            
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -419,7 +419,7 @@
             ] ;            
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -459,7 +459,7 @@
             ) ;
             sh:property [                               # Instant has a date as time stamp.
                 sh:path time:hasTime ;                  # Time stamp has to be set 
-                sh:qualifiedValueShape [                # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -511,9 +511,15 @@
                 sh:message "Wrong assignment (chronological order) of Change of Usage or Usage Start." ;
                 sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Usage Change or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -544,9 +550,15 @@
                     sh:severity sh:Violation ;
                 ]
             ) ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Usage End or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -570,9 +582,15 @@
                     sh:message "Wrong assignment (chronological order) of Usage Start or Construction Acceptance." ;
                     sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Usage Start or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -595,7 +613,7 @@
             ] .
 
     ### INSTANT SHAPES PHASE E - WARRANTY
-        osh:WarrantyChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase E - Warranty)
+        osh:WarrantyChangeShape a sh:NodeShape ;         # Instant Warranty Change (Phase E - Warranty)
             sh:targetClass occp:WarrantyChange ;
             sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
             sh:property [                                # The current Warranty Phase is ended with a Change of Warranty. 
@@ -618,9 +636,15 @@
                 sh:message "Wrong assignment (chronological order) of Change of Warranty or Warranty Start." ;
                 sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Warranty Change or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -653,7 +677,7 @@
             ) ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -677,9 +701,15 @@
                     sh:message "Wrong assignment (chronological order) of Warranty Start or Construction Acceptance." ;
                     sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Warranty Start or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -725,9 +755,15 @@
                 sh:message "Wrong assignment (chronological order) of Change of Design Life or Design Life Start." ;
                 sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Design Life Change or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -760,7 +796,7 @@
             ) ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -784,9 +820,15 @@
                     sh:message "Wrong assignment (chronological order) of Design Life Start or Construction Acceptance." ;
                     sh:severity sh:Violation ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Design Life Start or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -838,9 +880,15 @@
                 sh:message "Wrong assignment (chronological order) of Inspection Execution or Next Regular Inspection." ;
                 sh:severity sh:Warning ;
             ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Inspection Execution or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp - no minCount.
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
@@ -859,20 +907,197 @@
                 sh:message "Wrong assignment (chronological order) of Irregular Inspection or Usage Start." ;
                 sh:severity sh:Violation ;
             ] ;
-            sh:property [                                # Instant's chronological order 
+            sh:property [                                
                 sh:path time:before ;
-                sh:class occp:NextRegularInspection ;
-                sh:message "Wrong assignment (chronological order) of Irregular Inspection or Next Regular Inspection." ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Irregular Inspection or Deconstruction Completion." ;
                 sh:severity sh:Violation ;
-             ] ;
+            ] ;
             sh:property [                                # Instant has a date as time stamp.
                 sh:path time:hasTime ;                   # Time stamp has to be set 
-                sh:qualifiedValueShape [                 # The following object properties are valid options to set sime stamp
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                     sh:path (
                     occp:hasEstimatedTime
                     occp:hasActualTime
                     ) ;
                     ] ;
                 sh:message "Missing time stamp (Estimated or Actual Time) for Irregular Inspection." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:NextRegularInspectionShape a sh:NodeShape ;  # Instant Next Regular Inspection (Phase G - Inspection)
+            sh:targetClass occp:NextRegularInspection ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Wrong assignment (chronological order) of Next Regular Inspection or Usage Start." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Next Regular Inspection or Deconstruction Completion." ;
+                sh:severity sh:Warning ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Next Regular Inspection." ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE H INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseHInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseH_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseH_SpecialEvents ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase H (Special Events)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE H - SPECIAL EVENTS
+        osh:GeologicalEventShape a sh:NodeShape ;        # Instant Geological Event (Phase H - Special Events)
+            sh:targetClass occp:GeologicalEvent ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:LoadEventShape a sh:NodeShape ;              # Instant Load Event (Phase H - Special Events)
+            sh:targetClass occp:LoadEvent ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Load Event or Construction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Load Event or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Load Event." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:WeatherEventShape a sh:NodeShape ;           # Instant Weather Event (Phase H - Special Events)
+            sh:targetClass occp:WeatherEvent ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event." ;
+                sh:severity sh:Violation ;
+            ] .
+
+### PHASE K INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseKInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseK_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseK_Damage ;
+                sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase K (Damage)." ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE K - DAMAGE
+        osh:DamageDetectionShape a sh:NodeShape ;        # Instant Damage Detection (Phase K - Damage)
+            sh:targetClass occp:DamageDetection ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:ConstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Damage Detection or Construction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Damage Detection or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasActualTime ;             # Time stamp has to be set 
+                sh:message "Missing time stamp (Actual Time) for Damage Detection." ;
+                sh:severity sh:Violation ;
+            ] .
+            
+        osh:DamageObservationShape a sh:NodeShape ;      # Instant Damage Observation (Phase K - Damage)
+            sh:targetClass occp:DamageObservation ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:DamageDetection ;
+                sh:message "Wrong assignment (chronological order) of Damage Observation or Damage Detection." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Damage Observation or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasActualTime ;             # Time stamp has to be set 
+                sh:message "Missing time stamp (Actual Time) for Damage Detection." ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DamageRepairShape a sh:NodeShape ;           # Instant Damage Repair (Phase K - Damage)
+            sh:targetClass occp:DamageRepair ;
+            sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
+            sh:property [                                # Instant's chronological order 
+                sh:path time:after ;
+                sh:class occp:DamageDetection ;
+                sh:message "Wrong assignment (chronological order) of Damage Repair or Damage Detection." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path time:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Wrong assignment (chronological order) of Damage Repair or Deconstruction Completion." ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant has a date as time stamp.
+                sh:path time:hasTime ;                   # Time stamp has to be set 
+                sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
+                    sh:path (
+                    occp:hasEstimatedTime
+                    occp:hasActualTime
+                    ) ;
+                    ] ;
+                sh:message "Missing time stamp (Estimated or Actual Time) for Damage Repair." ;
                 sh:severity sh:Violation ;
             ] .

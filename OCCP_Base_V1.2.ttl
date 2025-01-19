@@ -210,25 +210,25 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageDetection
   occp:DamageDetection rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseK_Instant ;
-              rdfs:comment "This instant marks the point in time of the detection of a damage that affects a  component/construction/building. Since multiple damages are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the detection of a damage that affects a  component/construction/building. Multiple events are possible."@en ;
               rdfs:label "Damage Detection"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageObservation
   occp:DamageObservation rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseK_Instant ;
-              rdfs:comment "This instant marks the point in time of the observation of a known defect or damage or a component/building/construction. It is usually connected to a inspection, but it could also be used in combination with a damage monitoring system. Since multiple observations are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the observation of a known defect or damage or a component/building/construction. It is usually connected to an inspection, but it could also be used in combination with a damage monitoring system. Multiple events are possible."@en ;
               rdfs:label "Damage Observation"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageRepair
   occp:DamageRepair rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseK_Instant ;
-              rdfs:comment "This instant marks the point in time of the repair of a defect or damage of a component/building/construction. It usually is combined with the end of repair measures. As multiple damages can be repaired, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the repair of a defect or damage of a component/building/construction. It usually is combined with the end of repair measures."@en ;
               rdfs:label "Damage Repair"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DataProcurement
   occp:DataProcurement rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseA_Instant ;
-              rdfs:comment "Marks the date of data procurement measures like geodetic procurement actions or the date a set of data was added to the planning data sets/planning model. Since many procurement measures can be necessary, the instants can be counted."@en ;
+              rdfs:comment "Marks the date of data procurement measures like geodetic procurement actions or the date a set of data was added to the planning data sets/planning model. Multiple events are possible."@en ;
               rdfs:label "Data Procurement"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionCompletion
@@ -258,13 +258,13 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeChange
   occp:DesignLifeChange rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseF_Instant ;
-              rdfs:comment "This instant marks the point in time of a change of the estimated design life of a model component or building/construction. Different circumstances, such as repair measures or the change in usage, can lead to a change of the design life estimation and multiple dates can mark the change of estimations, thus this instant can be counted. This instant may lay before or after the end of a design life estimation and marks the date of the change of the estimation for the end of the design life, not the beginning of a new start of design life."@en ;
+              rdfs:comment "This instant marks the point in time of a change of the estimated design life of a model component or building/construction. Different circumstances, such as repair measures or the change in usage, can lead to a change of the design life estimation and multiple dates can mark the change of estimations, thus this instant can be counted. This instant may lay before or after the end of a design life estimation and marks the date of the change of the estimation for the end of the design life, not the beginning of a new start of design life. Multiple events are possible."@en ;
               rdfs:label "Design Life Change"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeEnd
   occp:DesignLifeEnd rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseF_Instant ;
-              rdfs:comment "This instant marks the point in time of the end of the estimated design life of a model component or building/construction. Different circumstances, such as repair measures, damages or the change in usage, can lead to a change of the design life estimation and multiple dates can mark the end of the estimated end of the design life, thus this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the end of the estimated design life of a model component or building/construction. Different circumstances, such as repair measures, damages or the change in usage, can lead to a change of the design life estimation and multiple dates can mark the end of the estimated end of the design life, thus multiple entries are possible."@en ;
               rdfs:label "Design Life End"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeStart
@@ -288,37 +288,37 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#GeologicalEvent
   occp:GeologicalEvent rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseH_Instant ;
-              rdfs:comment "This instant marks the point in time of a geological event that affects a component/construction/building, like an earth quake or a subsidence. Since multiple events are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of a geological event that affects a component/construction/building, like an earth quake or a subsidence. Multiple events are possible."@en ;
               rdfs:label "Geological Event"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#InspectionExecution
   occp:InspectionExecution rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseG_Instant ;
-              rdfs:comment "This instant marks the point in time of the execution of a regular inspection. Since many inspections are possible over the life cycle of a component/building/structure, this instant is counted."@en ;
+              rdfs:comment "This instant marks the point in time of the execution of a regular inspection. Many inspections are possible over the life cycle of a component/building/structure."@en ;
               rdfs:label "Inspection Execution"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#IrregularInspection
   occp:IrregularInspection rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseG_Instant ;
-              rdfs:comment "This instant marks the point in time of the execution of an irregular inspection. Since many irregular inspections are possible over the life cycle of a component/building/structure, this instant is counted."@en ;
+              rdfs:comment "This instant marks the point in time of the execution of an irregular inspection. Many irregular inspections are possible over the life cycle of a component/building/structure."@en ;
               rdfs:label "Irregular Inspection"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent
   occp:LoadEvent rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseH_Instant ;
-              rdfs:comment "This instant marks the point in time of a irregular load event that affects a  component/construction/building. Since multiple events are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of a irregular load event that affects a component/construction/building. Multiple events are possible."@en ;
               rdfs:label "Load Event"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NewComponent
   occp:NewComponent rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseL_Instant ;
-              rdfs:comment "This instant marks the point in time of the addition of a new component to an existing component/buildling/construction. For example this can be used to keep track of different parts of a construction, that need to be replaced, such as a new door handle that is fitted to an old door. For bigger changes within existing components/buildings/constructions, it is possible to initiate a sub-life-cycle (from planning until deconstruction), but as this could lead to confusion, this instant can be used to separate the new component (and its life cycle) from the old component, which continues to exist. Since multiple new components are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the addition of a new component to an existing component/buildling/construction. For example this can be used to keep track of different parts of a construction, that need to be replaced, such as a new door handle that is fitted to an old door. For bigger changes within existing components/buildings/constructions, it is possible to initiate a sub-life-cycle (from planning until deconstruction), but as this could lead to confusion, this instant can be used to separate the new component (and its life cycle) from the old component, which continues to exist. Multiple events are possible."@en ;
               rdfs:label "New Component"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NextRegularInspection
   occp:NextRegularInspection rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseG_Instant ;
-              rdfs:comment "This instant marks the point in time of the next of a regular inspection. This date is depending on the inspection interval of the component/building/structure and is usually calculated regarding the date of the last regular inspection. It serves as an orientation or reminder for the planning of the next regular inspection in order to stay within the regular inspection interval. Since many inspections are possible over the life cycle of a component/building/structure, this instant is counted."@en ;
+              rdfs:comment "This instant marks the point in time of the next of a regular inspection. This date is depending on the inspection interval of the component/building/structure and is usually calculated regarding the date of the last regular inspection. It serves as an orientation or reminder for the planning of the next regular inspection in order to stay within the regular inspection interval. Many inspections are possible over the life cycle of a component/building/structure."@en ;
               rdfs:label "Next Regular Inspection"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Phase
@@ -378,7 +378,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Instant
   occp:PhaseE_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase E - Warranty Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase E - Warranty Phase."@en ;
               rdfs:label "Phase E Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty
@@ -396,7 +396,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_Instant
   occp:PhaseF_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase F - Design Life Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase F - Design Life Phase."@en ;
               rdfs:label "Phase F Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection
@@ -408,7 +408,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Instant
   occp:PhaseG_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase G - Inspection Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase G - Inspection Phase."@en ;
               rdfs:label "Phase G Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_Instant
@@ -432,13 +432,13 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Instant
   occp:PhaseK_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase K - Damage Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase K - Damage Phase."@en ;
               rdfs:label "Phase K Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Instant
   occp:PhaseL_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase L - Repair Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase L - Repair Phase."@en ;
               rdfs:label "Phase L Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair
@@ -456,19 +456,19 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Instant
   occp:PhaseM_Instant rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Contains all instants that are within Phase M - Deconstruction Phase"@en ;
+              rdfs:comment "Contains all instants that are within Phase M - Deconstruction Phase."@en ;
               rdfs:label "Phase M Instant"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion
   occp:RepairCompletion rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseL_Instant ;
-              rdfs:comment "This instant marks the point in time of the completion of damage repair works of a component/construction/building. Since multiple events are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the completion of damage repair works of a component/construction/building. Multiple events are possible."@en ;
               rdfs:label "Repair Completion"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairStart
   occp:RepairStart rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseL_Instant ;
-              rdfs:comment "This instant marks the point in time of the beginning of damage repair works of a component/construction/building. Since multiple events are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the beginning of damage repair works of a component/construction/building. Multiple events are possible."@en ;
               rdfs:label "Repair Start"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewApproval
@@ -480,13 +480,13 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewRejection
   occp:ReviewRejection rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseB_Instant ;
-              rdfs:comment "This instant marks the point in time of the rejection of a planning model by the reviewer. The number of rejections can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the rejection of a planning model by the reviewer. Multiple events are possible."@en ;
               rdfs:label "Review Rejection"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewStart
   occp:ReviewStart rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseB_Instant ;
-              rdfs:comment "This instant marks the starting point of the reviewing process. The number of starting points (in case of a rejection and restart of the review) can be counted."@en ;
+              rdfs:comment "This instant marks the starting point of the reviewing process. Multiple events are possible (in case of a rejection and restart of the review)."@en ;
               rdfs:label "Review Start"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Submission
@@ -498,7 +498,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#SubmissionToReview
   occp:SubmissionToReview rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseA_Instant ;
-              rdfs:comment "This instant marks the date of the submission of a planning draft or model to the reviewer. It starts the reviewing process and thus Phase B. Since many iterations may be needed to get the reviewers approval, the number of submissions is counted."@en ;
+              rdfs:comment "This instant marks the date of the submission of a planning draft or model to the reviewer. It starts the reviewing process and thus Phase B. Multiple iterations may be needed to get the reviewers approval."@en ;
               rdfs:label "Submission to Review"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition
@@ -516,37 +516,37 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageEnd
   occp:UsageEnd rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseD_Instant ;
-              rdfs:comment "This instant marks the point in time of the end of usage of model component or building/construction. Since there can be multiple usage phases, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the end of usage of model component or building/construction. Multiple events are possible."@en ;
               rdfs:label "Usage End"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageStart
   occp:UsageStart rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseD_Instant ;
-              rdfs:comment "This instant marks the point in time of the beginning of usage of model component or building/construction. Since there can be multiple usage phases, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the beginning of usage of model component or building/construction. Multiple events are possible."@en ;
               rdfs:label "Usage Start"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyChange
   occp:WarrantyChange rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseE_Instant ;
-              rdfs:comment "This instant marks the point in time of a change of the warranty of a model component or building/construction. Repair measures can lead to the restart of the warranty period or the prolonging af the warranty, thus this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of a change of the warranty of a model component or building/construction. Repair measures can lead to the restart of the warranty period or the prolonging af the warranty, thus multiple events are possible."@en ;
               rdfs:label "Warranty Change"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyEnd
   occp:WarrantyEnd rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseE_Instant ;
-              rdfs:comment "This instant marks the point in time of the end of the warranty period of a model component or building/construction. Repair measures can lead to the restart of the warranty period and multiple dates that mark the end of the warranty, thus this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the end of the warranty period of a model component or building/construction. Repair measures can lead to the restart of the warranty period and multiple dates that mark the end of the warranty."@en ;
               rdfs:label "Warranty End"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyStart
   occp:WarrantyStart rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseE_Instant ;
-              rdfs:comment "This instant marks the point in time of the beginning of the warranty period of a model component or building/construction. Repair measures can lead to the restart of the warranty period and multiple dates that mark the beginning of the warranty, thus this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of the beginning of the warranty period of a model component or building/construction. Repair measures can lead to the restart of the warranty period and multiple dates that mark the beginning of the warranty."@en ;
               rdfs:label "Warranty Start"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WeatherEvent
   occp:WeatherEvent rdf:type owl:Class ;
               rdfs:subClassOf occp:PhaseH_Instant ;
-              rdfs:comment "This instant marks the point in time of a weather event that affects a  component/construction/building, like an flood or hurricane. Since multiple events are possible, this instant can be counted."@en ;
+              rdfs:comment "This instant marks the point in time of a weather event that affects a  component/construction/building, like an flood or hurricane. Since multiple events are possible."@en ;
               rdfs:label "Weather Event"@en .
 
 

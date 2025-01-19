@@ -56,7 +56,8 @@
   occp:hasActualTime rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ; 
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;      
-              rdfs:comment "The object property \"hasActualTime\" is used to mark the actual points in time of an Instant."@en .
+              rdfs:comment "The object property \"hasActualTime\" is used to mark the actual points in time of an Instant."@en ;
+              rdfs:label "has actual time"@en .
  
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
   occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
