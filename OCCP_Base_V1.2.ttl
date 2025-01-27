@@ -96,11 +96,6 @@
               rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en ;
               rdfs:label "has actual end"@en .
 
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasMilestone
-  occp:hasMilestone rdf:type owl:ObjectProperty ;
-              rdfs:comment "The property \"hasMilestone\" is used to connect Individuals to certain Instants (Phase Instants or Transitions)."@en ;
-              rdfs:label "has milestone"@en .
-
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
   occp:beginsBefore rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -193,12 +188,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Cycle
   occp:Cycle rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
-              rdfs:comment "A cycle is a time span with recurring periods, defined by a starting point in time, a period and a duration. The duration must be greater than the period and the duration must be an integer multiple of the period. Cycles are always within phases. They are used to keep track of interating processes, like multiple reviews during the planning phase, where each rejection of the reviewer causes another planning (and reviewing) cycle."@en .
-
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Cycle
-  occp:Cycle rdf:type owl:Class ;
-              rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
-              rdfs:comment "A cycle is a time span with recurring periods, defined by a starting point in time, a period and a duration. The duration must be greater than the period and the duration must be an integer multiple of the period. Cycles are always within phases. They are used to keep track of interating processes, like multiple reviews during the planning phase, where each rejection of the reviewer causes another planning (and reviewing) cycle."@en ;
+              rdfs:comment "A cycle is a time span with recurring periods, defined by a starting point in time, a period and a duration. They are used to keep track of iterating processes, like multiple reviews during the planning phase, where each rejection of the reviewer causes another planning (and reviewing) cycle."@en ;
               rdfs:label "Cycle"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CycleA_PlanningReview
@@ -504,7 +494,7 @@
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition
   occp:Transition rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-              rdfs:comment "Transitions mark key milestones between phases or special triggering events regarding a project - not single components. They are used to mark important dates for recording events, usually triggering the beginning of the next consecutive phase of the project and/or marking the completion of a phase."@en ;
+              rdfs:comment "Transitions mark key milestones between phases or special triggering events regarding a project - not single components. They usually trigger or allow for the beginning of the next consecutive phase or milestone of the project and/or marking the completion of a phase."@en ;
               rdfs:label "Transition"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange

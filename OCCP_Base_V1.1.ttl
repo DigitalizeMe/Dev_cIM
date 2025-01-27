@@ -89,10 +89,6 @@
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en .
 
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasMilestone
-  occp:hasMilestone rdf:type owl:ObjectProperty ;
-              rdfs:comment "The property \"hasMilestone\" is used to connect Individuals to certain Instants (Phase Instants or Transitions)."@en .
-
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
   occp:beginsBefore rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
