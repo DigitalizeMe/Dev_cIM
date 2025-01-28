@@ -29,6 +29,12 @@
               rdfs:comment "The object property \"endsPhase\" is used to mark instants that end an ongoing phase."@en ;
               rdfs:label "ends phase"@en .
 
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
+  occp:hasInstant rdf:type owl:ObjectProperty ;
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+              rdfs:comment "The property \"hasInstant\" is used to establish connections between models of constructions or components resp. their corresponding individuals (as representation within the ontology) to specific instants of the OCCP (e.g., occp:BeginningOfPlanning)."@en ;
+              rdfs:label "has instant"@en .
+
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
   occp:hasPhase rdf:type owl:ObjectProperty ;
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;

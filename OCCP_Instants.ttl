@@ -250,6 +250,10 @@
             sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD
             sh:property [
                 sh:path occp:endsPhase ;
+                sh:class occp:PhaseA_Planning ;
+            ] ;
+            sh:property [
+                sh:path occp:endsPhase ;
                 sh:class occp:PhaseB_Review ;
             ] ;
             sh:property [                               # Instant's chronological order within the Phase
