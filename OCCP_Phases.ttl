@@ -104,7 +104,7 @@
       [
         sh:path occp:endsWith ;                   # Phase B must end with the Completion of Planning
         sh:class occp:CompletionOfPlanning ;
-        sh:message "Wrong assignment Phase B (Review). Phase B usually starts and ends before Transition A. Phase B must end with Transition A (Completion of Planning)." ;
+        sh:message "Wrong assignment Phase B (Review). Phase B must end before or with Transition A (Completion of Planning)." ;
         sh:severity sh:Violation ;
       ]
       ) ;
