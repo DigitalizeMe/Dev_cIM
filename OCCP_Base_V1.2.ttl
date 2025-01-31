@@ -86,13 +86,13 @@
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
               rdfs:comment "The object property \"hasUpdateTime\" is used to mark the points in time of the update of an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-              rdfs:label "has recording time"@en .
+              rdfs:label "has update time"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedProperty
   occp:hasUpdatedProperty rdf:type owl:ObjectProperty ;
               rdfs:domain <http://www.w3.org/2006/time#Entity> ;     
               rdfs:comment "The object property \"hasUpdatedProperty\" is used to mark the time entity that receives an update (a (new) entry using occp:hasUpdateTime) for an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-              rdfs:label "has recording time"@en .
+              rdfs:label "has updated property"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
   occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
