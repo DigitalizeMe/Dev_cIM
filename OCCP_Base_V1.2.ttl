@@ -1,8 +1,10 @@
+@prefix ifc: <http://ifcowl.openbimstandards.org/IFC2X3_Final#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 @base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> .
 
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
@@ -74,26 +76,6 @@
               rdfs:comment "The object property \"hasEstimatedTime\" is used to mark the estimated points in time of an Instant."@en ;
               rdfs:label "has estimated time"@en .
 
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasRecordingTime
-  occp:hasRecordingTime rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
-              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
-              rdfs:comment "The object property \"hasRecordingTime\" is used to mark the points in time of the creating of a new entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-              rdfs:label "has recording time"@en .
-
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdateTime
-  occp:hasUpdateTime rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
-              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
-              rdfs:comment "The object property \"hasUpdateTime\" is used to mark the points in time of the update of an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-              rdfs:label "has update time"@en .
-
-  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedProperty
-  occp:hasUpdatedProperty rdf:type owl:ObjectProperty ;
-              rdfs:domain <http://www.w3.org/2006/time#Entity> ;     
-              rdfs:comment "The object property \"hasUpdatedProperty\" is used to mark the time entity that receives an update (a (new) entry using occp:hasUpdateTime) for an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-              rdfs:label "has updated property"@en .
-
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
   occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -121,6 +103,60 @@
               rdfs:domain <http://www.w3.org/2006/time#Interval> ;
               rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en ;
               rdfs:label "has actual end"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewIFCElement
+  occp:hasNewIFCElement rdf:type owl:ObjectProperty ;
+              rdfs:domain occp:Update ;
+              rdfs:range ifc:ifcElement ;
+              rdfs:comment "The object property \"hasNewIFCElement\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasPreviousIFCElement."@en ;
+              rdfs:label "has new IFC element"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousIFCElement
+  occp:hasPreviousIFCElement rdf:type owl:ObjectProperty ;
+              rdfs:domain occp:Update ;
+              rdfs:range ifc:ifcElement ;
+              rdfs:comment "The object property \"hasPreviousIFCElement\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasNewIFCElement."@en ;
+              rdfs:label "has previous IFC element"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasRecordingTime
+  occp:hasRecordingTime rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
+              rdfs:comment "The object property \"hasRecordingTime\" is used to mark the points in time of the creating of a new entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has recording time"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdateTime
+  occp:hasUpdateTime rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
+              rdfs:comment "The object property \"hasUpdateTime\" is used to mark the points in time of the update of an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has update time"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedEvent
+  occp:hasUpdatedEvent rdf:type owl:ObjectProperty ;
+              rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;     
+              rdfs:comment "The object property \"hasUpdatedEvent\" is used to mark the temporal entity that receives an update (phase, cycle, transition or instant) for an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has updated event"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedProperty
+  occp:hasUpdatedProperty rdf:type owl:ObjectProperty ;
+              rdfs:domain <http://www.w3.org/2006/time#hasTime> ;     
+              rdfs:comment "The object property \"hasUpdatedProperty\" is used to mark the time property that receives an update (a (new) entry using occp:hasUpdateTime) for an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has updated property"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewValue
+  occp:hasNewValue rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
+              rdfs:comment "The object property \"hasNewValue\" is used to mark the updated point in time (created using the updated property, e.g., time:hasTime, NOT adding a new one) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has new value"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousValue
+  occp:hasPreviousValue rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;  
+              rdfs:domain <http://www.w3.org/2006/time#Instant> ;     
+              rdfs:comment "The object property \"hasPreviousValue\" is used to mark the previously set point in time (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+              rdfs:label "has previous value"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
   occp:beginsBefore rdf:type owl:ObjectProperty ;
@@ -157,6 +193,25 @@
               rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
               rdfs:comment "The object property \"endsAfter\" is used with time:intervals or time:instants to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsAfter\" T2, it only describes, that the ends of T1 happens after the end of T2 without defining the order of the beginnings of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en ;
               rdfs:label "ends after"@en .
+
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewIFCID
+occp:hasNewIFCID rdf:type owl:DatatypeProperty ;
+              rdfs:domain occp:Update ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The datatype property \"hasNewIFCID\" stores the new IFC component's identifier (e.g., its GlobalId) as a string for queries."@en ;
+              rdfs:label "has new IFC ID"@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousIFCID
+occp:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
+              rdfs:domain occp:Update ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The datatype property \"hasPreviousIFCID\" stores the previous IFC component's identifier (e.g., its GlobalId) as a string for queries."@en ;
+              rdfs:label "has previous IFC ID"@en .
 
 
 #################################################################
@@ -521,6 +576,12 @@
   occp:Transition rdf:type owl:Class ;
               rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "Transitions mark key milestones between phases or special triggering events regarding a project - not single components. They usually trigger or allow for the beginning of the next consecutive phase or milestone of the project and/or marking the completion of a phase."@en ;
+              rdfs:label "Transition"@en .
+
+  ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Update
+  occp:Update rdf:type owl:Class ;
+              rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+              rdfs:comment "The Class \"Update\" can be used to update existing entries within a MsOCCP (Model-specific OCCP) file. In an update entry, it can be recorded which element is adressed (e.g., using an IFC-component-specific value/ID), which event is updated (using occp:hasUpdatedEvent), when the update is created (using occp:hasUpdateTime), the updated property (using occp:hasUpdatedProperty), and both the old and the new value of said property (using occp:hasPreviousValue and occp:hasNewValue). "@en ;
               rdfs:label "Transition"@en .
 
   ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange
