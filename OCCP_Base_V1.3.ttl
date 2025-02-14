@@ -9,7 +9,7 @@
 
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#2016> ;
-                                                                        owl:versionIRI 
+                                                                        owl:versionIRI ;
                                                                         rdfs:comment "First workaround to implement time tracking features to models"@en .
 
 #################################################################

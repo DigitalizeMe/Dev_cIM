@@ -129,12 +129,12 @@ occp:hasInstant rdf:type owl:ObjectProperty ;
                 rdfs:label "has instant"@en .
 
 
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewValue
-occp:hasNewValue rdf:type owl:ObjectProperty ;
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewTime
+occp:hasNewTime rdf:type owl:ObjectProperty ;
                  rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
                  rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                 rdfs:comment "The object property \"hasNewValue\" is used to mark the updated point in time (created using the updated property, e.g., time:hasTime, NOT adding a new one) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-                 rdfs:label "has new value"@en .
+                 rdfs:comment "The object property \"hasNewTime\" is used to mark the updated point in time (created using the updated property, e.g., time:hasTime, NOT adding a new one) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+                 rdfs:label "has new time"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
@@ -144,12 +144,12 @@ occp:hasPhase rdf:type owl:ObjectProperty ;
               rdfs:label "has phase"@en .
 
 
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousValue
-occp:hasPreviousValue rdf:type owl:ObjectProperty ;
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousTime
+occp:hasPreviousTime rdf:type owl:ObjectProperty ;
                       rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
                       rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                      rdfs:comment "The object property \"hasPreviousValue\" is used to mark the previously set point in time (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-                      rdfs:label "has previous value"@en .
+                      rdfs:comment "The object property \"hasPreviousTime\" is used to mark the previously set point in time (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+                      rdfs:label "has previous time"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasRecordingTime
