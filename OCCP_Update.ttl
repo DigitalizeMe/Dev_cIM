@@ -49,11 +49,24 @@ occp:hasUpdatedEvent rdf:type owl:ObjectProperty ;
                      rdfs:label "has updated event"@en .
 
 
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedProperty
-occp:hasUpdatedProperty rdf:type owl:ObjectProperty ;
-                        rdfs:domain <http://www.w3.org/2006/time#hasTime> ;
-                        rdfs:comment "The object property \"hasUpdatedProperty\" is used to mark the time property that receives an update (a (new) entry using occp:hasUpdateTime) for an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-                        rdfs:label "has updated property"@en .
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousChain
+occp:hasPreviousChain rdf:type owl:ObjectProperty ;
+                      owl:inverseOf occp:hasNextChain ;
+                      rdf:type owl:TransitiveProperty ;
+                      rdfs:domain occp:UpdateChain ;
+                      rdfs:range occp:UpdateChain ;
+                      rdfs:comment "The object property 'hasPreviousChain' links an UpdateChain instance to its predecessor, enabling chronological tracking across multiple update segments."@en ;
+                      rdfs:label "has previous chain"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNextChain
+occp:hasNextChain rdf:type owl:ObjectProperty ;
+                  owl:inverseOf occp:hasPreviousChain ;
+                  rdf:type owl:TransitiveProperty ;
+                  rdfs:domain occp:UpdateChain ;
+                  rdfs:range occp:UpdateChain ;
+                  rdfs:comment "The object property 'hasNextChain' links an UpdateChain instance to its successor, enabling forward tracking across multiple update segments."@en ;
+                  rdfs:label "has next chain"@en .                    
 
 
 #################################################################
@@ -118,6 +131,12 @@ occp:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Update
 occp:Update rdf:type owl:Class ;
             rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+            rdfs:comment "The Class \"Update\" can be used to update existing entries within a MsOCCP (Model-specific OCCP) file. In an update entry, it can be recorded which element is adressed (e.g., using an IFC-component-specific value/ID), which event is updated (using occp:hasUpdatedEvent), when the update is created (using occp:hasUpdateTime), the updated property (using occp:hasUpdatedProperty), and both the old and the new value of said property (using occp:hasPreviousValue and occp:hasNewValue). "@en ;
+            rdfs:label "Update"@en .
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateChain
+occp:UpdateChain rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing ;
             rdfs:comment "The Class \"Update\" can be used to update existing entries within a MsOCCP (Model-specific OCCP) file. In an update entry, it can be recorded which element is adressed (e.g., using an IFC-component-specific value/ID), which event is updated (using occp:hasUpdatedEvent), when the update is created (using occp:hasUpdateTime), the updated property (using occp:hasUpdatedProperty), and both the old and the new value of said property (using occp:hasPreviousValue and occp:hasNewValue). "@en ;
             rdfs:label "Update"@en .
 
