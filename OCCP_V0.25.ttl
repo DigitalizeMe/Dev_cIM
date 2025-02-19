@@ -125,7 +125,7 @@ occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
 occp:hasInstant rdf:type owl:ObjectProperty ;
                 rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                rdfs:comment "The property \"hasInstant\" is used to establish connections between models of constructions or components resp. their corresponding individuals (as representation within an ontology, e.g., a bot:Element) to specific instants of the OCCP (e.g., occp:BeginningOfPlanning)."@en ;
+                rdfs:comment "The property \"hasInstant\" is used to establish connections between models of constructions or components resp. their corresponding individuals (as representation within an ontology, e.g., a bot:Element) to specific instants of the MsOCCP (e.g., occp:BeginningOfPlanning)."@en ;
                 rdfs:label "has instant"@en .
 
 
@@ -747,7 +747,7 @@ occp:WeatherEvent rdf:type owl:Class ;
                   rdfs:comment "This instant marks the point in time of a weather event that affects a  component/construction/building, like an flood or hurricane. Since multiple events are possible."@en ;
                   rdfs:label "Weather Event"@en .
 
-                
+
 
 #################################################################
 #    SHACL SHAPES
