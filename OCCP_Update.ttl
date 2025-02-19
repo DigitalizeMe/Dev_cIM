@@ -20,7 +20,8 @@ occp:hasNewTime rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
                 rdf:type owl:TransitiveProperty ;
                 rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                rdfs:comment "The object property \"hasNewTime\" is used to mark the updated point in time (created using the updated property, e.g., time:hasTime, NOT adding a new one) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+                rdfs:range <http://www.w3.org/2006/time#Instant> ;
+                rdfs:comment "The object property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
                 rdfs:label "has new time"@en .
 
 
@@ -29,24 +30,17 @@ occp:hasPreviousTime rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
                      rdf:type owl:TransitiveProperty ;
                      rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                     rdfs:comment "The object property \"hasPreviousTime\" is used to mark the previously set point in time (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
+                     rdfs:range <http://www.w3.org/2006/time#Instant> ;
+                     rdfs:comment "The object property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
                      rdfs:label "has previous time"@en .
 
 
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdateTime
-occp:hasUpdateTime rdf:type owl:ObjectProperty ;
-                   rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                   rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                   rdfs:comment "The object property \"hasUpdateTime\" is used to mark the points in time of the update of an existing entry in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-                   rdfs:label "has update time"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedEvent
-occp:hasUpdatedEvent rdf:type owl:ObjectProperty ;
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdate
+occp:hasUpdate rdf:type owl:ObjectProperty ;
                      rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
                      rdfs:range occp:Update ;
-                     rdfs:comment "The object property \"hasUpdatedEvent\" is used to mark the temporal entity that receives an update (phase, cycle, transition or instant) for an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries and provide a better understanding of the evolution of information."@en ;
-                     rdfs:label "has updated event"@en .
+                     rdfs:comment "The object property \"hasUpdate\" links a temporal entity that receives an update (phase, cycle, transition or instant) to an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries, ensuring the integrity of time-based records."@en ;
+                     rdfs:label "has Update"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousChain
@@ -55,7 +49,7 @@ occp:hasPreviousChain rdf:type owl:ObjectProperty ;
                       rdf:type owl:TransitiveProperty ;
                       rdfs:domain occp:UpdateChain ;
                       rdfs:range occp:UpdateChain ;
-                      rdfs:comment "The object property 'hasPreviousChain' links an UpdateChain instance to its predecessor, enabling chronological tracking across multiple update segments."@en ;
+                      rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles."@en ;
                       rdfs:label "has previous chain"@en .
 
 
@@ -65,7 +59,7 @@ occp:hasNextChain rdf:type owl:ObjectProperty ;
                   rdf:type owl:TransitiveProperty ;
                   rdfs:domain occp:UpdateChain ;
                   rdfs:range occp:UpdateChain ;
-                  rdfs:comment "The object property 'hasNextChain' links an UpdateChain instance to its successor, enabling forward tracking across multiple update segments."@en ;
+                  rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
                   rdfs:label "has next chain"@en .                    
 
 
@@ -131,18 +125,15 @@ occp:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Update
 occp:Update rdf:type owl:Class ;
             rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-            rdfs:comment "The Class \"Update\" can be used to update existing entries within a MsOCCP (Model-specific OCCP) file. In an update entry, it can be recorded which element is adressed (e.g., using an IFC-component-specific value/ID), which event is updated (using occp:hasUpdatedEvent), when the update is created (using occp:hasUpdateTime), the updated property (using occp:hasUpdatedProperty), and both the old and the new value of said property (using occp:hasPreviousValue and occp:hasNewValue). "@en ;
+            rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
             rdfs:label "Update"@en .
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateChain
 occp:UpdateChain rdf:type owl:Class ;
             rdfs:subClassOf owl:Thing ;
-            rdfs:comment "The Class \"Update\" can be used to update existing entries within a MsOCCP (Model-specific OCCP) file. In an update entry, it can be recorded which element is adressed (e.g., using an IFC-component-specific value/ID), which event is updated (using occp:hasUpdatedEvent), when the update is created (using occp:hasUpdateTime), the updated property (using occp:hasUpdatedProperty), and both the old and the new value of said property (using occp:hasPreviousValue and occp:hasNewValue). "@en ;
-            rdfs:label "Update"@en .
+            rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history."@en ;
+            rdfs:label "Update Chain"@en .
 
 
-###  http://www.w3.org/2006/time#hasTime
-<http://www.w3.org/2006/time#hasTime> rdf:type owl:Class .
 
 
-###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
