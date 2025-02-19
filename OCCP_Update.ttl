@@ -39,7 +39,7 @@ occp:hasPreviousTime rdf:type owl:ObjectProperty ;
 occp:hasUpdate rdf:type owl:ObjectProperty ;
                      rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
                      rdfs:range occp:Update ;
-                     rdfs:comment "The object property \"hasUpdate\" links a temporal entity that receives an update (phase, cycle, transition or instant) to an existing entry (e.g., time:hasTime or occp:hasEstimatedEnd) in an MsOCCP (Model-specific OCCP) file to keep track of the chronology of entries, ensuring the integrity of time-based records."@en ;
+                     rdfs:comment "The object property \"hasUpdate\" links a temporal entity (phase, cycle, transition, or instant) to an update recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
                      rdfs:label "has Update"@en .
 
 
