@@ -10,7 +10,7 @@
 ### GENERAL SHAPE RULES
 
   osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
-    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
+    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd occp:hasNewTime occp:hasPreviousTime ) ] ;
     sh:datatype xsd:date ;
     sh:message "The date must be in the format YYYY-MM-DD." ;
     sh:severity sh:Violation .

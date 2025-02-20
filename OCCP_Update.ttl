@@ -1,12 +1,17 @@
 @prefix : <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix osh: <http://www.occpshape.de/shape#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 
+@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#2016> ;
                                                                         rdfs:comment "First workaround to implement time tracking features to models"@en .
@@ -37,10 +42,60 @@ occp:hasPreviousTime rdf:type owl:ObjectProperty ;
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdate
 occp:hasUpdate rdf:type owl:ObjectProperty ;
-                     rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-                     rdfs:range occp:Update ;
-                     rdfs:comment "The object property \"hasUpdate\" links a temporal entity (phase, cycle, transition, or instant) to an update recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
-                     rdfs:label "has Update"@en .
+               rdfs:domain owl:Thing;
+               rdfs:range occp:Update ;
+               rdfs:comment "The object property \"hasUpdate\" refers to any occp:Update that already exists. It is used to check for existing updates, if an update is to be created. If a previous update exists, a new \"UpdateChain\" is created."@en ;
+               rdfs:label "has update"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedValue
+occp:hasUpdatedValue rdf:type owl:ObjectProperty ;
+                     rdfs:domain occp:Update ;
+                     rdfs:range owl:Thing ;
+                     rdfs:comment "The object property \"hasUpdatedValue\" refers to any owl:Thing that has an updated value."@en ;
+                     rdfs:label "has updated value"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousValue
+occp:hasPreviousValue rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf occp:hasUpdatedValue ;
+                      owl:inverseOf occp:hasNewValue ;
+                      rdfs:comment "Links an update to the previous recorded value of a modified property."@en ;
+                      rdfs:label "has previous value"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewValue
+occp:hasNewValue rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf occp:hasUpdatedValue ;
+                 owl:inverseOf occp:hasPreviousValue ;
+                 rdfs:comment "Links an update to the newly recorded value of a modified property."@en ;
+                 rdfs:label "has new value"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdatedEvent
+occp:hasUpdatedEvent rdf:type owl:ObjectProperty ;
+                     rdfs:domain occp:Update ;
+                     rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+                     rdfs:comment "The object property \"hasUpdatedEvent\" links a temporal entity (phase, cycle, transition, or instant) to an update recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
+                     rdfs:label "has updated event"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPredecessor
+occp:hasPredecessor rdf:type owl:ObjectProperty ;
+                    rdfs:domain occp:UpdateReplacement ;
+                    rdfs:range occp:Update ;
+                    rdf:type owl:TransitiveProperty ;
+                    rdfs:comment "Links an update replacement to its predecessor, allowing chronological tracking of entity replacements. The predecessor is a standard update entry that recorded the last state before replacement."@en ;
+                    rdfs:label "has predecessor"@en .
+
+
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasSuccessor
+occp:hasSuccessor rdf:type owl:ObjectProperty ;
+                  rdfs:domain occp:Update ;
+                  rdfs:range occp:UpdateReplacement ;
+                  rdf:type owl:TransitiveProperty ;
+                  rdfs:comment "Links a standard update entry to a subsequent update replacement, tracking a structural change from an old entity to a new one."@en ;
+                  rdfs:label "has successor"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousChain
@@ -93,7 +148,7 @@ occp:hasNewHash rdf:type owl:DatatypeProperty ;
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewIFCID
 occp:hasNewIFCID rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf occp:hasHash ;
+                 rdfs:subPropertyOf occp:hasIFCID ;
                  rdfs:domain occp:Update ;
                  rdfs:range xsd:string ;
                  rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasPreviousIFCID."@en ;
@@ -111,7 +166,7 @@ occp:hasPreviousHash rdf:type owl:DatatypeProperty ;
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousIFCID
 occp:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf occp:hasHash ;
+                      rdfs:subPropertyOf occp:hasIFCID ;
                       rdfs:domain occp:Update ;
                       rdfs:range xsd:string ;
                       rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasNewIFCID."@en ;
@@ -128,6 +183,7 @@ occp:Update rdf:type owl:Class ;
             rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
             rdfs:label "Update"@en .
 
+
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateChain
 occp:UpdateChain rdf:type owl:Class ;
             rdfs:subClassOf owl:Thing ;
@@ -135,5 +191,238 @@ occp:UpdateChain rdf:type owl:Class ;
             rdfs:label "Update Chain"@en .
 
 
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateChainElement
+occp:UpdateChainElement rdf:type owl:Class ;
+            rdfs:subClassOf occp:Update ;
+            rdfs:comment "The class \"UpdateChainElement\" represents an update that is part of an \"UpdateChain\" It maintains sequential tracking of updates, ensuring chronological integrity of changes to IFC components and other time-bound entities."@en ;
+            rdfs:label "Update Chain Element"@en .
 
 
+###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateReplacement
+occp:UpdateReplacement rdf:type owl:Class ;
+                       rdfs:subClassOf occp:Update ;
+                       rdfs:comment "Links an update to a structural replacement of an IFC component, tracking the change from an old to a new entity."@en ;
+                       rdfs:label "Update Replacement"@en .          
+
+
+#################################################################
+#    SHACL SHAPES
+#################################################################
+
+### GENERAL SHAPE RULES
+
+  osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
+    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd occp:hasNewTime occp:hasPreviousTime ) ] ;
+    sh:datatype xsd:date ;
+    sh:message "The date must be in the format YYYY-MM-DD." ;
+    sh:severity sh:Violation .
+
+occp:UpdateShape a sh:NodeShape ;
+    sh:targetClass occp:Update ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+    sh:property [
+      sh:path time:hasTime ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+      sh:message "Each Update must have exactly one time stamp (time:hasTime) - min./max. count = 1." ;
+      sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+      sh:path occp:hasUpdatedEvent ;
+      sh:minCount 1 ;
+      sh:maxCount 1 ;
+      sh:message "Each Update must reference exactly one updated event (time:instant or time:interval)." ;
+      sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+      sh:path occp:hasIFCID ;
+      sh:minCount 1 ;
+      sh:datatype xsd:string ;
+      sh:message "Each Update must be linked to at least one IFC component via occp:hasIFCID." ;
+      sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+      sh:path occp:hasHash ;
+      sh:minCount 1 ;
+      sh:datatype xsd:string ;
+      sh:message "Each Update must be linked to at least one IFC component's hash value via occp:hasHash." ;
+      sh:severity sh:Violation ;
+    ] .
+
+osh:UpdateChainShape a sh:NodeShape ;
+    sh:targetClass occp:UpdateChain ;
+    sh:property [
+        sh:path occp:hasNextChain ;
+        sh:class occp:UpdateChain ;
+        sh:maxCount 1 ;
+        sh:message "Each UpdateChain may be linked to at most one next chain." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasPreviousChain ;
+        sh:class occp:UpdateChain ;
+        sh:maxCount 1 ;
+        sh:message "Each UpdateChain may be linked to at most one previous chain." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasUpdate ;
+        sh:class occp:UpdateChainElement ;
+        sh:minCount 1 ;
+        sh:maxCount 20 ;
+        sh:message "Each UpdateChain must contain between 1 and 21 UpdateChainElements." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:UpdateChainSizeConstraint a sh:NodeShape ;
+    sh:targetClass occp:UpdateChain ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "An UpdateChain must not contain more than 20 UpdateChainElements." ;
+        sh:severity sh:Violation ;
+        sh:prefixes [ sh:declare [ sh:prefix "occp" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#" ] ] ;
+        sh:select """
+            SELECT $this (COUNT(?update) AS ?count)
+            WHERE {
+                $this occp:hasUpdate ?update .
+            }
+            GROUP BY $this
+            HAVING (?count > 20)
+        """ ;
+    ] .
+
+osh:UpdateChainElementShape a sh:NodeShape ;
+    sh:targetClass occp:UpdateChainElement ;
+    sh:property [
+        sh:path occp:hasUpdateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each UpdateChainElement must have exactly one occp:hasUpdateTime timestamp." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasUpdatedEvent ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each UpdateChainElement must reference exactly one updated event (time:instant or time:interval)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasIFCID ;
+        sh:minCount 1 ;
+        sh:maxCount 2 ;
+        sh:message "Each UpdateChainElement must be linked to at least one and a max. of two IFC components via occp:hasIFCID." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasHash ;
+        sh:minCount 1 ;
+        sh:maxCount 2 ;
+        sh:message "Each UpdateChainElement must have at least one and a max. of two recorded hash values via occp:hasHash." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasPreviousTime ;
+        sh:maxCount 1 ;
+        sh:message "An UpdateChainElement may have at most one occp:hasPreviousTime value." ;
+        sh:severity sh:Warning ;
+    ] .
+
+  osh:UpdateReplacementShape a sh:NodeShape ;
+    sh:targetClass occp:UpdateReplacement ;
+    sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+    sh:property [
+        sh:path time:hasTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasPredecessor ;
+        sh:class occp:Update ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ; 
+        sh:message "Each UpdateReplacement must reference exactly one predecessor Update via occp:hasPredecessor." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasSuccessor ;
+        sh:class occp:UpdateReplacement ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+        sh:message "An UpdateReplacement may have at most one successor (hasSuccessor)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:ReplacementChronologyConstraint a sh:NodeShape ;
+    sh:targetClass occp:UpdateReplacement ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "The successor UpdateReplacement must have a later timestamp than its predecessor Update." ;
+        sh:severity sh:Violation ;
+        sh:prefixes [ 
+            sh:declare [ sh:prefix "occp" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#" ] ;
+        ] ;
+        sh:select """
+            SELECT $this ?prevTime ?newTime
+            WHERE {
+                $this occp:hasPredecessor ?prevUpdate .
+                ?prevUpdate time:hasTime ?prevTime .
+                $this time:hasTime ?newTime .
+                FILTER (?prevTime >= ?newTime)
+            }
+        """ ;
+    ] .
+
+osh:PredecessorConstraint a sh:NodeShape ;
+    sh:targetSubjectsOf occp:hasPredecessor ;
+    sh:property [
+        sh:path occp:hasPredecessor ;
+        sh:class occp:Update ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each occp:UpdateReplacement must reference exactly one predecessor occp:Update." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:SuccessorConstraint a sh:NodeShape ;
+    sh:targetSubjectsOf occp:hasSuccessor ;
+    sh:property [
+        sh:path occp:hasSuccessor ;
+        sh:class occp:UpdateReplacement ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each occp:Update must reference at most one successor occp:UpdateReplacement." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:UpdateEntityShape a sh:NodeShape ;
+    sh:targetSubjectsOf occp:hasUpdate ;
+    sh:property [
+        sh:path occp:hasUpdate ;
+        sh:class occp:Update ;
+        sh:minCount 1 ;
+        sh:message "Each entity with an update must be linked to at least one occp:Update instance." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:UpdatedValueShape a sh:NodeShape ;
+    sh:targetClass occp:Update ;
+    sh:property [
+        sh:path occp:hasUpdatedValue ;
+        sh:minCount 1 ;
+        sh:message "Each update must reference at least one modified entity (e.g., IFC component, phase, or instant)." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:UpdatedEventShape a sh:NodeShape ;
+    sh:targetClass occp:Update ;
+    sh:property [
+        sh:path occp:hasUpdatedEvent ;
+        sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each update must be linked to exactly one modified temporal entity (e.g., phase, cycle, transition, or instant)." ;
+        sh:severity sh:Violation ;
+    ] .
