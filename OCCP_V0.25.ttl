@@ -129,59 +129,11 @@ occp:hasInstant rdf:type owl:ObjectProperty ;
                 rdfs:label "has instant"@en .
 
 
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewTime
-occp:hasNewTime rdf:type owl:ObjectProperty ;
-                rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                rdf:type owl:TransitiveProperty ;
-                rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                rdfs:range <http://www.w3.org/2006/time#Instant> ;
-                rdfs:comment "The object property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                rdfs:label "has new time"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNextChain
-occp:hasNextChain rdf:type owl:ObjectProperty ;
-                  owl:inverseOf occp:hasPreviousChain ;
-                  rdf:type owl:TransitiveProperty ;
-                  rdfs:domain occp:UpdateChain ;
-                  rdfs:range occp:UpdateChain ;
-                  rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
-                  rdfs:label "has next chain"@en . 
-
-
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
 occp:hasPhase rdf:type owl:ObjectProperty ;
               rdfs:domain <http://www.w3.org/2006/time#Instant> ;
               rdfs:comment "The property \"hasPhase\" is used to connect time instants to certain phases."@en ;
               rdfs:label "has phase"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousChain
-occp:hasPreviousChain rdf:type owl:ObjectProperty ;
-                      owl:inverseOf occp:hasNextChain ;
-                      rdf:type owl:TransitiveProperty ;
-                      rdfs:domain occp:UpdateChain ;
-                      rdfs:range occp:UpdateChain ;
-                      rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles."@en ;
-                      rdfs:label "has previous chain"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousTime
-occp:hasPreviousTime rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                     rdf:type owl:TransitiveProperty ;
-                     rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                     rdfs:range <http://www.w3.org/2006/time#Instant> ;
-                     rdfs:comment "The object property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                     rdfs:label "has previous time"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasUpdate
-occp:hasUpdate rdf:type owl:ObjectProperty ;
-                     rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-                     rdfs:range occp:Update ;
-                     rdfs:comment "The object property \"hasUpdate\" links a temporal entity (phase, cycle, transition, or instant) to an update recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
-                     rdfs:label "has Update"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
@@ -204,61 +156,6 @@ occp:startsPhase rdf:type owl:ObjectProperty ;
                  rdfs:domain <http://www.w3.org/2006/time#Instant> ;
                  rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en ;
                  rdfs:label "starts phase"@en . 
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasHash
-occp:hasHash rdf:type owl:DatatypeProperty ;
-             rdfs:subPropertyOf owl:topDataProperty ;
-             rdfs:range xsd:string ;
-             rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC component to record the current state of a IFC component. The hash value is also used to check for changes of the IFC component."@en ;
-             rdfs:label "has hash"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasIFCID
-occp:hasIFCID rdf:type owl:DatatypeProperty ;
-              rdfs:range xsd:string ;
-              rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
-              rdfs:label "has IFC ID"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewHash
-occp:hasNewHash rdf:type owl:DatatypeProperty ;
-                rdfs:subPropertyOf occp:hasHash ;
-                rdfs:domain occp:Update ;
-                rdfs:range xsd:string ;
-                rdfs:comment "The data property \"hasNewHash\" is used to update an existing hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with occp:hasPreviousHash."@en ;
-                rdfs:label "has new hash"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasNewIFCID
-occp:hasNewIFCID rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf occp:hasHash ;
-                 rdfs:domain occp:Update ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasPreviousIFCID."@en ;
-                 rdfs:label "has new IFC ID"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousHash
-occp:hasPreviousHash rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf occp:hasHash ;
-                     rdfs:domain occp:Update ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with occp:hasNewHash."@en ;
-                     rdfs:label "has previous hash"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPreviousIFCID
-occp:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf occp:hasHash ;
-                      rdfs:domain occp:Update ;
-                      rdfs:range xsd:string ;
-                      rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with occp:hasNewIFCID."@en ;
-                      rdfs:label "has previous IFC ID"@en .
 
 
 #################################################################
@@ -683,20 +580,6 @@ occp:Transition rdf:type owl:Class ;
                 rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
                 rdfs:comment "Transitions mark key milestones between phases or special triggering events regarding a project - not single components. They usually trigger or allow for the beginning of the next consecutive phase or milestone of the project and/or marking the completion of a phase."@en ;
                 rdfs:label "Transition"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Update
-occp:Update rdf:type owl:Class ;
-            rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-            rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
-            rdfs:label "Update"@en .
-
-
-###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UpdateChain
-occp:UpdateChain rdf:type owl:Class ;
-            rdfs:subClassOf owl:Thing ;
-            rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history."@en ;
-            rdfs:label "Update Chain"@en .
 
 
 ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange
