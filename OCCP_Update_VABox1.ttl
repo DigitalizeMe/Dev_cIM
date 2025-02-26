@@ -1,0 +1,20 @@
+@prefix : <http://example.org/> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+:Wall123 a occp:ConstructionComponent ;
+    occp:hasIFCID "ABC-123" ;
+    occp:hasHash "h1a2b3c4d5e" ;
+    occp:hasInstant :Edit_BSTR ;
+    time:hasTime "2025-01-10T08:00:00"^^xsd:dateTime .
+
+
+:Update1 a occp:Update ;
+    time:hasTime "2025-02-01T12:00:00"^^xsd:dateTime ;   # Zeitpunkt des Updates
+    occp:hasUpdatedEvent :Edit_BSTR ;                    # Welches Event wurde aktualisiert?
+    occp:hasPreviousHash "h1a2b3c4d5e" ;
+    occp:hasNewHash "z9y8x7w6v5u" ;
+    occp:hasIFCID "ABC-123" ;  # IFC-ID bleibt gleich
+    occp:hasUpdate :Wall123 .  # Wall123 hat dieses Update
