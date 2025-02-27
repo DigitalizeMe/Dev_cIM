@@ -27,7 +27,7 @@ EX:Milestone2 a occp:DataProcurement ;
 
 EX:Milestone3 a occp:Edit_BSTR ;
     occp:after EX:Milestone1 ;
-    time:hasTime "2022-01-03"^^xsd:date .
+    time:hasTime "2022-01-01"^^xsd:date .
 
 EX:Milestone4 a occp:SubmissionToReview ;
     time:hasTime "2022-01-04"^^xsd:date ;
