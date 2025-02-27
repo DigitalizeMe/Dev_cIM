@@ -715,7 +715,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase A (Planning) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -733,7 +733,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase A (Planning) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -779,7 +779,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase B (Review) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -797,7 +797,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase B (Review) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -892,7 +892,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase C (Construction) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -910,7 +910,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase C (Construction) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -955,7 +955,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase D (Usage) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -973,7 +973,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase D (Usage) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1041,7 +1041,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase F (Design Life) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1059,7 +1059,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase F (Design Life) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1093,7 +1093,6 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
         ] ;
       ] ;
       sh:property [                               # End date options
@@ -1103,7 +1102,6 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
         ] ;
       ] .
 
@@ -1171,7 +1169,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase L (Repair) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1189,7 +1187,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase L (Repair) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1217,7 +1215,7 @@
           occp:hasEstimatedBeginning
           occp:hasActualBeginning
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual beginning) in Phase M (Deconstruction) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1235,7 +1233,7 @@
           occp:hasEstimatedEnd
           occp:hasActualEnd
         ) ;
-        sh:qualifiedMinCount 1 ;
+        sh:minCount 1 ;
         ] ;
       sh:message "Missing date (estimated or actual end) in Phase M (Deconstruction) - min. count = 1." ;
       sh:severity sh:Violation ;
@@ -1311,7 +1309,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Beginning of Planning - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1389,7 +1387,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Submission to Review - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1405,7 +1403,6 @@
                             sh:class occp:SubmissionToReview 
                             sh:class occp:ReviewRejection
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                     ] ;
                     sh:qualifiedMinCount 1 ;
                     sh:message "Wrong assignment (Submission To Review/Edit After Submission To Review)." ;
@@ -1438,7 +1435,7 @@
                         occp:hasEstimatedEnd
                         occp:hasActualEnd
                     ) ;
-                    sh:qualifiedMinCount 1 ;
+                    sh:minCount 1 ;
                     ] ;
                     sh:message "Missing date (estimated or actual end) for Cycle A (Planning and Review) - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1498,7 +1495,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Review Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1583,7 +1580,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Construction Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1625,7 +1622,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Construction Completion - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1659,7 +1656,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1687,7 +1684,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Completion - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1727,7 +1724,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Construction Acceptance - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1782,12 +1779,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Usage Change." ;
                     sh:severity sh:Warning ;
@@ -1827,7 +1823,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Usage End - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1859,7 +1855,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Usage Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1908,12 +1904,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Change." ;
                     sh:severity sh:Warning ;
@@ -1947,7 +1942,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Warranty End - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -1979,7 +1974,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -2028,12 +2023,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Change." ;
                     sh:severity sh:Warning ;
@@ -2067,7 +2061,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Design Life End - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -2099,7 +2093,7 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
+                        sh:minCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Start - min. count = 1." ;
                     sh:severity sh:Violation ;
@@ -2154,12 +2148,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Inspection Execution." ;
                     sh:severity sh:Violation ;
@@ -2187,7 +2180,6 @@
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Irregular Inspection." ;
                     sh:severity sh:Violation ;
@@ -2210,12 +2202,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Next Regular Inspection." ;
                     sh:severity sh:Violation ;
@@ -2238,12 +2229,11 @@
                 sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event." ;
                     sh:severity sh:Violation ;
@@ -2266,12 +2256,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Load Event." ;
                     sh:severity sh:Violation ;
@@ -2282,12 +2271,11 @@
                 sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event." ;
                     sh:severity sh:Violation ;
@@ -2364,12 +2352,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Damage Repair." ;
                     sh:severity sh:Violation ;
@@ -2404,12 +2391,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for New Component." ;
                     sh:severity sh:Violation ;
@@ -2438,12 +2424,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Repair Completion." ;
                     sh:severity sh:Violation ;
@@ -2472,12 +2457,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Repair Start." ;
                     sh:severity sh:Violation ;
@@ -2506,12 +2490,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Deconstruction Completion." ;
                     sh:severity sh:Violation ;
@@ -2534,12 +2517,11 @@
                 ] ;
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
+                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
                         sh:path (
                         occp:hasEstimatedTime
                         occp:hasActualTime
                         ) ;
-                        sh:qualifiedMinCount 1 ;
                         ] ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Deconstruction Start." ;
                     sh:severity sh:Violation ;
