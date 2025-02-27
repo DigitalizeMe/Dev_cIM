@@ -22,7 +22,7 @@ EX:CycleA_PlanningReview1 a occp:CycleA_PlanningReview ;
     occp:hasActualEnd "2022-01-06"^^xsd:date .
 
 EX:Milestone2 a occp:DataProcurement ;
-    occp:after EX:Milestone1;
+    occp:before EX:Milestone1;
     time:hasTime "2022-01-02"^^xsd:date .
 
 EX:Milestone3 a occp:Edit_BSTR ;
