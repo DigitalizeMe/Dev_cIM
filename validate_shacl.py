@@ -6,9 +6,9 @@ TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
 ABOX_PATH = r"OCCP_Phase_A_inVALID_1.ttl"
 
 # Pfad zur Jena SHACL-Validierung (in doppelte Anführungszeichen setzen!)
-JENA_PATH = r'"C:\Program Files (x86)\jena-5.2.0\apache-jena\bat"'
-PELLET_REASONER = os.path.join(JENA_PATH, "reasoner.bat")  # Pellet in Jena
-SHACL_VALIDATE = os.path.join(JENA_PATH, "shacl.bat")  # SHACL-Validierung
+JENA_PATH = r'"C:\Program Files (x86)\jena-5.2.0\apache-jena"'
+PELLET_REASONER = os.path.join(JENA_PATH, "bat", "reasoner.bat")  # Pellet in Jena
+SHACL_VALIDATE = os.path.join(JENA_PATH, "bat", "shacl.bat")  # SHACL-Validierung
 
 #  Funktion für Pellet-Reasoning
 def run_pellet_reasoning(tbox_path, abox_path):
