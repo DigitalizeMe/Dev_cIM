@@ -23,7 +23,7 @@ def run_pellet_reasoning(tbox_path, abox_path):
 #  Funktion für SHACL-Validierung
 def validate_shacl(tbox_path, abox_path):
     """ Führt die SHACL-Validierung mit Jena auf der TBox und ABox aus. """
-    command = [SHACL_VALIDATE, "--data", abox_path, "--shapes", tbox_path]
+    command = [SHACL_VALIDATE, "validate", "--data", abox_path, "--shapes", tbox_path]
     result = subprocess.run(command, capture_output=True, text=True)
     print("\n✅ SHACL-Validierung Output:\n", result.stdout)
     if result.stderr:
