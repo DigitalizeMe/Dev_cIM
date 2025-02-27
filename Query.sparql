@@ -1,0 +1,7 @@
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX time: <http://www.w3.org/2006/time#>
+
+SELECT ?phase1 ?phase2
+WHERE {
+    ?phase1 occp:beginsAfter ?phase2 .
+}
