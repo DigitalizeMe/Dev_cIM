@@ -1,24 +1,39 @@
 import subprocess
+import os
 
 # Absoluter Pfad zur OCCP TBox und ABox
 TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
 ABOX_PATH = r"OCCP_Phase_A_inVALID_1.ttl"
 
 # Pfad zur Jena SHACL-Validierung (in doppelte Anführungszeichen setzen!)
-JENA_PATH = r'"C:\Program Files (x86)\jena-5.2.0\apache-jena\bat\shacl.bat"'
+JENA_PATH = r'"C:\Program Files (x86)\jena-5.2.0\apache-jena"'
+PELLET_REASONER = os.path.join(JENA_PATH, "bat", "reasoner.bat")  # Pellet in Jena
+SHACL_VALIDATE = os.path.join(JENA_PATH, "bat", "shacl.bat")  # SHACL-Validierung
 
-def validate_shacl(tbox, abox):
-    # Der eigentliche Befehl für SHACL-Validierung
-    command = f'{JENA_PATH} validate --data {abox} --shapes {tbox}'
+#  Funktion für Pellet-Reasoning
+def run_pellet_reasoning(tbox_path, abox_path):
+    """ Führt den Pellet-Reasoner in Jena auf der TBox und ABox aus. """
+    command = [PELLET_REASONER, "--reasoner", "pellet", "--inf", "--data", abox_path, "--schema", tbox_path]
+    result = subprocess.run(command, capture_output=True, text=True)
+    print("\n🔍 Pellet Reasoning Output:\n", result.stdout)
+    if result.stderr:
+        print("\n⚠️ Pellet Fehler:\n", result.stderr)
+    return result.stdout
 
-    # Starte den Befehl über subprocess und fange die Ausgabe ab
-    result = subprocess.run(command, capture_output=True, text=True, shell=True)
+#  Funktion für SHACL-Validierung
+def validate_shacl(tbox_path, abox_path):
+    """ Führt die SHACL-Validierung mit Jena auf der TBox und ABox aus. """
+    command = [SHACL_VALIDATE, "--data", abox_path, "--shapes", tbox_path]
+    result = subprocess.run(command, capture_output=True, text=True)
+    print("\n✅ SHACL-Validierung Output:\n", result.stdout)
+    if result.stderr:
+        print("\n⚠️ SHACL Fehler:\n", result.stderr)
+    return result.stdout
 
-    if "Constraint Violation" in result.stdout:
-        print("❌ SHACL Validation Failed:")
-        print(result.stdout)
-    else:
-        print("✅ SHACL Validation Passed!")
-
+#  Hauptprogramm: Erst Reasoning, dann Validierung
 if __name__ == "__main__":
+    print("\n🚀 Starte Pellet-Reasoning...")
+    run_pellet_reasoning(TBOX_PATH, ABOX_PATH)
+
+    print("\n🚀 Starte SHACL-Validierung...")
     validate_shacl(TBOX_PATH, ABOX_PATH)
