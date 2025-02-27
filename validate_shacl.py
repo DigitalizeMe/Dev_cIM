@@ -2,7 +2,7 @@ import subprocess
 import os
 
 # Absoluter Pfad zur OCCP TBox und ABox
-TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
+TBOX_PATH = r"OCCP_V0.26.ttl"
 ABOX_PATH = r"OCCP_Phase_A_VALID_1.ttl"
 
 # Pfad zur Jena SHACL-Validierung (in doppelte Anführungszeichen setzen!)
