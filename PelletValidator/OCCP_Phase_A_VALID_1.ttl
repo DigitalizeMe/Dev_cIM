@@ -1,0 +1,79 @@
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+@prefix EX: <http://www.example.de/example#> .
+
+# Phase A (Planning) valid data
+
+EX:PhaseA_Planning a occp:PhaseA_Planning ; 
+    occp:hasActualBeginning "2022-01-01"^^xsd:date ;
+    occp:hasEstimatedEnd "2022-12-01"^^xsd:date ;
+    occp:hasActualEnd "2022-01-11"^^xsd:date .
+
+EX:Milestone1 a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2022-01-01"^^xsd:date .
+
+EX:CycleA_PlanningReview1 a occp:CycleA_PlanningReview ;
+    time:hasBeginning "2022-01-01"^^xsd:date ;
+    occp:hasEstimatedEnd "2022-02-02"^^xsd:date ;
+    occp:hasActualEnd "2022-01-06"^^xsd:date .
+
+EX:Milestone2 a occp:DataProcurement ;
+    occp:after EX:Milestone1;
+    time:hasTime "2022-01-02"^^xsd:date .
+
+EX:Milestone3 a occp:Edit_BSTR ;
+    occp:after EX:Milestone1 ;
+    time:hasTime "2022-01-03"^^xsd:date .
+
+EX:Milestone4 a occp:SubmissionToReview ;
+    time:hasTime "2022-01-04"^^xsd:date ;
+    occp:after EX:Milestone3 .
+
+EX:Milestone5 a occp:ReviewStart ;
+    occp:after EX:Milestone4 ;
+    time:hasTime "2022-01-05"^^xsd:date .
+
+EX:Milestone6 a occp:PhaseB_Review ;
+    time:after EX:Milestone4 ;
+    time:hasTime "2022-01-05"^^xsd:date .
+
+EX:Milestone7 a occp:ReviewRejection ;
+    time:after EX:Milestone5 ;
+    time:hasTime "2022-01-06"^^xsd:date .
+
+EX:CycleA_PlanningReview2 a occp:CycleA_PlanningReview ;
+    time:hasBeginning "2022-01-07"^^xsd:date ;
+    occp:hasEstimatedEnd "2022-02-02"^^xsd:date ;
+    occp:hasActualEnd "2022-01-11"^^xsd:date .
+
+EX:Milestone8 a occp:Edit_ASTR ;
+    occp:after EX:Milestone7 ;
+    time:hasTime "2022-01-07"^^xsd:date .
+
+EX:Milestone9 a occp:SubmissionToReview ;
+    occp:after EX:Milestone8 ;
+    time:hasTime "2022-01-08"^^xsd:date .
+
+EX:Milestone10 a occp:ReviewStart ;
+    occp:after EX:Milestone9 ;
+    time:hasTime "2022-01-09"^^xsd:date .
+
+EX:Milestone11 a occp:ReviewApproval ;
+    time:after EX:Milestone10 ;
+    time:hasTime "2022-01-10"^^xsd:date .
+
+EX:Milestone12 a occp:CompletionOfPlanning ;
+    time:after EX:Milestone11 ;
+    time:hasTime "2022-01-11"^^xsd:date .
+
+EX:Milestone13 a occp:BeginningOfTenderingProcess ;
+    time:after EX:Milestone12 ;
+    time:hasTime "2022-01-12"^^xsd:date .
+
+EX:Milestone14 a occp:Submission ;
+    time:after EX:Milestone13 ;
+    time:hasTime "2022-01-13"^^xsd:date .

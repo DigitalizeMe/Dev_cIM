@@ -1,6 +1,16 @@
 import subprocess
 import os
 
+java_cmd = [
+    "java",
+    "-jar",
+    "G:/Promo/cModeler_Git/cMM/OCCP_Dev2/PelletValidator/target/PelletValidator-1.0-SNAPSHOT-shaded.jar"
+]
+
+process = subprocess.run(java_cmd, capture_output=True, text=True)
+print(process.stdout)
+print(process.stderr)
+
 # Absoluter Pfad zur OCCP TBox und ABox
 TBOX_PATH = r"OCCP_V0.26.ttl"
 ABOX_PATH = r"OCCP_Phase_A_VALID_1.ttl"
