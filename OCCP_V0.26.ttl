@@ -133,6 +133,14 @@
                     rdfs:label "has actual time"@en .
 
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycleNumber
+    occp:hasCycleNumber rdf:type owl:DatatypeProperty ;
+                        rdfs:domain occp:Cycle ;
+                        rdfs:range xsd:integer ;
+                        rdfs:comment "Specifies the number of iterations in a cycle (e.g., review cycles in CycleA_PlanningReview)."@en ;
+                        rdfs:label "has cycle number"@en .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
     occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
                             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -678,6 +686,18 @@
     sh:datatype xsd:date ;
     sh:message "The date must be in the format YYYY-MM-DD." ;
     sh:severity sh:Violation .
+
+  osh:CycleShape a sh:NodeShape ;
+    sh:targetClass occp:Cycle ;
+    sh:property [
+        sh:path occp:hasCycleNumber ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;              
+        sh:maxCount 1 ;              
+        sh:minInclusive 1 ;          
+        sh:message "Each Cycle must specify exactly one positive integer for the number of iterations via occp:hasCycleNumber." ;
+        sh:severity sh:Violation ;
+    ] .
 
 ### ORDER OF PHASES AND TRANSITIONS
 

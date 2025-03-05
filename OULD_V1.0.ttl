@@ -27,39 +27,6 @@
                        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored either online or locally."@en ;
                        rdfs:label "has linked data"@en .
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOnlineData
-    ould:hasOnlineData rdfs:subPropertyOf ould:hasLinkedData ;
-                       rdfs:domain ould:Update ;
-                       rdfs:range xsd:anyURI ;
-                       rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
-                       rdfs:label "has online data"@en .
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOfflineData
-    ould:hasOfflineData rdfs:subPropertyOf ould:hasLinkedData ;
-                        rdfs:domain ould:Update ;
-                        rdfs:range xsd:string ;
-                        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
-                        rdfs:label "has offline data"@en .
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewTime
-    ould:hasNewTime rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                    rdf:type owl:TransitiveProperty ;
-                    rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                    rdfs:range <http://www.w3.org/2006/time#Instant> ;
-                    rdfs:comment "The object property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                    rdfs:label "has new time"@en .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
-    ould:hasPreviousTime rdf:type owl:ObjectProperty ;
-                         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                         rdf:type owl:TransitiveProperty ;
-                         rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-                         rdfs:range <http://www.w3.org/2006/time#Instant> ;
-                         rdfs:comment "The object property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                         rdfs:label "has previous time"@en .
-
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdate
     ould:hasUpdate rdf:type owl:ObjectProperty ;
@@ -152,6 +119,24 @@
 #################################################################
 
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOnlineData
+    ould:hasOnlineData rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf ould:hasLinkedData ; 
+                       rdfs:domain ould:Update ;
+                       rdfs:range xsd:anyURI ;
+                       rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
+                       rdfs:label "has online data"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOfflineData
+    ould:hasOfflineData rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf ould:hasLinkedData ;
+                        rdfs:domain ould:Update ;
+                        rdfs:range xsd:string ;
+                        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
+                        rdfs:label "has offline data"@en .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasDataLocation
     ould:hasDataLocation rdf:type owl:DatatypeProperty ;
                          rdfs:domain ould:LinkedData ;
@@ -193,6 +178,24 @@
                     rdfs:range xsd:string ;
                     rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
                     rdfs:label "has new IFC ID"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewTime
+    ould:hasNewTime rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+                    rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+                    rdfs:range xsd:date ;
+                    rdfs:comment "The object property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
+                    rdfs:label "has new time"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
+    ould:hasPreviousTime rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+                         rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+                         rdfs:range xsd:date ;
+                         rdfs:comment "The object property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
+                         rdfs:label "has previous time"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousHash
@@ -282,6 +285,20 @@
             sh:maxCount 1 ;
             sh:message "Each Update must have exactly one time stamp (time:hasTime) - min./max. count = 1." ;
             sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasNewTime ;
+            sh:datatype xsd:date ;
+            sh:minCount 1 ;  
+            sh:maxCount 1 ;
+            sh:message "Each Update may have exactly one ould:hasNewTime timestamp." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousTime ;
+            sh:maxCount 1 ;
+            sh:message "An Update may have at most one ould:hasPreviousTime value." ;
+            sh:severity sh:Warning ;
         ] ;
         sh:property [
             sh:path ould:hasUpdatedEvent ;
@@ -375,6 +392,14 @@
             sh:minCount 1 ;
             sh:maxCount 2 ;
             sh:message "Each UpdateChainElement must have at least one and a max. of two recorded hash values via ould:hasHash." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasNewTime ;
+            sh:datatype xsd:date ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChainElement must have exactly one ould:hasNewTime timestamp in xsd:date format." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
