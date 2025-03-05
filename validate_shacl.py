@@ -2,7 +2,7 @@ import owlready2
 from rdflib import Graph
 from pyshacl import validate
 
-owlready2.JAVA_EXE = "C:\\Program Files\\Java\\jdk-23\\bin"  
+owlready2.JAVA_EXE = "G:\\Java\\JDK_23\\bin\\java.exe"  
 TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
 ABOX_PATH = r"OCCP_Phase_A_inVALID_1.ttl"
 
