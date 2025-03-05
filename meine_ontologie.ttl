@@ -1,0 +1,13 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org/> .
+
+ex:Person a owl:Class .
+ex:hasAge a owl:DatatypeProperty ;
+    owl:domain ex:Person ;
+    owl:range xsd:integer .
+
+ex:Alice a ex:Person .
+ex:Bob a ex:Person ;
+    ex:hasAge "25"^^xsd:integer .

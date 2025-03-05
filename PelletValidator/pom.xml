@@ -62,6 +62,8 @@
             <groupId>net.sourceforge.aterm</groupId>
             <artifactId>aterm-java</artifactId>
             <version>1.6</version>
+            <scope>system</scope>
+            <systemPath>G:/Promo/cModeler_Git/cMM/OCCP_Dev2/lib/aterm-java-1.6.jar</systemPath>
         </dependency>
     </dependencies>
 

@@ -1,49 +1,56 @@
-import subprocess
-import os
+import owlready2
+from rdflib import Graph
+from pyshacl import validate
 
-java_cmd = [
-    "java",
-    "-jar",
-    "G:/Promo/cModeler_Git/cMM/OCCP_Dev2/PelletValidator/target/PelletValidator-1.0-SNAPSHOT-shaded.jar"
-]
+owlready2.JAVA_EXE = "C:\\Program Files\\Java\\jdk-23\\bin"  
+TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
+ABOX_PATH = r"OCCP_Phase_A_inVALID_1.ttl"
 
-process = subprocess.run(java_cmd, capture_output=True, text=True)
-print(process.stdout)
-print(process.stderr)
+print(f"Java-Pfad: {owlready2.JAVA_EXE}")
 
-# Absoluter Pfad zur OCCP TBox und ABox
-TBOX_PATH = r"OCCP_V0.26.ttl"
-ABOX_PATH = r"OCCP_Phase_A_VALID_1.ttl"
+# Schritt 1: Ontologie laden und Reasoning mit Pellet durchführen
+def perform_pellet_reasoning(ontology_file):
+    # Ontologie laden
+    onto = owlready2.get_ontology(f"file://{ontology_file}").load(format="turtle")
+    
+    # Reasoning mit Pellet durchführen
+    with onto:
+        owlready2.sync_reasoner_pellet(infer_property_values=True, infer_data_property_values=True)
+    
+    # Inferierte Ontologie speichern
+    output_file = "inferred_ontology.ttl"
+    onto.save(file=output_file, format="ntriples")  # ntriples, da pyshacl das bevorzugt
+    return output_file
 
-# Pfad zur Jena SHACL-Validierung (in doppelte Anführungszeichen setzen!)
-JENA_PATH = r"G:\Promo\Apache_Jena\jena-5.2.0\apache-jena"
-PELLET_REASONER = os.path.join(JENA_PATH, "bat", "tdb2_tdbquery.bat")  # Pellet in Jena
-SHACL_VALIDATE = os.path.join(JENA_PATH, "bat", "shacl.bat")  # SHACL-Validierung
+# Schritt 2: SHACL-Validierung
+def perform_shacl_validation(data_file, shapes_file):
+    # Datengraph (inferierte Ontologie) und Shapes-Graph laden
+    data_graph = Graph().parse(data_file, format="ntriples")
+    shapes_graph = Graph().parse(shapes_file, format="turtle")
+    
+    # SHACL-Validierung durchführen
+    result = validate(
+        data_graph,
+        shacl_graph=shapes_graph,
+        inference="none",  # Keine zusätzliche Inferenz, da Pellet schon lief
+        debug=True
+    )
+    
+    conforms, report_graph, report_text = result
+    print("Konformität:", conforms)
+    print("Validierungsbericht:\n", report_text)
+    return conforms
 
-#  Funktion für Pellet-Reasoning
-def run_pellet_reasoning(tbox_path, abox_path):
-    """ Führt den Pellet-Reasoner in Jena auf der TBox und ABox aus. """
-    command = [PELLET_REASONER, "--reasoner", "pellet", "--inf", "--data", abox_path, "--schema", tbox_path]
-    result = subprocess.run(command, capture_output=True, text=True)
-    print("\n🔍 Pellet Reasoning Output:\n", result.stdout)
-    if result.stderr:
-        print("\n⚠️ Pellet Fehler:\n", result.stderr)
-    return result.stdout
-
-#  Funktion für SHACL-Validierung
-def validate_shacl(tbox_path, abox_path):
-    """ Führt die SHACL-Validierung mit Jena auf der TBox und ABox aus. """
-    command = [SHACL_VALIDATE, "validate", "--data", abox_path, "--shapes", tbox_path]
-    result = subprocess.run(command, capture_output=True, text=True)
-    print("\n✅ SHACL-Validierung Output:\n", result.stdout)
-    if result.stderr:
-        print("\n⚠️ SHACL Fehler:\n", result.stderr)
-    return result.stdout
-
-#  Hauptprogramm: Erst Reasoning, dann Validierung
+# Hauptprogramm
 if __name__ == "__main__":
-    print("\n🚀 Starte Pellet-Reasoning...")
-    run_pellet_reasoning(TBOX_PATH, ABOX_PATH)
+    # Dateipfade (anpassen!)
+    ontology_file = "meine_ontologie.ttl"  # Deine TTL-Ontologie (TBox + ABox)
+    shapes_file = "meine_shapes.ttl"       # Deine SHACL-Shapes
+    
+    # Schritt 1: Reasoning mit Pellet
+    inferred_file = perform_pellet_reasoning(ontology_file)
+    
+    # Schritt 2: SHACL-Validierung der inferierten Ontologie
+    perform_shacl_validation(inferred_file, shapes_file)
 
-    print("\n🚀 Starte SHACL-Validierung...")
-    validate_shacl(TBOX_PATH, ABOX_PATH)
+

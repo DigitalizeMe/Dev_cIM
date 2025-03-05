@@ -1,0 +1,5 @@
+# Created at 2025-03-05T13:47:56.834
+Boot Manifest-JAR contains absolute paths in classpath 'G:\Promo\cModeler_Git\cMM\OCCP_Dev2\PelletValidator\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
