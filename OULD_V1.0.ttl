@@ -43,7 +43,7 @@
                         rdfs:range ould:Update ;
                         owl:inverseOf ould:hasSuccessor ;
                         rdf:type owl:TransitiveProperty ;
-                        rdfs:comment "Links an update replacement to its predecessor, allowing chronological tracking of entity replacements. The predecessor is a standard update entry that recorded the last state before replacement."@en ;
+                        rdfs:comment "Links an update to its predecessor, enabling chronological tracking of entity changes (e.g., replacements or modifications). The predecessor is an update entry recording the prior state."@en ;
                         rdfs:label "has predecessor"@en .
 
 
@@ -54,7 +54,7 @@
                       rdfs:range ould:Update;
                       owl:inverseOf ould:hasPredecessor ;
                       rdf:type owl:TransitiveProperty ;
-                      rdfs:comment "Links a standard update entry to a subsequent update replacement, tracking a structural change from an old entity to a new one."@en ;
+                      rdfs:comment "Links an update to a subsequent update, enabling chronological tracking of entity changes (e.g., replacements or modifications)."@en ;
                       rdfs:label "has successor"@en .
 
 
@@ -118,7 +118,7 @@
     ould:hasUpdateChain rdf:type owl:ObjectProperty ;
                         rdfs:domain ould:UpdatableEntity ;
                         rdfs:range ould:UpdateChain ;
-                        rdfs:comment "The object property \"hasUpdateChain\" links an UpdatableEntity to an \"UpdateChain\"."@en ;
+                        rdfs:comment "The object property \"hasUpdateChain\" links an UpdatableEntity to an \"UpdateChain\", grouping multiple related Updates (in contrast to ould:hasUpdate for single Updates)."@en ;
                         rdfs:label "has update chain"@en .  
 
 
@@ -200,7 +200,8 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
     ould:hasPreviousTime rdf:type owl:DatatypeProperty ;
                          rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                         rdfs:domain ould:Update ;
+                         rdfs:domain [ rdf:type owl:Class ;
+                                    owl:unionOf ( ould:Update time:Instant ) ] ;
                          rdfs:range xsd:date ;
                          rdfs:comment "The data property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
                          rdfs:label "has previous time"@en .
@@ -209,7 +210,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousHash
     ould:hasPreviousHash rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf ould:hasHash ;
-                        rdfs:domain ould:Update ;
+                        rdfs:domain ould:UpdatableEntity ;
                         rdfs:range xsd:string ;
                         rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasNewHash."@en ;
                         rdfs:label "has previous hash"@en .
@@ -218,7 +219,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCID
     ould:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf ould:hasIFCID ;
-                        rdfs:domain ould:Update ;
+                        rdfs:domain ould:UpdatableEntity ;
                         rdfs:range xsd:string ;
                         rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
                         rdfs:label "has previous IFC ID"@en .
@@ -264,7 +265,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateReplacement
     ould:UpdateReplacement rdf:type owl:Class ;
                         rdfs:subClassOf ould:Update ;
-                        rdfs:comment "Links an update to a structural replacement of an IFC component, tracking the change from an old to a new entity."@en ;
+                        rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCID, ould:hasNewIFCID, ould:hasPreviousHash, and ould:hasNewHash."@en ;
                         rdfs:label "Update Replacement"@en .          
 
 
@@ -297,12 +298,28 @@
             sh:path ould:hasNewTime ;
             sh:datatype xsd:date ;
             sh:maxCount 1 ;
+            sh:node [ 
+                sh:property [
+                    sh:path ould:hasPreviousTime ;
+                    sh:minCount 1 ;
+                    sh:message "If hasNewTime is specified, hasPreviousTime must also be provided." ;
+                    sh:severity sh:Violation ;
+                ] ;
+            ] ;
             sh:message "Each Update may have exactly one ould:hasNewTime timestamp." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
             sh:path ould:hasPreviousTime ;
             sh:maxCount 1 ;
+            sh:node [ 
+                sh:property [
+                    sh:path ould:hasNewTime ;
+                    sh:minCount 1 ;
+                    sh:message "If hasPreviousTime is specified, hasNewTime must also be provided." ;
+                    sh:severity sh:Violation ;
+                ] ;
+            ] ;
             sh:message "An Update may have at most one ould:hasPreviousTime value." ;
             sh:severity sh:Warning ;
         ] ;
@@ -323,9 +340,10 @@
         ] ;
         sh:property [
             sh:path ould:hasHash ;
-            sh:minCount 1 ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
             sh:datatype xsd:string ;
-            sh:message "Each Update must be linked to at least one IFC component's hash value via ouldhasHash." ;
+            sh:message "Each Update can be linked to at most one IFC component's hash value via ould:hasHash." ;
             sh:severity sh:Violation ;
         ] ;
         sh:sparql [
@@ -364,12 +382,12 @@
             sh:class ould:UpdateChainElement ;
             sh:minCount 1 ;
             sh:maxCount 20 ;
-            sh:message "Each UpdateChain must contain between 1 and 21 UpdateChainElements." ;
+            sh:message "Each UpdateChain must contain between 1 and 20 UpdateChainElements." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
             sh:path time:hasBeginning ;
-            sh:class xsd:date ; 
+            sh:datatype xsd:date ; 
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:message "Each UpdateChain must have a beginning in format xsd:date." ;
@@ -377,11 +395,81 @@
         ] ;
         sh:property [
             sh:path time:hasEnd ;
-            sh:class xsd:date ; 
+            sh:datatype xsd:date ; 
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:message "Each UpdateChain must have a End in format xsd:date." ;
             sh:severity sh:Violation ;    
+        ] ;
+        sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "time:hasBeginning must match the earliest time:hasTime of its Updates." ;
+        sh:severity sh:Violation ;
+        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                      sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+        sh:select """
+            SELECT $this ?begin ?earliest
+            WHERE {
+                $this time:hasBeginning ?begin .
+                $this ould:hasUpdate ?update .
+                ?update time:hasTime ?updateTime .
+                {
+                    SELECT $this (MIN(?time) AS ?earliest)
+                    WHERE {
+                        $this ould:hasUpdate ?u .
+                        ?u time:hasTime ?time .
+                    }
+                    GROUP BY $this
+                }
+                FILTER (?begin != ?earliest)
+            }
+        """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "time:hasEnd must match the latest time:hasTime of its Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                        sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+            sh:select """
+                SELECT $this ?end ?latest
+                WHERE {
+                    $this time:hasEnd ?end .
+                    $this ould:hasUpdate ?update .
+                    ?update time:hasTime ?updateTime .
+                    {
+                        SELECT $this (MAX(?time) AS ?latest)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?u time:hasTime ?time .
+                        }
+                        GROUP BY $this
+                    }
+                    FILTER (?end != ?latest)
+                }
+            """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "An UpdateChain must contain all Updates of its UpdatableEntity once it exists." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?entity ?update
+                WHERE {
+                    ?entity ould:hasUpdateChain $this .
+                    ?entity ould:hasUpdate ?update .
+                    FILTER NOT EXISTS { $this ould:hasUpdate ?update . }
+                    {
+                        SELECT ?entity (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            ?entity ould:hasUpdate ?u .
+                        }
+                        GROUP BY ?entity
+                        HAVING (?updateCount > 1)
+                    }
+                }
+            """ ;
         ] .
 
     oush:UpdateChainSizeConstraint a sh:NodeShape ;
@@ -398,6 +486,27 @@
                 }
                 GROUP BY $this
                 HAVING (?count > 20)
+            """ ;
+        ] .
+
+    oush:UpdateChainCreationShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If an UpdatableEntity has more than one Update, an UpdateChain must be created or extended." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ 
+                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] 
+            ] ;
+            sh:select """
+                SELECT $this (COUNT(?update) AS ?updateCount) ?chain
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    OPTIONAL { $this ould:hasUpdateChain ?chain . }
+                    FILTER NOT EXISTS { ?chain ould:hasUpdate ?update . }
+                }
+                GROUP BY $this ?chain
+                HAVING (?updateCount > 1 && !BOUND(?chain))
             """ ;
         ] .
 
@@ -419,24 +528,24 @@
         ] ;
         sh:property [
             sh:path ould:hasIFCID ;
-            sh:minCount 1 ;
+            sh:minCount 0 ;
             sh:maxCount 2 ;
-            sh:message "Each UpdateChainElement must be linked to at least one and a max. of two IFC components via ould:hasIFCID." ;
+            sh:message "Each UpdateChainElement can be linked to max. two IFC components via ould:hasIFCID." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
             sh:path ould:hasHash ;
-            sh:minCount 1 ;
+            sh:minCount 0 ;
             sh:maxCount 2 ;
-            sh:message "Each UpdateChainElement must have at least one and a max. of two recorded hash values via ould:hasHash." ;
+            sh:message "Each UpdateChainElement can have max. two recorded hash values via ould:hasHash." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
             sh:path ould:hasNewTime ;
             sh:datatype xsd:date ;
-            sh:minCount 1 ;
+            sh:minCount 0 ;
             sh:maxCount 1 ;
-            sh:message "Each UpdateChainElement must have exactly one ould:hasNewTime timestamp in xsd:date format." ;
+            sh:message "Each UpdateChainElement can have at most one ould:hasNewTime timestamp in xsd:date format." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -446,32 +555,48 @@
             sh:severity sh:Warning ;
         ] .
 
-  oush:UpdateReplacementShape a sh:NodeShape ;
-    sh:targetClass ould:UpdateReplacement ;
-    sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-    sh:property [
-        sh:path time:hasTime ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
-        sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path ould:hasPredecessor ;
-        sh:class ould:Update ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ; 
-        sh:message "Each UpdateReplacement must reference exactly one predecessor Update via ould:hasPredecessor." ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path ould:hasSuccessor ;
-        sh:class ould:UpdateReplacement ;
-        sh:minCount 0 ;
-        sh:maxCount 1 ;
-        sh:message "An UpdateReplacement may have at most one successor (hasSuccessor)." ;
-        sh:severity sh:Violation ;
-    ] .
+    oush:UpdatableEntityBaselineShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCID and hasHash." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    FILTER NOT EXISTS { ?update ould:hasIFCID ?ifcid . }
+                    FILTER NOT EXISTS { ?update ould:hasHash ?hash . }
+                }
+            """ ;
+        ] .
+
+    oush:UpdateReplacementShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPredecessor ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:message "Each UpdateReplacement must reference at least one predecessor Update via ould:hasPredecessor." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasSuccessor ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "An UpdateReplacement may have at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
+            sh:severity sh:Violation ;
+        ] .
 
     oush:ReplacementChronologyConstraint a sh:NodeShape ;
         sh:targetClass ould:UpdateReplacement ;
@@ -485,7 +610,7 @@
             sh:select """
                 SELECT $this ?prevTime ?newTime
                 WHERE {
-                    $this occp:hasPredecessor ?prevUpdate .
+                    $this ould:hasPredecessor ?prevUpdate .
                     ?prevUpdate time:hasTime ?prevTime .
                     $this time:hasTime ?newTime .
                     FILTER (?prevTime > ?newTime) 
@@ -499,8 +624,7 @@
             sh:path ould:hasPredecessor ;
             sh:class ould:Update ;
             sh:minCount 1 ;
-            sh:maxCount 1 ;
-            sh:message "Each ould:UpdateReplacement must reference exactly one predecessor ould:Update." ;
+            sh:message "Each ould:UpdateReplacement must reference at least one predecessor ould:Update." ;
             sh:severity sh:Violation ;
         ] .
 
@@ -508,10 +632,10 @@
         sh:targetSubjectsOf ould:hasSuccessor ;
         sh:property [
             sh:path ould:hasSuccessor ;
-            sh:class ould:UpdateReplacement ;
-            sh:minCount 1 ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
             sh:maxCount 1 ;
-            sh:message "Each ould:Update must reference at most one successor ould:UpdateReplacement." ;
+            sh:message "Each ould:Update may reference at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
             sh:severity sh:Violation ;
         ] .
 
