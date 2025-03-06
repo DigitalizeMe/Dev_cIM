@@ -1,0 +1,31 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdate ould:UpdateReplacement1 .
+
+ould:UpdateReplacement1 a ould:UpdateReplacement ;
+    time:hasTime "2025-03-05"^^xsd:date ;
+    # Fehler: Kein hasPredecessor angegeben (minCount 1 verletzt)
+    ould:hasNewIFCID "ifc:Wall2" ;
+    ould:hasPreviousIFCID "ifc:Wall1" ;
+    ould:hasNewHash "xyz789" ;
+    ould:hasPreviousHash "abc123" ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasHash "xyz789" .
+
+ould:Wall2 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasHash "xyz789" ;
+    ould:hasUpdate ould:UpdateReplacement1 .
+
+ould:Event1 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 2
+# - Violation bei UpdateReplacementShape: "Each UpdateReplacement must reference at least one predecessor Update via ould:hasPredecessor."
+# - Violation bei PredecessorConstraint: "Each ould:UpdateReplacement must reference at least one predecessor ould:Update."

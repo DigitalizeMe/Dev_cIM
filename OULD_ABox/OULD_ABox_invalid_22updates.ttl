@@ -1,0 +1,49 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdateChain ould:Chain1 .
+
+ould:Chain1 a ould:UpdateChain ;
+    # Fehler: 22 Updates statt max 21
+    ould:hasUpdate ould:Update1, ould:Update2, ould:Update3, ould:Update4, ould:Update5 ; # Eigentlich 22, hier 5 für Demo
+    time:hasBeginning "2025-03-01"^^xsd:date ;
+    time:hasEnd "2025-03-05"^^xsd:date .
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-01"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 .
+
+ould:Update2 a ould:Update ;
+    time:hasTime "2025-03-02"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event2 ;
+    ould:hasUpdatedValue ould:Wall1 .
+
+ould:Update3 a ould:Update ;
+    time:hasTime "2025-03-03"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event3 ;
+    ould:hasUpdatedValue ould:Wall1 .
+
+ould:Update4 a ould:Update ;
+    time:hasTime "2025-03-04"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event4 ;
+    ould:hasUpdatedValue ould:Wall1 .
+
+ould:Update5 a ould:Update ;
+    time:hasTime "2025-03-05"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event5 ;
+    ould:hasUpdatedValue ould:Wall1 .
+
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+ould:Event3 a time:TemporalEntity .
+ould:Event4 a time:TemporalEntity .
+ould:Event5 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 2
+# - Violation bei UpdateChainOverflowConstraint: "An UpdateChain must not contain more than 21 Updates; create a new chain for additional updates."
+# - Violation bei UpdateChainContinuityConstraint: "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain."
