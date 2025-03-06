@@ -1,1 +1,2 @@
-<file://meine_ontologie.ttl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<file://OULD_V1.0.ttl> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2002/07/owl#Ontology> .
+<file://OULD_V1.0.ttl> <http://www.w3.org/2002/07/owl#imports> <file://OULD_ABox.ttl> .

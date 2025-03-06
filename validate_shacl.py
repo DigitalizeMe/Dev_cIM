@@ -69,10 +69,9 @@ def perform_shacl_validation(data_file, shapes_file):
         raise
 
 if __name__ == "__main__":
-    # Beispiel-Dateipfade (anpassen!)
-    TBOX_PATH = r"OCCP_TBx_V0.26.ttl"
-    ABOX_PATH = r"OCCP_Phase_A_inVALID_1.ttl"
-    SHAPES_PATH = r"OULD_shapes.ttl"
+    TBOX_PATH = r"OULD_V1.0.ttl"
+    ABOX_PATH = r"OULD_ABox.ttl"
+    SHAPES_PATH = r"OULD_V1.0.ttl"  # Shapes sind in der TBox enthalten
     JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe"
 
     # Schritt 1: Reasoning mit Pellet
