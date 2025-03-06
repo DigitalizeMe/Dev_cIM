@@ -16,23 +16,23 @@ ould:ExternalDoc1 a ould:LinkedData ;
 ould:Update1 a ould:Update ;
     time:hasTime "2025-03-01"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event1 ;
-    ould:hasUpdatedValue ould:Wall1 ;  # Fix
+    ould:hasUpdatedValue ould:Wall1 ;
     ould:hasSuccessor ould:Update2 ;
-    ould:hasIFCID "ifc:Wall1" ;  # Fix
-    ould:hasHash "def456" ;  # Fix
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "def456" ;
     ould:hasNewTime "2025-03-01"^^xsd:date ;
     ould:hasPreviousTime "2025-02-28"^^xsd:date ;
     ould:hasNewHash "def456" ;
     ould:hasPreviousHash "abc123" .
 
 ould:Chain1 a ould:UpdateChain ;
-    ould:hasUpdate ould:Update1 ;  # Fix: Nur Updates, keine ChainElements
+    ould:hasUpdate ould:Update1 ;  # Nur Update, kein ChainElement
     time:hasBeginning "2025-03-01"^^xsd:date ;
-    time:hasEnd "2025-03-03"^^xsd:date ;
+    time:hasEnd "2025-03-01"^^xsd:date ;  # Fix: Passt zu Update1
     ould:hasNextChain ould:Chain2 .
 
 ould:Chain2 a ould:UpdateChain ;
-    ould:hasUpdate ould:UpdateReplacement1 ;  # Fix
+    ould:hasUpdate ould:UpdateReplacement1 ;
     time:hasBeginning "2025-03-10"^^xsd:date ;
     time:hasEnd "2025-03-10"^^xsd:date ;
     ould:hasPreviousChain ould:Chain1 .
@@ -40,29 +40,20 @@ ould:Chain2 a ould:UpdateChain ;
 ould:Update2 a ould:Update ;
     time:hasTime "2025-03-03"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event2 ;
-    ould:hasUpdatedValue ould:Wall1 ;  # Fix
+    ould:hasUpdatedValue ould:Wall1 ;
     ould:hasPredecessor ould:Update1 ;
     ould:hasSuccessor ould:UpdateReplacement1 ;
-    ould:hasIFCID "ifc:Wall1" ;  # Fix
-    ould:hasHash "ghi789" .  # Fix
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "ghi789" .
 
 ould:Wall2 a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Wall2" ;
     ould:hasHash "xyz789" ;
-    ould:hasUpdate ould:Update2 .  # Fix: Update statt UpdateReplacement
+    ould:hasUpdate ould:Update2 .
 
 ould:UpdateReplacement1 a ould:UpdateReplacement ;
     time:hasTime "2025-03-10"^^xsd:date ;
     ould:hasPredecessor ould:Update2 ;
     ould:hasNewIFCID "ifc:Wall2" ;
     ould:hasPreviousIFCID "ifc:Wall1" ;
-    ould:hasNewHash "xyz789" ;
-    ould:hasPreviousHash "ghi789" ;
-    ould:hasUpdatedEvent ould:Event3 ;
-    ould:hasUpdatedValue ould:Wall2 ;  # Fix
-    ould:hasIFCID "ifc:Wall2" ;  # Fix
-    ould:hasHash "xyz789" .  # Fix
-
-ould:Event1 a time:TemporalEntity .
-ould:Event2 a time:TemporalEntity .
-ould:Event3 a time:TemporalEntity .
+    ould:hasNewHash "xyz

@@ -379,7 +379,7 @@
         ] ;
         sh:property [
             sh:path ould:hasUpdate ;
-            sh:class ould:UpdateChainElement ;
+            sh:class ould:Update ;
             sh:minCount 1 ;
             sh:maxCount 20 ;
             sh:message "Each UpdateChain must contain between 1 and 20 UpdateChainElements." ;
