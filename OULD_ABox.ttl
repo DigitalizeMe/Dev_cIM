@@ -1,83 +1,68 @@
-@prefix : <http://example.org/> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# UpdatableEntity: Eine IFC-Wand
-:Wall1 a ould:UpdatableEntity ;
+ould:Wall1 a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
-    ould:hasUpdate :Update1, :Update2 ;
-    ould:hasUpdateChain :Chain1 ;
-    ould:hasLinkedData :ExternalDoc1 .
+    ould:hasUpdate ould:Update1, ould:Update2 ;
+    ould:hasUpdateChain ould:Chain1 ;
+    ould:hasLinkedData ould:ExternalDoc1 .
 
-# LinkedData: Externes Dokument
-:ExternalDoc1 a ould:LinkedData ;
+ould:ExternalDoc1 a ould:LinkedData ;
     ould:hasOnlineData <http://example.org/doc1> ;
     ould:hasDataLocation "http://example.org/doc1.pdf" .
 
-# Update: Erste Änderung
-:Update1 a ould:Update ;
+ould:Update1 a ould:Update ;
     time:hasTime "2025-03-01"^^xsd:date ;
-    ould:hasUpdatedEvent :Event1 ;
-    ould:hasSuccessor :Update2 ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;  # Fix
+    ould:hasSuccessor ould:Update2 ;
+    ould:hasIFCID "ifc:Wall1" ;  # Fix
+    ould:hasHash "def456" ;  # Fix
     ould:hasNewTime "2025-03-01"^^xsd:date ;
     ould:hasPreviousTime "2025-02-28"^^xsd:date ;
     ould:hasNewHash "def456" ;
     ould:hasPreviousHash "abc123" .
 
-# UpdateChain und UpdateChainElement
-:Chain1 a ould:UpdateChain ;
-    ould:hasUpdate :UpdateChainElement1, :UpdateChainElement2 ;
+ould:Chain1 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update1 ;  # Fix: Nur Updates, keine ChainElements
     time:hasBeginning "2025-03-01"^^xsd:date ;
     time:hasEnd "2025-03-03"^^xsd:date ;
-    ould:hasNextChain :Chain2 .
+    ould:hasNextChain ould:Chain2 .
 
-:UpdateChainElement1 a ould:UpdateChainElement ;
-    time:hasTime "2025-03-01"^^xsd:date ;
-    ould:hasUpdatedEvent :Event1 ;
-    ould:hasIFCID "ifc:Wall1" ;
-    ould:hasHash "def456" .
-
-:UpdateChainElement2 a ould:UpdateChainElement ; 
-    time:hasTime "2025-03-03"^^xsd:date ;
-    ould:hasUpdatedEvent :Event2 ;
-    ould:hasIFCID "ifc:Wall1" ;
-    ould:hasHash "ghi789" .
-
-:Chain2 a ould:UpdateChain ; #Eine Chain kann nicht aus einem Element entstehen. Hier habe ich den Grund gefunden, warum ich 21 in der Beschreibung hatte! Ich ging davon aus, dass man bis zu 21. Elemente in einer Chain hat, um dann, sobald das 22. Element dazukommt, die erste Chain auf 20 kürzt, um die neue aus 2 Elementen bestehen zu lassen, da ein einzelnes Element keine Kette ist. Das sollten wir noch ausbessern, war aber mein Fehler!
-    ould:hasUpdate :UpdateChainElement3 ;
+ould:Chain2 a ould:UpdateChain ;
+    ould:hasUpdate ould:UpdateReplacement1 ;  # Fix
     time:hasBeginning "2025-03-10"^^xsd:date ;
     time:hasEnd "2025-03-10"^^xsd:date ;
-    ould:hasPreviousChain :Chain1 .
+    ould:hasPreviousChain ould:Chain1 .
 
-:UpdateChainElement3 a ould:UpdateChainElement ;
-    time:hasTime "2025-03-10"^^xsd:date ;
-    ould:hasUpdatedEvent :Event3 .
-
-# Update: Zweite Änderung
-:Update2 a ould:Update ;
+ould:Update2 a ould:Update ;
     time:hasTime "2025-03-03"^^xsd:date ;
-    ould:hasUpdatedEvent :Event2 ;
-    ould:hasPredecessor :Update1 ;
-    ould:hasSuccessor :UpdateReplacement1 .
+    ould:hasUpdatedEvent ould:Event2 ;
+    ould:hasUpdatedValue ould:Wall1 ;  # Fix
+    ould:hasPredecessor ould:Update1 ;
+    ould:hasSuccessor ould:UpdateReplacement1 ;
+    ould:hasIFCID "ifc:Wall1" ;  # Fix
+    ould:hasHash "ghi789" .  # Fix
 
-# UpdateReplacement: Ersetzung von Wall1 durch Wall2
-:Wall2 a ould:UpdatableEntity ;
+ould:Wall2 a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Wall2" ;
     ould:hasHash "xyz789" ;
-    ould:hasUpdate :UpdateReplacement1 .
+    ould:hasUpdate ould:Update2 .  # Fix: Update statt UpdateReplacement
 
-:UpdateReplacement1 a ould:UpdateReplacement ;
+ould:UpdateReplacement1 a ould:UpdateReplacement ;
     time:hasTime "2025-03-10"^^xsd:date ;
-    ould:hasPredecessor :Update2 ;
+    ould:hasPredecessor ould:Update2 ;
     ould:hasNewIFCID "ifc:Wall2" ;
     ould:hasPreviousIFCID "ifc:Wall1" ;
     ould:hasNewHash "xyz789" ;
     ould:hasPreviousHash "ghi789" ;
-    ould:hasUpdatedEvent :Event3 .
+    ould:hasUpdatedEvent ould:Event3 ;
+    ould:hasUpdatedValue ould:Wall2 ;  # Fix
+    ould:hasIFCID "ifc:Wall2" ;  # Fix
+    ould:hasHash "xyz789" .  # Fix
 
-# Temporal Entities
-:Event1 a time:TemporalEntity .
-:Event2 a time:TemporalEntity .
-:Event3 a time:TemporalEntity .
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+ould:Event3 a time:TemporalEntity .
