@@ -1,3 +1,5 @@
+Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
+Inhalt von G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl:
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
@@ -723,4 +725,17 @@ ould:Update a owl:Class ;
     rdfs:label "Update"@en ;
     rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
     rdfs:subClassOf time:Instant .
+
+
+Konformität: False
+Validierungsbericht:
+Validation Report
+Conforms: False
+Results (1):
+Constraint Violation in MaxCountConstraintComponent (http://www.w3.org/ns/shacl#MaxCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:class ould:Update ; sh:maxCount Literal("21", datatype=xsd:integer) ; sh:message Literal("Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ould:hasUpdate ; sh:severity sh:Violation ]
+	Focus Node: ould:Chain1
+	Result Path: ould:hasUpdate
+	Message: Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements.
 

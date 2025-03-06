@@ -475,42 +475,27 @@
             """ ;
         ] .
 
-    oush:UpdateChainOverflowConstraint a sh:NodeShape ;
-        sh:targetClass ould:UpdateChain ;
-        sh:sparql [
-            a sh:SPARQLConstraint ;
-            sh:message "An UpdateChain must not contain more than 21 Updates; create a new chain for additional updates." ;
-            sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
-            sh:select """
-                SELECT $this (COUNT(?update) AS ?count)
-                WHERE {
-                    $this ould:hasUpdate ?update .
-                }
-                GROUP BY $this
-                HAVING (?count > 21)  
-            """
-        ] .
-
-    oush:UpdateChainCreationShape a sh:NodeShape ;
+    oush:UpdateChainContinuityConstraint a sh:NodeShape ;
         sh:targetClass ould:UpdatableEntity ;
         sh:sparql [
             a sh:SPARQLConstraint ;
-            sh:message "If an UpdatableEntity has more than one Update, an UpdateChain must be created or extended." ;
+            sh:message "If an UpdatableEntity has more than 21 Updates in a single chain, they must be split into chains with max 21 Updates each, linked via hasNextChain." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ 
-                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] 
-            ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
             sh:select """
-                SELECT $this (COUNT(?update) AS ?updateCount) ?chain
+                SELECT $this ?chain ?updateCount
                 WHERE {
-                    $this ould:hasUpdate ?update .
-                    OPTIONAL { $this ould:hasUpdateChain ?chain . }
-                    FILTER NOT EXISTS { ?chain ould:hasUpdate ?update . }
+                    $this ould:hasUpdateChain ?chain .
+                    {
+                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            ?chain ould:hasUpdate ?u .
+                        }
+                        GROUP BY $this ?chain
+                        HAVING (?updateCount > 21)
+                    }
                 }
-                GROUP BY $this ?chain
-                HAVING (?updateCount > 1 && !BOUND(?chain))
-            """ ;
+            """
         ] .
 
     oush:UpdateChainElementShape a sh:NodeShape ;
