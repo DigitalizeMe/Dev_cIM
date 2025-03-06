@@ -8,7 +8,7 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#2016> ;
@@ -251,7 +251,7 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain
     ould:UpdateChain rdf:type owl:Class ;
-                rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 20 ould:UpdateChainElement(s) for performance reasons."@en ;
+                rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 21 ould:UpdateChainElement(s) for performance reasons."@en ;
                 rdfs:label "Update Chain"@en .
 
 
@@ -295,33 +295,36 @@
             sh:severity sh:Violation ;
         ] ;
         sh:property [
-            sh:path ould:hasNewTime ;
-            sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:node [ 
-                sh:property [
-                    sh:path ould:hasPreviousTime ;
-                    sh:minCount 1 ;
-                    sh:message "If hasNewTime is specified, hasPreviousTime must also be provided." ;
-                    sh:severity sh:Violation ;
-                ] ;
-            ] ;
-            sh:message "Each Update may have exactly one ould:hasNewTime timestamp." ;
-            sh:severity sh:Violation ;
+        sh:path ould:hasNewTime ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:minCount 0 ;  # Optional
+        sh:message "Each Update may have at most one ould:hasNewTime timestamp." ;
+        sh:severity sh:Violation
         ] ;
         sh:property [
             sh:path ould:hasPreviousTime ;
+            sh:datatype xsd:date ;
             sh:maxCount 1 ;
-            sh:node [ 
-                sh:property [
-                    sh:path ould:hasNewTime ;
-                    sh:minCount 1 ;
-                    sh:message "If hasPreviousTime is specified, hasNewTime must also be provided." ;
-                    sh:severity sh:Violation ;
-                ] ;
-            ] ;
-            sh:message "An Update may have at most one ould:hasPreviousTime value." ;
-            sh:severity sh:Warning ;
+            sh:minCount 0 ;  # Optional
+            sh:message "Each Update may have at most one ould:hasPreviousTime value." ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If hasNewTime is specified, hasPreviousTime must also be provided, and vice versa." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    { $this ould:hasNewTime ?newTime . 
+                    FILTER NOT EXISTS { $this ould:hasPreviousTime ?prevTime . } }
+                    UNION
+                    { $this ould:hasPreviousTime ?prevTime . 
+                    FILTER NOT EXISTS { $this ould:hasNewTime ?newTime . } }
+                }
+            """
         ] ;
         sh:property [
             sh:path ould:hasUpdatedEvent ;
@@ -381,8 +384,8 @@
             sh:path ould:hasUpdate ;
             sh:class ould:Update ;
             sh:minCount 1 ;
-            sh:maxCount 20 ;
-            sh:message "Each UpdateChain must contain between 1 and 20 UpdateChainElements." ;
+            sh:maxCount 21 ;
+            sh:message "Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -472,11 +475,11 @@
             """ ;
         ] .
 
-    oush:UpdateChainSizeConstraint a sh:NodeShape ;
+    oush:UpdateChainOverflowConstraint a sh:NodeShape ;
         sh:targetClass ould:UpdateChain ;
         sh:sparql [
             a sh:SPARQLConstraint ;
-            sh:message "An UpdateChain must not contain more than 20 UpdateChainElements." ;
+            sh:message "An UpdateChain must not contain more than 21 Updates; create a new chain for additional updates." ;
             sh:severity sh:Violation ;
             sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
             sh:select """
@@ -485,8 +488,8 @@
                     $this ould:hasUpdate ?update .
                 }
                 GROUP BY $this
-                HAVING (?count > 20)
-            """ ;
+                HAVING (?count > 21)  
+            """
         ] .
 
     oush:UpdateChainCreationShape a sh:NodeShape ;
@@ -553,6 +556,31 @@
             sh:maxCount 1 ;
             sh:message "An UpdateChainElement may have at most one ould:hasPreviousTime value." ;
             sh:severity sh:Warning ;
+        ] .
+
+    oush:UpdateChainContinuityConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain. After split, the old chain must have max 20 Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?chain ?updateCount
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    $this ould:hasUpdateChain ?chain .
+                    {
+                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?chain ould:hasUpdate ?u .
+                        }
+                        GROUP BY $this ?chain
+                        HAVING (?updateCount > 21)  
+                    }
+                }
+            """
         ] .
 
     oush:UpdatableEntityBaselineShape a sh:NodeShape ;

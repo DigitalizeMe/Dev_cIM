@@ -2,17 +2,27 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+# UpdatableEntity mit mehreren Chains
 ould:Wall1 a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdate ould:Update1, ould:Update2 ;
-    ould:hasUpdateChain ould:Chain1 ;
+    ould:hasUpdateChain ould:Chain1, ould:Chain2 ;
     ould:hasLinkedData ould:ExternalDoc1 .
 
+# LinkedData
 ould:ExternalDoc1 a ould:LinkedData ;
     ould:hasOnlineData <http://example.org/doc1> ;
     ould:hasDataLocation "http://example.org/doc1.pdf" .
 
+# Erste Kette mit 20 Updates (hier 3 für Übersicht)
+ould:Chain1 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update1, ould:Update2, ould:UpdateChainEl1 ;  # Eigentlich 20
+    time:hasBeginning "2025-03-01"^^xsd:date ;
+    time:hasEnd "2025-03-03"^^xsd:date ;
+    ould:hasNextChain ould:Chain2 .
+
+# Update 1
 ould:Update1 a ould:Update ;
     time:hasTime "2025-03-01"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event1 ;
@@ -25,35 +35,61 @@ ould:Update1 a ould:Update ;
     ould:hasNewHash "def456" ;
     ould:hasPreviousHash "abc123" .
 
-ould:Chain1 a ould:UpdateChain ;
-    ould:hasUpdate ould:Update1 ;  # Nur Update, kein ChainElement
-    time:hasBeginning "2025-03-01"^^xsd:date ;
-    time:hasEnd "2025-03-01"^^xsd:date ;  # Fix: Passt zu Update1
-    ould:hasNextChain ould:Chain2 .
-
-ould:Chain2 a ould:UpdateChain ;
-    ould:hasUpdate ould:UpdateReplacement1 ;
-    time:hasBeginning "2025-03-10"^^xsd:date ;
-    time:hasEnd "2025-03-10"^^xsd:date ;
-    ould:hasPreviousChain ould:Chain1 .
-
+# Update 2
 ould:Update2 a ould:Update ;
-    time:hasTime "2025-03-03"^^xsd:date ;
+    time:hasTime "2025-03-02"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event2 ;
     ould:hasUpdatedValue ould:Wall1 ;
     ould:hasPredecessor ould:Update1 ;
-    ould:hasSuccessor ould:UpdateReplacement1 ;
     ould:hasIFCID "ifc:Wall1" ;
     ould:hasHash "ghi789" .
 
+# UpdateChainElement
+ould:UpdateChainEl1 a ould:UpdateChainElement ;
+    time:hasTime "2025-03-03"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event3 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "jkl012" .
+
+# Zweite Kette mit 2 Updates (nach Split-Szenario)
+ould:Chain2 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update21, ould:UpdateReplacement1 ;
+    time:hasBeginning "2025-03-04"^^xsd:date ;
+    time:hasEnd "2025-03-05"^^xsd:date ;
+    ould:hasPreviousChain ould:Chain1 .
+
+# Update 21 (ehemals letztes Glied der alten Kette)
+ould:Update21 a ould:Update ;
+    time:hasTime "2025-03-04"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event4 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "mno345" ;
+    ould:hasSuccessor ould:UpdateReplacement1 .
+
+# UpdateReplacement (als 22.)
+ould:UpdateReplacement1 a ould:UpdateReplacement ;
+    time:hasTime "2025-03-05"^^xsd:date ;
+    ould:hasPredecessor ould:Update21 ;
+    ould:hasNewIFCID "ifc:Wall2" ;
+    ould:hasPreviousIFCID "ifc:Wall1" ;
+    ould:hasNewHash "xyz789" ;
+    ould:hasPreviousHash "mno345" ;
+    ould:hasUpdatedEvent ould:Event5 ;
+    ould:hasUpdatedValue ould:Wall2 ;
+    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasHash "xyz789" .
+
+# Zweites UpdatableEntity
 ould:Wall2 a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Wall2" ;
     ould:hasHash "xyz789" ;
-    ould:hasUpdate ould:Update2 .
+    ould:hasUpdate ould:UpdateReplacement1 .
 
-ould:UpdateReplacement1 a ould:UpdateReplacement ;
-    time:hasTime "2025-03-10"^^xsd:date ;
-    ould:hasPredecessor ould:Update2 ;
-    ould:hasNewIFCID "ifc:Wall2" ;
-    ould:hasPreviousIFCID "ifc:Wall1" ;
-    ould:hasNewHash "xyz
+# Temporal Entities
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+ould:Event3 a time:TemporalEntity .
+ould:Event4 a time:TemporalEntity .
+ould:Event5 a time:TemporalEntity .
