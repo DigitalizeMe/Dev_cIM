@@ -1,0 +1,34 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdateChain ould:Chain1 .
+
+ould:Chain1 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update1, ould:Update2 ;
+    time:hasBeginning "2025-03-03"^^xsd:date ;  # Fehler: Später als frühestes Update
+    time:hasEnd "2025-03-01"^^xsd:date .       # Fehler: Früher als spätestes Update
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-01"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "def456" .
+
+ould:Update2 a ould:Update ;
+    time:hasTime "2025-03-02"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event2 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "ghi789" .
+
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 2
+# - Violation bei UpdateChainShape: "time:hasBeginning must match the earliest time:hasTime of its Updates."
+# - Violation bei UpdateChainShape: "time:hasEnd must match the latest time:hasTime of its Updates."

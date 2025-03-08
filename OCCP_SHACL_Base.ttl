@@ -1,0 +1,38 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+osh:GeneralTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:property [
+        sh:path ( time:hasBeginning time:hasEnd time:hasTime ) ;
+        sh:class time:Instant ;
+        sh:minCount 1 ;
+        sh:message "Mindestens ein Instant für Beginning, End oder Time erforderlich." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path ( occp:hasActualBeginning occp:hasActualEnd occp:hasActualTime ) ;
+        sh:class time:Instant ;
+        sh:maxCount 1 ;
+        sh:message "Maximal ein tatsächlicher Zeitpunkt erlaubt." ;
+        sh:severity sh:Violation ;
+    ] .
+
+osh:InstantTimeShape a sh:NodeShape ;
+    sh:targetClass time:Instant ;
+    sh:property [
+        sh:path occp:hasActualTime ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:message "Maximal ein tatsächlicher Zeitstempel erlaubt." ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasEstimatedTime ;
+        sh:datatype xsd:date ;
+        sh:message "Geschätzte Zeitstempel müssen im Format YYYY-MM-DD sein." ;
+        sh:severity sh:Violation ;
+    ] .

@@ -238,6 +238,7 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity
     ould:UpdatableEntity rdf:type owl:Class ;
+                         owl:disjointWith ould:UpdateChain ;
                          rdfs:comment "A superclass representing any entity that can undergo updates. This includes IFC components, MsOCCP records, temporal entities and other objects that require chronological modification tracking, e.g., attached or linked data."@en ;
                          rdfs:label "Updatable Entity"@en .
 
@@ -251,6 +252,7 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain
     ould:UpdateChain rdf:type owl:Class ;
+                owl:disjointWith ould:UpdatableEntity ;
                 rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 21 ould:UpdateChainElement(s) for performance reasons."@en ;
                 rdfs:label "Update Chain"@en .
 
@@ -476,25 +478,17 @@
         ] .
 
     oush:UpdateChainContinuityConstraint a sh:NodeShape ;
-        sh:targetClass ould:UpdatableEntity ;
+        sh:targetClass ould:UpdateChain ;
         sh:sparql [
-            a sh:SPARQLConstraint ;
-            sh:message "If an UpdatableEntity has more than 21 Updates in a single chain, they must be split into chains with max 21 Updates each, linked via hasNextChain." ;
-            sh:severity sh:Violation ;
+            sh:message "An UpdateChain must not contain more than 21 Updates." ;
             sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
             sh:select """
-                SELECT $this ?chain ?updateCount
+                SELECT $this
                 WHERE {
-                    $this ould:hasUpdateChain ?chain .
-                    {
-                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
-                        WHERE {
-                            ?chain ould:hasUpdate ?u .
-                        }
-                        GROUP BY $this ?chain
-                        HAVING (?updateCount > 21)
-                    }
+                    $this ould:hasUpdate ?u .
                 }
+                GROUP BY $this
+                HAVING (COUNT(?u) > 21)
             """
         ] .
 
@@ -632,13 +626,17 @@
         ] .
 
     oush:PredecessorConstraint a sh:NodeShape ;
-        sh:targetSubjectsOf ould:hasPredecessor ;
-        sh:property [
-            sh:path ould:hasPredecessor ;
-            sh:class ould:Update ;
-            sh:minCount 1 ;
-            sh:message "Each ould:UpdateReplacement must reference at least one predecessor ould:Update." ;
-            sh:severity sh:Violation ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:sparql [
+            sh:message "Each UpdateReplacement must reference a valid predecessor Update that exists." ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this a ould:UpdateReplacement .
+                    FILTER NOT EXISTS { $this ould:hasPredecessor ?pred . }
+                }
+            """
         ] .
 
     oush:SuccessorConstraint a sh:NodeShape ;
@@ -682,3 +680,17 @@
             sh:severity sh:Violation ;
         ] .
 
+oush:SimpleTestShape a sh:NodeShape ;
+    sh:targetClass ould:UpdateChain ;
+    sh:sparql [
+        sh:message "Test: Chains mit mehr als 5 Updates." ;
+        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+        sh:select """
+            SELECT $this (COUNT(?u) AS ?updateCount)
+            WHERE {
+                $this ould:hasUpdate ?u .
+            }
+            GROUP BY $this
+            HAVING (?updateCount > 5)
+        """
+    ] .

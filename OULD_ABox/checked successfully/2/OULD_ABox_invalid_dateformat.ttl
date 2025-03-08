@@ -1,0 +1,20 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdate ould:Update1 .
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-05 12:00"^^xsd:dateTime ;  # Fehler: Falsches Format (sollte xsd:date sein)
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "def456" .
+
+ould:Event1 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 1
+# - Violation bei GeneralDatePropertyShape: "The date must be in the format YYYY-MM-DD."

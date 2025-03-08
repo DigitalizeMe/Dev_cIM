@@ -1,0 +1,39 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdate ould:Update1 .
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-05"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "def456" ;
+    ould:hasSuccessor ould:UpdateReplacement1 .
+
+ould:UpdateReplacement1 a ould:UpdateReplacement ;
+    time:hasTime "2025-03-06"^^xsd:date ;
+    ould:hasPredecessor ould:Update1 ;
+    ould:hasNewIFCID "ifc:Wall2" ;
+    ould:hasPreviousIFCID "ifc:Wall1" ;
+    ould:hasNewHash "xyz789" ;
+    ould:hasPreviousHash "def456" ;
+    ould:hasUpdatedEvent ould:Event2 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasHash "xyz789" .
+
+ould:Wall2 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasHash "xyz789" ;
+    ould:hasUpdate ould:UpdateReplacement1 .
+
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 0
+# - Keine Violations, alles korrekt.

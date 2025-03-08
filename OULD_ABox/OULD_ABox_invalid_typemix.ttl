@@ -1,0 +1,22 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Chain2 a ould:UpdateChain, ould:UpdatableEntity ;  # Fehler: Disjunkte Klassen
+    ould:hasUpdate ould:Update1 ;
+    time:hasBeginning "2025-03-01"^^xsd:date ;
+    time:hasEnd "2025-03-01"^^xsd:date ;
+    ould:hasIFCID "ifc:Chain2" ;
+    ould:hasHash "abc123" .
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-01"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Chain2 ;
+    ould:hasIFCID "ifc:Chain2" ;
+    ould:hasHash "def456" .
+
+ould:Event1 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: Keine direkte Violation (da Disjunktheit OWL ist, nicht SHACL), aber prüft Reasoning-Konsistenz.
+# - Hinweis: Wenn Pellet Reasoning aktiviert ist, sollte es einen Konflikt melden (loggen prüfen).

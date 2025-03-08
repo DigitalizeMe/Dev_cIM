@@ -1,741 +1,421 @@
-Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
-Inhalt von G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl:
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
-@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix time: <http://www.w3.org/2006/time#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-
-<http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD> a owl:Ontology ;
-    rdfs:comment "First workaround to implement OCCP-based updates and version control features."@en ;
-    owl:imports occp:,
-        time:2016 .
-
-ould:hasDataLocation a owl:DatatypeProperty ;
-    rdfs:label "has data location"@en ;
-    rdfs:comment "The data property \"hasDataLocation\" specifies the location of the linked data and is used in conjunction with ould:hasOnlineData or ould:hasOfflineData to specify the exact location. It can be a URI (for online storage) or a local file path (for offline storage)."@en ;
-    rdfs:domain ould:LinkedData ;
-    rdfs:range xsd:string .
-
-ould:hasNewHash a owl:DatatypeProperty ;
-    rdfs:label "has new hash"@en ;
-    rdfs:comment "The data property \"hasNewHash\" is used to update an existing hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasPreviousHash."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf ould:hasHash .
-
-ould:hasNewIFCID a owl:DatatypeProperty ;
-    rdfs:label "has new IFC ID"@en ;
-    rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf ould:hasIFCID .
-
-ould:hasOfflineData a owl:DatatypeProperty ;
-    rdfs:label "has offline data"@en ;
-    rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf ould:hasLinkedData .
-
-ould:hasOnlineData a owl:DatatypeProperty ;
-    rdfs:label "has online data"@en ;
-    rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:anyURI ;
-    rdfs:subPropertyOf ould:hasLinkedData .
-
-ould:hasPreviousHash a owl:DatatypeProperty ;
-    rdfs:label "has previous hash"@en ;
-    rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasNewHash."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf ould:hasHash .
-
-ould:hasPreviousIFCID a owl:DatatypeProperty ;
-    rdfs:label "has previous IFC ID"@en ;
-    rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string ;
-    rdfs:subPropertyOf ould:hasIFCID .
-
-ould:hasUpdateChain a owl:ObjectProperty ;
-    rdfs:label "has update chain"@en ;
-    rdfs:comment "The object property \"hasUpdateChain\" links an UpdatableEntity to an \"UpdateChain\", grouping multiple related Updates (in contrast to ould:hasUpdate for single Updates)."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range ould:UpdateChain .
-
-oush:PredecessorConstraint a sh:NodeShape ;
-    sh:property [ sh:class ould:Update ;
-            sh:message "Each ould:UpdateReplacement must reference at least one predecessor ould:Update." ;
-            sh:minCount 1 ;
-            sh:path ould:hasPredecessor ;
-            sh:severity sh:Violation ] ;
-    sh:targetSubjectsOf ould:hasPredecessor .
-
-oush:ReplacementChronologyConstraint a sh:NodeShape ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "The successor UpdateReplacement must have a later timestamp than its predecessor Update." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this ?prevTime ?newTime
-                WHERE {
-                    $this ould:hasPredecessor ?prevUpdate .
-                    ?prevUpdate time:hasTime ?prevTime .
-                    $this time:hasTime ?newTime .
-                    FILTER (?prevTime > ?newTime) 
-                }
-            """ ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:UpdateReplacement .
-
-oush:SuccessorConstraint a sh:NodeShape ;
-    sh:property [ sh:class ould:Update ;
-            sh:maxCount 1 ;
-            sh:message "Each ould:Update may reference at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
-            sh:minCount 0 ;
-            sh:path ould:hasSuccessor ;
-            sh:severity sh:Violation ] ;
-    sh:targetSubjectsOf ould:hasSuccessor .
-
-oush:UpdatableEntityBaselineShape a sh:NodeShape ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCID and hasHash." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this
-                WHERE {
-                    $this ould:hasUpdate ?update .
-                    FILTER NOT EXISTS { ?update ould:hasIFCID ?ifcid . }
-                    FILTER NOT EXISTS { ?update ould:hasHash ?hash . }
-                }
-            """ ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:UpdatableEntity .
-
-oush:UpdateChainContinuityConstraint a sh:NodeShape ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "If an UpdatableEntity has more than 21 Updates in a single chain, they must be split into chains with max 21 Updates each, linked via hasNextChain." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this ?chain ?updateCount
-                WHERE {
-                    $this ould:hasUpdateChain ?chain .
-                    {
-                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
-                        WHERE {
-                            ?chain ould:hasUpdate ?u .
-                        }
-                        GROUP BY $this ?chain
-                        HAVING (?updateCount > 21)
-                    }
-                }
-            """ ;
-            sh:severity sh:Violation ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain. After split, the old chain must have max 20 Updates." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this ?chain ?updateCount
-                WHERE {
-                    $this ould:hasUpdate ?update .
-                    $this ould:hasUpdateChain ?chain .
-                    {
-                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
-                        WHERE {
-                            $this ould:hasUpdate ?u .
-                            ?chain ould:hasUpdate ?u .
-                        }
-                        GROUP BY $this ?chain
-                        HAVING (?updateCount > 21)  
-                    }
-                }
-            """ ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:UpdatableEntity .
-
-oush:UpdateChainElementShape a sh:NodeShape ;
-    sh:property [ sh:maxCount 1 ;
-            sh:message "Each UpdateChainElement must have exactly one time:hasTime timestamp." ;
-            sh:minCount 1 ;
-            sh:path time:hasTime ;
-            sh:severity sh:Violation ],
-        [ sh:maxCount 1 ;
-            sh:message "Each UpdateChainElement must reference exactly one updated event (time:instant or time:interval)." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdatedEvent ;
-            sh:severity sh:Violation ],
-        [ sh:maxCount 2 ;
-            sh:message "Each UpdateChainElement can be linked to max. two IFC components via ould:hasIFCID." ;
-            sh:minCount 0 ;
-            sh:path ould:hasIFCID ;
-            sh:severity sh:Violation ],
-        [ sh:maxCount 2 ;
-            sh:message "Each UpdateChainElement can have max. two recorded hash values via ould:hasHash." ;
-            sh:minCount 0 ;
-            sh:path ould:hasHash ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:message "Each UpdateChainElement can have at most one ould:hasNewTime timestamp in xsd:date format." ;
-            sh:minCount 0 ;
-            sh:path ould:hasNewTime ;
-            sh:severity sh:Violation ],
-        [ sh:maxCount 1 ;
-            sh:message "An UpdateChainElement may have at most one ould:hasPreviousTime value." ;
-            sh:path ould:hasPreviousTime ;
-            sh:severity sh:Warning ] ;
-    sh:targetClass ould:UpdateChainElement .
-
-oush:UpdateChainShape a sh:NodeShape ;
-    sh:property [ sh:class ould:UpdateChain ;
-            sh:maxCount 1 ;
-            sh:message "Each UpdateChain may be linked to at most one next chain." ;
-            sh:path ould:hasNextChain ;
-            sh:severity sh:Violation ],
-        [ sh:class ould:UpdateChain ;
-            sh:maxCount 1 ;
-            sh:message "Each UpdateChain may be linked to at most one previous chain." ;
-            sh:path ould:hasPreviousChain ;
-            sh:severity sh:Violation ],
-        [ sh:class ould:Update ;
-            sh:maxCount 21 ;
-            sh:message "Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdate ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:message "Each UpdateChain must have a beginning in format xsd:date." ;
-            sh:minCount 1 ;
-            sh:path time:hasBeginning ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:message "Each UpdateChain must have a End in format xsd:date." ;
-            sh:minCount 1 ;
-            sh:path time:hasEnd ;
-            sh:severity sh:Violation ] ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "time:hasBeginning must match the earliest time:hasTime of its Updates." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ],
-                        [ sh:namespace "http://www.w3.org/2006/time#" ;
-                            sh:prefix "time" ] ] ;
-            sh:select """
-            SELECT $this ?begin ?earliest
-            WHERE {
-                $this time:hasBeginning ?begin .
-                $this ould:hasUpdate ?update .
-                ?update time:hasTime ?updateTime .
-                {
-                    SELECT $this (MIN(?time) AS ?earliest)
-                    WHERE {
-                        $this ould:hasUpdate ?u .
-                        ?u time:hasTime ?time .
-                    }
-                    GROUP BY $this
-                }
-                FILTER (?begin != ?earliest)
-            }
-        """ ;
-            sh:severity sh:Violation ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "time:hasEnd must match the latest time:hasTime of its Updates." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ],
-                        [ sh:namespace "http://www.w3.org/2006/time#" ;
-                            sh:prefix "time" ] ] ;
-            sh:select """
-                SELECT $this ?end ?latest
-                WHERE {
-                    $this time:hasEnd ?end .
-                    $this ould:hasUpdate ?update .
-                    ?update time:hasTime ?updateTime .
-                    {
-                        SELECT $this (MAX(?time) AS ?latest)
-                        WHERE {
-                            $this ould:hasUpdate ?u .
-                            ?u time:hasTime ?time .
-                        }
-                        GROUP BY $this
-                    }
-                    FILTER (?end != ?latest)
-                }
-            """ ;
-            sh:severity sh:Violation ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "An UpdateChain must contain all Updates of its UpdatableEntity once it exists." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this ?entity ?update
-                WHERE {
-                    ?entity ould:hasUpdateChain $this .
-                    ?entity ould:hasUpdate ?update .
-                    FILTER NOT EXISTS { $this ould:hasUpdate ?update . }
-                    {
-                        SELECT ?entity (COUNT(?u) AS ?updateCount)
-                        WHERE {
-                            ?entity ould:hasUpdate ?u .
-                        }
-                        GROUP BY ?entity
-                        HAVING (?updateCount > 1)
-                    }
-                }
-            """ ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:UpdateChain .
-
-oush:UpdateEntityShape a sh:NodeShape ;
-    sh:property [ sh:class ould:Update ;
-            sh:message "Each entity with an update must be linked to at least one ould:Update instance." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdate ;
-            sh:severity sh:Violation ] ;
-    sh:targetSubjectsOf ould:hasUpdate .
-
-oush:UpdateReplacementShape a sh:NodeShape ;
-    sh:property [ sh:maxCount 1 ;
-            sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
-            sh:minCount 1 ;
-            sh:path time:hasTime ;
-            sh:severity sh:Violation ],
-        [ sh:class ould:Update ;
-            sh:message "Each UpdateReplacement must reference at least one predecessor Update via ould:hasPredecessor." ;
-            sh:minCount 1 ;
-            sh:path ould:hasPredecessor ;
-            sh:severity sh:Violation ],
-        [ sh:class ould:Update ;
-            sh:maxCount 1 ;
-            sh:message "An UpdateReplacement may have at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
-            sh:minCount 0 ;
-            sh:path ould:hasSuccessor ;
-            sh:severity sh:Violation ],
-        oush:GeneralDatePropertyShape ;
-    sh:targetClass ould:UpdateReplacement .
-
-oush:UpdateShape a sh:NodeShape ;
-    sh:property [ sh:maxCount 1 ;
-            sh:message "Each Update must have exactly one time stamp (time:hasTime) - min./max. count = 1." ;
-            sh:minCount 1 ;
-            sh:path time:hasTime ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:message "Each Update may have at most one ould:hasNewTime timestamp." ;
-            sh:minCount 0 ;
-            sh:path ould:hasNewTime ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:date ;
-            sh:maxCount 1 ;
-            sh:message "Each Update may have at most one ould:hasPreviousTime value." ;
-            sh:minCount 0 ;
-            sh:path ould:hasPreviousTime ;
-            sh:severity sh:Violation ],
-        [ sh:maxCount 1 ;
-            sh:message "Each Update must reference exactly one updated event (time:instant or time:interval)." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdatedEvent ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-            sh:message "Each Update can only be linked to one IFC component via ould:hasIFCID." ;
-            sh:minCount 0 ;
-            sh:path ould:hasIFCID ;
-            sh:severity sh:Violation ],
-        [ sh:datatype xsd:string ;
-            sh:maxCount 1 ;
-            sh:message "Each Update can be linked to at most one IFC component's hash value via ould:hasHash." ;
-            sh:minCount 0 ;
-            sh:path ould:hasHash ;
-            sh:severity sh:Violation ],
-        oush:GeneralDatePropertyShape ;
-    sh:sparql [ a sh:SPARQLConstraint ;
-            sh:message "If hasNewTime is specified, hasPreviousTime must also be provided, and vice versa." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this
-                WHERE {
-                    { $this ould:hasNewTime ?newTime . 
-                    FILTER NOT EXISTS { $this ould:hasPreviousTime ?prevTime . } }
-                    UNION
-                    { $this ould:hasPreviousTime ?prevTime . 
-                    FILTER NOT EXISTS { $this ould:hasNewTime ?newTime . } }
-                }
-            """ ;
-            sh:severity sh:Violation ],
-        [ a sh:SPARQLConstraint ;
-            sh:message "hasNewTime must be later than hasPreviousTime if both exist." ;
-            sh:prefixes [ sh:declare [ sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ;
-                            sh:prefix "ould" ] ] ;
-            sh:select """
-                SELECT $this ?prevTime ?newTime
-                WHERE {
-                    $this ould:hasPreviousTime ?prevTime .
-                    $this ould:hasNewTime ?newTime .
-                    FILTER (?newTime <= ?prevTime)
-                }
-            """ ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:Update .
-
-oush:UpdatedEventShape a sh:NodeShape ;
-    sh:property [ sh:class time:TemporalEntity ;
-            sh:maxCount 1 ;
-            sh:message "Each update must be linked to exactly one modified temporal entity (e.g., phase, cycle, transition, or instant)." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdatedEvent ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:Update .
-
-oush:UpdatedValueShape a sh:NodeShape ;
-    sh:property [ sh:message "Each update must reference at least one modified entity (e.g., IFC component, phase, or instant)." ;
-            sh:minCount 1 ;
-            sh:path ould:hasUpdatedValue ;
-            sh:severity sh:Violation ] ;
-    sh:targetClass ould:Update .
-
-ould:Chain1 a ould:UpdateChain ;
-    ould:hasUpdate ould:Update1,
-        ould:Update10,
-        ould:Update11,
-        ould:Update12,
-        ould:Update13,
-        ould:Update14,
-        ould:Update15,
-        ould:Update16,
-        ould:Update17,
-        ould:Update18,
-        ould:Update19,
-        ould:Update2,
-        ould:Update20,
-        ould:Update21,
-        ould:Update22,
-        ould:Update3,
-        ould:Update4,
-        ould:Update5,
-        ould:Update6,
-        ould:Update7,
-        ould:Update8,
-        ould:Update9 ;
-    time:hasBeginning "2025-03-01"^^xsd:date ;
-    time:hasEnd "2025-03-22"^^xsd:date .
-
-ould:Event1 a time:TemporalEntity .
-
-ould:Event10 a time:TemporalEntity .
-
-ould:Event11 a time:TemporalEntity .
-
-ould:Event12 a time:TemporalEntity .
-
-ould:Event13 a time:TemporalEntity .
-
-ould:Event14 a time:TemporalEntity .
-
-ould:Event15 a time:TemporalEntity .
-
-ould:Event16 a time:TemporalEntity .
-
-ould:Event17 a time:TemporalEntity .
-
-ould:Event18 a time:TemporalEntity .
-
-ould:Event19 a time:TemporalEntity .
-
-ould:Event2 a time:TemporalEntity .
-
-ould:Event20 a time:TemporalEntity .
-
-ould:Event21 a time:TemporalEntity .
-
-ould:Event22 a time:TemporalEntity .
-
-ould:Event3 a time:TemporalEntity .
-
-ould:Event4 a time:TemporalEntity .
-
-ould:Event5 a time:TemporalEntity .
-
-ould:Event6 a time:TemporalEntity .
-
-ould:Event7 a time:TemporalEntity .
-
-ould:Event8 a time:TemporalEntity .
-
-ould:Event9 a time:TemporalEntity .
-
-ould:Update1 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event1 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-01"^^xsd:date .
-
-ould:Update10 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event10 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-10"^^xsd:date .
-
-ould:Update11 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event11 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-11"^^xsd:date .
-
-ould:Update12 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event12 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-12"^^xsd:date .
-
-ould:Update13 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event13 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-13"^^xsd:date .
-
-ould:Update14 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event14 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-14"^^xsd:date .
-
-ould:Update15 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event15 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-15"^^xsd:date .
-
-ould:Update16 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event16 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-16"^^xsd:date .
-
-ould:Update17 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event17 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-17"^^xsd:date .
-
-ould:Update18 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event18 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-18"^^xsd:date .
-
-ould:Update19 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event19 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-19"^^xsd:date .
-
-ould:Update2 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event2 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-02"^^xsd:date .
-
-ould:Update20 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event20 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-20"^^xsd:date .
-
-ould:Update21 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event21 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-21"^^xsd:date .
-
-ould:Update22 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event22 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-22"^^xsd:date .
-
-ould:Update3 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event3 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-03"^^xsd:date .
-
-ould:Update4 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event4 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-04"^^xsd:date .
-
-ould:Update5 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event5 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-05"^^xsd:date .
-
-ould:Update6 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event6 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-06"^^xsd:date .
-
-ould:Update7 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event7 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-07"^^xsd:date .
-
-ould:Update8 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event8 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-08"^^xsd:date .
-
-ould:Update9 a ould:Update ;
-    ould:hasUpdatedEvent ould:Event9 ;
-    ould:hasUpdatedValue ould:Wall1 ;
-    time:hasTime "2025-03-09"^^xsd:date .
-
-ould:UpdateChainElement a owl:Class ;
-    rdfs:label "Update Chain Element"@en ;
-    rdfs:comment "The class \"UpdateChainElement\" represents an update that is part of an \"UpdateChain\". It maintains sequential tracking of updates, ensuring chronological integrity of changes to IFC components and other time-bound entities."@en ;
-    rdfs:subClassOf ould:Update .
-
-ould:hasNewValue a owl:ObjectProperty ;
-    rdfs:label "has new value"@en ;
-    rdfs:comment "Links an update to the newly recorded value of a modified property."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range owl:Thing ;
-    rdfs:subPropertyOf ould:hasUpdatedValue ;
-    owl:inverseOf ould:hasPreviousValue .
-
-ould:hasPreviousValue a owl:ObjectProperty ;
-    rdfs:label "has previous value"@en ;
-    rdfs:comment "Links an update to the previous recorded value of a modified property."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range owl:Thing ;
-    rdfs:subPropertyOf ould:hasUpdatedValue ;
-    owl:inverseOf ould:hasNewValue .
-
-ould:LinkedData a owl:Class ;
-    rdfs:label "Linked Data"@en ;
-    rdfs:comment "Represents an external dataset, document, or reference that is linked to an IFC component. This class enables structured integration of additional information into the MsOCCP."@en .
-
-ould:UpdateReplacement a owl:Class ;
-    rdfs:label "Update Replacement"@en ;
-    rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCID, ould:hasNewIFCID, ould:hasPreviousHash, and ould:hasNewHash."@en ;
-    rdfs:subClassOf ould:Update .
-
-ould:hasLinkedData a owl:ObjectProperty ;
-    rdfs:label "has linked data"@en ;
-    rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored either online or locally (see also: ould:hasOnlineData and ould:hasOfflineData for online/offline specifics)."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range ould:LinkedData .
-
-ould:hasNextChain a owl:ObjectProperty,
-        owl:TransitiveProperty ;
-    rdfs:label "has next chain"@en ;
-    rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance   to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
-    rdfs:domain ould:UpdateChain ;
-    rdfs:range ould:UpdateChain ;
-    owl:inverseOf ould:hasPreviousChain .
-
-ould:hasPreviousChain a owl:ObjectProperty,
-        owl:TransitiveProperty ;
-    rdfs:label "has previous chain"@en ;
-    rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles, e.g., linking sequential modifications of an IFC component."@en ;
-    rdfs:domain ould:UpdateChain ;
-    rdfs:range ould:UpdateChain ;
-    owl:inverseOf ould:hasNextChain .
-
-oush:GeneralDatePropertyShape a sh:PropertyShape ;
-    sh:datatype xsd:date ;
-    sh:message "The date must be in the format YYYY-MM-DD." ;
-    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ould:hasNewTime ould:hasPreviousTime ) ] ;
-    sh:severity sh:Violation .
-
-ould:hasNewTime a owl:DatatypeProperty ;
-    rdfs:label "has new time"@en ;
-    rdfs:comment "The data property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( ould:Update time:Instant ) ] ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf time:hasTime .
-
-ould:hasPreviousTime a owl:DatatypeProperty ;
-    rdfs:label "has previous time"@en ;
-    rdfs:comment "The data property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
-    rdfs:domain [ a owl:Class ;
-            owl:unionOf ( ould:Update time:Instant ) ] ;
-    rdfs:range xsd:date ;
-    rdfs:subPropertyOf time:hasTime .
-
-ould:hasUpdatedEvent a owl:ObjectProperty ;
-    rdfs:label "has updated event"@en ;
-    rdfs:comment "The object property \"hasUpdatedEvent\" links a temporal entity (phase, cycle, transition, or instant) to an update typically recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range time:TemporalEntity ;
-    rdfs:subPropertyOf ould:hasUpdatedValue .
-
-ould:hasHash a owl:DatatypeProperty ;
-    rdfs:label "has hash"@en ;
-    rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC component to record the current state of a IFC component. The hash value is also used to check for changes of the IFC component."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string .
-
-ould:hasIFCID a owl:DatatypeProperty ;
-    rdfs:label "has IFC ID"@en ;
-    rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range xsd:string .
-
-ould:hasPredecessor a owl:ObjectProperty,
-        owl:TransitiveProperty ;
-    rdfs:label "has predecessor"@en ;
-    rdfs:comment "Links an update to its predecessor, enabling chronological tracking of entity changes (e.g., replacements or modifications). The predecessor is an update entry recording the prior state."@en ;
-    rdfs:domain ould:Update ;
-    rdfs:range ould:Update ;
-    rdfs:subPropertyOf ould:hasUpdate ;
-    owl:inverseOf ould:hasSuccessor .
-
-ould:hasSuccessor a owl:ObjectProperty,
-        owl:TransitiveProperty ;
-    rdfs:label "has successor"@en ;
-    rdfs:comment "Links an update to a subsequent update, enabling chronological tracking of entity changes (e.g., replacements or modifications)."@en ;
-    rdfs:domain ould:Update ;
-    rdfs:range ould:Update ;
-    rdfs:subPropertyOf ould:hasUpdate ;
-    owl:inverseOf ould:hasPredecessor .
-
-ould:hasUpdatedValue a owl:ObjectProperty ;
-    rdfs:label "has updated value"@en ;
-    rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC-ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range owl:Thing .
-
-ould:hasUpdate a owl:ObjectProperty ;
-    rdfs:label "has update"@en ;
-    rdfs:comment "Connects an UpdatableEntity to an existing Update. If a prior Update exists, a new UpdateChain is initiated to track subsequent modifications."@en ;
-    rdfs:domain ould:UpdatableEntity ;
-    rdfs:range ould:Update .
-
-ould:UpdateChain a owl:Class ;
-    rdfs:label "Update Chain"@en ;
-    rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 21 ould:UpdateChainElement(s) for performance reasons."@en .
-
-ould:UpdatableEntity a owl:Class ;
-    rdfs:label "Updatable Entity"@en ;
-    rdfs:comment "A superclass representing any entity that can undergo updates. This includes IFC components, MsOCCP records, temporal entities and other objects that require chronological modification tracking, e.g., attached or linked data."@en .
-
-ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasHash "abc123" ;
-    ould:hasIFCID "ifc:Wall1" ;
-    ould:hasUpdateChain ould:Chain1 .
-
-ould:Update a owl:Class ;
-    rdfs:label "Update"@en ;
-    rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
-    rdfs:subClassOf time:Instant .
-
-
-Konformität: False
-Validierungsbericht:
-Validation Report
+2025-03-08 16:06:16,390 - INFO - Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
+2025-03-08 16:06:16,390 - INFO - Prüfe Ontologie auf Disjunktheit...
+2025-03-08 16:06:16,391 - DEBUG - Disjunkte Klassenpaare: {(rdflib.term.URIRef('http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain'), rdflib.term.URIRef('http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity')), (rdflib.term.URIRef('http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity'), rdflib.term.URIRef('http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain'))}
+2025-03-08 16:06:16,391 - INFO - Keine Disjunktheitsverletzungen gefunden.
+2025-03-08 16:06:16,422 - INFO - Starte SPARQL-Abfrage für alle UpdateChains...
+2025-03-08 16:06:16,552 - INFO - SPARQL-Abfrage Ergebnisse:
+2025-03-08 16:06:16,573 - DEBUG - Versuche Shapes von URI zu laden: file:///G:/Promo/cModeler_Git/cMM/OCCP_Dev2/OULD_V1.0.ttl
+2025-03-08 16:06:16,594 - DEBUG - Running validation in-place, without modifying the DataGraph.
+2025-03-08 16:06:16,594 - DEBUG - Found 13 SHACL Shapes defined with type sh:NodeShape.
+2025-03-08 16:06:16,594 - DEBUG - Found 1 SHACL Shapes defined with type sh:PropertyShape.
+2025-03-08 16:06:16,594 - DEBUG - Found 1 property paths to follow.
+2025-03-08 16:06:16,595 - DEBUG - Found 13 implied SHACL Shapes based on their properties.
+2025-03-08 16:06:16,595 - DEBUG - Found 25 implied SHACL Shapes used as values in shape-expecting constraints.
+2025-03-08 16:06:16,596 - DEBUG - Cached 13 unique NodeShapes and 25 unique PropertyShapes.
+2025-03-08 16:06:16,596 - DEBUG - Validating DataGraph named N015feccd87ce48039a09c9e44790281a
+2025-03-08 16:06:16,596 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> defines its own targets.
+2025-03-08 16:06:16,597 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,597 - DEBUG - Milliseconds to find focus nodes: 0.071ms
+2025-03-08 16:06:16,597 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,597 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>
+2025-03-08 16:06:16,598 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.001ms
+2025-03-08 16:06:16,598 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>
+2025-03-08 16:06:16,598 - DEBUG - Checking conformance for constraint: <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>
+2025-03-08 16:06:16,599 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>
+2025-03-08 16:06:16,599 - DEBUG - Running evaluation of Shape <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>
+2025-03-08 16:06:16,599 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,600 - DEBUG - Running evaluation of Shape <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>
+2025-03-08 16:06:16,600 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.601ms
+2025-03-08 16:06:16,601 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>
+2025-03-08 16:06:16,601 - DEBUG - Checking conformance for constraint: <DatatypeConstraintComponent on <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>>
+2025-03-08 16:06:16,602 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape> -> <DatatypeConstraintComponent on <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>>
+2025-03-08 16:06:16,602 - DEBUG - Milliseconds to check constraint <DatatypeConstraintComponent on <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>>: 0.553ms
+2025-03-08 16:06:16,602 - DEBUG - DataGraph conforms to constraint <DatatypeConstraintComponent on <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>>.
+2025-03-08 16:06:16,603 - DEBUG - Milliseconds to evaluate shape <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape>: 2.902ms
+2025-03-08 16:06:16,603 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b17>
+2025-03-08 16:06:16,603 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,603 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b17>
+2025-03-08 16:06:16,604 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.020ms
+2025-03-08 16:06:16,604 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b17>
+2025-03-08 16:06:16,605 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>
+2025-03-08 16:06:16,605 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b17> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>
+2025-03-08 16:06:16,606 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>: 0.605ms
+2025-03-08 16:06:16,606 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>.
+2025-03-08 16:06:16,606 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>
+2025-03-08 16:06:16,606 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b17> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>
+2025-03-08 16:06:16,606 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>: 0.400ms
+2025-03-08 16:06:16,607 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b17>>.
+2025-03-08 16:06:16,607 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b17>: 3.346ms
+2025-03-08 16:06:16,607 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b18>
+2025-03-08 16:06:16,607 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,608 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b18>
+2025-03-08 16:06:16,608 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.013ms
+2025-03-08 16:06:16,608 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b18>
+2025-03-08 16:06:16,608 - DEBUG - Checking conformance for constraint: <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,609 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b18> -> <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,609 - DEBUG - Milliseconds to check constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>: 0.449ms
+2025-03-08 16:06:16,609 - DEBUG - DataGraph conforms to constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>.
+2025-03-08 16:06:16,609 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,609 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b18> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,610 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>: 0.343ms
+2025-03-08 16:06:16,610 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>.
+2025-03-08 16:06:16,610 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,610 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b18> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>
+2025-03-08 16:06:16,611 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>: 0.334ms
+2025-03-08 16:06:16,611 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b18>>.
+2025-03-08 16:06:16,611 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b18>: 3.175ms
+2025-03-08 16:06:16,611 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b19>
+2025-03-08 16:06:16,611 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,611 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b19>
+2025-03-08 16:06:16,612 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.013ms
+2025-03-08 16:06:16,612 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b19>
+2025-03-08 16:06:16,612 - DEBUG - Checking conformance for constraint: <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,612 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b19> -> <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,613 - DEBUG - Milliseconds to check constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>: 0.336ms
+2025-03-08 16:06:16,613 - DEBUG - DataGraph conforms to constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>.
+2025-03-08 16:06:16,613 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,613 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b19> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,613 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>: 0.347ms
+2025-03-08 16:06:16,614 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>.
+2025-03-08 16:06:16,614 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,614 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b19> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>
+2025-03-08 16:06:16,615 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>: 0.423ms
+2025-03-08 16:06:16,615 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b19>>.
+2025-03-08 16:06:16,615 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b19>: 3.527ms
+2025-03-08 16:06:16,615 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b23>
+2025-03-08 16:06:16,615 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,616 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b23>
+2025-03-08 16:06:16,616 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.024ms
+2025-03-08 16:06:16,616 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b23>
+2025-03-08 16:06:16,616 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>
+2025-03-08 16:06:16,617 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b23> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>
+2025-03-08 16:06:16,617 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>: 0.420ms
+2025-03-08 16:06:16,617 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>.
+2025-03-08 16:06:16,618 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>
+2025-03-08 16:06:16,618 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b23> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>
+2025-03-08 16:06:16,618 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>: 0.336ms
+2025-03-08 16:06:16,618 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b23>>.
+2025-03-08 16:06:16,618 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b23>: 2.499ms
+2025-03-08 16:06:16,619 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b24>
+2025-03-08 16:06:16,619 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,619 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b24>
+2025-03-08 16:06:16,619 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.046ms
+2025-03-08 16:06:16,619 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b24>
+2025-03-08 16:06:16,620 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,620 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b24> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,620 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>: 0.410ms
+2025-03-08 16:06:16,621 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>.
+2025-03-08 16:06:16,621 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,621 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b24> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,621 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>: 0.345ms
+2025-03-08 16:06:16,621 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>.
+2025-03-08 16:06:16,622 - DEBUG - Checking conformance for constraint: <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,622 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b24> -> <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>
+2025-03-08 16:06:16,622 - DEBUG - Milliseconds to check constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>: 0.344ms
+2025-03-08 16:06:16,622 - DEBUG - DataGraph conforms to constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b24>>.
+2025-03-08 16:06:16,622 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b24>: 3.409ms
+2025-03-08 16:06:16,623 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b25>
+2025-03-08 16:06:16,623 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,623 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b25>
+2025-03-08 16:06:16,623 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.017ms
+2025-03-08 16:06:16,623 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b25>
+2025-03-08 16:06:16,624 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,624 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b25> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,624 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>: 0.376ms
+2025-03-08 16:06:16,624 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>.
+2025-03-08 16:06:16,625 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,625 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b25> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,625 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>: 0.343ms
+2025-03-08 16:06:16,625 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>.
+2025-03-08 16:06:16,625 - DEBUG - Checking conformance for constraint: <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,625 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b25> -> <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>
+2025-03-08 16:06:16,626 - DEBUG - Milliseconds to check constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>: 0.348ms
+2025-03-08 16:06:16,626 - DEBUG - DataGraph conforms to constraint <DatatypeConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b25>>.
+2025-03-08 16:06:16,626 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b25>: 3.117ms
+2025-03-08 16:06:16,626 - DEBUG - Milliseconds to check constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>: 27.820ms
+2025-03-08 16:06:16,627 - DEBUG - DataGraph conforms to constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>.
+2025-03-08 16:06:16,629 - DEBUG - Checking conformance for constraint: <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>
+2025-03-08 16:06:16,629 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape> -> <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>
+2025-03-08 16:06:16,670 - DEBUG - Milliseconds to check constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>: 40.930ms
+2025-03-08 16:06:16,671 - DEBUG - DataGraph conforms to constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>>.
+2025-03-08 16:06:16,671 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateShape>: 73.505ms
+2025-03-08 16:06:16,671 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape> defines its own targets.
+2025-03-08 16:06:16,672 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,672 - DEBUG - Milliseconds to find focus nodes: 0.091ms
+2025-03-08 16:06:16,672 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,672 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>
+2025-03-08 16:06:16,673 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.002ms
+2025-03-08 16:06:16,673 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>
+2025-03-08 16:06:16,673 - DEBUG - Checking conformance for constraint: <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>>
+2025-03-08 16:06:16,674 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape> -> <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>>
+2025-03-08 16:06:16,688 - DEBUG - Milliseconds to check constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>>: 14.607ms
+2025-03-08 16:06:16,689 - DEBUG - DataGraph conforms to constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>>.
+2025-03-08 16:06:16,689 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatableEntityBaselineShape>: 16.207ms
+2025-03-08 16:06:16,689 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateReplacementShape> defines its own targets.
+2025-03-08 16:06:16,689 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,690 - DEBUG - Milliseconds to find focus nodes: 0.059ms
+2025-03-08 16:06:16,690 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,690 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateReplacementShape> because it found no focus nodes.
+2025-03-08 16:06:16,690 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape> defines its own targets.
+2025-03-08 16:06:16,690 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,691 - DEBUG - Milliseconds to find focus nodes: 0.045ms
+2025-03-08 16:06:16,691 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,691 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>
+2025-03-08 16:06:16,691 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.001ms
+2025-03-08 16:06:16,691 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>
+2025-03-08 16:06:16,692 - DEBUG - Checking conformance for constraint: <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>>
+2025-03-08 16:06:16,692 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>>
+2025-03-08 16:06:16,692 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b70>
+2025-03-08 16:06:16,692 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,692 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b70>
+2025-03-08 16:06:16,693 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.020ms
+2025-03-08 16:06:16,693 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b70>
+2025-03-08 16:06:16,693 - DEBUG - Checking conformance for constraint: <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>
+2025-03-08 16:06:16,693 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b70> -> <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>
+2025-03-08 16:06:16,694 - DEBUG - Milliseconds to check constraint <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>: 0.438ms
+2025-03-08 16:06:16,694 - DEBUG - DataGraph conforms to constraint <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>.
+2025-03-08 16:06:16,694 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>
+2025-03-08 16:06:16,694 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b70> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>
+2025-03-08 16:06:16,695 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>: 0.439ms
+2025-03-08 16:06:16,695 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b70>>.
+2025-03-08 16:06:16,695 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b70>: 2.627ms
+2025-03-08 16:06:16,695 - DEBUG - Milliseconds to check constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>>: 3.688ms
+2025-03-08 16:06:16,696 - DEBUG - DataGraph conforms to constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>>.
+2025-03-08 16:06:16,696 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateEntityShape>: 4.776ms
+2025-03-08 16:06:16,696 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainShape> defines its own targets.
+2025-03-08 16:06:16,696 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,697 - DEBUG - Milliseconds to find focus nodes: 0.047ms
+2025-03-08 16:06:16,697 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,697 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainShape> because it found no focus nodes.
+2025-03-08 16:06:16,697 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint> defines its own targets.
+2025-03-08 16:06:16,697 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,697 - DEBUG - Milliseconds to find focus nodes: 0.055ms
+2025-03-08 16:06:16,697 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,698 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>
+2025-03-08 16:06:16,698 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.001ms
+2025-03-08 16:06:16,698 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>
+2025-03-08 16:06:16,698 - DEBUG - Checking conformance for constraint: <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>>
+2025-03-08 16:06:16,699 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint> -> <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>>
+2025-03-08 16:06:16,738 - DEBUG - Milliseconds to check constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>>: 39.086ms
+2025-03-08 16:06:16,738 - DEBUG - DataGraph conforms to constraint <SPARQLBasedConstraint on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>>.
+2025-03-08 16:06:16,738 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainContinuityConstraint>: 40.522ms
+2025-03-08 16:06:16,739 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#SimpleTestShape> defines its own targets.
+2025-03-08 16:06:16,739 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,739 - DEBUG - Milliseconds to find focus nodes: 0.052ms
+2025-03-08 16:06:16,739 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,739 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#SimpleTestShape> because it found no focus nodes.
+2025-03-08 16:06:16,739 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainElementShape> defines its own targets.
+2025-03-08 16:06:16,740 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,740 - DEBUG - Milliseconds to find focus nodes: 0.045ms
+2025-03-08 16:06:16,740 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,740 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdateChainElementShape> because it found no focus nodes.
+2025-03-08 16:06:16,740 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#ReplacementChronologyConstraint> defines its own targets.
+2025-03-08 16:06:16,741 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,741 - DEBUG - Milliseconds to find focus nodes: 0.042ms
+2025-03-08 16:06:16,741 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,741 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#ReplacementChronologyConstraint> because it found no focus nodes.
+2025-03-08 16:06:16,741 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> defines its own targets.
+2025-03-08 16:06:16,741 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,742 - DEBUG - Milliseconds to find focus nodes: 0.063ms
+2025-03-08 16:06:16,742 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,742 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>
+2025-03-08 16:06:16,742 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.001ms
+2025-03-08 16:06:16,742 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>
+2025-03-08 16:06:16,743 - DEBUG - Checking conformance for constraint: <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>>
+2025-03-08 16:06:16,743 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>>
+2025-03-08 16:06:16,743 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b72>
+2025-03-08 16:06:16,743 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,744 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b72>
+2025-03-08 16:06:16,744 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.014ms
+2025-03-08 16:06:16,744 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b72>
+2025-03-08 16:06:16,744 - DEBUG - Checking conformance for constraint: <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,744 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b72> -> <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,745 - DEBUG - Milliseconds to check constraint <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>: 0.404ms
+2025-03-08 16:06:16,745 - DEBUG - DataGraph conforms to constraint <ClassConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>.
+2025-03-08 16:06:16,745 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,745 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b72> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,746 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>: 0.390ms
+2025-03-08 16:06:16,746 - DEBUG - DataGraph conforms to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>.
+2025-03-08 16:06:16,746 - DEBUG - Checking conformance for constraint: <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,746 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b72> -> <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>
+2025-03-08 16:06:16,747 - DEBUG - Milliseconds to check constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>: 0.400ms
+2025-03-08 16:06:16,747 - DEBUG - DataGraph conforms to constraint <MaxCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b72>>.
+2025-03-08 16:06:16,747 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b72>: 3.267ms
+2025-03-08 16:06:16,747 - DEBUG - Milliseconds to check constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>>: 4.226ms
+2025-03-08 16:06:16,747 - DEBUG - DataGraph conforms to constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>>.
+2025-03-08 16:06:16,748 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedEventShape>: 5.400ms
+2025-03-08 16:06:16,748 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#PredecessorConstraint> defines its own targets.
+2025-03-08 16:06:16,748 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,748 - DEBUG - Milliseconds to find focus nodes: 0.050ms
+2025-03-08 16:06:16,748 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,749 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#PredecessorConstraint> because it found no focus nodes.
+2025-03-08 16:06:16,749 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#SuccessorConstraint> defines its own targets.
+2025-03-08 16:06:16,749 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,749 - DEBUG - Milliseconds to find focus nodes: 0.042ms
+2025-03-08 16:06:16,749 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,750 - DEBUG - Skipping shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#SuccessorConstraint> because it found no focus nodes.
+2025-03-08 16:06:16,750 - DEBUG - Checking if Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape> defines its own targets.
+2025-03-08 16:06:16,750 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,750 - DEBUG - Milliseconds to find focus nodes: 0.068ms
+2025-03-08 16:06:16,751 - DEBUG - Found 1 Focus Nodes to evaluate.
+2025-03-08 16:06:16,751 - DEBUG - Running evaluation of Shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>
+2025-03-08 16:06:16,751 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.001ms
+2025-03-08 16:06:16,751 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>
+2025-03-08 16:06:16,751 - DEBUG - Checking conformance for constraint: <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>>
+2025-03-08 16:06:16,752 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>>
+2025-03-08 16:06:16,752 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b71>
+2025-03-08 16:06:16,752 - DEBUG - Shape was passed 1 Focus Node/s to evaluate.
+2025-03-08 16:06:16,752 - DEBUG - Running evaluation of Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b71>
+2025-03-08 16:06:16,753 - DEBUG - Milliseconds to find value nodes for focus nodes: 0.013ms
+2025-03-08 16:06:16,753 - DEBUG - Current shape evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b71>
+2025-03-08 16:06:16,753 - DEBUG - Checking conformance for constraint: <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b71>>
+2025-03-08 16:06:16,753 - DEBUG - Current constraint evaluation path: <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape> -> <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>> -> <PropertyShape na93ae69101034dcfa27f7306055b8322b71> -> <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b71>>
+2025-03-08 16:06:16,754 - DEBUG - Milliseconds to check constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b71>>: 0.980ms
+2025-03-08 16:06:16,754 - DEBUG - Focus nodes do _not_ conform to constraint <MinCountConstraintComponent on <PropertyShape na93ae69101034dcfa27f7306055b8322b71>>.
+2025-03-08 16:06:16,755 - DEBUG - Milliseconds to evaluate shape <PropertyShape na93ae69101034dcfa27f7306055b8322b71>: 2.173ms
+2025-03-08 16:06:16,755 - DEBUG - Milliseconds to check constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>>: 3.140ms
+2025-03-08 16:06:16,755 - DEBUG - Focus nodes do _not_ conform to constraint <PropertyConstraintComponent on <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>>.
+2025-03-08 16:06:16,755 - DEBUG - Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Each update must reference at least one modified entity (e.g., IFC component, phase, or instant).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ould:hasUpdatedValue ; sh:severity sh:Violation ]
+	Focus Node: ould:Update1
+	Result Path: ould:hasUpdatedValue
+	Message: Each update must reference at least one modified entity (e.g., IFC component, phase, or instant).
+
+2025-03-08 16:06:16,756 - DEBUG - Milliseconds to evaluate shape <NodeShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#UpdatedValueShape>: 4.912ms
+2025-03-08 16:06:16,756 - DEBUG - Checking if Shape <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape> defines its own targets.
+2025-03-08 16:06:16,756 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,757 - DEBUG - Milliseconds to find focus nodes: 0.033ms
+2025-03-08 16:06:16,757 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,757 - DEBUG - Skipping shape <PropertyShape http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#GeneralDatePropertyShape> because it found no focus nodes.
+2025-03-08 16:06:16,757 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b70> defines its own targets.
+2025-03-08 16:06:16,757 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,757 - DEBUG - Milliseconds to find focus nodes: 0.028ms
+2025-03-08 16:06:16,758 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,758 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b70> because it found no focus nodes.
+2025-03-08 16:06:16,758 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b48> defines its own targets.
+2025-03-08 16:06:16,758 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,758 - DEBUG - Milliseconds to find focus nodes: 0.028ms
+2025-03-08 16:06:16,758 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,758 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b48> because it found no focus nodes.
+2025-03-08 16:06:16,759 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b69> defines its own targets.
+2025-03-08 16:06:16,759 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,759 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,759 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,759 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b69> because it found no focus nodes.
+2025-03-08 16:06:16,759 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b17> defines its own targets.
+2025-03-08 16:06:16,759 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,759 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,760 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,760 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b17> because it found no focus nodes.
+2025-03-08 16:06:16,760 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b19> defines its own targets.
+2025-03-08 16:06:16,760 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,760 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,760 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,760 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b19> because it found no focus nodes.
+2025-03-08 16:06:16,761 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b25> defines its own targets.
+2025-03-08 16:06:16,761 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,761 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,761 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,761 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b25> because it found no focus nodes.
+2025-03-08 16:06:16,761 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b50> defines its own targets.
+2025-03-08 16:06:16,761 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,762 - DEBUG - Milliseconds to find focus nodes: 0.027ms
+2025-03-08 16:06:16,762 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,762 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b50> because it found no focus nodes.
+2025-03-08 16:06:16,762 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b33> defines its own targets.
+2025-03-08 16:06:16,762 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,762 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,762 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,762 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b33> because it found no focus nodes.
+2025-03-08 16:06:16,763 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b53> defines its own targets.
+2025-03-08 16:06:16,763 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,763 - DEBUG - Milliseconds to find focus nodes: 0.028ms
+2025-03-08 16:06:16,763 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,763 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b53> because it found no focus nodes.
+2025-03-08 16:06:16,763 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b18> defines its own targets.
+2025-03-08 16:06:16,763 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,764 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,764 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,764 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b18> because it found no focus nodes.
+2025-03-08 16:06:16,764 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b49> defines its own targets.
+2025-03-08 16:06:16,764 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,764 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,764 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,765 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b49> because it found no focus nodes.
+2025-03-08 16:06:16,765 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b23> defines its own targets.
+2025-03-08 16:06:16,765 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,765 - DEBUG - Milliseconds to find focus nodes: 0.027ms
+2025-03-08 16:06:16,765 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,765 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b23> because it found no focus nodes.
+2025-03-08 16:06:16,766 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b61> defines its own targets.
+2025-03-08 16:06:16,766 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,766 - DEBUG - Milliseconds to find focus nodes: 0.029ms
+2025-03-08 16:06:16,766 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,766 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b61> because it found no focus nodes.
+2025-03-08 16:06:16,766 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b30> defines its own targets.
+2025-03-08 16:06:16,767 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,767 - DEBUG - Milliseconds to find focus nodes: 0.031ms
+2025-03-08 16:06:16,767 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,767 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b30> because it found no focus nodes.
+2025-03-08 16:06:16,767 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b51> defines its own targets.
+2025-03-08 16:06:16,768 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,768 - DEBUG - Milliseconds to find focus nodes: 0.055ms
+2025-03-08 16:06:16,768 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,768 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b51> because it found no focus nodes.
+2025-03-08 16:06:16,768 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b52> defines its own targets.
+2025-03-08 16:06:16,768 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,769 - DEBUG - Milliseconds to find focus nodes: 0.033ms
+2025-03-08 16:06:16,769 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,769 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b52> because it found no focus nodes.
+2025-03-08 16:06:16,769 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b71> defines its own targets.
+2025-03-08 16:06:16,769 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,769 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,769 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,770 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b71> because it found no focus nodes.
+2025-03-08 16:06:16,770 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b29> defines its own targets.
+2025-03-08 16:06:16,770 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,770 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,770 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,770 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b29> because it found no focus nodes.
+2025-03-08 16:06:16,770 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b60> defines its own targets.
+2025-03-08 16:06:16,770 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,771 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,771 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,771 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b60> because it found no focus nodes.
+2025-03-08 16:06:16,771 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b31> defines its own targets.
+2025-03-08 16:06:16,771 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,771 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,771 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,772 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b31> because it found no focus nodes.
+2025-03-08 16:06:16,772 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b24> defines its own targets.
+2025-03-08 16:06:16,772 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,772 - DEBUG - Milliseconds to find focus nodes: 0.025ms
+2025-03-08 16:06:16,772 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,772 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b24> because it found no focus nodes.
+2025-03-08 16:06:16,772 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b32> defines its own targets.
+2025-03-08 16:06:16,773 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,773 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,773 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,773 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b32> because it found no focus nodes.
+2025-03-08 16:06:16,773 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b72> defines its own targets.
+2025-03-08 16:06:16,773 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,773 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,774 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,774 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b72> because it found no focus nodes.
+2025-03-08 16:06:16,774 - DEBUG - Checking if Shape <PropertyShape na93ae69101034dcfa27f7306055b8322b62> defines its own targets.
+2025-03-08 16:06:16,774 - DEBUG - Identifying targets to find focus nodes.
+2025-03-08 16:06:16,774 - DEBUG - Milliseconds to find focus nodes: 0.026ms
+2025-03-08 16:06:16,774 - DEBUG - Found 0 Focus Nodes to evaluate.
+2025-03-08 16:06:16,774 - DEBUG - Skipping shape <PropertyShape na93ae69101034dcfa27f7306055b8322b62> because it found no focus nodes.
+2025-03-08 16:06:16,775 - INFO - Konformität (inference=none): False
+2025-03-08 16:06:16,775 - INFO - Validierungsbericht (inference=none):
+2025-03-08 16:06:16,775 - INFO - Validation Report
 Conforms: False
 Results (1):
-Constraint Violation in MaxCountConstraintComponent (http://www.w3.org/ns/shacl#MaxCountConstraintComponent):
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
-	Source Shape: [ sh:class ould:Update ; sh:maxCount Literal("21", datatype=xsd:integer) ; sh:message Literal("Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ould:hasUpdate ; sh:severity sh:Violation ]
-	Focus Node: ould:Chain1
-	Result Path: ould:hasUpdate
-	Message: Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements.
-
+	Source Shape: [ sh:message Literal("Each update must reference at least one modified entity (e.g., IFC component, phase, or instant).") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path ould:hasUpdatedValue ; sh:severity sh:Violation ]
+	Focus Node: ould:Update1
+	Result Path: ould:hasUpdatedValue
+	Message: Each update must reference at least one modified entity (e.g., IFC component, phase, or instant).

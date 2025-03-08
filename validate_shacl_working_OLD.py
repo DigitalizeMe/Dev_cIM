@@ -1,13 +1,9 @@
 import owlready2
 from rdflib import Graph, Namespace, RDF
-from rdflib.namespace import SH, OWL
 from pyshacl import validate
 import logging
 import os
-import sys
-from io import StringIO
 
-# Konfiguration des Loggings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 logging.basicConfig(
     filename=os.path.join(BASE_DIR, "validation.log"),
@@ -17,7 +13,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Pfade und Namespace
 TBOX_PATH = os.path.join(BASE_DIR, "OULD_V1.0.ttl")
 ABOX_DIR = os.path.join(BASE_DIR, "OULD_ABox")
 SHAPES_PATH = os.path.join(BASE_DIR, "OULD_V1.0.ttl")
@@ -47,23 +42,17 @@ def combine_and_reason(tbox_path=TBOX_PATH, abox_path=None, java_exe=JAVA_EXE):
         output_file = os.path.join(BASE_DIR, "inferred_ontology.ttl")
         data_graph.serialize(destination=output_file, format="turtle")
         logger.info(f"Inferierte Ontologie gespeichert: {output_file}")
-        # Generische Disjunktheitsprüfung
-        logger.info("Prüfe Ontologie auf Disjunktheit...")
-        disjoint_pairs = set()
-        for s, p, o in data_graph.triples((None, OWL.disjointWith, None)):
-            disjoint_pairs.add((s, o))
-            disjoint_pairs.add((o, s))  # Bidirektional
-        logger.debug(f"Disjunkte Klassenpaare: {disjoint_pairs}")
-        for subj in data_graph.subjects(RDF.type, None):
-            types = set(o for s, p, o in data_graph.triples((subj, RDF.type, None)))
-            for class1, class2 in disjoint_pairs:
-                if class1 in types and class2 in types:
-                    logger.error(f"Disjunktheitsverletzung gefunden: {subj} hat Typen {class1} und {class2}")
-                    raise Exception(f"Ontology is inconsistent: {subj} has disjoint types {class1} and {class2}")
-        logger.info("Keine Disjunktheitsverletzungen gefunden.")
+        chain1_types = list(data_graph.triples((OULD.Chain1, RDF.type, None)))
+        logger.debug(f"Chain1 Typen nach Reasoning: {len(chain1_types)}")
+        for s, p, o in chain1_types:
+            logger.debug(f"Chain1 Typ-Triple: {s} {p} {o}")
+        wall1_types = list(data_graph.triples((OULD.Wall1, RDF.type, None)))
+        logger.debug(f"Wall1 Typen nach Reasoning: {len(wall1_types)}")
+        for s, p, o in wall1_types:
+            logger.debug(f"Wall1 Typ-Triple: {s} {p} {o}")
         return output_file
     except Exception as e:
-        logger.error(f"Fehler beim Reasoning oder Disjunktheitsprüfung: {e}")
+        logger.error(f"Fehler beim Reasoning: {e}")
         raise
 
 def debug_sparql(data_file):
@@ -71,18 +60,17 @@ def debug_sparql(data_file):
         data_graph = Graph().parse(data_file, format="turtle")
         query = """
             PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
-            SELECT ?chain (COUNT(?u) AS ?updateCount)
+            SELECT (COUNT(?u) AS ?updateCount)
             WHERE {
-                ?chain a ould:UpdateChain .
-                ?chain ould:hasUpdate ?u .
+                ould:Chain1 a ould:UpdateChain .
+                ould:Chain1 ould:hasUpdate ?u .
             }
-            GROUP BY ?chain
         """
-        logger.info("Starte SPARQL-Abfrage für alle UpdateChains...")
+        logger.info("Starte spezifische SPARQL-Abfrage für Chain1...")
         results = data_graph.query(query)
-        logger.info("SPARQL-Abfrage Ergebnisse:")
+        logger.info("SPARQL-Abfrage Ergebnisse für Chain1:")
         for row in results:
-            logger.info(f"Chain: {row.chain}, UpdateCount: {row.updateCount}")
+            logger.info(f"UpdateCount für Chain1: {row.updateCount}")
         return len(results) > 0
     except Exception as e:
         logger.error(f"Fehler bei der SPARQL-Abfrage: {e}")
@@ -91,10 +79,7 @@ def debug_sparql(data_file):
 def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
     try:
         data_graph = Graph().parse(data_file, format="turtle")
-        shapes_path_normalized = shapes_path.replace("\\", "/")
-        shapes_uri = f"file:///{shapes_path_normalized}"
-        logger.debug(f"Versuche Shapes von URI zu laden: {shapes_uri}")
-        shapes_graph = Graph().parse(shapes_uri, format="turtle")
+        shapes_graph = Graph().parse(shapes_path, format="turtle")
         result = validate(data_graph, shacl_graph=shapes_graph, inference="none", debug=2)
         conforms, report_graph, report_text = result
         logger.info(f"Konformität (inference=none): {conforms}")
@@ -108,7 +93,7 @@ def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
         raise
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OULD_ABox_invalid_novalue.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OULD_ABox_invalid_typemix.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
     perform_shacl_validation(inferred_file)

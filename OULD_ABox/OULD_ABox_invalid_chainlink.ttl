@@ -1,0 +1,52 @@
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ould:Wall1 a ould:UpdatableEntity ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" ;
+    ould:hasUpdateChain ould:Chain1 .
+
+ould:Chain1 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update1 ;
+    ould:hasNextChain ould:Chain2, ould:Chain3 ;  # Fehler: Zwei hasNextChain
+    time:hasBeginning "2025-03-01"^^xsd:date ;
+    time:hasEnd "2025-03-01"^^xsd:date .
+
+ould:Chain2 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update2 ;
+    time:hasBeginning "2025-03-02"^^xsd:date ;
+    time:hasEnd "2025-03-02"^^xsd:date .
+
+ould:Chain3 a ould:UpdateChain ;
+    ould:hasUpdate ould:Update3 ;
+    time:hasBeginning "2025-03-03"^^xsd:date ;
+    time:hasEnd "2025-03-03"^^xsd:date .
+
+ould:Update1 a ould:Update ;
+    time:hasTime "2025-03-01"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event1 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "def456" .
+
+ould:Update2 a ould:Update ;
+    time:hasTime "2025-03-02"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event2 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "ghi789" .
+
+ould:Update3 a ould:Update ;
+    time:hasTime "2025-03-03"^^xsd:date ;
+    ould:hasUpdatedEvent ould:Event3 ;
+    ould:hasUpdatedValue ould:Wall1 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "jkl012" .
+
+ould:Event1 a time:TemporalEntity .
+ould:Event2 a time:TemporalEntity .
+ould:Event3 a time:TemporalEntity .
+
+# Erwartete Fehleranzahl: 1
+# - Violation bei UpdateChainShape: "Each UpdateChain may be linked to at most one next chain."

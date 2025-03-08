@@ -1,11 +1,9 @@
 import owlready2
 from rdflib import Graph, Namespace, RDF
-from rdflib.namespace import SH, OWL
 from pyshacl import validate
 import logging
 import os
 import sys
-from io import StringIO
 
 # Konfiguration des Loggings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -47,23 +45,9 @@ def combine_and_reason(tbox_path=TBOX_PATH, abox_path=None, java_exe=JAVA_EXE):
         output_file = os.path.join(BASE_DIR, "inferred_ontology.ttl")
         data_graph.serialize(destination=output_file, format="turtle")
         logger.info(f"Inferierte Ontologie gespeichert: {output_file}")
-        # Generische Disjunktheitsprüfung
-        logger.info("Prüfe Ontologie auf Disjunktheit...")
-        disjoint_pairs = set()
-        for s, p, o in data_graph.triples((None, OWL.disjointWith, None)):
-            disjoint_pairs.add((s, o))
-            disjoint_pairs.add((o, s))  # Bidirektional
-        logger.debug(f"Disjunkte Klassenpaare: {disjoint_pairs}")
-        for subj in data_graph.subjects(RDF.type, None):
-            types = set(o for s, p, o in data_graph.triples((subj, RDF.type, None)))
-            for class1, class2 in disjoint_pairs:
-                if class1 in types and class2 in types:
-                    logger.error(f"Disjunktheitsverletzung gefunden: {subj} hat Typen {class1} und {class2}")
-                    raise Exception(f"Ontology is inconsistent: {subj} has disjoint types {class1} and {class2}")
-        logger.info("Keine Disjunktheitsverletzungen gefunden.")
         return output_file
     except Exception as e:
-        logger.error(f"Fehler beim Reasoning oder Disjunktheitsprüfung: {e}")
+        logger.error(f"Fehler beim Reasoning: {e}")
         raise
 
 def debug_sparql(data_file):
@@ -92,7 +76,7 @@ def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
     try:
         data_graph = Graph().parse(data_file, format="turtle")
         shapes_path_normalized = shapes_path.replace("\\", "/")
-        shapes_uri = f"file:///{shapes_path_normalized}"
+        shapes_uri = f"file:///{shapes_path_normalized}"  # Fix für lokalen Pfad
         logger.debug(f"Versuche Shapes von URI zu laden: {shapes_uri}")
         shapes_graph = Graph().parse(shapes_uri, format="turtle")
         result = validate(data_graph, shacl_graph=shapes_graph, inference="none", debug=2)
@@ -108,7 +92,7 @@ def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
         raise
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OULD_ABox_invalid_novalue.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OULD_ABox_invalid_typemix.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
     perform_shacl_validation(inferred_file)

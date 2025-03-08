@@ -2538,12 +2538,19 @@
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
                     sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
+                        sh:or (
+                            [ sh:path occp:hasEstimatedTime ]
+                            [ sh:path occp:hasActualTime ]
+                        )
+                    ] ;
+                    sh:minCount 1 ;
                     sh:message "Missing time stamp (Estimated or Actual Time) for Deconstruction Start." ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:hasActualTime ;
+                    sh:maxCount 1 ;  
+                    sh:message "Too many actual timestamps for Deconstruction Start - max. count = 1." ;
                     sh:severity sh:Violation ;
                 ] .
 
