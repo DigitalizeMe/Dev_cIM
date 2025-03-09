@@ -155,37 +155,6 @@
                 ] .
 
 
-        ### CYCLE SHAPE
-
-            osh:CycleAShape a sh:NodeShape ;
-                sh:targetClass occp:CycleA_PlanningReview ;
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
-                sh:property [                               # Actual Begin date - limitation
-                    sh:path occp:hasActualBeginning ;
-                    sh:minCount 1 ;
-                    sh:maxCount 1 ;
-                    sh:message "Missing or too many dates for Beginning for Cycle A (Planning and Review) - min./max. count = 1." ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # End date options
-                    sh:path time:hasEnd ;                   # End date has to be set (hasEnd)
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set end date
-                    sh:path (
-                        occp:hasEstimatedEnd
-                        occp:hasActualEnd
-                    ) ;
-                    sh:minCount 1 ;
-                    ] ;
-                    sh:message "Missing date (estimated or actual end) for Cycle A (Planning and Review) - min. count = 1." ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # Actual End date - limitation
-                    sh:path occp:hasActualEnd ; 
-                    sh:maxCount 1 ;
-                    sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
-                    sh:severity sh:Violation ;
-                ] .
-
     ### PHASE B INSTANTS
         # PHASE ASSIGNMENT        
     

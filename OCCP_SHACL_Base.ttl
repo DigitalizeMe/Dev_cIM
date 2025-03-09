@@ -10,14 +10,14 @@ osh:GeneralTimeShape a sh:NodeShape ;
         sh:path ( time:hasBeginning time:hasEnd time:hasTime ) ;
         sh:class time:Instant ;
         sh:minCount 1 ;
-        sh:message "Mindestens ein Instant für Beginning, End oder Time erforderlich." ;
+        sh:message "Property time:hasBeginning, time:hasEnd, or time:hasTime must refer to at least one time:Instant." ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path ( occp:hasActualBeginning occp:hasActualEnd occp:hasActualTime ) ;
         sh:class time:Instant ;
         sh:maxCount 1 ;
-        sh:message "Maximal ein tatsächlicher Zeitpunkt erlaubt." ;
+        sh:message "Property occp:hasActualBeginning, occp:hasActualEnd, or occp:hasActualTime must refer to at most one time:Instant." ;
         sh:severity sh:Violation ;
     ] .
 
@@ -27,12 +27,12 @@ osh:InstantTimeShape a sh:NodeShape ;
         sh:path occp:hasActualTime ;
         sh:datatype xsd:date ;
         sh:maxCount 1 ;
-        sh:message "Maximal ein tatsächlicher Zeitstempel erlaubt." ;
+        sh:message "Property occp:hasActualTime must have at most one value of type xsd:date." ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path occp:hasEstimatedTime ;
         sh:datatype xsd:date ;
-        sh:message "Geschätzte Zeitstempel müssen im Format YYYY-MM-DD sein." ;
+        sh:message "Property occp:hasEstimatedTime must have values of type xsd:date." ;
         sh:severity sh:Violation ;
     ] .

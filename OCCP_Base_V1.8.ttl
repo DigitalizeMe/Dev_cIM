@@ -20,6 +20,8 @@
     occp:after rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf time:after ;
                 owl:inverseOf occp:before ;
+                rdfs:domain time:TemporalEntity ;
+                rdfs:range time:TemporalEntity ;
                 rdf:type owl:TransitiveProperty ;
                 rdfs:comment "A transitive variant of time:after, ensuring that if A occurs after B and B occurs after C, then A also occurs after C."@en ;
                 rdfs:label "after (transitive)"@en .
@@ -29,6 +31,8 @@
     occp:before rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf time:before ;
                 owl:inverseOf occp:after ;
+                rdfs:domain time:TemporalEntity ;
+                rdfs:range time:TemporalEntity ;
                 rdf:type owl:TransitiveProperty ;
                 rdfs:comment "A transitive variant of time:before, ensuring that if A occurs before B and B occurs before C, then A also occurs before C."@en ;
                 rdfs:label "before (transitive)"@en .
@@ -59,8 +63,17 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsWith
     occp:beginsWith rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+                    rdfs:domain time:TemporalEntity ;
+                    rdfs:range time:TemporalEntity ;
                     rdfs:comment "The object property \"beginsWith\" is used with time:interval or time:instant to describe the chronological order of the beginnings of T1 and T2. If a time:interval T1 \"beginsWith\" T2, it only describes, that the beginning of T1 happens on the same day with the beginning of T2 without defining the order of the ends of T1 and T2, so the ends of T1 and T2 can happen in any order or simulaneously."@en ;
                     rdfs:label "begins with"@en .
+
+		###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifeCycle							
+		occp:belongsToLifeCycle rdf:type owl:ObjectProperty ;
+														rdfs:domain time:TemporalEntity ;
+														rdfs:range occp:LifeCycle ;
+														rdfs:comment "Links a phase or instant to the lifecycle it belongs to."@en ;
+														rdfs:label "belongs to lifecycle"@en .								
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsAfter
@@ -98,6 +111,7 @@
     occp:endsPhase rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
                 rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+                rdfs:range occp:Phase ;
                 rdfs:comment "The object property \"endsPhase\" is used to mark instants that end an ongoing phase."@en ;
                 rdfs:label "ends phase"@en .
 
@@ -105,6 +119,8 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
     occp:endsWith rdf:type owl:ObjectProperty ;
                 rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+                rdfs:domain time:TemporalEntity ;
+                rdfs:range time:TemporalEntity ;
                 rdfs:comment "The object property \"endsWith\" is used with time:interval or time:instant to describe the chronological order of the endings of T1 and T2. If a time:interval T1 \"endsWith\" T2, it only describes, that the ends of T1 happens on the same day as (the end of) T2 without defining the order of the beginnings or points in time of T1 and T2, so the beginnings of T1 and T2 can happen in any order or simulaneously."@en ;
                 rdfs:label "ends with"@en .
 
@@ -174,7 +190,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
     occp:hasInstant rdf:type owl:ObjectProperty ;
                     rdfs:range <http://www.w3.org/2006/time#Instant> ;
-                    rdfs:comment "The property \"hasInstant\" is used to establish connections between models of constructions or components resp. their corresponding individuals (as representation within an ontology, e.g., a bot:Element) to specific instants of the MsOCCP (e.g., occp:BeginningOfPlanning)."@en ;
+                    rdfs:comment "The property occp:hasInstant links a specific instant (e.g., occp:BeginningOfPlanning) from the MsOCCP to an updatable entity (e.g., ould:UpdatableEntity representing an IFC component or model) to record its lifecycle events."@en ;
                     rdfs:label "has instant"@en .
 
 
@@ -188,7 +204,9 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
     occp:isInPhase rdf:type owl:ObjectProperty ;
-                rdfs:comment "The property \"isInPhase\" is used for new life cycles that evolve e.g., from complex repair measures. Example: Part of a building in use is damaged and needs to be replaced. The repair measures need to be planned and so forth and thus start a new life cycle for the replacement element. This new life cycle is taking place within the repair phase of the damaged elements (\"is in Phase of the Repair Phase of said elements\"), as the rest of the building stays intact."@en ;
+			   				rdfs:domain occp:LifeCycle ;
+    						rdfs:range occp:Phase ;
+                rdfs:comment "Links a lifecycle to the overarching phase it is embedded in."@en ;
                 rdfs:label "is in phase"@en .
 
 
@@ -196,6 +214,7 @@
     occp:startsCycle rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
                     rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+                    rdfs:range occp:Cycle ;
                     rdfs:comment "The object property \"startsCycle\" is used to mark instants that start a new cycle within a phase."@en ;
                     rdfs:label "starts cycle"@en .
 
@@ -204,8 +223,21 @@
     occp:startsPhase rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
                     rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+                    rdfs:range occp:Phase ;
                     rdfs:comment "The object property \"startsPhase\" is used to mark instants that start a new phase."@en ;
                     rdfs:label "starts phase"@en . 
+
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+		###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifeCycleID
+		occp:hasLifeCycleID rdf:type owl:DatatypeProperty ;
+												rdfs:domain occp:LifeCycle ;
+												rdfs:range xsd:string ;
+												rdfs:comment "Provides a unique identifier for the lifecycle."@en ;
+												rdfs:label "has lifecycle ID"@en .
 
 
 #################################################################
@@ -392,6 +424,13 @@
                             rdfs:subClassOf occp:PhaseG_Instant ;
                             rdfs:comment "This instant marks the point in time of the execution of an irregular inspection. Many irregular inspections are possible over the life cycle of a component/building/structure."@en ;
                             rdfs:label "Irregular Inspection"@en .
+
+
+		###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LifeCycle		
+		occp:LifeCycle rdf:type owl:Class ;
+										rdfs:subClassOf time:Interval ;
+										rdfs:comment "Represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
+										rdfs:label "Life Cycle"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent

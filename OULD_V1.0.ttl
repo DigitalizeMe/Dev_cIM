@@ -127,102 +127,110 @@
 #################################################################
 
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#entryTime
+    ould:entryTime rdf:type owl:DatatypeProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:dateTime ;
+        rdfs:comment "Specifies the timestamp (YYYY-MM-DDThh:mm:ss) when an entry was made in the MsOCCP for the entity."@en ;
+        rdfs:label "entry time"@en .
+    
+    
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOnlineData
     ould:hasOnlineData rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf ould:hasLinkedData ; 
-                       rdfs:domain ould:UpdatableEntity ;
-                       rdfs:range xsd:anyURI ;
-                       rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
-                       rdfs:label "has online data"@en .
+        rdfs:subPropertyOf ould:hasLinkedData ; 
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:anyURI ;
+        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
+        rdfs:label "has online data"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOfflineData
     ould:hasOfflineData rdf:type owl:DatatypeProperty ;
-                        rdfs:subPropertyOf ould:hasLinkedData ;
-                        rdfs:domain ould:UpdatableEntity ;
-                        rdfs:range xsd:string ;
-                        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
-                        rdfs:label "has offline data"@en .
+        rdfs:subPropertyOf ould:hasLinkedData ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
+        rdfs:label "has offline data"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasDataLocation
     ould:hasDataLocation rdf:type owl:DatatypeProperty ;
-                         rdfs:domain ould:LinkedData ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "The data property \"hasDataLocation\" specifies the location of the linked data and is used in conjunction with ould:hasOnlineData or ould:hasOfflineData to specify the exact location. It can be a URI (for online storage) or a local file path (for offline storage)."@en ;
-                         rdfs:label "has data location"@en .
+        rdfs:domain ould:LinkedData ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasDataLocation\" specifies the location of the linked data and is used in conjunction with ould:hasOnlineData or ould:hasOfflineData to specify the exact location. It can be a URI (for online storage) or a local file path (for offline storage)."@en ;
+        rdfs:label "has data location"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasHash
     ould:hasHash rdf:type owl:DatatypeProperty ;
-                 rdfs:domain ould:UpdatableEntity ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC component to record the current state of a IFC component. The hash value is also used to check for changes of the IFC component."@en ;
-                 rdfs:label "has hash"@en .
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC component to record the current state of a IFC component. The hash value is also used to check for changes of the IFC component."@en ;
+        rdfs:label "has hash"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasIFCID
     ould:hasIFCID rdf:type owl:DatatypeProperty ;
-                  rdfs:domain ould:UpdatableEntity ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
-                  rdfs:label "has IFC ID"@en .
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
+        rdfs:label "has IFC ID"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewHash
     ould:hasNewHash rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf ould:hasHash ;
-                    rdfs:domain ould:UpdatableEntity ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "The data property \"hasNewHash\" is used to update an existing hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasPreviousHash."@en ;
-                    rdfs:label "has new hash"@en .
+        rdfs:subPropertyOf ould:hasHash ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasNewHash\" is used to update an existing hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasPreviousHash."@en ;
+        rdfs:label "has new hash"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewIFCID
     ould:hasNewIFCID rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf ould:hasIFCID ;
-                    rdfs:domain ould:UpdatableEntity ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
-                    rdfs:label "has new IFC ID"@en .
+        rdfs:subPropertyOf ould:hasIFCID ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
+        rdfs:label "has new IFC ID"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewTime
     ould:hasNewTime rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                    rdfs:domain [ rdf:type owl:Class ;
-                                    owl:unionOf ( ould:Update time:Instant ) ] ;
-                    rdfs:range xsd:date ;
-                    rdfs:comment "The data property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                    rdfs:label "has new time"@en .
+        rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+        rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( ould:Update time:Instant ) ] ;
+        rdfs:range xsd:date ;
+        rdfs:comment "The data property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
+        rdfs:label "has new time"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
     ould:hasPreviousTime rdf:type owl:DatatypeProperty ;
-                         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-                         rdfs:domain [ rdf:type owl:Class ;
-                                    owl:unionOf ( ould:Update time:Instant ) ] ;
-                         rdfs:range xsd:date ;
-                         rdfs:comment "The data property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
-                         rdfs:label "has previous time"@en .
+        rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+        rdfs:domain [ rdf:type owl:Class ;
+                owl:unionOf ( ould:Update time:Instant ) ] ;
+        rdfs:range xsd:date ;
+        rdfs:comment "The data property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
+        rdfs:label "has previous time"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousHash
     ould:hasPreviousHash rdf:type owl:DatatypeProperty ;
-                        rdfs:subPropertyOf ould:hasHash ;
-                        rdfs:domain ould:UpdatableEntity ;
-                        rdfs:range xsd:string ;
-                        rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasNewHash."@en ;
-                        rdfs:label "has previous hash"@en .
+        rdfs:subPropertyOf ould:hasHash ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasNewHash."@en ;
+        rdfs:label "has previous hash"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCID
     ould:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
-                        rdfs:subPropertyOf ould:hasIFCID ;
-                        rdfs:domain ould:UpdatableEntity ;
-                        rdfs:range xsd:string ;
-                        rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
-                        rdfs:label "has previous IFC ID"@en .
+        rdfs:subPropertyOf ould:hasIFCID ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
+        rdfs:label "has previous IFC ID"@en .
 
 
 #################################################################

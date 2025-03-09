@@ -1,19 +1,10 @@
-@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix sh:     <http://www.w3.org/ns/shacl#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix occp:   <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix osh:    <http://www.occpshape.de/shape#> .
 
-### GENERAL SHAPE RULES
-
-  osh:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
-    sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd occp:hasNewTime occp:hasPreviousTime ) ] ;
-    sh:datatype xsd:date ;
-    sh:message "The date must be in the format YYYY-MM-DD." ;
-    sh:severity sh:Violation .
+### CYCLE RELATED SHAPE RULES
 
   osh:CycleShape a sh:NodeShape ;
     sh:targetClass occp:Cycle ;
@@ -33,14 +24,32 @@
           sh:path occp:isInPhase ;
           sh:class occp:Phase ;
           sh:minCount 1 ;
-          sh:message "Ein neuer Lebenszyklus muss einer bestehenden Phase zugeordnet sein." ;
+          sh:message "A lifecycle must be linked to at least one phase.." ;
       ] ;
       sh:property [
           sh:path time:hasBeginning ;
           sh:lessThanOrEquals [
               sh:path ( [ sh:inversePath occp:isInPhase ] time:hasEnd )
           ] ;
-          sh:message "Der neue Lebenszyklus muss innerhalb der zugeordneten Phase beginnen." ;
+          sh:message "A lifecycle must begin within the phase it is linked to." ;
+      ] .
+
+  osh:LifeCycleShape a sh:NodeShape ;
+      sh:targetClass occp:LifeCycle ;
+      sh:property [
+          sh:path occp:hasLifeCycleID ;
+          sh:datatype xsd:string ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Property occp:hasLifeCycleID must provide exactly one unique ID of type xsd:string." ;
+          sh:severity sh:Violation ;
+      ] ;
+      sh:property [
+          sh:path occp:isInPhase ;
+          sh:class occp:Phase ;
+          sh:minCount 1 ;
+          sh:message "Property occp:isInPhase must link to at least one occp:Phase." ;
+          sh:severity sh:Violation ;
       ] .
 
 ### ORDER OF PHASES AND TRANSITIONS
@@ -637,3 +646,37 @@
       sh:message "Missing or too many date(s) for Transition E (Completion Of Deconstruction) - max. & min. count = 1." ;
       sh:severity sh:Violation ;
       ] .
+
+
+### CYCLE SHAPES
+
+  osh:CycleAShape a sh:NodeShape ;
+      sh:targetClass occp:CycleA_PlanningReview ;
+      sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+      sh:property [                               # Actual Begin date - limitation
+          sh:path occp:hasActualBeginning ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Missing or too many dates for Beginning for Cycle A (Planning and Review) - min./max. count = 1." ;
+          sh:severity sh:Violation ;
+      ] ;
+      sh:property [                               # End date options
+          sh:path time:hasEnd ;                   # End date has to be set (hasEnd)
+          sh:qualifiedValueShape [                # The following object properties are valid options to set end date
+          sh:path (
+              occp:hasEstimatedEnd
+              occp:hasActualEnd
+          ) ;
+          sh:minCount 1 ;
+          ] ;
+          sh:message "Missing date (estimated or actual end) for Cycle A (Planning and Review) - min. count = 1." ;
+          sh:severity sh:Violation ;
+      ] ;
+      sh:property [                               # Actual End date - limitation
+          sh:path occp:hasActualEnd ; 
+          sh:maxCount 1 ;
+          sh:message "Too many dates for actual End in Phase M (Deconstruction) - max. count = 1." ;
+          sh:severity sh:Violation ;
+      ] .
+
+
