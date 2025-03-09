@@ -4,20 +4,34 @@
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
+
+osh:GeneralDatePropertyShape a sh:PropertyShape ;
+    sh:path ( occp:hasActualTime occp:hasEstimatedTime ) ;
+    sh:datatype xsd:date ;
+    sh:message "The date must be in the format YYYY-MM-DD."@en ;
+    sh:severity sh:Violation .
+
 osh:GeneralTimeShape a sh:NodeShape ;
     sh:targetClass time:TemporalEntity ;
     sh:property [
-        sh:path ( time:hasBeginning time:hasEnd time:hasTime ) ;
+        sh:path ( time:hasBeginning time:hasEnd ) ;
         sh:class time:Instant ;
         sh:minCount 1 ;
-        sh:message "Property time:hasBeginning, time:hasEnd, or time:hasTime must refer to at least one time:Instant." ;
+        sh:message "Property \'time:hasBeginning\' or \'time:hasEnd\' must refer to at least one \'time:Instant\'."@en ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
-        sh:path ( occp:hasActualBeginning occp:hasActualEnd occp:hasActualTime ) ;
+        sh:path occp:hasActualBeginning ;
         sh:class time:Instant ;
         sh:maxCount 1 ;
-        sh:message "Property occp:hasActualBeginning, occp:hasActualEnd, or occp:hasActualTime must refer to at most one time:Instant." ;
+        sh:message "Property \'occp:hasActualBeginning\' must refer to at most one \'time:Instant\'."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
+        sh:path occp:hasActualEnd ;
+        sh:class time:Instant ;
+        sh:maxCount 1 ;
+        sh:message "Property \'occp:hasActualEnd\' must refer to at most one \'time:Instant\'."@en ;
         sh:severity sh:Violation ;
     ] .
 
@@ -27,12 +41,12 @@ osh:InstantTimeShape a sh:NodeShape ;
         sh:path occp:hasActualTime ;
         sh:datatype xsd:date ;
         sh:maxCount 1 ;
-        sh:message "Property occp:hasActualTime must have at most one value of type xsd:date." ;
+        sh:message "Property \'occp:hasActualTime\' must have at most one value of type xsd:date."@en ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path occp:hasEstimatedTime ;
         sh:datatype xsd:date ;
-        sh:message "Property occp:hasEstimatedTime must have values of type xsd:date." ;
+        sh:message "Property \'occp:hasEstimatedTime\' must have values of type xsd:date."@en ;
         sh:severity sh:Violation ;
     ] .

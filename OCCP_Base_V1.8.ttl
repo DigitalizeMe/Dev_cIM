@@ -129,7 +129,7 @@
     occp:hasActualBeginning rdf:type owl:ObjectProperty ;
                             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
                             rdfs:domain <http://www.w3.org/2006/time#Interval> ;
-                            rdfs:range  xsd:date ;
+                            rdfs:range <http://www.w3.org/2006/time#Instant> ;
                             rdfs:comment "The object property \"hasActualBeginning\" is used to mark the actual beginning of a Phase."@en ;
                             rdfs:label "has actual beginning"@en .
 
@@ -138,7 +138,7 @@
     occp:hasActualEnd rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
                     rdfs:domain <http://www.w3.org/2006/time#Interval> ;
-                    rdfs:range  xsd:date ;
+                    rdfs:range  <http://www.w3.org/2006/time#Instant> ;
                     rdfs:comment "The object property \"hasActualEnd\" is used to mark the actual end of a Phase."@en ;
                     rdfs:label "has actual end"@en .
 
@@ -164,7 +164,7 @@
     occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
                             rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
                             rdfs:domain <http://www.w3.org/2006/time#Interval> ;
-                            rdfs:range  xsd:date ;
+                            rdfs:range  <http://www.w3.org/2006/time#Instant> ;
                             rdfs:comment "The object property \"hasEstimatedBeginning\" is used to mark the estimated beginning of a Phase."@en ;
                             rdfs:label "has estimated beginning"@en .
 
@@ -173,7 +173,7 @@
     occp:hasEstimatedEnd rdf:type owl:ObjectProperty ;
                         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
                         rdfs:domain <http://www.w3.org/2006/time#Interval> ;
-                        rdfs:range  xsd:date ;
+                        rdfs:range  <http://www.w3.org/2006/time#Instant> ;
                         rdfs:comment "The object property \"hasEstimatedEnd\" is used to mark the estimated end of a Phase."@en ;
                         rdfs:label "has estimated end"@en .
 

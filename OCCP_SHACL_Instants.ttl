@@ -25,7 +25,6 @@
 
             osh:BeginningOfPlanningShape a sh:NodeShape ;   # Instant Beginning Of Planning (Phase A - Planning)
                 sh:targetClass occp:BeginningOfPlanning ;   
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
                 sh:property [                               # Instant (Beginning Of Planning) starts a new Phase A (Planning).
                     sh:path occp:startsPhase ;              
                     sh:class occp:PhaseA_Planning ;
@@ -61,7 +60,6 @@
 
             osh:DataProcurementShape a sh:NodeShape ;       # Instant Data Procurement (Phase A - Planning)
                 sh:targetClass occp:DataProcurement ;       
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
                 sh:property [                               # Instant's chronological order within the Phase
                     sh:path occp:after ;                    
                     sh:class occp:BeginningOfPlanning ;
@@ -83,7 +81,6 @@
 
             osh:Edit_BSTRShape a sh:NodeShape ;             # Instant Edit Before Submission To Review (Phase A - Planning)
                 sh:targetClass occp:Edit_BSTR ; 
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
                 sh:property [                               # Instant's chronological order within the Phase
                     sh:path occp:after ;                    
                     sh:class occp:BeginningOfPlanning ;
@@ -105,7 +102,6 @@
 
             osh:SubmissionToReviewShape a sh:NodeShape ;    # Instant Submission To Review (Phase A - Planning)
                 sh:targetClass occp:SubmissionToReview ;
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
                 sh:or (                                     # Instant's chronological order within the Phase - 2 Options
                     [
                         sh:path occp:after ;                    
@@ -133,7 +129,6 @@
 
             osh:Edit_ASTRShape a sh:NodeShape ;             # Instant Edit After Submission To Review (Phase A - Planning)
                 sh:targetClass occp:Edit_ASTR ;
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
                 sh:property [
                     sh:path occp:after ;
                     sh:qualifiedValueShape [
@@ -171,7 +166,6 @@
 
             osh:ReviewStartShape a sh:NodeShape ;           # Instant Review Start (Phase B - Review)
                 sh:targetClass occp:ReviewStart ;
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD
                 sh:property [
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseB_Review ;
@@ -211,7 +205,6 @@
 
             osh:ReviewApprovalShape a sh:NodeShape ;        # Instant Review Approval (Phase B - Review)
                 sh:targetClass occp:ReviewApproval ;
-                sh:property osh:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD
                 sh:property [
                     sh:path occp:endsPhase ;
                     sh:class occp:PhaseA_Planning ;
@@ -239,7 +232,6 @@
 
             osh:ReviewRejectionShape a sh:NodeShape ;        # Instant Review Rejection (Phase B - Review)
                 sh:targetClass occp:ReviewRejection ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order within the Phase      
                     sh:path occp:after ;
                     sh:class occp:ReviewStart ;
@@ -270,7 +262,6 @@
 
             osh:ConstructionStartShape a sh:NodeShape ;      # Instant Construction Start (Phase C - Construction)
                 sh:targetClass occp:ConstructionStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseC_Construction ;
@@ -302,7 +293,6 @@
 
             osh:ConstructionCompletionShape a sh:NodeShape ; # Instant Construction Completion (Phase C - Construction)
                 sh:targetClass occp:ConstructionCompletion ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order within the Phase
                     sh:path occp:after ;
                     sh:class occp:ConstructionStart ;
@@ -344,7 +334,6 @@
 
             osh:DefectElimStartShape a sh:NodeShape ;        # Instant Defect Elimination Start (Phase C - Construction)
                 sh:targetClass occp:DefectElimStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order within the Phase
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -372,7 +361,6 @@
 
             osh:DefectElimCompletionShape a sh:NodeShape ;        # Instant Defect Elimination Completion (Phase C - Construction)
                 sh:targetClass occp:DefectElimCompletion ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order within the Phase
                     sh:path occp:after ;
                     sh:class occp:DefectElimStart ;
@@ -400,7 +388,6 @@
 
             osh:ConstructionAcceptanceShape a sh:NodeShape ;      # Instant Construction Acceptance (Phase C - Construction)
                 sh:targetClass occp:ConstructionAcceptance ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:before ;
                     sh:class occp:UsageStart ;
@@ -461,7 +448,6 @@
         ### INSTANT SHAPES PHASE D - USAGE
             osh:UsageChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase D - Usage)
                 sh:targetClass occp:UsageChange ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Usage Phase is ended with a Change of Usage. 
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseD_Usage ;
@@ -502,7 +488,6 @@
 
             osh:UsageEndShape a sh:NodeShape ;      # Instant Usage End (Phase D - Usage)
                 sh:targetClass occp:UsageEnd ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Usage Phase is ended with Usage End
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseD_Usage ;
@@ -542,7 +527,6 @@
 
             osh:UsageStartShape a sh:NodeShape ;      # Instant Usage Start (Phase D - Usage)
                 sh:targetClass occp:UsageStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # A new Usage Phase is started with Usage Start
                     sh:path occp:startsPhase ;                
                     sh:class occp:PhaseD_Usage ;
@@ -586,7 +570,6 @@
         ### INSTANT SHAPES PHASE E - WARRANTY
             osh:WarrantyChangeShape a sh:NodeShape ;         # Instant Warranty Change (Phase E - Warranty)
                 sh:targetClass occp:WarrantyChange ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Warranty Phase is ended with a Change of Warranty. 
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseE_Warranty ;
@@ -627,7 +610,6 @@
 
             osh:WarrantyEndShape a sh:NodeShape ;            # Instant Warranty End (Phase E - Warranty)
                 sh:targetClass occp:WarrantyEnd ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Warranty Phase is ended with Warranty End
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseE_Warranty ;
@@ -661,7 +643,6 @@
 
             osh:WarrantyStartShape a sh:NodeShape ;          # Instant Warranty Start (Phase E - Warranty)
                 sh:targetClass occp:WarrantyStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # A new Warranty Phase is started with Warranty Start
                     sh:path occp:startsPhase ;                
                     sh:class occp:PhaseE_Warranty ;
@@ -705,7 +686,6 @@
         ### INSTANT SHAPES PHASE F - DESIGN LIFE
             osh:DesignLifeChangeShape a sh:NodeShape ;       # Instant Design Life Change (Phase F - Design Life)
                 sh:targetClass occp:DesignLifeChange ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Design Life Phase is ended with a Change of Design Life. 
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseF_DesignLife ;
@@ -746,7 +726,6 @@
 
             osh:DesignLifeEndShape a sh:NodeShape ;          # Instant Design Life End (Phase F - Design Life)
                 sh:targetClass occp:DesignLifeEnd ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # The current Design Life Phase is ended with Design Life End
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseF_DesignLife ;
@@ -780,7 +759,6 @@
 
             osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
                 sh:targetClass occp:DesignLifeEnd ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # A new Design Life Phase is started with Design Life Start
                     sh:path occp:startsPhase ;                
                     sh:class occp:PhaseF_DesignLife ;
@@ -824,7 +802,6 @@
         ### INSTANT SHAPES PHASE G - INSPECTION
             osh:InspectionExecutionShape a sh:NodeShape ;    # Instant Inspection Execution (Phase G - Inspection)
                 sh:targetClass occp:InspectionExecution ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionAcceptance ;
@@ -871,7 +848,6 @@
 
             osh:IrregularInspectionShape a sh:NodeShape ;    # Instant Irregular Inspection (Phase G - Inspection)
                 sh:targetClass occp:IrregularInspection ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:UsageStart ;
@@ -898,7 +874,6 @@
 
             osh:NextRegularInspectionShape a sh:NodeShape ;  # Instant Next Regular Inspection (Phase G - Inspection)
                 sh:targetClass occp:NextRegularInspection ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:UsageStart ;
@@ -937,7 +912,6 @@
         ### INSTANT SHAPES PHASE H - SPECIAL EVENTS
             osh:GeologicalEventShape a sh:NodeShape ;        # Instant Geological Event (Phase H - Special Events)
                 sh:targetClass occp:GeologicalEvent ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
                     sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
@@ -952,7 +926,6 @@
 
             osh:LoadEventShape a sh:NodeShape ;              # Instant Load Event (Phase H - Special Events)
                 sh:targetClass occp:LoadEvent ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -979,7 +952,6 @@
 
             osh:WeatherEventShape a sh:NodeShape ;           # Instant Weather Event (Phase H - Special Events)
                 sh:targetClass occp:WeatherEvent ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant has a date as time stamp.
                     sh:path time:hasTime ;                   # Time stamp has to be set 
                     sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
@@ -1006,7 +978,6 @@
         ### INSTANT SHAPES PHASE K - DAMAGE
             osh:DamageDetectionShape a sh:NodeShape ;        # Instant Damage Detection (Phase K - Damage)
                 sh:targetClass occp:DamageDetection ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -1027,7 +998,6 @@
                 
             osh:DamageObservationShape a sh:NodeShape ;      # Instant Damage Observation (Phase K - Damage)
                 sh:targetClass occp:DamageObservation ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:DamageDetection ;
@@ -1048,7 +1018,6 @@
 
             osh:DamageRepairShape a sh:NodeShape ;           # Instant Damage Repair (Phase K - Damage)
                 sh:targetClass occp:DamageRepair ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:DamageDetection ;
@@ -1087,7 +1056,6 @@
         ### INSTANT SHAPES PHASE L - REPAIR
             osh:NewComponentShape a sh:NodeShape ;           # Instant New Component (Phase L - Repair)
                 sh:targetClass occp:NewComponent ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -1114,7 +1082,6 @@
 
             osh:RepairCompletionShape a sh:NodeShape ;           # Instant Repair Completion (Phase L - Repair)
                 sh:targetClass occp:RepairCompletion ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -1147,7 +1114,6 @@
 
             osh:RepairStartShape a sh:NodeShape ;            # Instant Repair Start (Phase L - Repair)
                 sh:targetClass occp:RepairStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
@@ -1192,7 +1158,6 @@
         ### INSTANT SHAPES PHASE M - DECONSTRUCTION
             osh:DeconstructionCompletionShape a sh:NodeShape ;   # Instant Deconstruction Completion (Phase M - Deconstruction)
                 sh:targetClass occp:DeconstructionCompletion ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:DeconstructionStart ;
@@ -1213,7 +1178,6 @@
 
             osh:DeconstructionStartShape a sh:NodeShape ;   # Instant Deconstruction Start (Phase M - Deconstruction)
                 sh:targetClass occp:DeconstructionStart ;
-                sh:property osh:GeneralDatePropertyShape ;   # Date format YYYY-MM-DD
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:UsageEnd ;
