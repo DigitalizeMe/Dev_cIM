@@ -674,7 +674,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange
     occp:UsageChange rdf:type owl:Class ;
                     rdfs:subClassOf occp:PhaseD_Instant ;
-                    rdfs:comment "This instant marks the point in time of a change in usage of model component or building/construction. Since there can be multiple changes in usage, this instant can be counted. This also means there can be multiple usage phases (with gaps in between them) and thus multiple starts and endings of these usage phases. This instant is after the end of a previous usage phase and before the start of a new usage phase."@en ;
+                    rdfs:comment "This instant marks the point in time of a change in usage of model component or building/construction. This also means there can be multiple usage phases (with gaps in between them) and thus multiple starts and endings of these usage phases. This instant is after or at the end of a previous usage phase (or several) and before or at the start of a new usage phase (or several)."@en ;
                     rdfs:label "Usage Change"@en .
 
 

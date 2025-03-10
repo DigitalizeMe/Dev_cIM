@@ -140,13 +140,16 @@
         sh:message "Phase A (Planning) can only have one actual beginning instant (e.g., BeginningOfPlanning)."@en ;
         sh:severity sh:Violation ;
     ] ;
-    sh:property [
-        sh:path occp:hasActualEnd ;
-        sh:class occp:CompletionOfPlanning ;
-        sh:maxCount 1 ;
-        sh:message "Phase A (Planning) can only have one actual end instant (e.g., CompletionOfPlanning)."@en ;
-        sh:severity sh:Violation ;
-    ] .
+      sh:property [
+          sh:path occp:hasActualEnd ;
+          sh:or (
+              [ sh:class occp:ReviewApproval ]
+              [ sh:class occp:CompletionOfPlanning ]
+          ) ;
+          sh:maxCount 1 ;
+          sh:message "Phase A (Planning) can only have one actual end instant (e.g., ReviewApproval or CompletionOfPlanning)."@en ;
+          sh:severity sh:Violation ;
+      ] .
 
   osh:ShapeOfPhaseB a sh:NodeShape ;
       sh:targetClass occp:PhaseB_Review ;
@@ -171,26 +174,29 @@
       ] ;
       sh:property [
           sh:path occp:hasActualEnd ;
-          sh:class occp:CompletionOfPlanning ;
+          sh:or (
+              [ sh:class occp:ReviewApproval ]
+              [ sh:class occp:CompletionOfPlanning ]
+          ) ;
           sh:maxCount 1 ;
-          sh:message "Phase B (Review) can only have one actual end instant (e.g., CompletionOfPlanning)."@en ;
+          sh:message "Phase B (Review) can only have one actual end instant (e.g., ReviewApproval or CompletionOfPlanning)."@en ;
           sh:severity sh:Violation ;
       ] .
 
   osh:ShapeOfTransitionA a sh:NodeShape ;         # Transition A (Completion of Planning) 
-    sh:targetClass occp:CompletionOfPlanning ;
-    sh:property [                                 # Transition order
-      sh:path occp:before ;
-      sh:class occp:BeginOfTenderingProcess ;
-      sh:message "Wrong assignment of Transition A (Completion of Planning) or Transition B (Begin of Tendering Process). Transition A usually occurs before Transition B."@en ;
-      sh:severity sh:Warning ;
+      sh:targetClass occp:CompletionOfPlanning ;
+      sh:property [                                 # Transition order
+          sh:path occp:before ;
+          sh:class occp:BeginOfTenderingProcess ;
+          sh:message "Wrong assignment of Transition A (Completion of Planning) or Transition B (Begin of Tendering Process). Transition A usually occurs before Transition B."@en ;
+          sh:severity sh:Warning ;
       ] ;
-    sh:property [                                 # Transition time (single point in time)
-      sh:path occp:hasActualTime ;
-      sh:minCount 1 ;
-      sh:maxCount 1 ;
-      sh:message "Transition A (Completion of Planning) must have exactly one actual timestamp."@en ;
-      sh:severity sh:Violation ;
+      sh:property [                                 # Transition time (single point in time)
+          sh:path occp:hasActualTime ;
+          sh:minCount 1 ;
+          sh:maxCount 1 ;
+          sh:message "Transition A (Completion of Planning) must have exactly one actual timestamp."@en ;
+          sh:severity sh:Violation ;
       ] .
 
   osh:ShapeOfTransitionB a sh:NodeShape ;         # Transition B (Begin Of Tendering Process)

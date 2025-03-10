@@ -77,23 +77,13 @@
 
             osh:SubmissionToReviewShape a sh:NodeShape ;    # Instant Submission To Review (Phase A - Planning)
                 sh:targetClass occp:SubmissionToReview ;
-                sh:or (                                     # Instant's chronological order within the Phase - 2 Options
-                    [
-                        sh:path occp:after ;                    
-                        sh:class occp:Edit_BSTR ;
-                    ]
-                    [
-                        sh:path occp:after ;                    
-                        sh:class occp:Edit_ASTR ;
-                        sh:message "Wrong assignment (chronological order) of Submission To Review or Edit Before/After Submission To Review."@en ;
-                        sh:severity sh:Violation ;
-                    ]
-                ) ;
-                sh:property [
-                    sh:path occp:startsPhase ;
-                    sh:class occp:PhaseB_Review ;
-                    sh:maxCount 1 ;
-                    sh:message "SubmissionToReview can start at most one Phase B (Review)."@en ;
+                    sh:property [                           # Instant's chronological order within the Phase - 2 Options
+                    sh:path occp:after ;
+                    sh:or (
+                        [ sh:class occp:Edit_BSTR ]
+                        [ sh:class occp:Edit_ASTR ]
+                    ) ;
+                    sh:message "Wrong assignment (chronological order) of Submission To Review or Edit Before/After Submission To Review."@en ;
                     sh:severity sh:Violation ;
                 ] ;
                 sh:property [
@@ -140,6 +130,10 @@
                 sh:property [
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseB_Review ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Review Start must start exactly one Phase B (Review)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:or (                                     # Instant's chronological order within the Phase - 2 Options
                     [
@@ -158,19 +152,7 @@
                 sh:property [
                     sh:path occp:after ;
                     sh:class occp:SubmissionToReview ;
-                    sh:message "Wrong assignment (chronological order) of Review Start or Submission to Review."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Review Start - min. count = 1."@en ;
+                    sh:message "Review Start must occur after Submissio To Review."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -179,10 +161,18 @@
                 sh:property [
                     sh:path occp:endsPhase ;
                     sh:class occp:PhaseA_Planning ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Review Approval must end exactly one Phase A (Planning)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [
                     sh:path occp:endsPhase ;
                     sh:class occp:PhaseB_Review ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Review Approval must end exactly one Phase B (Review)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                               # Instant's chronological order within the Phase
                     sh:path occp:after ;
@@ -193,11 +183,9 @@
                 sh:property [                               # Instant (Review Approval) ends current Cycle A (Planning/Review).
                     sh:path occp:endsCycle ;              
                     sh:class occp:CycleA_PlanningReview ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;
+                    sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Too many dates for Review Approval - max. count = 1."@en ;
+                    sh:message "Review Approval must end exactly one Cycle A (Planning/Review)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -209,12 +197,21 @@
                     sh:message "Wrong assignment (chronological order) of Review Rejection or Review Start."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant (Review Rejection) ends current Cycle A (Planning/Review).
-                    sh:path occp:endsCycle ;              
+                sh:property [
+                    sh:path occp:endsCycle ;
                     sh:class occp:CycleA_PlanningReview ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Review Rejection must end exactly one Cycle A (Planning/Review)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;
+                sh:property [
+                    sh:path occp:startsCycle ;
+                    sh:class occp:CycleA_PlanningReview ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Review Rejection must start exactly one new Cycle A (Planning/Review)."@en ;
+                    sh:severity sh:Violation ;
                 ] .
 
 
@@ -225,7 +222,9 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseC_Construction ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase C (Construction)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase C Instant must belong to exactly one Phase C (Construction)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -233,9 +232,13 @@
 
             osh:ConstructionStartShape a sh:NodeShape ;      # Instant Construction Start (Phase C - Construction)
                 sh:targetClass occp:ConstructionStart ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseC_Construction ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "ConstructionStart must start exactly one Phase C (Construction)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # Instant's chronological order within the Phase
                     sh:path occp:before ;
@@ -243,22 +246,10 @@
                     sh:message "Wrong assignment (chronological order) of Construction Start or Construction Completion."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Construction Start - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # Actual Time stamp - limitation
-                    sh:path occp:hasActualTime ;
-                    sh:maxCount 1 ;
-                    sh:message "Too many dates for Actual Time stamp for Construction Start - max. count = 1" ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:Submission ;
+                    sh:message "Construction Start must occur after Submission."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -283,25 +274,7 @@
                         sh:message "Wrong assignment (chronological order) of Construction Completion or Defect Elimination Start."@en ;
                         sh:severity sh:Violation ;
                     ]
-                ) ;
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Construction Completion - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # Actual Time stamp - limitation
-                    sh:path occp:hasActualTime ;
-                    sh:maxCount 1 ;
-                    sh:message "Too many dates for Actual Time stamp for Construction Completion - max. count = 1" ;
-                    sh:severity sh:Violation ;
-                ] .
+                ) .
 
             osh:DefectElimStartShape a sh:NodeShape ;        # Instant Defect Elimination Start (Phase C - Construction)
                 sh:targetClass occp:DefectElimStart ;
@@ -315,18 +288,6 @@
                     sh:path occp:before ;
                     sh:class occp:DefectElimCompletion ;
                     sh:message "Wrong assignment (chronological order) of Defect Elimination Start or Defect Elimination Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;            
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Start - min. count = 1."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -343,18 +304,6 @@
                     sh:class occp:ConstructionAcceptance ;
                     sh:message "Wrong assignment (chronological order) of Defect Elimination Completion or Construction Acceptance."@en ;
                     sh:severity sh:Violation ;
-                ] ;            
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Defect Elimination Completion - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
                 ] .
 
             osh:ConstructionAcceptanceShape a sh:NodeShape ;      # Instant Construction Acceptance (Phase C - Construction)
@@ -368,7 +317,6 @@
                 sh:property [
                     sh:path occp:before ;
                     sh:class occp:CompletionOfConstruction ;
-                    sh:minCount 1 ;
                     sh:message "Wrong assignment (chronological order) of Construction Acceptance or Completion of Construction (Transition)."@en ;
                     sh:severity sh:Violation ;
                 ] ;
@@ -385,25 +333,7 @@
                         sh:message "Wrong assignment (chronological order) of Construction Acceptance or Defect Elimination Completion."@en ;
                         sh:severity sh:Violation ;
                     ]
-                ) ;
-                sh:property [                               # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                  # Time stamp has to be set 
-                    sh:qualifiedValueShape [                # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Construction Acceptance - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                               # Actual Time stamp - limitation
-                    sh:path occp:hasActualTime ;
-                    sh:maxCount 1 ;
-                    sh:message "Too many dates for Actual Time stamp for Construction Acceptance - max. count = 1" ;
-                    sh:severity sh:Violation ;
-                ] .
+                ) .
 
     ### PHASE D INSTANTS
         # PHASE ASSIGNMENT
@@ -412,25 +342,57 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseD_Usage ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase D (Usage)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase D Instant must belong to exactly one Phase D (Usage)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE D - USAGE
+            
+            osh:UsageStartShape a sh:NodeShape ;      # Instant Usage Start (Phase D - Usage)
+                sh:targetClass occp:UsageStart ;
+                sh:property [                                # A new Usage Phase is started with Usage Start
+                    sh:path occp:startsPhase ;                
+                    sh:class occp:PhaseD_Usage ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "UsageStart must start exactly one Phase D (Usage)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [                                # Instant's chronological order 
+                        sh:path occp:after ;
+                        sh:class occp:ConstructionAcceptance ;
+                        sh:message "UsageStart must occur after Completion of Construction."@en ;
+                        sh:severity sh:Violation ;;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:UsageEnd ;
+                    sh:message "UsageStart must occur before UsageEnd."@en ;
+                    sh:severity sh:Violation ;
+                ] .
+            
             osh:UsageChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase D - Usage)
                 sh:targetClass occp:UsageChange ;
                 sh:property [                                # The current Usage Phase is ended with a Change of Usage. 
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseD_Usage ;
+                    sh:minCount 1 ;
+                    sh:message "UsageStart must end at least one Phase D (Usage)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # A new Usage Phase is started with a Change of Usage.
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseD_Usage ;
+                    sh:minCount 1 ;
+                    sh:message "UsageStart must start at least one Phase D (Usage)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
-                    sh:class occp:ConstructionAcceptance ;
-                    sh:message "Wrong assignment (chronological order) of Change of Usage or Construction Acceptance."@en ;
+                    sh:class occp:CompletionOfConstruction ;
+                    sh:message "UsageChange must occur after Completion of Construction."@en ;
                     sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # Instant's chronological order within the Phase
@@ -441,89 +403,45 @@
                 ] ;
                 sh:property [                                
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Usage Change or Deconstruction Completion."@en ;
+                    sh:class occp:UsageEnd ;
+                    sh:message "UsageChange must occur before UsageEnd."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Usage Change."@en ;
-                    sh:severity sh:Warning ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "UsageChange must occur before DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
                 ] .
 
             osh:UsageEndShape a sh:NodeShape ;      # Instant Usage End (Phase D - Usage)
                 sh:targetClass occp:UsageEnd ;
-                sh:property [                                # The current Usage Phase is ended with Usage End
-                    sh:path occp:endsPhase ;                
+                sh:property [
+                    sh:path occp:endsPhase ;
                     sh:class occp:PhaseD_Usage ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "UsageEnd must end exactly one Phase D (Usage)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:or (                                     # Instant's chronological order within the Phase - 2 Options
                     [
                         sh:path occp:after ;
                         sh:class occp:UsageStart ;
-                        sh:message "Wrong assignment (chronological order) of Usage End or Usage Start."@en ;
+                        sh:message "UsageEnd must occur after UsageStart."@en ;
                         sh:severity sh:Violation ;
                     ]
                     [
                         sh:path occp:after ;
                         sh:class occp:UsageChange ;
-                        sh:message "Wrong assignment (chronological order) of Usage End or Usage Change."@en ;
+                        sh:message "UsageEnd must occur after UsageChange."@en ;
                         sh:severity sh:Violation ;
                     ]
                 ) ;
                 sh:property [                                
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Usage End or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Usage End - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] .
-
-            osh:UsageStartShape a sh:NodeShape ;      # Instant Usage Start (Phase D - Usage)
-                sh:targetClass occp:UsageStart ;
-                sh:property [                                # A new Usage Phase is started with Usage Start
-                    sh:path occp:startsPhase ;                
-                    sh:class occp:PhaseD_Usage ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                        sh:path occp:after ;
-                        sh:class occp:ConstructionAcceptance ;
-                        sh:message "Wrong assignment (chronological order) of Usage Start or Construction Acceptance."@en ;
-                        sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                
-                    sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Usage Start or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Usage Start - min. count = 1."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "UsageEnd must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -534,56 +452,88 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseE_Warranty ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase E (Warranty)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase E Instant must belong to exactly one Phase E (Warranty)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE E - WARRANTY
+            osh:WarrantyStartShape a sh:NodeShape ;          # Instant Warranty Start (Phase E - Warranty)
+                sh:targetClass occp:WarrantyStart ;
+                sh:property [                                # A new Warranty Phase is started with Warranty Start
+                    sh:path occp:startsPhase ;                
+                    sh:class occp:PhaseE_Warranty ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "WarrantyStart must start exactly one Phase E (Warranty)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [                                # Instant's chronological order 
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "Wrong assignment (chronological order) of Warranty Start or Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [                                
+                    sh:path occp:before ;
+                    sh:class occp:WarrantyEnd ;
+                    sh:message "WarrantyStart must occur before WarrantyEnd."@en ;
+                    sh:severity sh:Violation ;
+                ] .
+
+
             osh:WarrantyChangeShape a sh:NodeShape ;         # Instant Warranty Change (Phase E - Warranty)
                 sh:targetClass occp:WarrantyChange ;
                 sh:property [                                # The current Warranty Phase is ended with a Change of Warranty. 
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseE_Warranty ;
+                    sh:minCount 1 ;
+                    sh:message "WarrantyChange must end at least one Phase E (Warranty)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # A new Warranty Phase is started with a Change of Warranty.
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseE_Warranty ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:ConstructionAcceptance ;
-                    sh:message "Wrong assignment (chronological order) of Change of Warranty or Construction Acceptance."@en ;
+                    sh:minCount 1 ;
+                    sh:message "WarrantyChange must start at least one Phase E (Warranty)."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant's chronological order within the Phase
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:CompletionOfConstruction ;
+                    sh:message "WarrantyChange must occur after Completion of Construction."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
                     sh:path occp:after ;
                     sh:class occp:WarrantyStart ;
-                    sh:message "Wrong assignment (chronological order) of Change of Warranty or Warranty Start."@en ;
+                    sh:message "WarrantyChange must occur after WarrantyStart."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Warranty Change or Deconstruction Completion."@en ;
+                    sh:class occp:WarrantyEnd ;
+                    sh:message "WarrantyChange must occur before WarrantyEnd."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Change."@en ;
-                    sh:severity sh:Warning ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "WarrantyChange must occur before DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
                 ] .
+                
 
             osh:WarrantyEndShape a sh:NodeShape ;            # Instant Warranty End (Phase E - Warranty)
                 sh:targetClass occp:WarrantyEnd ;
                 sh:property [                                # The current Warranty Phase is ended with Warranty End
                     sh:path occp:endsPhase ;                
                     sh:class occp:PhaseE_Warranty ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "WarrantyEnd must end exactly one Phase E (Warranty)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:or (                                     # Instant's chronological order within the Phase - 2 Options
                     [
@@ -599,47 +549,10 @@
                         sh:severity sh:Violation ;
                     ]
                 ) ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Warranty End - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] .
-
-            osh:WarrantyStartShape a sh:NodeShape ;          # Instant Warranty Start (Phase E - Warranty)
-                sh:targetClass occp:WarrantyStart ;
-                sh:property [                                # A new Warranty Phase is started with Warranty Start
-                    sh:path occp:startsPhase ;                
-                    sh:class occp:PhaseE_Warranty ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                        sh:path occp:after ;
-                        sh:class occp:ConstructionAcceptance ;
-                        sh:message "Wrong assignment (chronological order) of Warranty Start or Construction Acceptance."@en ;
-                        sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Warranty Start or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Warranty Start - min. count = 1."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "WarrantyEnd must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -650,20 +563,57 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseF_DesignLife ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase F (Design Life)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase F Instant must belong to exactly one Phase F (Design Life)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE F - DESIGN LIFE
+            osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
+                sh:targetClass occp:DesignLifeEnd ;
+                sh:property [                                # A new Design Life Phase is started with Design Life Start
+                    sh:path occp:startsPhase ;                
+                    sh:class occp:PhaseF_DesignLife ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "DesignLifeStart must start exactly one Phase F (Design Life)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [                                # Instant's chronological order 
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "DesignLifeStart must occur after Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DesignLifeStart must occur before DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DesignLifeEnd ;
+                    sh:message "DesignLifeStart must occur before DesignLifeEnd."@en ;
+                    sh:severity sh:Violation ;
+                ] .
+         
             osh:DesignLifeChangeShape a sh:NodeShape ;       # Instant Design Life Change (Phase F - Design Life)
                 sh:targetClass occp:DesignLifeChange ;
                 sh:property [                                # The current Design Life Phase is ended with a Change of Design Life. 
-                    sh:path occp:endsPhase ;                
+                    sh:path occp:endsPhase ;
                     sh:class occp:PhaseF_DesignLife ;
+                    sh:minCount 1 ;
+                    sh:message "DesignLifeChange must end at least one Phase F (Design Life)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # A new Design Life Phase is started with a Change of Design Life.
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseF_DesignLife ;
+                    sh:minCount 1 ;
+                    sh:message "DesignLifeChange must start at least one Phase F (Design Life)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
@@ -677,29 +627,28 @@
                     sh:message "Wrong assignment (chronological order) of Change of Design Life or Design Life Start."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Design Life Change or Deconstruction Completion."@en ;
+                    sh:class occp:DesignLifeEnd ;
+                    sh:message "DesignLifeChange must occur before DesignLifeEnd."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Change."@en ;
-                    sh:severity sh:Warning ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DesignLifeChange must occur before DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
                 ] .
 
             osh:DesignLifeEndShape a sh:NodeShape ;          # Instant Design Life End (Phase F - Design Life)
                 sh:targetClass occp:DesignLifeEnd ;
                 sh:property [                                # The current Design Life Phase is ended with Design Life End
-                    sh:path occp:endsPhase ;                
+                    sh:path occp:endsPhase ;
                     sh:class occp:PhaseF_DesignLife ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "DesignLifeEnd must end exactly one Phase F (Design Life)."@en ;
+                    sh:severity sh:Violation ;
                 ] ;
                 sh:or (                                     # Instant's chronological order within the Phase - 2 Options
                     [
@@ -715,49 +664,19 @@
                         sh:severity sh:Violation ;
                     ]
                 ) ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Design Life End - min. count = 1."@en ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "DesignLifeEnd must occur after Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DesignLifeEnd must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
-            osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
-                sh:targetClass occp:DesignLifeEnd ;
-                sh:property [                                # A new Design Life Phase is started with Design Life Start
-                    sh:path occp:startsPhase ;                
-                    sh:class occp:PhaseF_DesignLife ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                        sh:path occp:after ;
-                        sh:class occp:ConstructionAcceptance ;
-                        sh:message "Wrong assignment (chronological order) of Design Life Start or Construction Acceptance."@en ;
-                        sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                
-                    sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Design Life Start or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        sh:minCount 1 ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Design Life Start - min. count = 1."@en ;
-                    sh:severity sh:Violation ;
-                ] .
 
     ### PHASE G INSTANTS
         # PHASE ASSIGNMENT
@@ -766,7 +685,9 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseG_Inspection ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase G (Inspection)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase G Instant must belong to exactly one Phase G (Inspection)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -775,8 +696,8 @@
                 sh:targetClass occp:InspectionExecution ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
-                    sh:class occp:ConstructionAcceptance ;
-                    sh:message "Wrong assignment (chronological order) of Inspection Execution or Construction Acceptance."@en ;
+                    sh:class occp:ConstructionStart ;
+                    sh:message "InspectionExecution must occur after ConstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] ;
                 sh:or (                                     # Instant's chronological order - 2 Options
@@ -793,27 +714,10 @@
                         sh:severity sh:Violation ;
                     ]
                 ) ;
-                sh:property [                                # Instant's chronological order within phase
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:NextRegularInspection ;
-                    sh:message "Wrong assignment (chronological order) of Inspection Execution or Next Regular Inspection."@en ;
-                    sh:severity sh:Warning ;
-                ] ;
-                sh:property [                                
-                    sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Inspection Execution or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Inspection Execution."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "InspectionExecution must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -825,47 +729,31 @@
                     sh:message "Wrong assignment (chronological order) of Irregular Inspection or Usage Start."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Irregular Inspection or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Irregular Inspection."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "IrregularInspection must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
             osh:NextRegularInspectionShape a sh:NodeShape ;  # Instant Next Regular Inspection (Phase G - Inspection)
                 sh:targetClass occp:NextRegularInspection ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:InspectionExecution ;
+                    sh:message "NextRegularInspection must occur after InspectionExecution."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:UsageStart ;
                     sh:message "Wrong assignment (chronological order) of Next Regular Inspection or Usage Start."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Next Regular Inspection or Deconstruction Completion."@en ;
-                    sh:severity sh:Warning ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Next Regular Inspection."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "NextRegularInspection must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -876,22 +764,25 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseH_SpecialEvents ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase H (Special Events)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase H Instant must belong to exactly one Phase H (Special Events)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE H - SPECIAL EVENTS
             osh:GeologicalEventShape a sh:NodeShape ;        # Instant Geological Event (Phase H - Special Events)
                 sh:targetClass occp:GeologicalEvent ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event."@en ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "GeologicalEvent must occur after Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "GeologicalEvent must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -899,39 +790,29 @@
                 sh:targetClass occp:LoadEvent ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
-                    sh:class occp:ConstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Load Event or Construction Completion."@en ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "LoadEvent must occur after Construction Acceptance."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Load Event or Deconstruction Completion."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "LoadEvent must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Load Event."@en ;
-                    sh:severity sh:Violation ;
-                ] .
+                ] . 
 
             osh:WeatherEventShape a sh:NodeShape ;           # Instant Weather Event (Phase H - Special Events)
                 sh:targetClass occp:WeatherEvent ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Geological Event."@en ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "WeatherEvent must occur after Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "WeatherEvent must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -942,28 +823,33 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseK_Damage ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase K (Damage)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase K Instant must belong to exactly one Phase K (Damage)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE K - DAMAGE
             osh:DamageDetectionShape a sh:NodeShape ;        # Instant Damage Detection (Phase K - Damage)
                 sh:targetClass occp:DamageDetection ;
+                sh:property [
+                    sh:path occp:startsPhase ;
+                    sh:class occp:PhaseK_Damage ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "DamageDetection must start exactly one Phase K (Damage)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
-                    sh:class occp:ConstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Damage Detection or Construction Completion."@en ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "DamageDetection must occur after Construction Acceptance."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Damage Detection or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasActualTime ;             # Time stamp has to be set 
-                    sh:message "Missing time stamp (Actual Time) for Damage Detection."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DamageDetection must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
                 
@@ -972,18 +858,13 @@
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:DamageDetection ;
-                    sh:message "Wrong assignment (chronological order) of Damage Observation or Damage Detection."@en ;
+                    sh:message "DamageObservation must occur after DamageDetection."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Damage Observation or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasActualTime ;             # Time stamp has to be set 
-                    sh:message "Missing time stamp (Actual Time) for Damage Detection."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DamageObservation must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -992,24 +873,13 @@
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:DamageDetection ;
-                    sh:message "Wrong assignment (chronological order) of Damage Repair or Damage Detection."@en ;
+                    sh:message "DamageRepair must occur after DamageDetection."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Damage Repair or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Damage Repair."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DamageRepair must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -1020,7 +890,9 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseL_Repair ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase L (Repair)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase L Instant must belong to exactly one Phase L (Repair)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -1030,90 +902,69 @@
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:after ;
                     sh:class occp:ConstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of New Component or Construction Completion."@en ;
+                    sh:message "NewComponent must occur after ConstructionCompletion."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of New Component or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for New Component."@en ;
-                    sh:severity sh:Violation ;
-                ] .
-
-            osh:RepairCompletionShape a sh:NodeShape ;           # Instant Repair Completion (Phase L - Repair)
-                sh:targetClass occp:RepairCompletion ;
-                sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:ConstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Repair Completion or Construction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:RepairStart ;
-                    sh:message "Wrong assignment (chronological order) of Repair Completion or Repair Start."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                
-                    sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Repair Completion or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Repair Completion."@en ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "NewComponent must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
             osh:RepairStartShape a sh:NodeShape ;            # Instant Repair Start (Phase L - Repair)
                 sh:targetClass occp:RepairStart ;
                 sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:ConstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Repair Start or Construction Completion."@en ;
+                    sh:path occp:startsPhase ;
+                    sh:class occp:PhaseL_Repair ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "RepairStart must start exactly one Phase L (Repair)."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant's chronological order 
+                sh:property [
                     sh:path occp:after ;
                     sh:class occp:DamageDetection ;
-                    sh:message "Wrong assignment (chronological order) of Repair Start or Damage Detection."@en ;
+                    sh:message "RepairStart must occur after DamageDetection."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                
+                sh:property [
                     sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Repair Start or Deconstruction Completion."@en ;
+                    sh:class occp:RepairCompletion ;
+                    sh:message "RepairStart must occur before RepairCompletion."@en ;
                     sh:severity sh:Violation ;
                 ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Repair Start."@en ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "RepairStart must occur before DeconstructionStart."@en ;
                     sh:severity sh:Violation ;
                 ] .
+
+            osh:RepairCompletionShape a sh:NodeShape ;           # Instant Repair Completion (Phase L - Repair)
+                sh:targetClass occp:RepairCompletion ;
+                sh:property [                                # Instant's chronological order 
+                    sh:path occp:endsPhase ;
+                    sh:class occp:PhaseL_Repair ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "RepairCompletion must end exactly one Phase L (Repair)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:RepairStart ;
+                    sh:message "RepairCompletion must occur after RepairStart."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "RepairCompletion must occur before DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
+                ] .
+
+
 
     ### PHASE M INSTANTS
         # PHASE ASSIGNMENT
@@ -1122,61 +973,49 @@
                 sh:property [
                     sh:path occp:hasPhase ;
                     sh:class occp:PhaseM_Deconstruction ;
-                    sh:message "Wrong Phase/Instant assignment - Instant should belong to Phase M (Deconstruction)."@en ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each Phase M Instant must belong to exactly one Phase M (Deconstruction)."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
         ### INSTANT SHAPES PHASE M - DECONSTRUCTION
-            osh:DeconstructionCompletionShape a sh:NodeShape ;   # Instant Deconstruction Completion (Phase M - Deconstruction)
-                sh:targetClass occp:DeconstructionCompletion ;
-                sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:DeconstructionStart ;
-                    sh:message "Wrong assignment (chronological order) of Deconstruction Completion or Deconstruction Start."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp - no minCount.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] .
-
             osh:DeconstructionStartShape a sh:NodeShape ;   # Instant Deconstruction Start (Phase M - Deconstruction)
                 sh:targetClass occp:DeconstructionStart ;
+                sh:targetClass occp:DeconstructionCompletion ;
                 sh:property [                                # Instant's chronological order 
-                    sh:path occp:after ;
-                    sh:class occp:UsageEnd ;
-                    sh:message "Wrong assignment (chronological order) of Deconstruction Start or Usage End."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant's chronological order 
-                    sh:path occp:before ;
-                    sh:class occp:DeconstructionCompletion ;
-                    sh:message "Wrong assignment (chronological order) of Deconstruction Start or Deconstruction Completion."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [                                # Instant has a date as time stamp.
-                    sh:path time:hasTime ;                   # Time stamp has to be set 
-                    sh:qualifiedValueShape [                 # The following object properties are valid options to set time stamp.
-                        sh:path (
-                        occp:hasEstimatedTime
-                        occp:hasActualTime
-                        ) ;
-                        ] ;
+                    sh:path occp:startsPhase ;
+                    sh:class occp:PhaseM_Deconstruction ;
                     sh:minCount 1 ;
-                    sh:message "Missing time stamp (Estimated or Actual Time) for Deconstruction Start."@en ;
+                    sh:maxCount 1 ;
+                    sh:message "DeconstructionStart must start exactly one Phase M (Deconstruction)."@en ;
                     sh:severity sh:Violation ;
                 ] ;
                 sh:property [
-                    sh:path occp:hasActualTime ;
-                    sh:maxCount 1 ;
-                    sh:message "Too many actual timestamps for Actual Time of Deconstruction Start - max. count = 1."@en ;
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionAcceptance ; ;
+                    sh:message "DeconstructionStart must occur after Construction Acceptance."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:before ;
+                    sh:class occp:DeconstructionCompletion ;
+                    sh:message "DeconstructionStart must occur before DeconstructionCompletion."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
+            osh:DeconstructionCompletionShape a sh:NodeShape ;   # Instant Deconstruction Completion (Phase M - Deconstruction)
+                sh:property [                                # Instant's chronological order 
+                    sh:path occp:endsPhase ;
+                    sh:class occp:PhaseM_Deconstruction ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "DeconstructionCompletion must end exactly one Phase M (Deconstruction)."@en ;
+                    sh:severity sh:Violation ;
+                ] ;
+                sh:property [
+                    sh:path occp:after ;
+                    sh:class occp:DeconstructionStart ;
+                    sh:message "DeconstructionCompletion must occur after DeconstructionStart."@en ;
+                    sh:severity sh:Violation ;
+                ] .
