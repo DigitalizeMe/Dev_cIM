@@ -571,7 +571,7 @@
 
         ### INSTANT SHAPES PHASE F - DESIGN LIFE
             osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
-                sh:targetClass occp:DesignLifeEnd ;
+                sh:targetClass occp:DesignLifeStart ;
                 sh:property [                                # A new Design Life Phase is started with Design Life Start
                     sh:path occp:startsPhase ;                
                     sh:class occp:PhaseF_DesignLife ;
@@ -965,7 +965,6 @@
                 ] .
 
 
-
     ### PHASE M INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseMInstantShape a sh:NodeShape ;
@@ -982,7 +981,6 @@
         ### INSTANT SHAPES PHASE M - DECONSTRUCTION
             osh:DeconstructionStartShape a sh:NodeShape ;   # Instant Deconstruction Start (Phase M - Deconstruction)
                 sh:targetClass occp:DeconstructionStart ;
-                sh:targetClass occp:DeconstructionCompletion ;
                 sh:property [                                # Instant's chronological order 
                     sh:path occp:startsPhase ;
                     sh:class occp:PhaseM_Deconstruction ;

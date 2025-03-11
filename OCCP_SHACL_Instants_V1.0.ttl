@@ -1,0 +1,1023 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+### PHASE A INSTANTS
+    # PHASE ASSIGNMENT
+
+        osh:PhaseAInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseA_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseA_Planning ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseA_Instant' must belong to exactly one 'occp:PhaseA_Planning' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE A - PLANNING
+
+        osh:BeginningOfPlanningShape a sh:NodeShape ;   # Instant Beginning Of Planning (Phase A - Planning)
+            sh:targetClass occp:BeginningOfPlanning ;   
+            sh:property [                               # Instant (Beginning Of Planning) starts a new Phase A (Planning).
+                sh:path occp:startsPhase ;              
+                sh:class occp:PhaseA_Planning ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:BeginningOfPlanning' must start exactly one 'occp:PhaseA_Planning' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:before ;                   
+                sh:class occp:DataProcurement ;
+                sh:message "Each 'occp:BeginningOfPlanning' must occur before 'occp:DataProcurement' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:SubmissionToReview ;
+                sh:message "Each 'occp:BeginningOfPlanning' should occur before 'occp:SubmissionToReview' via 'occp:before'."@en ;
+                sh:severity sh:Warning ;
+            ] .
+
+        osh:DataProcurementShape a sh:NodeShape ;       # Instant Data Procurement (Phase A - Planning)
+            sh:targetClass occp:DataProcurement ;       
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:after ;                    
+                sh:class occp:BeginningOfPlanning ;
+                sh:message "Each 'occp:DataProcurement' must occur after 'occp:BeginningOfPlanning' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:before ;                   
+                sh:class occp:SubmissionToReview ;
+                sh:message "Each 'occp:DataProcurement' should occur before 'occp:SubmissionToReview' via 'occp:before'."@en ;
+                sh:severity sh:Warning ;
+            ] .
+
+        osh:Edit_BSTRShape a sh:NodeShape ;             # Instant Edit Before Submission To Review (Phase A - Planning)
+            sh:targetClass occp:Edit_BSTR ; 
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:after ;                    
+                sh:class occp:BeginningOfPlanning ;
+                sh:message "Each 'occp:Edit_BSTR' must occur after 'occp:BeginningOfPlanning' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:before ;                   
+                sh:class occp:SubmissionToReview ;
+                sh:message "Each 'occp:Edit_BSTR' must occur before 'occp:SubmissionToReview' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:SubmissionToReviewShape a sh:NodeShape ;    # Instant Submission To Review (Phase A - Planning)
+            sh:targetClass occp:SubmissionToReview ;
+            sh:property [                               # Instant's chronological order within the Phase - 2 Options
+                sh:path occp:after ;
+                sh:or (
+                    [ sh:class occp:Edit_BSTR ]
+                    [ sh:class occp:Edit_ASTR ]
+                ) ;
+                sh:message "Each 'occp:SubmissionToReview' must occur after 'occp:Edit_BSTR' or 'occp:Edit_ASTR' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:startsCycle ;
+                sh:class occp:CycleA_PlanningReview ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:SubmissionToReview' can start only one 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:Edit_ASTRShape a sh:NodeShape ;             # Instant Edit After Submission To Review (Phase A - Planning)
+            sh:targetClass occp:Edit_ASTR ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:SubmissionToReview ;
+                sh:message "Each 'occp:Edit_ASTR' must occur after 'occp:SubmissionToReview' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:CompletionOfPlanning ;
+                sh:message "Each 'occp:Edit_ASTR' should occur before 'occp:CompletionOfPlanning' via 'occp:before'."@en ;
+                sh:severity sh:Warning ;
+            ] .
+
+
+### PHASE B INSTANTS
+    # PHASE ASSIGNMENT        
+    
+        osh:PhaseBInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseB_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseB_Review ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseB_Instant' must belong to exactly one 'occp:PhaseB_Review' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE B - REVIEW
+
+        osh:ReviewStartShape a sh:NodeShape ;           # Instant Review Start (Phase B - Review)
+            sh:targetClass occp:ReviewStart ;
+            sh:property [
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseB_Review ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewStart' must start exactly one 'occp:PhaseB_Review' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:before ;
+                    sh:class occp:ReviewApproval ;
+                    sh:message "Each 'occp:ReviewStart' must occur before 'occp:ReviewApproval' via 'occp:before'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:before ;
+                    sh:class occp:ReviewRejection ;
+                    sh:message "Each 'occp:ReviewStart' must occur before 'occp:ReviewRejection' via 'occp:before'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:SubmissionToReview ;
+                sh:message "Each 'occp:ReviewStart' must occur after 'occp:SubmissionToReview' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:ReviewApprovalShape a sh:NodeShape ;        # Instant Review Approval (Phase B - Review)
+            sh:targetClass occp:ReviewApproval ;
+            sh:property [
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseA_Planning ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseB_Review ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseB_Review' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:ReviewStart ;
+                sh:message "Each 'occp:ReviewApproval' must occur after 'occp:ReviewStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                               # Instant (Review Approval) ends current Cycle A (Planning/Review).
+                sh:path occp:endsCycle ;              
+                sh:class occp:CycleA_PlanningReview ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:CycleA_PlanningReview' via 'occp:endsCycle'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:ReviewRejectionShape a sh:NodeShape ;       # Instant Review Rejection (Phase B - Review)
+            sh:targetClass occp:ReviewRejection ;
+            sh:property [                               # Instant's chronological order within the Phase      
+                sh:path occp:after ;
+                sh:class occp:ReviewStart ;
+                sh:message "Each 'occp:ReviewRejection' must occur after 'occp:ReviewStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:endsCycle ;
+                sh:class occp:CycleA_PlanningReview ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewRejection' must end exactly one 'occp:CycleA_PlanningReview' via 'occp:endsCycle'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:startsCycle ;
+                sh:class occp:CycleA_PlanningReview ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ReviewRejection' must start exactly one new 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE C INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseCInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseC_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseC_Construction ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseC_Instant' must belong to exactly one 'occp:PhaseC_Construction' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE C - CONSTRUCTION
+
+        osh:ConstructionStartShape a sh:NodeShape ;      # Instant Construction Start (Phase C - Construction)
+            sh:targetClass occp:ConstructionStart ;
+            sh:property [
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseC_Construction ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:ConstructionStart' must start exactly one 'occp:PhaseC_Construction' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path occp:before ;
+                sh:class occp:ConstructionCompletion ;
+                sh:message "Each 'occp:ConstructionStart' must occur before 'occp:ConstructionCompletion' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:Submission ;
+                sh:message "Each 'occp:ConstructionStart' must occur after 'occp:Submission' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:ConstructionCompletionShape a sh:NodeShape ; # Instant Construction Completion (Phase C - Construction)
+            sh:targetClass occp:ConstructionCompletion ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:ConstructionStart ;
+                sh:message "Each 'occp:ConstructionCompletion' must occur after 'occp:ConstructionStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:before ;
+                    sh:class occp:ConstructionAcceptance ;
+                    sh:message "Each 'occp:ConstructionCompletion' must occur before 'occp:ConstructionAcceptance' via 'occp:before'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:before ;
+                    sh:class occp:DefectElimStart ;
+                    sh:message "Each 'occp:ConstructionCompletion' must occur before 'occp:DefectElimStart' via 'occp:before'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) .
+
+        osh:DefectElimStartShape a sh:NodeShape ;        # Instant Defect Elimination Start (Phase C - Construction)
+            sh:targetClass occp:DefectElimStart ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:ConstructionCompletion ;
+                sh:message "Each 'occp:DefectElimStart' must occur after 'occp:ConstructionCompletion' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DefectElimCompletion ;
+                sh:message "Each 'occp:DefectElimStart' must occur before 'occp:DefectElimCompletion' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DefectElimCompletionShape a sh:NodeShape ;   # Instant Defect Elimination Completion (Phase C - Construction)
+            sh:targetClass occp:DefectElimCompletion ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:DefectElimStart ;
+                sh:message "Each 'occp:DefectElimCompletion' must occur after 'occp:DefectElimStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DefectElimCompletion' must occur before 'occp:ConstructionAcceptance' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:ConstructionAcceptanceShape a sh:NodeShape ; # Instant Construction Acceptance (Phase C - Construction)
+            sh:targetClass occp:ConstructionAcceptance ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:before ;
+                sh:class occp:UsageStart ;
+                sh:message "Each 'occp:ConstructionAcceptance' should occur before 'occp:UsageStart' via 'occp:before'."@en ;
+                sh:severity sh:Warning ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:CompletionOfConstruction ;
+                sh:message "Each 'occp:ConstructionAcceptance' must occur before 'occp:CompletionOfConstruction' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:after ;
+                    sh:class occp:ConstructionCompletion ;
+                    sh:message "Each 'occp:ConstructionAcceptance' must occur after 'occp:ConstructionCompletion' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:after ;
+                    sh:class occp:DefectElimCompletion ;
+                    sh:message "Each 'occp:ConstructionAcceptance' must occur after 'occp:DefectElimCompletion' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) .
+
+
+### PHASE D INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseDInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseD_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseD_Usage ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseD_Instant' must belong to exactly one 'occp:PhaseD_Usage' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE D - USAGE
+            
+        osh:UsageStartShape a sh:NodeShape ;      # Instant Usage Start (Phase D - Usage)
+            sh:targetClass occp:UsageStart ;
+            sh:property [                         # A new Usage Phase is started with Usage Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseD_Usage ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:UsageStart' must start exactly one 'occp:PhaseD_Usage' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                         # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:UsageStart' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:UsageEnd ;
+                sh:message "Each 'occp:UsageStart' must occur before 'occp:UsageEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+            
+        osh:UsageChangeShape a sh:NodeShape ;      # Instant Usage Change (Phase D - Usage)
+            sh:targetClass occp:UsageChange ;
+            sh:property [                          # The current Usage Phase is ended with a Change of Usage
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseD_Usage ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:UsageChange' must end at least one 'occp:PhaseD_Usage' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                          # A new Usage Phase is started with a Change of Usage
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseD_Usage ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:UsageChange' must start at least one 'occp:PhaseD_Usage' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                          # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:CompletionOfConstruction ;
+                sh:message "Each 'occp:UsageChange' must occur after 'occp:CompletionOfConstruction' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                          # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Each 'occp:UsageChange' must occur after 'occp:UsageStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                         
+                sh:path occp:before ;
+                sh:class occp:UsageEnd ;
+                sh:message "Each 'occp:UsageChange' must occur before 'occp:UsageEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:UsageChange' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:UsageEndShape a sh:NodeShape ;      # Instant Usage End (Phase D - Usage)
+            sh:targetClass occp:UsageEnd ;
+            sh:property [
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseD_Usage ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:UsageEnd' must end exactly one 'occp:PhaseD_Usage' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                             # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:after ;
+                    sh:class occp:UsageStart ;
+                    sh:message "Each 'occp:UsageEnd' must occur after 'occp:UsageStart' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:after ;
+                    sh:class occp:UsageChange ;
+                    sh:message "Each 'occp:UsageEnd' must occur after 'occp:UsageChange' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [                       
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:UsageEnd' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE E INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseEInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseE_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseE_Warranty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseE_Instant' must belong to exactly one 'occp:PhaseE_Warranty' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE E - WARRANTY
+        osh:WarrantyStartShape a sh:NodeShape ;          # Instant Warranty Start (Phase E - Warranty)
+            sh:targetClass occp:WarrantyStart ;
+            sh:property [                                # A new Warranty Phase is started with Warranty Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:WarrantyStart' must start exactly one 'occp:PhaseE_Warranty' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:WarrantyStart' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                
+                sh:path occp:before ;
+                sh:class occp:WarrantyEnd ;
+                sh:message "Each 'occp:WarrantyStart' must occur before 'occp:WarrantyEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:WarrantyChangeShape a sh:NodeShape ;         # Instant Warranty Change (Phase E - Warranty)
+            sh:targetClass occp:WarrantyChange ;
+            sh:property [                                # The current Warranty Phase is ended with a Change of Warranty
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:WarrantyChange' must end at least one 'occp:PhaseE_Warranty' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # A new Warranty Phase is started with a Change of Warranty
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseE_Warranty ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:WarrantyChange' must start at least one 'occp:PhaseE_Warranty' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:CompletionOfConstruction ;
+                sh:message "Each 'occp:WarrantyChange' must occur after 'occp:CompletionOfConstruction' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:WarrantyStart ;
+                sh:message "Each 'occp:WarrantyChange' must occur after 'occp:WarrantyStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:WarrantyEnd ;
+                sh:message "Each 'occp:WarrantyChange' must occur before 'occp:WarrantyEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:WarrantyChange' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+                
+        osh:WarrantyEndShape a sh:NodeShape ;            # Instant Warranty End (Phase E - Warranty)
+            sh:targetClass occp:WarrantyEnd ;
+            sh:property [                                # The current Warranty Phase is ended with Warranty End
+                sh:path occp:endsPhase ;                
+                sh:class occp:PhaseE_Warranty ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:WarrantyEnd' must end exactly one 'occp:PhaseE_Warranty' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:after ;
+                    sh:class occp:WarrantyStart ;
+                    sh:message "Each 'occp:WarrantyEnd' must occur after 'occp:WarrantyStart' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:after ;
+                    sh:class occp:WarrantyChange ;
+                    sh:message "Each 'occp:WarrantyEnd' must occur after 'occp:WarrantyChange' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:WarrantyEnd' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE F INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseFInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseF_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseF_Instant' must belong to exactly one 'occp:PhaseF_DesignLife' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE F - DESIGN LIFE
+        osh:DesignLifeStartShape a sh:NodeShape ;        # Instant Design Life Start (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeStart ;
+            sh:property [                                # A new Design Life Phase is started with Design Life Start
+                sh:path occp:startsPhase ;                
+                sh:class occp:PhaseF_DesignLife ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:DesignLifeStart' must start exactly one 'occp:PhaseF_DesignLife' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DesignLifeStart' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DesignLifeStart' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DesignLifeEnd ;
+                sh:message "Each 'occp:DesignLifeStart' must occur before 'occp:DesignLifeEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+         
+        osh:DesignLifeChangeShape a sh:NodeShape ;       # Instant Design Life Change (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeChange ;
+            sh:property [                                # The current Design Life Phase is ended with a Change of Design Life
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:DesignLifeChange' must end at least one 'occp:PhaseF_DesignLife' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # A new Design Life Phase is started with a Change of Design Life
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:DesignLifeChange' must start at least one 'occp:PhaseF_DesignLife' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DesignLifeChange' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order within the Phase
+                sh:path occp:after ;
+                sh:class occp:DesignLifeStart ;
+                sh:message "Each 'occp:DesignLifeChange' must occur after 'occp:DesignLifeStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DesignLifeEnd ;
+                sh:message "Each 'occp:DesignLifeChange' must occur before 'occp:DesignLifeEnd' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DesignLifeChange' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DesignLifeEndShape a sh:NodeShape ;          # Instant Design Life End (Phase F - Design Life)
+            sh:targetClass occp:DesignLifeEnd ;
+            sh:property [                                # The current Design Life Phase is ended with Design Life End
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseF_DesignLife ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:DesignLifeEnd' must end exactly one 'occp:PhaseF_DesignLife' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order within the Phase - 2 Options
+                [
+                    sh:path occp:after ;
+                    sh:class occp:DesignLifeStart ;
+                    sh:message "Each 'occp:DesignLifeEnd' must occur after 'occp:DesignLifeStart' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:after ;
+                    sh:class occp:DesignLifeChange ;
+                    sh:message "Each 'occp:DesignLifeEnd' must occur after 'occp:DesignLifeChange' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DesignLifeEnd' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DesignLifeEnd' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    
+### PHASE G INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseGInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseG_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseG_Inspection ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseG_Instant' must belong to exactly one 'occp:PhaseG_Inspection' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE G - INSPECTION
+        osh:InspectionExecutionShape a sh:NodeShape ;    # Instant Inspection Execution (Phase G - Inspection)
+            sh:targetClass occp:InspectionExecution ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionStart ;
+                sh:message "Each 'occp:InspectionExecution' must occur after 'occp:ConstructionStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:or (                                     # Instant's chronological order - 2 Options
+                [
+                    sh:path occp:after ;
+                    sh:class occp:UsageStart ;
+                    sh:message "Each 'occp:InspectionExecution' must occur after 'occp:UsageStart' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+                [
+                    sh:path occp:after ;
+                    sh:class occp:UsageChange ;
+                    sh:message "Each 'occp:InspectionExecution' must occur after 'occp:UsageChange' via 'occp:after'."@en ;
+                    sh:severity sh:Violation ;
+                ]
+            ) ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:InspectionExecution' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:IrregularInspectionShape a sh:NodeShape ;    # Instant Irregular Inspection (Phase G - Inspection)
+            sh:targetClass occp:IrregularInspection ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Each 'occp:IrregularInspection' must occur after 'occp:UsageStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:IrregularInspection' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:NextRegularInspectionShape a sh:NodeShape ;  # Instant Next Regular Inspection (Phase G - Inspection)
+            sh:targetClass occp:NextRegularInspection ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:InspectionExecution ;
+                sh:message "Each 'occp:NextRegularInspection' must occur after 'occp:InspectionExecution' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:UsageStart ;
+                sh:message "Each 'occp:NextRegularInspection' must occur after 'occp:UsageStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:NextRegularInspection' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE H INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseHInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseH_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseH_SpecialEvents ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseH_Instant' must belong to exactly one 'occp:PhaseH_SpecialEvents' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE H - SPECIAL EVENTS
+        osh:GeologicalEventShape a sh:NodeShape ;        # Instant Geological Event (Phase H - Special Events)
+            sh:targetClass occp:GeologicalEvent ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:GeologicalEvent' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:GeologicalEvent' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:LoadEventShape a sh:NodeShape ;              # Instant Load Event (Phase H - Special Events)
+            sh:targetClass occp:LoadEvent ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:LoadEvent' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:LoadEvent' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:WeatherEventShape a sh:NodeShape ;           # Instant Weather Event (Phase H - Special Events)
+            sh:targetClass occp:WeatherEvent ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:WeatherEvent' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:WeatherEvent' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE K INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseKInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseK_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseK_Damage ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseK_Instant' must belong to exactly one 'occp:PhaseK_Damage' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE K - DAMAGE
+        osh:DamageDetectionShape a sh:NodeShape ;        # Instant Damage Detection (Phase K - Damage)
+            sh:targetClass occp:DamageDetection ;
+            sh:property [
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseK_Damage ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:DamageDetection' must start exactly one 'occp:PhaseK_Damage' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DamageDetection' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DamageDetection' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+                
+        osh:DamageObservationShape a sh:NodeShape ;      # Instant Damage Observation (Phase K - Damage)
+            sh:targetClass occp:DamageObservation ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:DamageDetection ;
+                sh:message "Each 'occp:DamageObservation' must occur after 'occp:DamageDetection' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DamageObservation' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DamageRepairShape a sh:NodeShape ;           # Instant Damage Repair (Phase K - Damage)
+            sh:targetClass occp:DamageRepair ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:DamageDetection ;
+                sh:message "Each 'occp:DamageRepair' must occur after 'occp:DamageDetection' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DamageRepair' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE L INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseLInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseL_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseL_Repair ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseL_Instant' must belong to exactly one 'occp:PhaseL_Repair' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE L - REPAIR
+        osh:NewComponentShape a sh:NodeShape ;           # Instant New Component (Phase L - Repair)
+            sh:targetClass occp:NewComponent ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:after ;
+                sh:class occp:ConstructionCompletion ;
+                sh:message "Each 'occp:NewComponent' must occur after 'occp:ConstructionCompletion' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:NewComponent' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:RepairStartShape a sh:NodeShape ;            # Instant Repair Start (Phase L - Repair)
+            sh:targetClass occp:RepairStart ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseL_Repair ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:RepairStart' must start exactly one 'occp:PhaseL_Repair' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:DamageDetection ;
+                sh:message "Each 'occp:RepairStart' must occur after 'occp:DamageDetection' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:RepairCompletion ;
+                sh:message "Each 'occp:RepairStart' must occur before 'occp:RepairCompletion' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:RepairStart' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:RepairCompletionShape a sh:NodeShape ;       # Instant Repair Completion (Phase L - Repair)
+            sh:targetClass occp:RepairCompletion ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseL_Repair ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:RepairCompletion' must end exactly one 'occp:PhaseL_Repair' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:RepairStart ;
+                sh:message "Each 'occp:RepairCompletion' must occur after 'occp:RepairStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:RepairCompletion' must occur before 'occp:DeconstructionStart' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### PHASE M INSTANTS
+    # PHASE ASSIGNMENT
+        osh:PhaseMInstantShape a sh:NodeShape ;
+            sh:targetClass occp:PhaseM_Instant ;
+            sh:property [
+                sh:path occp:hasPhase ;
+                sh:class occp:PhaseM_Deconstruction ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseM_Instant' must belong to exactly one 'occp:PhaseM_Deconstruction' via 'occp:hasPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+    ### INSTANT SHAPES PHASE M - DECONSTRUCTION
+        osh:DeconstructionStartShape a sh:NodeShape ;    # Instant Deconstruction Start (Phase M - Deconstruction)
+            sh:targetClass occp:DeconstructionStart ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:startsPhase ;
+                sh:class occp:PhaseM_Deconstruction ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:DeconstructionStart' must start exactly one 'occp:PhaseM_Deconstruction' via 'occp:startsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:ConstructionAcceptance ;
+                sh:message "Each 'occp:DeconstructionStart' must occur after 'occp:ConstructionAcceptance' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:before ;
+                sh:class occp:DeconstructionCompletion ;
+                sh:message "Each 'occp:DeconstructionStart' must occur before 'occp:DeconstructionCompletion' via 'occp:before'."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+        osh:DeconstructionCompletionShape a sh:NodeShape ;   # Instant Deconstruction Completion (Phase M - Deconstruction)
+            sh:targetClass occp:DeconstructionCompletion ;
+            sh:property [                                # Instant's chronological order 
+                sh:path occp:endsPhase ;
+                sh:class occp:PhaseM_Deconstruction ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:DeconstructionCompletion' must end exactly one 'occp:PhaseM_Deconstruction' via 'occp:endsPhase'."@en ;
+                sh:severity sh:Violation ;
+            ] ;
+            sh:property [
+                sh:path occp:after ;
+                sh:class occp:DeconstructionStart ;
+                sh:message "Each 'occp:DeconstructionCompletion' must occur after 'occp:DeconstructionStart' via 'occp:after'."@en ;
+                sh:severity sh:Violation ;
+            ] .

@@ -545,7 +545,7 @@
             sh:severity sh:Warning ;
         ] .
 
-    oush:UpdateChainContinuityConstraint a sh:NodeShape ;
+    oush:UpdateChainSplitConstraint a sh:NodeShape ;
         sh:targetClass ould:UpdatableEntity ;
         sh:sparql [
             a sh:SPARQLConstraint ;
@@ -688,17 +688,24 @@
             sh:severity sh:Violation ;
         ] .
 
-oush:SimpleTestShape a sh:NodeShape ;
-    sh:targetClass ould:UpdateChain ;
-    sh:sparql [
-        sh:message "Test: Chains mit mehr als 5 Updates." ;
-        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
-        sh:select """
-            SELECT $this (COUNT(?u) AS ?updateCount)
-            WHERE {
-                $this ould:hasUpdate ?u .
-            }
-            GROUP BY $this
-            HAVING (?updateCount > 5)
-        """
-    ] .
+
+### LINKED DATA SHAPE RULES
+
+    oush:LinkedDataPropertyShape a sh:PropertyShape ;
+        sh:path ( ould:hasOnlineData ould:hasOfflineData ) ;
+        sh:or (
+            [ sh:datatype xsd:anyURI ]
+            [ sh:datatype xsd:string ]
+        ) ;
+        sh:message "Must be a URI (online) or string (offline)."@en ;
+        sh:severity sh:Violation .
+
+    oush:LinkedDataShape a sh:NodeShape ;
+        sh:targetClass ould:LinkedData ;
+            sh:property [
+                sh:path ould:hasDataLocation ;
+                sh:datatype xsd:string ;
+                sh:minCount 1 ;
+                sh:message "Each LinkedData must have exactly one location."@en ;
+                sh:severity sh:Violation ;
+            ] .

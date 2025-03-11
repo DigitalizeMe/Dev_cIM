@@ -8,7 +8,7 @@
 osh:GeneralDatePropertyShape a sh:PropertyShape ;
     sh:path ( occp:hasActualTime occp:hasEstimatedTime ) ;
     sh:datatype xsd:date ;
-    sh:message "The date must be in the format YYYY-MM-DD."@en ;
+    sh:message "Dates must be in YYYY-MM-DD format."@en ;
     sh:severity sh:Violation .
 
 osh:GeneralTimeShape a sh:NodeShape ;
@@ -17,21 +17,21 @@ osh:GeneralTimeShape a sh:NodeShape ;
         sh:path ( time:hasBeginning time:hasEnd ) ;
         sh:class time:Instant ;
         sh:minCount 1 ;
-        sh:message "Property \'time:hasBeginning\' or \'time:hasEnd\' must refer to at least one \'time:Instant\'."@en ;
+        sh:message "At least one 'time:hasBeginning' or 'time:hasEnd' must reference a 'time:Instant'."@en ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path occp:hasActualBeginning ;
         sh:class time:Instant ;
         sh:maxCount 1 ;
-        sh:message "Property \'occp:hasActualBeginning\' must refer to at most one \'time:Instant\'."@en ;
+        sh:message "Each entity must have at most one actual beginning via occp:hasActualBeginning."@en ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path occp:hasActualEnd ;
         sh:class time:Instant ;
         sh:maxCount 1 ;
-        sh:message "Property \'occp:hasActualEnd\' must refer to at most one \'time:Instant\'."@en ;
+        sh:message "Each entity must have at most one actual end via occp:hasActualEnd."@en ;
         sh:severity sh:Violation ;
     ] .
 
@@ -41,12 +41,12 @@ osh:InstantTimeShape a sh:NodeShape ;
         sh:path occp:hasActualTime ;
         sh:datatype xsd:date ;
         sh:maxCount 1 ;
-        sh:message "Property \'occp:hasActualTime\' must have at most one value of type xsd:date."@en ;
+        sh:message "Each instant must have at most one actual timestamp via occp:hasActualTime of type xsd:date."@en ;
         sh:severity sh:Violation ;
     ] ;
     sh:property [
         sh:path occp:hasEstimatedTime ;
         sh:datatype xsd:date ;
-        sh:message "Property \'occp:hasEstimatedTime\' must have values of type xsd:date."@en ;
+        sh:message "Each instant must have at most one estimated timestamp via occp:hasEstimatedTime of type xsd:date."@en ;
         sh:severity sh:Violation ;
     ] .
