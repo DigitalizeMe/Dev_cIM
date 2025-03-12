@@ -1,11 +1,10 @@
 import owlready2
 from rdflib import Graph, Namespace, RDF
 from rdflib.namespace import SH, OWL
+from pyshacl import validate
 import logging
 import os
 import sys
-import subprocess
-import json
 from io import StringIO
 
 # Konfiguration des Loggings
@@ -16,9 +15,6 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
     filemode="w"
 )
-
-# Logging-Setup (falls nicht schon vorhanden)
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Pfade und Namespace
@@ -93,50 +89,27 @@ def debug_sparql(data_file):
         logger.error(f"Fehler bei der SPARQL-Abfrage: {e}")
         raise
 
-def perform_shacl_js_validation(data_file, shapes_path=SHAPES_PATH):
+def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
     try:
-        # Pfad zum JavaScript-Skript
-        validate_script = os.path.join(BASE_DIR, "validate-shacl.js")  # Passe ggf. den Pfad an
-        cmd = [
-            "node",
-            validate_script,
-            data_file,
-            shapes_path
-        ]
-        result = subprocess.run(cmd, capture_output=True, text=True)
-
-        if result.returncode == 0:
-            # Ergebnis aus der Datei lesen
-            try:
-                with open('validation-report.json', 'r') as f:
-                    report = json.load(f)
-                logger.info("SHACL.js validation successful.")
-                logger.info(f"Konformität (inference=none): {report['conforms']}")
-                if not report['conforms']:
-                    for res in report['results']:
-                        logger.error(f"Validation error: {res['message']} (Focus Node: {res['focusNode']}, Path: {res['path']})")
-                return report['conforms']
-            except FileNotFoundError:
-                logger.error("Validation report file not found.")
-                return False
-            except json.JSONDecodeError:
-                logger.error("Failed to parse validation report.")
-                return False
-        else:
-            logger.error("SHACL.js validation failed.")
-            logger.error(result.stderr)
-            return False
+        data_graph = Graph().parse(data_file, format="turtle")
+        shapes_path_normalized = shapes_path.replace("\\", "/")
+        shapes_uri = f"file:///{shapes_path_normalized}"
+        logger.debug(f"Versuche Shapes von URI zu laden: {shapes_uri}")
+        shapes_graph = Graph().parse(shapes_uri, format="turtle")
+        result = validate(data_graph, shacl_graph=shapes_graph, inference="none", debug=2)
+        conforms, report_graph, report_text = result
+        logger.info(f"Konformität (inference=none): {conforms}")
+        if not conforms:
+            logger.info("Validierungsbericht (inference=none):")
+            report_lines = report_text.splitlines()
+            logger.info("\n".join(report_lines))
+        return conforms
     except Exception as e:
-        logger.error(f"Fehler bei der SHACL-Validierung mit rdf-validate-shacl: {e}")
+        logger.error(f"Fehler bei der SHACL-Validierung: {e}")
         raise
 
 if __name__ == "__main__":
     ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Valid_LCycle_1.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
-    conforms = perform_shacl_js_validation(inferred_file)
-
-    if conforms:
-        logger.info("Validation successful: Conforms to SHACL.")
-    else:
-        logger.error("Validation failed.")
+    perform_shacl_validation(inferred_file)
