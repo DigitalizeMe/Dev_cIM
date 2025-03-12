@@ -4,7 +4,7 @@
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix osh:    <http://www.occpshape.de/shape#> .
 
-### CYCLE RELATED SHAPE RULES
+### CYCLE RELATED SHACL RULES
 
     osh:CycleShape a sh:NodeShape ;
         sh:targetClass occp:Cycle ;
@@ -111,7 +111,7 @@
             sh:severity sh:Violation ;
         ] .
 
-### ORDER OF PHASES AND TRANSITIONS
+### PHASE RELATED SHACL RULES
 
     osh:ShapeOfPhaseA a sh:NodeShape ;
         sh:targetClass occp:PhaseA_Planning ;
