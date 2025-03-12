@@ -5,9 +5,9 @@
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
 
-###############################################################
-### SHACL RULES
-###############################################################
+#################################################################
+#    SHACL Rules
+#################################################################
 
 ### GENERAL SHACL RULES
 
@@ -55,4 +55,104 @@
             sh:datatype xsd:date ;
             sh:message "Each instant must have at most one estimated timestamp via occp:hasEstimatedTime of type xsd:date."@en ;
             sh:severity sh:Violation ;
+        ] .
+
+
+#################################################################
+#    SPARQL Queries
+#################################################################
+
+### Generische Regel für occp:before mit Aggregaten
+    osh:BeforeTimeShape a sh:NodeShape ;
+        sh:targetClass time:TemporalEntity ;
+        sh:sparql [
+            sh:select """
+                SELECT $this ?other ?latestEndTime ?earliestStartTime WHERE {
+                    $this occp:before ?other .
+                    {
+                        SELECT $this (MAX(?endTime) AS ?latestEndTime)
+                        WHERE {
+                            $this time:hasEnd ?endInstant .
+                            ?endInstant occp:hasActualTime ?endTime .
+                        }
+                        GROUP BY $this
+                    }
+                    {
+                        SELECT ?other (MIN(?startTime) AS ?earliestStartTime)
+                        WHERE {
+                            ?other time:hasBeginning ?startInstant .
+                            ?startInstant occp:hasActualTime ?startTime .
+                        }
+                        GROUP BY ?other
+                    }
+                    FILTER (?latestEndTime >= ?earliestStartTime)
+                }
+            """ ;
+            sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) via 'occp:before'."@en ;
+            sh:severity sh:Violation
+        ] .
+
+### Generische Regel für occp:after mit Aggregaten
+    osh:AfterTimeShape a sh:NodeShape ;
+        sh:targetClass time:TemporalEntity ;
+        sh:sparql [
+            sh:select """
+                SELECT $this ?other ?earliestStartTime ?latestEndTime WHERE {
+                    $this occp:after ?other .
+                    {
+                        SELECT $this (MIN(?startTime) AS ?earliestStartTime)
+                        WHERE {
+                            $this time:hasBeginning ?startInstant .
+                            ?startInstant occp:hasActualTime ?startTime .
+                        }
+                        GROUP BY $this
+                    }
+                    {
+                        SELECT ?other (MAX(?endTime) AS ?latestEndTime)
+                        WHERE {
+                            ?other time:hasEnd ?endInstant .
+                            ?endInstant occp:hasActualTime ?endTime .
+                        }
+                        GROUP BY ?other
+                    }
+                    FILTER (?earliestStartTime <= ?latestEndTime)
+                }
+            """ ;
+            sh:message "The earliest beginning of { $this } (time: { ?earliestStartTime }) must be after the latest end of { ?other } (time: { ?latestEndTime }) via 'occp:after'."@en ;
+            sh:severity sh:Violation
+        ] .
+
+### Implizite Reihenfolge-Regel
+    osh:PhaseOrderTimeShape a sh:NodeShape ;
+        sh:targetClass occp:Phase ;
+        sh:sparql [
+            sh:select """
+                SELECT $this ?other ?latestEndTime ?earliestStartTime WHERE {
+                    {
+                        SELECT $this (MAX(?endTime) AS ?latestEndTime)
+                        WHERE {
+                            $this time:hasEnd ?endInstant .
+                            ?endInstant occp:hasActualTime ?endTime .
+                        }
+                        GROUP BY $this
+                    }
+                    {
+                        SELECT ?other (MIN(?startTime) AS ?earliestStartTime)
+                        WHERE {
+                            ?other time:hasBeginning ?startInstant .
+                            ?startInstant occp:hasActualTime ?startTime .
+                        }
+                        GROUP BY ?other
+                    }
+                    FILTER (?latestEndTime >= ?earliestStartTime)
+                    FILTER (?other != $this)
+                    FILTER (
+                        ($this a occp:PhaseA_Planning && ?other a occp:PhaseB_Review) ||
+                        ($this a occp:PhaseA_Planning && ?other a occp:PhaseC_Construction) ||
+                        ($this a occp:PhaseB_Review && ?other a occp:PhaseC_Construction)
+                    )
+                }
+            """ ;
+            sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) based on phase order."@en ;
+            sh:severity sh:Violation
         ] .

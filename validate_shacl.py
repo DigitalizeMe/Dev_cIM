@@ -18,11 +18,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Pfade und Namespace
-TBOX_PATH = os.path.join(BASE_DIR, "OULD_V1.0.ttl")
-ABOX_DIR = os.path.join(BASE_DIR, "OULD_ABox")
-SHAPES_PATH = os.path.join(BASE_DIR, "OULD_V1.0.ttl")
+TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")
+ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
+SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_min.ttl")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
 OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
+OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
 
 def combine_and_reason(tbox_path=TBOX_PATH, abox_path=None, java_exe=JAVA_EXE):
     try:
@@ -108,7 +109,7 @@ def perform_shacl_validation(data_file, shapes_path=SHAPES_PATH):
         raise
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OULD_ABox_invalid_novalue.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Valid_LCycle_1.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
     perform_shacl_validation(inferred_file)

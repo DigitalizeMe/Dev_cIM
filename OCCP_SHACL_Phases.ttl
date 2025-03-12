@@ -103,12 +103,21 @@
             sh:severity sh:Violation ;
         ] ;
         sh:property [
-            sh:path time:hasBeginning ;
-            sh:lessThanOrEquals [
-                sh:path ( [ sh:inversePath occp:isInPhase ] time:hasEnd )
-            ] ;
+        sh:path time:hasBeginning ;
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this WHERE {
+                    $this time:hasBeginning ?start .
+                    $this occp:isInPhase ?phase .
+                    ?phase time:hasEnd ?phaseEnd .
+                    FILTER (?start > ?phaseEnd)
+                }
+            """ ;
             sh:message "Each 'occp:LifeCycle' must have its 'time:hasBeginning' before or equal to the 'time:hasEnd' of the 'occp:Phase' it is embedded in via 'occp:isInPhase'."@en ;
-            sh:severity sh:Violation ;
+        ] ;
+        sh:severity sh:Violation ;
         ] .
 
 ### PHASE RELATED SHACL RULES
