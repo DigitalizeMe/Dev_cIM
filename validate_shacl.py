@@ -26,6 +26,7 @@ TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
 SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_min.ttl")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
+JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")  # Hauptverzeichnis der Jena-Installation
 OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
 OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
 
@@ -93,48 +94,42 @@ def debug_sparql(data_file):
         logger.error(f"Fehler bei der SPARQL-Abfrage: {e}")
         raise
 
-def perform_shacl_js_validation(data_file, shapes_path=SHAPES_PATH):
+def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
     try:
-        # Pfad zum JavaScript-Skript
-        validate_script = os.path.join(BASE_DIR, "validate-shacl.js")  # Passe ggf. den Pfad an
+        jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
+        if not os.path.exists(jena_shacl_cmd):
+            logger.error(f"Jena SHACL-Tool nicht gefunden: {jena_shacl_cmd}")
+            return False
+
         cmd = [
-            "node",
-            validate_script,
-            data_file,
-            shapes_path
+            jena_shacl_cmd,
+            "validate",
+            "--data", data_file,
+            "--shapes", shapes_path
         ]
-        result = subprocess.run(cmd, capture_output=True, text=True)
+        result = subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, "JENA_HOME": JENA_HOME})
 
         if result.returncode == 0:
-            # Ergebnis aus der Datei lesen
-            try:
-                with open('validation-report.json', 'r') as f:
-                    report = json.load(f)
-                logger.info("SHACL.js validation successful.")
-                logger.info(f"Konformität (inference=none): {report['conforms']}")
-                if not report['conforms']:
-                    for res in report['results']:
-                        logger.error(f"Validation error: {res['message']} (Focus Node: {res['focusNode']}, Path: {res['path']})")
-                return report['conforms']
-            except FileNotFoundError:
-                logger.error("Validation report file not found.")
-                return False
-            except json.JSONDecodeError:
-                logger.error("Failed to parse validation report.")
-                return False
+            output = result.stdout
+            conforms = "conforms: true" in output.lower()
+            logger.info(f"Jena SHACL validation output: {output}")
+            logger.info(f"Konformität (inference=none): {conforms}")
+            if not conforms:
+                logger.error("Validation fehlgeschlagen. Details in der Ausgabe oben.")
+            return conforms
         else:
-            logger.error("SHACL.js validation failed.")
+            logger.error("Jena SHACL validation failed.")
             logger.error(result.stderr)
             return False
     except Exception as e:
-        logger.error(f"Fehler bei der SHACL-Validierung mit rdf-validate-shacl: {e}")
-        raise
+        logger.error(f"Fehler bei der Jena SHACL-Validierung: {e}")
+        return False
 
 if __name__ == "__main__":
     ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Valid_LCycle_1.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
-    conforms = perform_shacl_js_validation(inferred_file)
+    conforms = perform_shacl_jena_validation(inferred_file)
 
     if conforms:
         logger.info("Validation successful: Conforms to SHACL.")

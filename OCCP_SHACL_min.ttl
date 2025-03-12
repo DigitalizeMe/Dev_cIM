@@ -4,58 +4,13 @@
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
-### Ursprüngliche General SHACL Rules
-osh:GeneralDatePropertyShape a sh:PropertyShape ;
-    sh:path ( occp:hasActualTime occp:hasEstimatedTime ) ;
-    sh:datatype xsd:date ;
-    sh:message "Dates must be in YYYY-MM-DD format."@en ;
-    sh:severity sh:Violation .
-
-osh:GeneralTimeShape a sh:NodeShape ;
-    sh:targetClass time:TemporalEntity ;
-    sh:property [
-        sh:path ( time:hasBeginning time:hasEnd ) ;
-        sh:class time:Instant ;
-        sh:minCount 1 ;
-        sh:message "At least one 'time:hasBeginning' or 'time:hasEnd' must reference a 'time:Instant'."@en ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path occp:hasActualBeginning ;
-        sh:class time:Instant ;
-        sh:maxCount 1 ;
-        sh:message "Each entity must have at most one actual beginning via occp:hasActualBeginning."@en ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path occp:hasActualEnd ;
-        sh:class time:Instant ;
-        sh:maxCount 1 ;
-        sh:message "Each entity must have at most one actual end via occp:hasActualEnd."@en ;
-        sh:severity sh:Violation ;
-    ] .
-
-osh:InstantTimeShape a sh:NodeShape ;
-    sh:targetClass time:Instant ;
-    sh:property [
-        sh:path occp:hasActualTime ;
-        sh:datatype xsd:date ;
-        sh:maxCount 1 ;
-        sh:message "Each instant must have at most one actual timestamp via occp:hasActualTime of type xsd:date."@en ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path occp:hasEstimatedTime ;
-        sh:datatype xsd:date ;
-        sh:message "Each instant must have estimated timestamps via occp:hasEstimatedTime of type xsd:date."@en ;
-        sh:severity sh:Violation ;
-    ] .
-
 ### Generische Regel für occp:before (ohne Sub-SELECT)
 osh:BeforeTimeShape a sh:NodeShape ;
     sh:targetClass time:TemporalEntity ;
     sh:sparql [
         sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
             SELECT $this ?other ?endTime ?startTime WHERE {
                 $this occp:before ?other .
                 $this time:hasEnd ?endInstant .
@@ -74,6 +29,8 @@ osh:AfterTimeShape a sh:NodeShape ;
     sh:targetClass time:TemporalEntity ;
     sh:sparql [
         sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
             SELECT $this ?other ?startTime ?endTime WHERE {
                 $this occp:after ?other .
                 $this time:hasBeginning ?startInstant .
@@ -92,6 +49,8 @@ osh:PhaseOrderTimeShape a sh:NodeShape ;
     sh:targetClass occp:Phase ;
     sh:sparql [
         sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
             SELECT $this ?other ?endTime ?startTime WHERE {
                 $this time:hasEnd ?endInstant .
                 ?endInstant occp:hasActualTime ?endTime .
@@ -99,11 +58,13 @@ osh:PhaseOrderTimeShape a sh:NodeShape ;
                 ?startInstant occp:hasActualTime ?startTime .
                 FILTER (?endTime >= ?startTime)
                 FILTER (?other != $this)
-                FILTER (
-                    ($this a occp:PhaseA_Planning && ?other a occp:PhaseB_Review) ||
-                    ($this a occp:PhaseA_Planning && ?other a occp:PhaseC_Construction) ||
-                    ($this a occp:PhaseB_Review && ?other a occp:PhaseC_Construction)
-                )
+                {
+                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseB_Review . }
+                    UNION
+                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseC_Construction . }
+                    UNION
+                    { $this a occp:PhaseB_Review . ?other a occp:PhaseC_Construction . }
+                }
             }
         """ ;
         sh:message "The end of { $this } (time: { ?endTime }) must be before the beginning of { ?other } (time: { ?startTime }) based on phase order."@en ;

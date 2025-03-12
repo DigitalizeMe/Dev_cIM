@@ -1,0 +1,16 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix osh: <http://www.occpshape.de/shape#> .
+
+osh:TestSparqlShape a sh:NodeShape ;
+    sh:targetClass occp:Phase ;
+    sh:sparql [
+        sh:select """
+            SELECT $this WHERE {
+                $this a occp:Phase .
+            }
+        """ ;
+        sh:message "This is a test SPARQL constraint."@en ;
+        sh:severity sh:Violation
+    ] .
