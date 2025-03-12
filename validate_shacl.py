@@ -6,6 +6,7 @@ import os
 import sys
 import subprocess
 import json
+import shutil
 from io import StringIO
 
 # Konfiguration des Loggings
@@ -96,30 +97,59 @@ def debug_sparql(data_file):
 
 def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
     try:
-        jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
-        if not os.path.exists(jena_shacl_cmd):
-            logger.error(f"Jena SHACL-Tool nicht gefunden: {jena_shacl_cmd}")
-            return False
+        # Suche shacl im PATH
+        jena_shacl_cmd = shutil.which("shacl")
+        if not jena_shacl_cmd:
+            # Fallback: Versuche den direkten Pfad
+            jena_shacl_cmd = os.path.join(JENA_HOME, "bin", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
+            if not os.path.exists(jena_shacl_cmd):
+                logger.error(f"Jena SHACL-Tool nicht gefunden: {jena_shacl_cmd}")
+                return False
 
+        # Konvertiere Pfade für Jena (Backslashes zu Schrägstrichen)
+        data_file_jena = data_file.replace("\\", "/")
+        shapes_path_jena = shapes_path.replace("\\", "/")
+
+        # Schreibe die Ausgabe in eine temporäre Datei
+        report_file = os.path.join(BASE_DIR, "validation_report.ttl")
         cmd = [
             jena_shacl_cmd,
             "validate",
-            "--data", data_file,
-            "--shapes", shapes_path
+            "--data", data_file_jena,
+            "--shapes", shapes_path_jena
         ]
-        result = subprocess.run(cmd, capture_output=True, text=True, env={**os.environ, "JENA_HOME": JENA_HOME})
+        with open(report_file, "w", encoding="utf-8") as f:
+            result = subprocess.run(cmd, stdout=f, stderr=subprocess.PIPE, text=True, env={**os.environ, "JENA_HOME": JENA_HOME})
+
+        # Logge stderr
+        if result.stderr:
+            logger.error(f"Jena SHACL validation stderr: {result.stderr}")
 
         if result.returncode == 0:
-            output = result.stdout
-            conforms = "conforms: true" in output.lower()
-            logger.info(f"Jena SHACL validation output: {output}")
+            # Lese die Ausgabe aus der Datei
+            with open(report_file, "r", encoding="utf-8") as f:
+                report_data = f.read()
+            logger.info(f"Jena SHACL validation stdout: {report_data}")
+
+            # Parse die Turtle-Ausgabe mit rdflib
+            report_graph = Graph()
+            report_graph.parse(data=report_data, format="turtle")
+            conforms = False
+            for s, p, o in report_graph.triples((None, SH.conforms, None)):
+                conforms = o.toPython()  # o sollte ein Literal mit "true" oder "false" sein
             logger.info(f"Konformität (inference=none): {conforms}")
             if not conforms:
-                logger.error("Validation fehlgeschlagen. Details in der Ausgabe oben.")
+                # Extrahiere Ergebnisse für detaillierte Fehler
+                for s, p, o in report_graph.triples((None, SH.result, None)):
+                    for result_obj in report_graph.objects(s, SH.result):
+                        message = report_graph.value(result_obj, SH.message) or "No message"
+                        focus_node = report_graph.value(result_obj, SH.focusNode) or "Unknown"
+                        path = report_graph.value(result_obj, SH.path) or "Unknown"
+                        severity = report_graph.value(result_obj, SH.severity) or "Unknown"
+                        logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
             return conforms
         else:
-            logger.error("Jena SHACL validation failed.")
-            logger.error(result.stderr)
+            logger.error("Jena SHACL validation failed with non-zero exit code.")
             return False
     except Exception as e:
         logger.error(f"Fehler bei der Jena SHACL-Validierung: {e}")

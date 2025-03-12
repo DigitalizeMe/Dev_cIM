@@ -1,10 +1,17 @@
-2025-03-12 22:27:17,175 - INFO - Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
-2025-03-12 22:27:17,176 - INFO - Prüfe Ontologie auf Disjunktheit...
-2025-03-12 22:27:17,176 - DEBUG - Disjunkte Klassenpaare: set()
-2025-03-12 22:27:17,177 - INFO - Keine Disjunktheitsverletzungen gefunden.
-2025-03-12 22:27:17,216 - INFO - Starte SPARQL-Abfrage für alle UpdateChains...
-2025-03-12 22:27:17,334 - INFO - SPARQL-Abfrage Ergebnisse:
-2025-03-12 22:27:18,225 - INFO - Jena SHACL validation output: 
-2025-03-12 22:27:18,225 - INFO - Konformität (inference=none): False
-2025-03-12 22:27:18,225 - ERROR - Validation fehlgeschlagen. Details in der Ausgabe oben.
-2025-03-12 22:27:18,225 - ERROR - Validation failed.
+2025-03-12 23:58:34,918 - INFO - Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
+2025-03-12 23:58:34,918 - INFO - Prüfe Ontologie auf Disjunktheit...
+2025-03-12 23:58:34,918 - DEBUG - Disjunkte Klassenpaare: set()
+2025-03-12 23:58:34,919 - INFO - Keine Disjunktheitsverletzungen gefunden.
+2025-03-12 23:58:34,954 - INFO - Starte SPARQL-Abfrage für alle UpdateChains...
+2025-03-12 23:58:35,069 - INFO - SPARQL-Abfrage Ergebnisse:
+2025-03-12 23:58:36,141 - INFO - Jena SHACL validation stdout: PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+[ rdf:type     sh:ValidationReport;
+  sh:conforms  true
+] .
+
+2025-03-12 23:58:36,142 - INFO - Konformität (inference=none): True
+2025-03-12 23:58:36,142 - INFO - Validation successful: Conforms to SHACL.
