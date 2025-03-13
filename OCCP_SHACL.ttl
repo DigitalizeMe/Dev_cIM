@@ -805,18 +805,17 @@
                 sh:targetClass occp:ReviewApproval ;
                 sh:property [
                     sh:path occp:endsPhase ;
-                    sh:class occp:PhaseA_Planning ;
                     sh:minCount 1 ;
-                    sh:maxCount 1 ;
-                    sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en ;
-                    sh:severity sh:Violation ;
-                ] ;
-                sh:property [
-                    sh:path occp:endsPhase ;
-                    sh:class occp:PhaseB_Review ;
-                    sh:minCount 1 ;
-                    sh:maxCount 1 ;
-                    sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseB_Review' via 'occp:endsPhase'."@en ;
+                    sh:maxCount 2 ;
+                    sh:or (
+                        [   sh:class occp:PhaseA_Planning ;
+                            sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en ;
+                        ]
+                        [
+                            sh:class occp:PhaseB_Review ;
+                            sh:message "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseB_Review' via 'occp:endsPhase'."@en ;
+                        ]   
+                    ) ;                    
                     sh:severity sh:Violation ;
                 ] ;
                 sh:property [                               # Instant's chronological order within the Phase

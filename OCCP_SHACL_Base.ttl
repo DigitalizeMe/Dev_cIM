@@ -38,16 +38,19 @@ osh:GeneralTimeShape a sh:NodeShape ;
 osh:InstantTimeShape a sh:NodeShape ;
     sh:targetClass time:Instant ;
     sh:property [
+        sh:path [ sh:alternativePath ( occp:hasActualTime occp:hasEstimatedTime ) ] ;
+        sh:qualifiedValueShape [
+            sh:datatype xsd:date ;
+        ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "Each instant must have at least one timestamp (either 'occp:hasActualTime' or 'occp:hasEstimatedTime') of type xsd:date."@en ;
+        sh:severity sh:Violation ;
+    ] ;
+    sh:property [
         sh:path occp:hasActualTime ;
         sh:datatype xsd:date ;
         sh:maxCount 1 ;
         sh:message "Each instant must have at most one actual timestamp via occp:hasActualTime of type xsd:date."@en ;
-        sh:severity sh:Violation ;
-    ] ;
-    sh:property [
-        sh:path occp:hasEstimatedTime ;
-        sh:datatype xsd:date ;
-        sh:message "Each instant must have estimated timestamps via occp:hasEstimatedTime of type xsd:date."@en ;
         sh:severity sh:Violation ;
     ] .
 

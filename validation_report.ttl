@@ -11,124 +11,31 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 [ rdf:type     sh:ValidationReport;
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :phaseA;
-                 sh:resultMessage              "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseC_Construction' via 'occp:beginsBefore'."@en;
-                 sh:resultPath                 occp:beginsBefore;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
+                 sh:focusNode                  :instant_completion_of_construction;
+                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseD_Usage' via 'occp:before'."@en;
+                 sh:resultPath                 occp:before;
+                 sh:resultSeverity             sh:Warning;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
+                 sh:sourceShape                _:b0;
+                 sh:value                      :phaseM
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_deconstruction_start;
-                 sh:resultMessage              "Each 'occp:DeconstructionStart' must start exactly one 'occp:PhaseM_Deconstruction' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
+                 sh:focusNode                  :instant_completion_of_construction;
+                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseM_Deconstruction' via 'occp:before'."@en;
+                 sh:resultPath                 occp:before;
+                 sh:resultSeverity             sh:Warning;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
+                 sh:sourceShape                _:b1;
+                 sh:value                      :phaseD
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_warranty_start;
-                 sh:resultMessage              "Each 'occp:WarrantyStart' must start exactly one 'occp:PhaseE_Warranty' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_weather_event;
-                 sh:resultMessage              "Each 'occp:PhaseH_Instant' must belong to exactly one 'occp:PhaseH_SpecialEvents' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b0
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_repair_completion;
-                 sh:resultMessage              "Each 'occp:PhaseL_Instant' must belong to exactly one 'occp:PhaseL_Repair' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b1
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_submission_to_review;
-                 sh:resultMessage              "Each 'occp:PhaseA_Instant' must belong to exactly one 'occp:PhaseA_Planning' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b2
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_damage_detection;
-                 sh:resultMessage              "Each 'occp:PhaseK_Instant' must belong to exactly one 'occp:PhaseK_Damage' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_designlife_start;
-                 sh:resultMessage              "Each 'occp:DesignLifeStart' must start exactly one 'occp:PhaseF_DesignLife' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_repair_start;
-                 sh:resultMessage              "Each 'occp:PhaseL_Instant' must belong to exactly one 'occp:PhaseL_Repair' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b1
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_warranty_end;
-                 sh:resultMessage              "Each 'occp:WarrantyEnd' must end exactly one 'occp:PhaseE_Warranty' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :phaseA;
-                 sh:resultMessage              "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseB_Review' via 'occp:beginsBefore'."@en;
-                 sh:resultPath                 occp:beginsBefore;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_review_approval;
-                 sh:resultMessage              "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseB_Review' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_geological_event;
-                 sh:resultMessage              "Each 'occp:PhaseH_Instant' must belong to exactly one 'occp:PhaseH_SpecialEvents' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b0
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_review_approval;
-                 sh:resultMessage              "Each 'occp:ReviewApproval' must end exactly one 'occp:CycleA_PlanningReview' via 'occp:endsCycle'."@en;
-                 sh:resultPath                 occp:endsCycle;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_inspection_execution;
-                 sh:resultMessage              "Each 'occp:PhaseG_Instant' must belong to exactly one 'occp:PhaseG_Inspection' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
+                 sh:focusNode                  :transitionD;
+                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseD_Usage' via 'occp:before'."@en;
+                 sh:resultPath                 occp:before;
+                 sh:resultSeverity             sh:Warning;
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
+                 sh:sourceShape                _:b0;
+                 sh:value                      :phaseM
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  :transitionD;
@@ -136,167 +43,16 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                  sh:resultPath                 occp:before;
                  sh:resultSeverity             sh:Warning;
                  sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                [] ;
+                 sh:sourceShape                _:b1;
                  sh:value                      :phaseD
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_repair_completion;
-                 sh:resultMessage              "Each 'occp:RepairCompletion' must end exactly one 'occp:PhaseL_Repair' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
+                 sh:focusNode                  :phaseA;
+                 sh:resultMessage              "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseB_Review' via 'occp:beginsBefore'."@en;
+                 sh:resultPath                 occp:beginsBefore;
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :phaseH;
-                 sh:resultMessage              "Each 'occp:PhaseH_SpecialEvents' must have at least one instant via 'occp:hasInstant' referencing a 'time:Instant' (e.g., 'occp:GeologicalEvent', 'occp:WeatherEvent')."@en;
-                 sh:resultPath                 occp:hasInstant;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_usage_start;
-                 sh:resultMessage              "Each 'occp:UsageStart' must start exactly one 'occp:PhaseD_Usage' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_construction_start;
-                 sh:resultMessage              "Each 'occp:ConstructionStart' must start exactly one 'occp:PhaseC_Construction' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_usage_end;
-                 sh:resultMessage              "Each 'occp:PhaseD_Instant' must belong to exactly one 'occp:PhaseD_Usage' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_designlife_end;
-                 sh:resultMessage              "Each 'occp:DesignLifeEnd' must end exactly one 'occp:PhaseF_DesignLife' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_designlife_start;
-                 sh:resultMessage              "Each 'occp:PhaseF_Instant' must belong to exactly one 'occp:PhaseF_DesignLife' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b4
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_review_approval;
-                 sh:resultMessage              "Each 'occp:PhaseB_Instant' must belong to exactly one 'occp:PhaseB_Review' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_beginning_of_planning;
-                 sh:resultMessage              "Each 'occp:PhaseA_Instant' must belong to exactly one 'occp:PhaseA_Planning' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b2
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_damage_detection;
-                 sh:resultMessage              "Each 'occp:DamageDetection' must start exactly one 'occp:PhaseK_Damage' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_warranty_end;
-                 sh:resultMessage              "Each 'occp:PhaseE_Instant' must belong to exactly one 'occp:PhaseE_Warranty' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b5
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_designlife_end;
-                 sh:resultMessage              "Each 'occp:PhaseF_Instant' must belong to exactly one 'occp:PhaseF_DesignLife' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b4
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_construction_start;
-                 sh:resultMessage              "Each 'occp:PhaseC_Instant' must belong to exactly one 'occp:PhaseC_Construction' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_review_approval;
-                 sh:resultMessage              "Each 'occp:ReviewApproval' must end exactly one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_repair_start;
-                 sh:resultMessage              "Each 'occp:RepairStart' must start exactly one 'occp:PhaseL_Repair' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_usage_end;
-                 sh:resultMessage              "Each 'occp:UsageEnd' must end exactly one 'occp:PhaseD_Usage' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_beginning_of_planning;
-                 sh:resultMessage              "Each 'occp:BeginningOfPlanning' must start exactly one 'occp:PhaseA_Planning' via 'occp:startsPhase'."@en;
-                 sh:resultPath                 occp:startsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_usage_start;
-                 sh:resultMessage              "Each 'occp:PhaseD_Instant' must belong to exactly one 'occp:PhaseD_Usage' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_warranty_start;
-                 sh:resultMessage              "Each 'occp:PhaseE_Instant' must belong to exactly one 'occp:PhaseE_Warranty' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b5
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_deconstruction_start;
-                 sh:resultMessage              "Each 'occp:PhaseM_Instant' must belong to exactly one 'occp:PhaseM_Deconstruction' via 'occp:hasPhase'."@en;
-                 sh:resultPath                 occp:hasPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
+                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
+                 sh:sourceShape                [] ;
+                 sh:value                      :phaseC
                ]
 ] .

@@ -234,3 +234,5 @@
           sh:message "The latest end of { $this } (time: { ?endTimeThis }) must equal the latest end of { ?other } (time: { ?endTimeOther }) via 'occp:endsWith'."@en ;
           sh:severity sh:Violation
       ] .
+
+

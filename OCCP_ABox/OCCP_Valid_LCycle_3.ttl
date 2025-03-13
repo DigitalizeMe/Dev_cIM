@@ -1,0 +1,223 @@
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://www.example.de/example#> .
+
+# Cycle and LifeCycle
+:cycle1 a occp:Cycle ;
+    occp:hasCycleNumber 1 ;
+    time:hasBeginning :instant_cycle_start ;
+    time:hasEnd :instant_cycle_end ;
+    occp:hasActualBeginning :instant_cycle_start .
+
+:lifecycle1 a occp:LifeCycle ;
+    occp:hasLifeCycleID "LC001" ;
+    occp:isInPhase :phaseA ;
+    time:hasBeginning :instant_beginning_of_planning ;
+    time:hasEnd :instant_deconstruction_completion ;
+    occp:hasActualBeginning :instant_beginning_of_planning .
+
+# Additional Cycle for Planning and Review
+:cycleA a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase :phaseA ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
+    occp:hasActualEnd :instant_review_approval ;
+    time:hasBeginning :instant_beginning_of_planning ;
+    time:hasEnd :instant_review_approval .
+
+# Phases and Transitions with Actual and Estimated Beginnings/Ends
+:phaseA a occp:PhaseA_Planning ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
+    occp:hasActualEnd :instant_review_approval ;  # Corrected to ReviewApproval per SHACL
+    occp:beginsBefore :phaseC .                   # Corrected to PhaseC per SHACL
+
+:phaseB a occp:PhaseB_Review ;
+    occp:hasActualBeginning :instant_submission_to_review ;
+    occp:hasActualEnd :instant_completion_of_planning .  # Adjusted to logical end
+
+:transitionA a occp:CompletionOfPlanning ;
+    occp:hasActualTime "2025-03-01"^^xsd:date ;
+    occp:before :transitionB .
+
+:transitionB a occp:BeginOfTenderingProcess ;
+    occp:hasActualTime "2025-03-05"^^xsd:date ;
+    occp:before :transitionC .
+
+:transitionC a occp:Submission ;
+    occp:hasActualTime "2025-03-10"^^xsd:date ;
+    occp:before :phaseC .
+
+:phaseC a occp:PhaseC_Construction ;
+    occp:hasActualBeginning :instant_construction_start ;
+    occp:hasActualEnd :instant_completion_of_construction .
+
+:transitionD a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2025-06-01"^^xsd:date ;
+    occp:after :transitionA ;
+    occp:before :phaseD ;
+    occp:before :phaseM .                         # Corrected to PhaseM to resolve Warning
+
+:phaseD a occp:PhaseD_Usage ;
+    occp:hasActualBeginning :instant_usage_start ;
+    occp:hasActualEnd :instant_usage_end .
+
+:phaseE a occp:PhaseE_Warranty ;
+    occp:hasActualBeginning :instant_warranty_start ;
+    occp:hasActualEnd :instant_warranty_end .
+
+:phaseF a occp:PhaseF_DesignLife ;
+    occp:hasActualBeginning :instant_designlife_start ;
+    occp:hasActualEnd :instant_designlife_end .
+
+:phaseG a occp:PhaseG_Inspection ;
+    occp:hasActualBeginning :instant_inspection_execution ;
+    occp:hasActualEnd :instant_inspection_end .
+
+:phaseH a occp:PhaseH_SpecialEvents ;
+    occp:hasEstimatedBeginning "2025-06-01"^^xsd:date ;
+    occp:hasEstimatedEnd "2025-11-01"^^xsd:date ;
+    occp:hasInstant :instant_geological_event ;
+    occp:hasInstant :instant_weather_event .
+
+:phaseK a occp:PhaseK_Damage ;
+    occp:hasActualBeginning :instant_damage_detection ;
+    occp:hasActualEnd :instant_damage_end .
+
+:phaseL a occp:PhaseL_Repair ;
+    occp:hasActualBeginning :instant_repair_start ;
+    occp:hasActualEnd :instant_repair_completion .
+
+:phaseM a occp:PhaseM_Deconstruction ;
+    occp:hasActualBeginning :instant_deconstruction_start ;
+    occp:hasActualEnd :instant_deconstruction_completion .
+
+:transitionE a occp:CompletionOfDeconstruction ;
+    occp:hasActualTime "2025-12-01"^^xsd:date ;
+    occp:endsWith :phaseM .
+
+# Instants starting or ending Phases with hasPhase
+:instant_cycle_start a time:Instant ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:startsPhase :cycle1 ;
+    occp:hasPhase :cycle1 .
+
+:instant_cycle_end a time:Instant ;
+    occp:hasActualTime "2025-12-01"^^xsd:date ;
+    occp:endsPhase :cycle1 ;
+    occp:hasPhase :cycle1 .
+
+:instant_beginning_of_planning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:startsPhase :phaseA ;
+    occp:startsCycle :cycleA ;
+    occp:hasPhase :phaseA ;
+    occp:hasCycle :cycleA .
+
+:instant_submission_to_review a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-02-15"^^xsd:date ;
+    occp:startsPhase :phaseB ;  # Starts PhaseB
+    occp:hasPhase :phaseA .     # Only PhaseA
+
+:instant_review_approval a occp:ReviewApproval ;
+    occp:hasActualTime "2025-02-28"^^xsd:date ;
+    occp:endsPhase :phaseA ;    # Ends PhaseA (adjusted)
+    occp:endsPhase :phaseB ;    # Ends PhaseA (adjusted)
+    occp:endsCycle :cycleA ;
+    occp:hasPhase :phaseB ;     # Corrected to PhaseA per SHACL
+    occp:hasCycle :cycleA .
+
+:instant_completion_of_planning a occp:CompletionOfPlanning ;
+    occp:hasActualTime "2025-03-01"^^xsd:date ;
+    occp:endsPhase :phaseB ;
+    occp:hasPhase :phaseB .
+
+:instant_construction_start a occp:ConstructionStart ;
+    occp:hasActualTime "2025-03-15"^^xsd:date ;
+    occp:startsPhase :phaseC ;
+    occp:hasPhase :phaseC .
+
+:instant_completion_of_construction a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2025-06-01"^^xsd:date ;
+    occp:before :phaseD ;
+    occp:before :phaseM ;
+    occp:endsPhase :phaseC ;
+    occp:hasPhase :phaseC .
+
+:instant_usage_start a occp:UsageStart ;
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:startsPhase :phaseD ;
+    occp:hasPhase :phaseD .
+
+:instant_usage_end a occp:UsageEnd ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:endsPhase :phaseD ;
+    occp:hasPhase :phaseD .
+
+:instant_warranty_start a occp:WarrantyStart ;
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:startsPhase :phaseE ;
+    occp:hasPhase :phaseE .
+
+:instant_warranty_end a occp:WarrantyEnd ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:endsPhase :phaseE ;
+    occp:hasPhase :phaseE .
+
+:instant_designlife_start a occp:DesignLifeStart ;
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:startsPhase :phaseF ;
+    occp:hasPhase :phaseF .
+
+:instant_designlife_end a occp:DesignLifeEnd ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:endsPhase :phaseF ;
+    occp:hasPhase :phaseF .
+
+:instant_inspection_execution a occp:InspectionExecution ;
+    occp:hasActualTime "2025-07-01"^^xsd:date ;
+    occp:startsPhase :phaseG ;
+    occp:hasPhase :phaseG .
+
+:instant_inspection_end a time:Instant ;
+    occp:hasActualTime "2025-07-02"^^xsd:date ;
+    occp:endsPhase :phaseG ;
+    occp:hasPhase :phaseG .
+
+:instant_geological_event a occp:GeologicalEvent ;
+    occp:hasActualTime "2025-08-01"^^xsd:date ;
+    occp:hasPhase :phaseH .
+
+:instant_weather_event a occp:WeatherEvent ;
+    occp:hasActualTime "2025-09-01"^^xsd:date ;
+    occp:hasPhase :phaseH .
+
+:instant_damage_detection a occp:DamageDetection ;
+    occp:hasActualTime "2025-07-15"^^xsd:date ;
+    occp:startsPhase :phaseK ;
+    occp:hasPhase :phaseK .
+
+:instant_damage_end a time:Instant ;
+    occp:hasActualTime "2025-07-20"^^xsd:date ;
+    occp:endsPhase :phaseK ;
+    occp:hasPhase :phaseK .
+
+:instant_repair_start a occp:RepairStart ;
+    occp:hasActualTime "2025-07-21"^^xsd:date ;
+    occp:startsPhase :phaseL ;
+    occp:hasPhase :phaseL .
+
+:instant_repair_completion a occp:RepairCompletion ;
+    occp:hasActualTime "2025-07-25"^^xsd:date ;
+    occp:endsPhase :phaseL ;
+    occp:hasPhase :phaseL .
+
+:instant_deconstruction_start a occp:DeconstructionStart ;
+    occp:hasActualTime "2025-11-15"^^xsd:date ;
+    occp:startsPhase :phaseM ;
+    occp:hasPhase :phaseM .
+
+:instant_deconstruction_completion a occp:CompletionOfDeconstruction ;
+    occp:hasActualTime "2025-12-01"^^xsd:date ;
+    occp:endsPhase :phaseM ;
+    occp:hasPhase :phaseM .

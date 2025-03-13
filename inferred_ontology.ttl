@@ -5,48 +5,17 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-:cycle1 a occp:Cycle ;
-    occp:hasCycleNumber 1 ;
-    time:hasBeginning :instant_cycle_start ;
-    time:hasEnd :instant_cycle_end .
-
 :lifecycle1 a occp:LifeCycle ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
     occp:hasLifeCycleID "LC001" ;
     occp:isInPhase :phaseA ;
     time:hasBeginning :instant_beginning_of_planning ;
     time:hasEnd :instant_deconstruction_completion .
 
-:phaseB a occp:PhaseB_Review ;
-    occp:hasActualBeginning :instant_submission_to_review ;
-    occp:hasActualEnd :instant_review_approval .
-
-:phaseE a occp:PhaseE_Warranty ;
-    occp:hasActualBeginning :instant_warranty_start ;
-    occp:hasActualEnd :instant_warranty_end .
-
-:phaseF a occp:PhaseF_DesignLife ;
-    occp:hasActualBeginning :instant_designlife_start ;
-    occp:hasActualEnd :instant_designlife_end .
-
-:phaseG a occp:PhaseG_Inspection ;
-    occp:hasActualBeginning :instant_inspection_execution ;
-    occp:hasActualEnd :instant_inspection_end .
-
-:phaseH a occp:PhaseH_SpecialEvents ;
-    occp:hasActualBeginning :instant_geological_event ;
-    occp:hasActualEnd :instant_weather_event .
-
-:phaseK a occp:PhaseK_Damage ;
-    occp:hasActualBeginning :instant_damage_detection ;
-    occp:hasActualEnd :instant_damage_end .
-
-:phaseL a occp:PhaseL_Repair ;
-    occp:hasActualBeginning :instant_repair_start ;
-    occp:hasActualEnd :instant_repair_completion .
-
 :transitionD a occp:CompletionOfConstruction ;
     occp:after :transitionA ;
-    occp:before :phaseD ;
+    occp:before :phaseD,
+        :phaseM ;
     occp:hasActualTime "2025-06-01"^^xsd:date .
 
 :transitionE a occp:CompletionOfDeconstruction ;
@@ -66,11 +35,6 @@ occp:ConstructionCompletion a owl:Class ;
     rdfs:label "Construction Completion"@en ;
     rdfs:comment "This class represents the instant marking the completion of construction for a model component or building."@en ;
     rdfs:subClassOf occp:PhaseC_Instant .
-
-occp:CycleA_PlanningReview a owl:Class ;
-    rdfs:label "Cycle A Planning Review"@en ;
-    rdfs:comment "This class represents a cycle starting with plan submission and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
-    rdfs:subClassOf occp:Cycle .
 
 occp:DamageObservation a owl:Class ;
     rdfs:label "Damage Observation"@en ;
@@ -277,86 +241,104 @@ occp:startsPhase a owl:ObjectProperty ;
     rdfs:subPropertyOf time:hasBeginning .
 
 :instant_completion_of_construction a occp:CompletionOfConstruction ;
-    occp:hasActualTime "2025-06-01"^^xsd:date .
+    occp:before :phaseD,
+        :phaseM ;
+    occp:endsPhase :phaseC ;
+    occp:hasActualTime "2025-06-01"^^xsd:date ;
+    occp:hasPhase :phaseC .
 
 :instant_completion_of_planning a occp:CompletionOfPlanning ;
-    occp:hasActualTime "2025-03-01"^^xsd:date .
+    occp:endsPhase :phaseB ;
+    occp:hasActualTime "2025-03-01"^^xsd:date ;
+    occp:hasPhase :phaseB .
 
 :instant_construction_start a occp:ConstructionStart ;
-    occp:hasActualTime "2025-03-15"^^xsd:date .
+    occp:hasActualTime "2025-03-15"^^xsd:date ;
+    occp:hasPhase :phaseC ;
+    occp:startsPhase :phaseC .
 
 :instant_cycle_end a time:Instant ;
-    occp:hasActualTime "2025-12-01"^^xsd:date .
-
-:instant_cycle_start a time:Instant ;
-    occp:hasActualTime "2025-01-01"^^xsd:date .
+    occp:endsPhase :cycle1 ;
+    occp:hasActualTime "2025-12-01"^^xsd:date ;
+    occp:hasPhase :cycle1 .
 
 :instant_damage_detection a occp:DamageDetection ;
-    occp:hasActualTime "2025-07-15"^^xsd:date .
+    occp:hasActualTime "2025-07-15"^^xsd:date ;
+    occp:hasPhase :phaseK ;
+    occp:startsPhase :phaseK .
 
 :instant_damage_end a time:Instant ;
-    occp:hasActualTime "2025-07-20"^^xsd:date .
+    occp:endsPhase :phaseK ;
+    occp:hasActualTime "2025-07-20"^^xsd:date ;
+    occp:hasPhase :phaseK .
 
 :instant_deconstruction_start a occp:DeconstructionStart ;
-    occp:hasActualTime "2025-11-15"^^xsd:date .
+    occp:hasActualTime "2025-11-15"^^xsd:date ;
+    occp:hasPhase :phaseM ;
+    occp:startsPhase :phaseM .
 
 :instant_designlife_end a occp:DesignLifeEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
+    occp:endsPhase :phaseF ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:hasPhase :phaseF .
 
 :instant_designlife_start a occp:DesignLifeStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:hasPhase :phaseF ;
+    occp:startsPhase :phaseF .
 
 :instant_geological_event a occp:GeologicalEvent ;
-    occp:hasActualTime "2025-08-01"^^xsd:date .
+    occp:hasActualTime "2025-08-01"^^xsd:date ;
+    occp:hasPhase :phaseH .
 
 :instant_inspection_end a time:Instant ;
-    occp:hasActualTime "2025-07-02"^^xsd:date .
+    occp:endsPhase :phaseG ;
+    occp:hasActualTime "2025-07-02"^^xsd:date ;
+    occp:hasPhase :phaseG .
 
 :instant_inspection_execution a occp:InspectionExecution ;
-    occp:hasActualTime "2025-07-01"^^xsd:date .
+    occp:hasActualTime "2025-07-01"^^xsd:date ;
+    occp:hasPhase :phaseG ;
+    occp:startsPhase :phaseG .
 
 :instant_repair_completion a occp:RepairCompletion ;
-    occp:hasActualTime "2025-07-25"^^xsd:date .
+    occp:endsPhase :phaseL ;
+    occp:hasActualTime "2025-07-25"^^xsd:date ;
+    occp:hasPhase :phaseL .
 
 :instant_repair_start a occp:RepairStart ;
-    occp:hasActualTime "2025-07-21"^^xsd:date .
-
-:instant_review_approval a occp:ReviewApproval ;
-    occp:hasActualTime "2025-02-28"^^xsd:date .
+    occp:hasActualTime "2025-07-21"^^xsd:date ;
+    occp:hasPhase :phaseL ;
+    occp:startsPhase :phaseL .
 
 :instant_submission_to_review a occp:SubmissionToReview ;
-    occp:hasActualTime "2025-02-15"^^xsd:date .
+    occp:hasActualTime "2025-02-15"^^xsd:date ;
+    occp:hasPhase :phaseA ;
+    occp:startsPhase :phaseB .
 
 :instant_usage_end a occp:UsageEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
+    occp:endsPhase :phaseD ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:hasPhase :phaseD .
 
 :instant_usage_start a occp:UsageStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:hasPhase :phaseD ;
+    occp:startsPhase :phaseD .
 
 :instant_warranty_end a occp:WarrantyEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
+    occp:endsPhase :phaseE ;
+    occp:hasActualTime "2025-11-01"^^xsd:date ;
+    occp:hasPhase :phaseE .
 
 :instant_warranty_start a occp:WarrantyStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
+    occp:hasActualTime "2025-06-02"^^xsd:date ;
+    occp:hasPhase :phaseE ;
+    occp:startsPhase :phaseE .
 
 :instant_weather_event a occp:WeatherEvent ;
-    occp:hasActualTime "2025-09-01"^^xsd:date .
-
-:phaseA a occp:PhaseA_Planning ;
-    occp:hasActualBeginning :instant_beginning_of_planning ;
-    occp:hasActualEnd :instant_completion_of_planning .
-
-:phaseC a occp:PhaseC_Construction ;
-    occp:hasActualBeginning :instant_construction_start ;
-    occp:hasActualEnd :instant_completion_of_construction .
-
-:phaseD a occp:PhaseD_Usage ;
-    occp:hasActualBeginning :instant_usage_start ;
-    occp:hasActualEnd :instant_usage_end .
-
-:phaseM a occp:PhaseM_Deconstruction ;
-    occp:hasActualBeginning :instant_deconstruction_start ;
-    occp:hasActualEnd :instant_deconstruction_completion .
+    occp:hasActualTime "2025-09-01"^^xsd:date ;
+    occp:hasPhase :phaseH .
 
 :transitionA a occp:CompletionOfPlanning ;
     occp:before :transitionB ;
@@ -384,6 +366,11 @@ occp:ConstructionStart a owl:Class ;
     rdfs:label "Construction Start"@en ;
     rdfs:comment "This class represents the instant marking the beginning of construction works for a model component or building."@en ;
     rdfs:subClassOf occp:PhaseC_Instant .
+
+occp:CycleA_PlanningReview a owl:Class ;
+    rdfs:label "Cycle A Planning Review"@en ;
+    rdfs:comment "This class represents a cycle starting with plan submission and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
+    rdfs:subClassOf occp:Cycle .
 
 occp:DamageDetection a owl:Class ;
     rdfs:label "Damage Detection"@en ;
@@ -574,11 +561,21 @@ occp:endsBefore a owl:ObjectProperty,
     rdfs:subPropertyOf time:hasEnd ;
     owl:inverseOf occp:endsAfter .
 
-:instant_beginning_of_planning a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2025-01-01"^^xsd:date .
+:instant_cycle_start a time:Instant ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:hasPhase :cycle1 ;
+    occp:startsPhase :cycle1 .
 
 :instant_deconstruction_completion a occp:CompletionOfDeconstruction ;
-    occp:hasActualTime "2025-12-01"^^xsd:date .
+    occp:endsPhase :phaseM ;
+    occp:hasActualTime "2025-12-01"^^xsd:date ;
+    occp:hasPhase :phaseM .
+
+:phaseH a occp:PhaseH_SpecialEvents ;
+    occp:hasEstimatedBeginning "2025-06-01"^^xsd:date ;
+    occp:hasEstimatedEnd "2025-11-01"^^xsd:date ;
+    occp:hasInstant :instant_geological_event,
+        :instant_weather_event .
 
 occp:CompletionOfConstruction a owl:Class ;
     rdfs:label "Completion of Construction"@en ;
@@ -599,6 +596,14 @@ occp:PhaseM_Instant a owl:Class ;
     rdfs:label "Phase M Instant"@en ;
     rdfs:comment "This class represents instants within Phase M (Deconstruction Phase), grouping all related events."@en ;
     rdfs:subClassOf time:Instant .
+
+:instant_review_approval a occp:ReviewApproval ;
+    occp:endsCycle :cycleA ;
+    occp:endsPhase :phaseA,
+        :phaseB ;
+    occp:hasActualTime "2025-02-28"^^xsd:date ;
+    occp:hasCycle :cycleA ;
+    occp:hasPhase :phaseB .
 
 occp:PhaseB_Instant a owl:Class ;
     rdfs:label "Phase B Instant"@en ;
@@ -640,10 +645,55 @@ occp:PhaseL_Instant a owl:Class ;
     rdfs:comment "This class represents instants within Phase L (Repair Phase), grouping all related events."@en ;
     rdfs:subClassOf time:Instant .
 
+:cycle1 a occp:Cycle ;
+    occp:hasActualBeginning :instant_cycle_start ;
+    occp:hasCycleNumber 1 ;
+    time:hasBeginning :instant_cycle_start ;
+    time:hasEnd :instant_cycle_end .
+
+:cycleA a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
+    occp:hasActualEnd :instant_review_approval ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase :phaseA ;
+    time:hasBeginning :instant_beginning_of_planning ;
+    time:hasEnd :instant_review_approval .
+
+:phaseE a occp:PhaseE_Warranty ;
+    occp:hasActualBeginning :instant_warranty_start ;
+    occp:hasActualEnd :instant_warranty_end .
+
+:phaseF a occp:PhaseF_DesignLife ;
+    occp:hasActualBeginning :instant_designlife_start ;
+    occp:hasActualEnd :instant_designlife_end .
+
+:phaseG a occp:PhaseG_Inspection ;
+    occp:hasActualBeginning :instant_inspection_execution ;
+    occp:hasActualEnd :instant_inspection_end .
+
+:phaseK a occp:PhaseK_Damage ;
+    occp:hasActualBeginning :instant_damage_detection ;
+    occp:hasActualEnd :instant_damage_end .
+
+:phaseL a occp:PhaseL_Repair ;
+    occp:hasActualBeginning :instant_repair_start ;
+    occp:hasActualEnd :instant_repair_completion .
+
 occp:LifeCycle a owl:Class ;
     rdfs:label "Life Cycle"@en ;
     rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
     rdfs:subClassOf time:Interval .
+
+:instant_beginning_of_planning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:hasCycle :cycleA ;
+    occp:hasPhase :phaseA ;
+    occp:startsCycle :cycleA ;
+    occp:startsPhase :phaseA .
+
+:phaseB a occp:PhaseB_Review ;
+    occp:hasActualBeginning :instant_submission_to_review ;
+    occp:hasActualEnd :instant_completion_of_planning .
 
 occp:Cycle a owl:Class ;
     rdfs:label "Cycle"@en ;
@@ -664,6 +714,23 @@ occp:Transition a owl:Class ;
     rdfs:label "Transition"@en ;
     rdfs:comment "This class represents key milestones or triggering events between phases, typically enabling the start of the next phase or marking phase completion."@en ;
     rdfs:subClassOf time:Instant .
+
+:phaseA a occp:PhaseA_Planning ;
+    occp:beginsBefore :phaseC ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
+    occp:hasActualEnd :instant_review_approval .
+
+:phaseC a occp:PhaseC_Construction ;
+    occp:hasActualBeginning :instant_construction_start ;
+    occp:hasActualEnd :instant_completion_of_construction .
+
+:phaseD a occp:PhaseD_Usage ;
+    occp:hasActualBeginning :instant_usage_start ;
+    occp:hasActualEnd :instant_usage_end .
+
+:phaseM a occp:PhaseM_Deconstruction ;
+    occp:hasActualBeginning :instant_deconstruction_start ;
+    occp:hasActualEnd :instant_deconstruction_completion .
 
 occp:Phase a owl:Class ;
     rdfs:label "Phase"@en ;
