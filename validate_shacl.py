@@ -156,7 +156,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
         return False
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "Phases_VALID.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Valid_LCycle_2.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
     conforms = perform_shacl_jena_validation(inferred_file)

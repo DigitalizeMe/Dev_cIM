@@ -7,9 +7,7 @@
 :cycle1 a occp:Cycle ;
     occp:hasCycleNumber 1 ;
     time:hasBeginning :instant_cycle_start ;
-    time:hasEnd :instant_cycle_end ;
-    occp:startsCycle :instant_submission_to_review ;
-    occp:endsCycle :instant_review_approval .
+    time:hasEnd :instant_cycle_end .
 
 :lifecycle1 a occp:LifeCycle ;
     occp:hasLifeCycleID "LC001" ;
@@ -20,19 +18,11 @@
 # Phases und Transitions
 :phaseA a occp:PhaseA_Planning ;
     occp:hasActualBeginning :instant_beginning_of_planning ;
-    occp:hasActualEnd :instant_completion_of_planning ;
-    occp:beginsBefore :phaseB ;
-    occp:beginsBefore :phaseC ;  # Hinzugefügt
-    occp:endsBefore :instant_completion_of_construction ;  # Geändert
-    occp:startsPhase :instant_beginning_of_planning ;
-    occp:endsPhase :instant_review_approval .
+    occp:hasActualEnd :instant_completion_of_planning .
 
 :phaseB a occp:PhaseB_Review ;
     occp:hasActualBeginning :instant_submission_to_review ;
-    occp:hasActualEnd :instant_review_approval ;
-    occp:beginsBefore :phaseC ;
-    occp:startsPhase :instant_submission_to_review ;
-    occp:endsPhase :instant_review_approval .
+    occp:hasActualEnd :instant_review_approval .
 
 :transitionA a occp:CompletionOfPlanning ;
     occp:hasActualTime "2025-03-01"^^xsd:date ;
@@ -48,12 +38,7 @@
 
 :phaseC a occp:PhaseC_Construction ;
     occp:hasActualBeginning :instant_construction_start ;
-    occp:hasActualEnd :instant_completion_of_construction ;
-    occp:after :transitionA ;
-    occp:after :transitionC ;
-    occp:startsPhase :instant_construction_start ;
-    occp:endsPhase :instant_completion_of_construction ;
-    occp:hasPhase :instant_construction_start .
+    occp:hasActualEnd :instant_completion_of_construction .
 
 :transitionD a occp:CompletionOfConstruction ;
     occp:hasActualTime "2025-06-01"^^xsd:date ;
@@ -62,77 +47,35 @@
 
 :phaseD a occp:PhaseD_Usage ;
     occp:hasActualBeginning :instant_usage_start ;
-    occp:hasActualEnd :instant_usage_end ;
-    occp:after :transitionD ;
-    occp:endsBefore :phaseM ;
-    occp:startsPhase :instant_usage_start ;
-    occp:endsPhase :instant_usage_end ;
-    occp:hasPhase :instant_usage_start ;
-    occp:hasPhase :instant_usage_end .
+    occp:hasActualEnd :instant_usage_end .
 
 :phaseE a occp:PhaseE_Warranty ;
     occp:hasActualBeginning :instant_warranty_start ;
-    occp:hasActualEnd :instant_warranty_end ;
-    occp:after :transitionD ;
-    occp:startsPhase :instant_warranty_start ;
-    occp:endsPhase :instant_warranty_end ;
-    occp:hasPhase :instant_warranty_start ;
-    occp:hasPhase :instant_warranty_end .
+    occp:hasActualEnd :instant_warranty_end .
 
 :phaseF a occp:PhaseF_DesignLife ;
     occp:hasActualBeginning :instant_designlife_start ;
-    occp:hasActualEnd :instant_designlife_end ;
-    occp:after :transitionD ;
-    occp:beginsWith :phaseD ;
-    occp:before :phaseM ;
-    occp:startsPhase :instant_designlife_start ;
-    occp:endsPhase :instant_designlife_end ;
-    occp:hasPhase :instant_designlife_start ;
-    occp:hasPhase :instant_designlife_end .
+    occp:hasActualEnd :instant_designlife_end .
 
 :phaseG a occp:PhaseG_Inspection ;
     occp:hasActualBeginning :instant_inspection_execution ;
-    occp:hasActualEnd :instant_inspection_end ;
-    occp:after :transitionD ;
-    occp:before :phaseM ;
-    occp:startsPhase :instant_inspection_execution ;
-    occp:endsPhase :instant_inspection_end ;
-    occp:hasPhase :instant_inspection_execution .
+    occp:hasActualEnd :instant_inspection_end .
 
 :phaseH a occp:PhaseH_SpecialEvents ;
     occp:hasActualBeginning :instant_geological_event ;
-    occp:hasActualEnd :instant_weather_event ;
-    occp:hasPhase :instant_geological_event ;
-    occp:hasPhase :instant_weather_event .
+    occp:hasActualEnd :instant_weather_event .
 
 :phaseK a occp:PhaseK_Damage ;
     occp:hasActualBeginning :instant_damage_detection ;
-    occp:hasActualEnd :instant_damage_end ;
-    occp:after :transitionC ;
-    occp:beginsBefore :phaseL ;
-    occp:startsPhase :instant_damage_detection ;
-    occp:endsPhase :instant_damage_end ;
-    occp:hasPhase :instant_damage_detection .
+    occp:hasActualEnd :instant_damage_end .
 
 :phaseL a occp:PhaseL_Repair ;
     occp:hasActualBeginning :instant_repair_start ;
-    occp:hasActualEnd :instant_repair_completion ;
-    occp:after :transitionC ;
-    occp:endsAfter :phaseK ;
-    occp:before :phaseM ;
-    occp:startsPhase :instant_repair_start ;
-    occp:endsPhase :instant_repair_completion ;
-    occp:hasPhase :instant_repair_start ;
-    occp:hasPhase :instant_repair_completion .
+    occp:hasActualEnd :instant_repair_completion  .
 
 :phaseM a occp:PhaseM_Deconstruction ;
     occp:hasActualBeginning :instant_deconstruction_start ;
-    occp:hasActualEnd :instant_deconstruction_completion ;
-    occp:after :transitionD ;
-    occp:startsPhase :instant_deconstruction_start ;
-    occp:endsPhase :instant_deconstruction_completion ;
-    occp:hasPhase :instant_deconstruction_start ;
-    occp:hasPhase :instant_deconstruction_completion .
+    occp:hasActualEnd :instant_deconstruction_completion  .
 
 :transitionE a occp:CompletionOfDeconstruction ;
     occp:hasActualTime "2025-12-01"^^xsd:date ;

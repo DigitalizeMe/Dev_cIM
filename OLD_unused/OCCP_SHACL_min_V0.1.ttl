@@ -1,0 +1,72 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+### Generische Regel für occp:before (ohne Sub-SELECT)
+osh:BeforeTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?endTime ?startTime WHERE {
+                $this occp:before ?other .
+                $this time:hasEnd ?endInstant .
+                ?endInstant occp:hasActualTime ?endTime .
+                ?other time:hasBeginning ?startInstant .
+                ?startInstant occp:hasActualTime ?startTime .
+                FILTER (?endTime >= ?startTime)
+            }
+        """ ;
+        sh:message "The end of { $this } (time: { ?endTime }) must be before the beginning of { ?other } (time: { ?startTime }) via 'occp:before'."@en ;
+        sh:severity sh:Violation
+    ] .
+
+### Generische Regel für occp:after (ohne Sub-SELECT)
+osh:AfterTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?startTime ?endTime WHERE {
+                $this occp:after ?other .
+                $this time:hasBeginning ?startInstant .
+                ?startInstant occp:hasActualTime ?startTime .
+                ?other time:hasEnd ?endInstant .
+                ?endInstant occp:hasActualTime ?endTime .
+                FILTER (?startTime <= ?endTime)
+            }
+        """ ;
+        sh:message "The beginning of { $this } (time: { ?startTime }) must be after the end of { ?other } (time: { ?endTime }) via 'occp:after'."@en ;
+        sh:severity sh:Violation
+    ] .
+
+### Implizite Reihenfolge-Regel (ohne Sub-SELECT)
+osh:PhaseOrderTimeShape a sh:NodeShape ;
+    sh:targetClass occp:Phase ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?endTime ?startTime WHERE {
+                $this time:hasEnd ?endInstant .
+                ?endInstant occp:hasActualTime ?endTime .
+                ?other time:hasBeginning ?startInstant .
+                ?startInstant occp:hasActualTime ?startTime .
+                FILTER (?endTime >= ?startTime)
+                FILTER (?other != $this)
+                {
+                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseB_Review . }
+                    UNION
+                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseC_Construction . }
+                    UNION
+                    { $this a occp:PhaseB_Review . ?other a occp:PhaseC_Construction . }
+                }
+            }
+        """ ;
+        sh:message "The end of { $this } (time: { ?endTime }) must be before the beginning of { ?other } (time: { ?startTime }) based on phase order."@en ;
+        sh:severity sh:Violation
+    ] .

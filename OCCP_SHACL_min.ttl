@@ -4,69 +4,233 @@
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
-### Generische Regel für occp:before (ohne Sub-SELECT)
-osh:BeforeTimeShape a sh:NodeShape ;
+
+#################################################################
+#    SPARQL Queries
+#################################################################
+
+### GENERIC TIME QUERIES
+
+### occp:before
+  osh:BeforeTimeShape a sh:NodeShape ;
+      sh:targetClass time:TemporalEntity ;
+      sh:sparql [
+          sh:select """
+              PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+              PREFIX time: <http://www.w3.org/2006/time#>
+              SELECT $this ?other ?latestEndTime ?earliestStartTime WHERE {
+                  $this occp:before ?other .
+                  {
+                      SELECT $this (MAX(?endTime) AS ?latestEndTime)
+                      WHERE {
+                          $this time:hasEnd ?endInstant .
+                          ?endInstant occp:hasActualTime ?endTime .
+                      }
+                      GROUP BY $this
+                  }
+                  {
+                      SELECT ?other (MIN(?startTime) AS ?earliestStartTime)
+                      WHERE {
+                          ?other time:hasBeginning ?startInstant .
+                          ?startInstant occp:hasActualTime ?startTime .
+                      }
+                      GROUP BY ?other
+                  }
+                  FILTER (?latestEndTime >= ?earliestStartTime)
+              }
+          """ ;
+          sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) via 'occp:before'."@en ;
+          sh:severity sh:Violation
+      ] .
+
+### occp:after
+  osh:AfterTimeShape a sh:NodeShape ;
+      sh:targetClass time:TemporalEntity ;
+      sh:sparql [
+          sh:select """
+              PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+              PREFIX time: <http://www.w3.org/2006/time#>
+              SELECT $this ?other ?earliestStartTime ?latestEndTime WHERE {
+                  $this occp:after ?other .
+                  {
+                      SELECT $this (MIN(?startTime) AS ?earliestStartTime)
+                      WHERE {
+                          $this time:hasBeginning ?startInstant .
+                          ?startInstant occp:hasActualTime ?startTime .
+                      }
+                      GROUP BY $this
+                  }
+                  {
+                      SELECT ?other (MAX(?endTime) AS ?latestEndTime)
+                      WHERE {
+                          ?other time:hasEnd ?endInstant .
+                          ?endInstant occp:hasActualTime ?endTime .
+                      }
+                      GROUP BY ?other
+                  }
+                  FILTER (?earliestStartTime <= ?latestEndTime)
+              }
+          """ ;
+          sh:message "The earliest beginning of { $this } (time: { ?earliestStartTime }) must be after the latest end of { ?other } (time: { ?latestEndTime }) via 'occp:after'."@en ;
+          sh:severity sh:Violation
+      ] .
+
+### occp:beginsBefore
+  osh:BeginsBeforeTimeShape a sh:NodeShape ;
+      sh:targetClass time:TemporalEntity ;
+      sh:sparql [
+          sh:select """
+              PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+              PREFIX time: <http://www.w3.org/2006/time#>
+              SELECT $this ?other ?latestStartTime ?earliestStartTime WHERE {
+                  $this occp:beginsBefore ?other .
+                  {
+                      SELECT $this (MAX(?startTime) AS ?latestStartTime)
+                      WHERE {
+                          $this time:hasBeginning ?startInstant .
+                          ?startInstant occp:hasActualTime ?startTime .
+                      }
+                      GROUP BY $this
+                  }
+                  {
+                      SELECT ?other (MIN(?startTime) AS ?earliestStartTime)
+                      WHERE {
+                          ?other time:hasBeginning ?startInstant .
+                          ?startInstant occp:hasActualTime ?startTime .
+                      }
+                      GROUP BY ?other
+                  }
+                  FILTER (?latestStartTime >= ?earliestStartTime)
+              }
+          """ ;
+          sh:message "The latest beginning of { $this } (time: { ?latestStartTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) via 'occp:beginsBefore'."@en ;
+          sh:severity sh:Violation
+      ] .
+
+### occp:endsBefore
+  osh:EndsBeforeTimeShape a sh:NodeShape ;
     sh:targetClass time:TemporalEntity ;
     sh:sparql [
         sh:select """
             PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
             PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?other ?endTime ?startTime WHERE {
-                $this occp:before ?other .
-                $this time:hasEnd ?endInstant .
-                ?endInstant occp:hasActualTime ?endTime .
-                ?other time:hasBeginning ?startInstant .
-                ?startInstant occp:hasActualTime ?startTime .
-                FILTER (?endTime >= ?startTime)
-            }
-        """ ;
-        sh:message "The end of { $this } (time: { ?endTime }) must be before the beginning of { ?other } (time: { ?startTime }) via 'occp:before'."@en ;
-        sh:severity sh:Violation
-    ] .
-
-### Generische Regel für occp:after (ohne Sub-SELECT)
-osh:AfterTimeShape a sh:NodeShape ;
-    sh:targetClass time:TemporalEntity ;
-    sh:sparql [
-        sh:select """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-            PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?other ?startTime ?endTime WHERE {
-                $this occp:after ?other .
-                $this time:hasBeginning ?startInstant .
-                ?startInstant occp:hasActualTime ?startTime .
-                ?other time:hasEnd ?endInstant .
-                ?endInstant occp:hasActualTime ?endTime .
-                FILTER (?startTime <= ?endTime)
-            }
-        """ ;
-        sh:message "The beginning of { $this } (time: { ?startTime }) must be after the end of { ?other } (time: { ?endTime }) via 'occp:after'."@en ;
-        sh:severity sh:Violation
-    ] .
-
-### Implizite Reihenfolge-Regel (ohne Sub-SELECT)
-osh:PhaseOrderTimeShape a sh:NodeShape ;
-    sh:targetClass occp:Phase ;
-    sh:sparql [
-        sh:select """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-            PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?other ?endTime ?startTime WHERE {
-                $this time:hasEnd ?endInstant .
-                ?endInstant occp:hasActualTime ?endTime .
-                ?other time:hasBeginning ?startInstant .
-                ?startInstant occp:hasActualTime ?startTime .
-                FILTER (?endTime >= ?startTime)
-                FILTER (?other != $this)
+            SELECT $this ?other ?latestEndTime ?earliestEndTime WHERE {
+                $this occp:endsBefore ?other .
                 {
-                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseB_Review . }
-                    UNION
-                    { $this a occp:PhaseA_Planning . ?other a occp:PhaseC_Construction . }
-                    UNION
-                    { $this a occp:PhaseB_Review . ?other a occp:PhaseC_Construction . }
+                    SELECT $this (MAX(?endTime) AS ?latestEndTime)
+                    WHERE {
+                        $this time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY $this
                 }
+                {
+                    SELECT ?other (MIN(?endTime) AS ?earliestEndTime)
+                    WHERE {
+                        ?other time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY ?other
+                }
+                FILTER (?latestEndTime >= ?earliestEndTime)
             }
         """ ;
-        sh:message "The end of { $this } (time: { ?endTime }) must be before the beginning of { ?other } (time: { ?startTime }) based on phase order."@en ;
+        sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest end of { ?other } (time: { ?earliestEndTime }) via 'occp:endsBefore'."@en ;
+        sh:severity sh:Violation
+    ] .
+
+### occp:endsAfter
+  osh:EndsAfterTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?earliestEndTime ?latestEndTime WHERE {
+                $this occp:endsAfter ?other .
+                {
+                    SELECT $this (MIN(?endTime) AS ?earliestEndTime)
+                    WHERE {
+                        $this time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY $this
+                }
+                {
+                    SELECT ?other (MAX(?endTime) AS ?latestEndTime)
+                    WHERE {
+                        ?other time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY ?other
+                }
+                FILTER (?earliestEndTime <= ?latestEndTime)
+            }
+        """ ;
+        sh:message "The earliest end of { $this } (time: { ?earliestEndTime }) must be after the latest end of { ?other } (time: { ?latestEndTime }) via 'occp:endsAfter'."@en ;
+        sh:severity sh:Violation
+    ] .
+
+### occp:beginsWith
+  osh:BeginsWithTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?startTimeThis ?startTimeOther WHERE {
+                $this occp:beginsWith ?other .
+                {
+                    SELECT $this (MIN(?startTime) AS ?startTimeThis)
+                    WHERE {
+                        $this time:hasBeginning ?startInstant .
+                        ?startInstant occp:hasActualTime ?startTime .
+                    }
+                    GROUP BY $this
+                }
+                {
+                    SELECT ?other (MIN(?startTime) AS ?startTimeOther)
+                    WHERE {
+                        ?other time:hasBeginning ?startInstant .
+                        ?startInstant occp:hasActualTime ?startTime .
+                    }
+                    GROUP BY ?other
+                }
+                FILTER (?startTimeThis != ?startTimeOther)
+            }
+        """ ;
+        sh:message "The earliest beginning of { $this } (time: { ?startTimeThis }) must equal the earliest beginning of { ?other } (time: { ?startTimeOther }) via 'occp:beginsWith'."@en ;
+        sh:severity sh:Violation
+    ] .
+
+### occp:endsWith
+  osh:EndsWithTimeShape a sh:NodeShape ;
+    sh:targetClass time:TemporalEntity ;
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?other ?endTimeThis ?endTimeOther WHERE {
+                $this occp:endsWith ?other .
+                {
+                    SELECT $this (MAX(?endTime) AS ?endTimeThis)
+                    WHERE {
+                        $this time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY $this
+                }
+                {
+                    SELECT ?other (MAX(?endTime) AS ?endTimeOther)
+                    WHERE {
+                        ?other time:hasEnd ?endInstant .
+                        ?endInstant occp:hasActualTime ?endTime .
+                    }
+                    GROUP BY ?other
+                }
+                FILTER (?endTimeThis != ?endTimeOther)
+            }
+        """ ;
+        sh:message "The latest end of { $this } (time: { ?endTimeThis }) must equal the latest end of { ?other } (time: { ?endTimeOther }) via 'occp:endsWith'."@en ;
         sh:severity sh:Violation
     ] .
