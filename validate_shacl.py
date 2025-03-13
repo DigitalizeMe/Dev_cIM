@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Pfade und Namespace
 TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
-SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_min.ttl")
+SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL.ttl")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
 JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")  # Hauptverzeichnis der Jena-Installation
 OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
@@ -156,7 +156,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
         return False
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Valid_LCycle_1.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "Phases_VALID.ttl")
     inferred_file = combine_and_reason(tbox_path=TBOX_PATH, abox_path=ABOX_PATH, java_exe=JAVA_EXE)
     debug_sparql(inferred_file)
     conforms = perform_shacl_jena_validation(inferred_file)

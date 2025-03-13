@@ -1,17 +1,29 @@
-2025-03-12 23:58:34,918 - INFO - Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
-2025-03-12 23:58:34,918 - INFO - Prüfe Ontologie auf Disjunktheit...
-2025-03-12 23:58:34,918 - DEBUG - Disjunkte Klassenpaare: set()
-2025-03-12 23:58:34,919 - INFO - Keine Disjunktheitsverletzungen gefunden.
-2025-03-12 23:58:34,954 - INFO - Starte SPARQL-Abfrage für alle UpdateChains...
-2025-03-12 23:58:35,069 - INFO - SPARQL-Abfrage Ergebnisse:
-2025-03-12 23:58:36,141 - INFO - Jena SHACL validation stdout: PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX sh:   <http://www.w3.org/ns/shacl#>
-PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
+2025-03-13 00:31:14,327 - INFO - Inferierte Ontologie gespeichert: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\inferred_ontology.ttl
+2025-03-13 00:31:14,327 - INFO - Prüfe Ontologie auf Disjunktheit...
+2025-03-13 00:31:14,327 - DEBUG - Disjunkte Klassenpaare: set()
+2025-03-13 00:31:14,328 - INFO - Keine Disjunktheitsverletzungen gefunden.
+2025-03-13 00:31:14,355 - INFO - Starte SPARQL-Abfrage für alle UpdateChains...
+2025-03-13 00:31:14,470 - INFO - SPARQL-Abfrage Ergebnisse:
+2025-03-13 00:31:15,517 - ERROR - Jena SHACL validation stderr: org.apache.jena.shacl.parser.ShaclParseException: No sh:path on a property shape: node=<http://www.occpshape.de/shape#ShapeOfPhaseL> sh:property _:B235dd7e76fea27c5dfe333b3be7c9dfd
+	at org.apache.jena.shacl.parser.ShapesParser.findPropertyShapes(ShapesParser.java:410)
+	at org.apache.jena.shacl.parser.ShapesParser.parseShape$(ShapesParser.java:334)
+	at org.apache.jena.shacl.parser.ShapesParser.parseShapeStep(ShapesParser.java:312)
+	at org.apache.jena.shacl.parser.ShapesParser.parseShape(ShapesParser.java:243)
+	at org.apache.jena.shacl.parser.ShapesParser.parseShapeAcc(ShapesParser.java:228)
+	at org.apache.jena.shacl.parser.ShapesParser.parseShapes(ShapesParser.java:170)
+	at org.apache.jena.shacl.parser.ShapesParser.parseProcess(ShapesParser.java:99)
+	at org.apache.jena.shacl.Shapes.parseProcess(Shapes.java:115)
+	at org.apache.jena.shacl.Shapes.parseAll(Shapes.java:110)
+	at org.apache.jena.shacl.Shapes.parse(Shapes.java:87)
+	at org.apache.jena.shacl.validation.ShaclPlainValidator.parse(ShaclPlainValidator.java:38)
+	at org.apache.jena.shacl.validation.ShaclPlainValidator.validate(ShaclPlainValidator.java:90)
+	at shacl.shacl_validate.exec(shacl_validate.java:127)
+	at org.apache.jena.cmd.CmdMain.mainMethod(CmdMain.java:86)
+	at org.apache.jena.cmd.CmdMain.mainRun(CmdMain.java:55)
+	at org.apache.jena.cmd.CmdMain.mainRun(CmdMain.java:43)
+	at shacl.shacl_validate.main(shacl_validate.java:61)
+	at shacl.shacl.main(shacl.java:75)
 
-[ rdf:type     sh:ValidationReport;
-  sh:conforms  true
-] .
-
-2025-03-12 23:58:36,142 - INFO - Konformität (inference=none): True
-2025-03-12 23:58:36,142 - INFO - Validation successful: Conforms to SHACL.
+2025-03-13 00:31:15,517 - INFO - Jena SHACL validation stdout: 
+2025-03-13 00:31:15,518 - INFO - Konformität (inference=none): False
+2025-03-13 00:31:15,518 - ERROR - Validation failed.

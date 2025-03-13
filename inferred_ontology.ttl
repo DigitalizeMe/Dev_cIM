@@ -5,61 +5,33 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-:cycle1 a occp:Cycle ;
-    occp:endsCycle :instant_review_approval ;
-    occp:hasCycleNumber 1 ;
-    occp:startsCycle :instant_submission_to_review ;
-    time:hasBeginning :instant_cycle_start ;
-    time:hasEnd :instant_cycle_end .
+:phaseA a occp:PhaseA_Planning ;
+    occp:hasActualBeginning :instant_beginning_of_planning ;
+    occp:hasActualEnd :instant_completion_of_planning .
 
-:lifecycle1 a occp:LifeCycle ;
-    occp:hasLifeCycleID "LC001" ;
-    occp:isInPhase :phaseA ;
-    time:hasBeginning :instant_beginning_of_planning ;
-    time:hasEnd :instant_deconstruction_completion .
+:phaseB a occp:PhaseB_Review ;
+    occp:hasActualBeginning :instant_submission_to_review ;
+    occp:hasActualEnd :instant_review_approval ;
+    time:hasBeginning :instant_estimated_start_b1,
+        :instant_estimated_start_b2 .
 
-:phaseE a occp:PhaseE_Warranty ;
-    occp:after :transitionD ;
-    occp:endsPhase :instant_warranty_end ;
-    occp:hasActualBeginning :instant_warranty_start ;
-    occp:hasActualEnd :instant_warranty_end ;
-    occp:hasPhase :instant_warranty_end,
-        :instant_warranty_start ;
-    occp:startsPhase :instant_warranty_start .
-
-:phaseF a occp:PhaseF_DesignLife ;
-    occp:after :transitionD ;
-    occp:before :phaseM ;
-    occp:beginsWith :phaseD ;
-    occp:endsPhase :instant_designlife_end ;
-    occp:hasActualBeginning :instant_designlife_start ;
-    occp:hasActualEnd :instant_designlife_end ;
-    occp:hasPhase :instant_designlife_end,
-        :instant_designlife_start ;
-    occp:startsPhase :instant_designlife_start .
-
-:phaseG a occp:PhaseG_Inspection ;
-    occp:after :transitionD ;
-    occp:before :phaseM ;
-    occp:endsPhase :instant_inspection_end ;
-    occp:hasActualBeginning :instant_inspection_execution ;
-    occp:hasActualEnd :instant_inspection_end ;
-    occp:hasPhase :instant_inspection_execution ;
-    occp:startsPhase :instant_inspection_execution .
-
-:phaseH a occp:PhaseH_SpecialEvents ;
-    occp:hasActualBeginning :instant_geological_event ;
-    occp:hasActualEnd :instant_weather_event ;
-    occp:hasPhase :instant_geological_event,
-        :instant_weather_event .
-
-:transitionE a occp:CompletionOfDeconstruction ;
-    occp:endsWith :phaseM ;
-    occp:hasActualTime "2025-12-01"^^xsd:date .
+:phaseC a occp:PhaseC_Construction ;
+    occp:hasActualBeginning :instant_construction_start ;
+    occp:hasActualEnd :instant_completion_of_construction .
 
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> a owl:Ontology ;
     rdfs:comment "First workaround to implement time tracking features to models"@en ;
     owl:imports time: .
+
+occp:BeginOfTenderingProcess a owl:Class ;
+    rdfs:label "Begin of Tendering Process"@en ;
+    rdfs:comment "This class represents the instant marking the start of the tendering process, a transition between the planning and construction phases, occurring after the completion of planning."@en ;
+    rdfs:subClassOf occp:Transition .
+
+occp:CompletionOfDeconstruction a owl:Class ;
+    rdfs:label "Completion of Deconstruction"@en ;
+    rdfs:comment "This class represents the instant marking the completion of the final deconstruction task, ending the lifecycle of a building or construction."@en ;
+    rdfs:subClassOf occp:Transition .
 
 occp:ConstructionAcceptance a owl:Class ;
     rdfs:label "Construction Acceptance"@en ;
@@ -75,6 +47,11 @@ occp:CycleA_PlanningReview a owl:Class ;
     rdfs:label "Cycle A Planning Review"@en ;
     rdfs:comment "This class represents a cycle starting with plan submission and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
     rdfs:subClassOf occp:Cycle .
+
+occp:DamageDetection a owl:Class ;
+    rdfs:label "Damage Detection"@en ;
+    rdfs:comment "This class represents the instant marking the detection of damage affecting a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseK_Instant .
 
 occp:DamageObservation a owl:Class ;
     rdfs:label "Damage Observation"@en ;
@@ -96,6 +73,11 @@ occp:DeconstructionCompletion a owl:Class ;
     rdfs:comment "This class represents the instant marking the completion of deconstruction works, ending the lifecycle of a component or building."@en ;
     rdfs:subClassOf occp:PhaseM_Instant .
 
+occp:DeconstructionStart a owl:Class ;
+    rdfs:label "Deconstruction Start"@en ;
+    rdfs:comment "This class represents the instant marking the beginning of deconstruction works for a component or building."@en ;
+    rdfs:subClassOf occp:PhaseM_Instant .
+
 occp:DefectElimCompletion a owl:Class ;
     rdfs:label "Defect Elimination Completion"@en ;
     rdfs:comment "This class represents the instant marking the completion of construction works related to defect elimination for a model component or building."@en ;
@@ -111,6 +93,16 @@ occp:DesignLifeChange a owl:Class ;
     rdfs:comment "This class represents the instant marking a change in the estimated design life due to factors like repairs or usage changes. Multiple events possible."@en ;
     rdfs:subClassOf occp:PhaseF_Instant .
 
+occp:DesignLifeEnd a owl:Class ;
+    rdfs:label "Design Life End"@en ;
+    rdfs:comment "This class represents the instant marking the end of the estimated design life of a component or building. Multiple events possible due to estimation changes."@en ;
+    rdfs:subClassOf occp:PhaseF_Instant .
+
+occp:DesignLifeStart a owl:Class ;
+    rdfs:label "Design Life Start"@en ;
+    rdfs:comment "This class represents the instant marking the start of the estimated design life of a component or building."@en ;
+    rdfs:subClassOf occp:PhaseF_Instant .
+
 occp:Edit_ASTR a owl:Class ;
     rdfs:label "Edit ASTR"@en ;
     rdfs:comment "This class represents the instant marking significant changes to a planning model after submission to review (ASTR = After Submission To Review). Multiple events possible."@en ;
@@ -120,6 +112,16 @@ occp:Edit_BSTR a owl:Class ;
     rdfs:label "Edit BSTR"@en ;
     rdfs:comment "This class represents the instant marking significant changes to a planning model before submission to review (BSTR = Before Submission To Review). Multiple events possible."@en ;
     rdfs:subClassOf occp:PhaseA_Instant .
+
+occp:GeologicalEvent a owl:Class ;
+    rdfs:label "Geological Event"@en ;
+    rdfs:comment "This class represents the instant marking a geological event (e.g., earthquake) affecting a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseH_Instant .
+
+occp:InspectionExecution a owl:Class ;
+    rdfs:label "Inspection Execution"@en ;
+    rdfs:comment "This class represents the instant marking the execution of a regular inspection. Multiple events possible over the lifecycle."@en ;
+    rdfs:subClassOf occp:PhaseG_Instant .
 
 occp:IrregularInspection a owl:Class ;
     rdfs:label "Irregular Inspection"@en ;
@@ -141,6 +143,56 @@ occp:NextRegularInspection a owl:Class ;
     rdfs:comment "This class represents the instant marking the planned date of the next regular inspection, based on the inspection interval. Multiple events possible over the lifecycle."@en ;
     rdfs:subClassOf occp:PhaseG_Instant .
 
+occp:PhaseD_Usage a owl:Class ;
+    rdfs:label "Phase D Usage"@en ;
+    rdfs:comment "This class represents the usage phase, starting with UsageStart and ending with UsageEnd."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseE_Warranty a owl:Class ;
+    rdfs:label "Phase E Warranty"@en ;
+    rdfs:comment "This class represents the warranty phase, starting with WarrantyStart and ending with WarrantyEnd."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseF_DesignLife a owl:Class ;
+    rdfs:label "Phase F Design Life"@en ;
+    rdfs:comment "This class represents the design life phase, starting with DesignLifeStart and ending with DesignLifeEnd."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseG_Inspection a owl:Class ;
+    rdfs:label "Phase G Inspection"@en ;
+    rdfs:comment "This class represents the inspection phase, starting with the beginning of usage and ending with the beginning of deconstruction."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseH_SpecialEvents a owl:Class ;
+    rdfs:label "Phase H Special Events"@en ;
+    rdfs:comment "This class represents the special events phase, starting with the first special event and ending with the last."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseK_Damage a owl:Class ;
+    rdfs:label "Phase K Damage"@en ;
+    rdfs:comment "This class represents the damage phase, starting with DamageDetection and ending with repair completion or deconstruction start."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseL_Repair a owl:Class ;
+    rdfs:label "Phase L Repair"@en ;
+    rdfs:comment "This class represents the repair phase, starting with RepairStart and ending with RepairCompletion."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:PhaseM_Deconstruction a owl:Class ;
+    rdfs:label "Phase M Deconstruction"@en ;
+    rdfs:comment "This class represents the deconstruction phase, starting with DeconstructionStart and ending with DeconstructionCompletion."@en ;
+    rdfs:subClassOf occp:Phase .
+
+occp:RepairCompletion a owl:Class ;
+    rdfs:label "Repair Completion"@en ;
+    rdfs:comment "This class represents the instant marking the completion of damage repair works for a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseL_Instant .
+
+occp:RepairStart a owl:Class ;
+    rdfs:label "Repair Start"@en ;
+    rdfs:comment "This class represents the instant marking the beginning of damage repair works for a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseL_Instant .
+
 occp:ReviewRejection a owl:Class ;
     rdfs:label "Review Rejection"@en ;
     rdfs:comment "This class represents the instant marking the reviewer’s rejection of a planning model. Multiple events possible."@en ;
@@ -151,15 +203,45 @@ occp:ReviewStart a owl:Class ;
     rdfs:comment "This class represents the instant marking the start of the review process. Multiple events possible with rejections."@en ;
     rdfs:subClassOf occp:PhaseB_Instant .
 
+occp:Submission a owl:Class ;
+    rdfs:label "Submission"@en ;
+    rdfs:comment "This class represents the instant marking the end of the tendering process, serving as a transition to the construction phase."@en ;
+    rdfs:subClassOf occp:Transition .
+
 occp:UsageChange a owl:Class ;
     rdfs:label "Usage Change"@en ;
     rdfs:comment "This class represents the instant marking a change in usage of a component or building, potentially ending one or more usage phases and initiating new ones. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseD_Instant .
+
+occp:UsageEnd a owl:Class ;
+    rdfs:label "Usage End"@en ;
+    rdfs:comment "This class represents the instant marking the end of usage for a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseD_Instant .
+
+occp:UsageStart a owl:Class ;
+    rdfs:label "Usage Start"@en ;
+    rdfs:comment "This class represents the instant marking the beginning of usage for a component or building. Multiple events possible."@en ;
     rdfs:subClassOf occp:PhaseD_Instant .
 
 occp:WarrantyChange a owl:Class ;
     rdfs:label "Warranty Change"@en ;
     rdfs:comment "This class represents the instant marking a change in warranty due to repairs or extensions. Multiple events possible."@en ;
     rdfs:subClassOf occp:PhaseE_Instant .
+
+occp:WarrantyEnd a owl:Class ;
+    rdfs:label "Warranty End"@en ;
+    rdfs:comment "This class represents the instant marking the end of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
+    rdfs:subClassOf occp:PhaseE_Instant .
+
+occp:WarrantyStart a owl:Class ;
+    rdfs:label "Warranty Start"@en ;
+    rdfs:comment "This class represents the instant marking the beginning of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
+    rdfs:subClassOf occp:PhaseE_Instant .
+
+occp:WeatherEvent a owl:Class ;
+    rdfs:label "Weather Event"@en ;
+    rdfs:comment "This class represents the instant marking a weather event (e.g., flood) affecting a component or building. Multiple events possible."@en ;
+    rdfs:subClassOf occp:PhaseH_Instant .
 
 occp:beginsWith a owl:ObjectProperty ;
     rdfs:label "begins with"@en ;
@@ -280,99 +362,49 @@ occp:startsPhase a owl:ObjectProperty ;
     rdfs:range occp:Phase ;
     rdfs:subPropertyOf time:hasBeginning .
 
+:instant_beginning_of_planning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date .
+
+:instant_completion_of_construction a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2025-06-01"^^xsd:date .
+
 :instant_completion_of_planning a occp:CompletionOfPlanning ;
     occp:hasActualTime "2025-03-01"^^xsd:date .
 
-:instant_cycle_end a time:Instant ;
-    occp:hasActualTime "2025-12-01"^^xsd:date .
+:instant_construction_start a occp:ConstructionStart ;
+    occp:hasActualTime "2025-03-15"^^xsd:date .
 
-:instant_cycle_start a time:Instant ;
-    occp:hasActualTime "2025-01-01"^^xsd:date .
+:instant_estimated_start_b1 a time:Instant ;
+    occp:hasEstimatedTime "2025-02-10"^^xsd:date .
 
-:phaseA a occp:PhaseA_Planning ;
-    occp:beginsBefore :phaseB,
-        :phaseC ;
-    occp:endsBefore :instant_completion_of_construction ;
-    occp:endsPhase :instant_review_approval ;
-    occp:hasActualBeginning :instant_beginning_of_planning ;
-    occp:hasActualEnd :instant_completion_of_planning ;
-    occp:startsPhase :instant_beginning_of_planning .
+:instant_estimated_start_b2 a time:Instant ;
+    occp:hasEstimatedTime "2025-02-20"^^xsd:date .
 
-:phaseB a occp:PhaseB_Review ;
-    occp:beginsBefore :phaseC ;
-    occp:endsPhase :instant_review_approval ;
-    occp:hasActualBeginning :instant_submission_to_review ;
-    occp:hasActualEnd :instant_review_approval ;
-    occp:startsPhase :instant_submission_to_review .
+:instant_review_approval a occp:ReviewApproval ;
+    occp:hasActualTime "2025-02-28"^^xsd:date .
 
-:phaseK a occp:PhaseK_Damage ;
-    occp:after :transitionC ;
-    occp:beginsBefore :phaseL ;
-    occp:endsPhase :instant_damage_end ;
-    occp:hasActualBeginning :instant_damage_detection ;
-    occp:hasActualEnd :instant_damage_end ;
-    occp:hasPhase :instant_damage_detection ;
-    occp:startsPhase :instant_damage_detection .
-
-:phaseL a occp:PhaseL_Repair ;
-    occp:after :transitionC ;
-    occp:before :phaseM ;
-    occp:endsAfter :phaseK ;
-    occp:endsPhase :instant_repair_completion ;
-    occp:hasActualBeginning :instant_repair_start ;
-    occp:hasActualEnd :instant_repair_completion ;
-    occp:hasPhase :instant_repair_completion,
-        :instant_repair_start ;
-    occp:startsPhase :instant_repair_start .
-
-:transitionB a occp:BeginOfTenderingProcess ;
-    occp:before :transitionC ;
-    occp:hasActualTime "2025-03-05"^^xsd:date .
-
-occp:BeginOfTenderingProcess a owl:Class ;
-    rdfs:label "Begin of Tendering Process"@en ;
-    rdfs:comment "This class represents the instant marking the start of the tendering process, a transition between the planning and construction phases, occurring after the completion of planning."@en ;
-    rdfs:subClassOf occp:Transition .
+:instant_submission_to_review a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-02-15"^^xsd:date .
 
 occp:BeginningOfPlanning a owl:Class ;
     rdfs:label "Beginning of Planning"@en ;
     rdfs:comment "This class represents the instant marking the official start of the planning phase."@en ;
     rdfs:subClassOf occp:PhaseA_Instant .
 
+occp:CompletionOfConstruction a owl:Class ;
+    rdfs:label "Completion of Construction"@en ;
+    rdfs:comment "This class represents the instant marking the last acceptance and finish of construction works, serving as a transition between the construction and usage phases."@en ;
+    rdfs:subClassOf occp:Transition .
+
+occp:CompletionOfPlanning a owl:Class ;
+    rdfs:label "Completion of Planning"@en ;
+    rdfs:comment "This class represents the instant marking the last planning review acceptance, serving as a transition from the planning phase to the tendering process."@en ;
+    rdfs:subClassOf occp:Transition .
+
 occp:ConstructionStart a owl:Class ;
     rdfs:label "Construction Start"@en ;
     rdfs:comment "This class represents the instant marking the beginning of construction works for a model component or building."@en ;
     rdfs:subClassOf occp:PhaseC_Instant .
-
-occp:DamageDetection a owl:Class ;
-    rdfs:label "Damage Detection"@en ;
-    rdfs:comment "This class represents the instant marking the detection of damage affecting a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseK_Instant .
-
-occp:DeconstructionStart a owl:Class ;
-    rdfs:label "Deconstruction Start"@en ;
-    rdfs:comment "This class represents the instant marking the beginning of deconstruction works for a component or building."@en ;
-    rdfs:subClassOf occp:PhaseM_Instant .
-
-occp:DesignLifeEnd a owl:Class ;
-    rdfs:label "Design Life End"@en ;
-    rdfs:comment "This class represents the instant marking the end of the estimated design life of a component or building. Multiple events possible due to estimation changes."@en ;
-    rdfs:subClassOf occp:PhaseF_Instant .
-
-occp:DesignLifeStart a owl:Class ;
-    rdfs:label "Design Life Start"@en ;
-    rdfs:comment "This class represents the instant marking the start of the estimated design life of a component or building."@en ;
-    rdfs:subClassOf occp:PhaseF_Instant .
-
-occp:GeologicalEvent a owl:Class ;
-    rdfs:label "Geological Event"@en ;
-    rdfs:comment "This class represents the instant marking a geological event (e.g., earthquake) affecting a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseH_Instant .
-
-occp:InspectionExecution a owl:Class ;
-    rdfs:label "Inspection Execution"@en ;
-    rdfs:comment "This class represents the instant marking the execution of a regular inspection. Multiple events possible over the lifecycle."@en ;
-    rdfs:subClassOf occp:PhaseG_Instant .
 
 occp:PhaseA_Planning a owl:Class ;
     rdfs:label "Phase A Planning"@en ;
@@ -389,95 +421,15 @@ occp:PhaseC_Construction a owl:Class ;
     rdfs:comment "This class represents the construction phase, starting with ConstructionStart and ending with CompletionOfConstruction."@en ;
     rdfs:subClassOf occp:Phase .
 
-occp:PhaseD_Usage a owl:Class ;
-    rdfs:label "Phase D Usage"@en ;
-    rdfs:comment "This class represents the usage phase, starting with UsageStart and ending with UsageEnd."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseE_Warranty a owl:Class ;
-    rdfs:label "Phase E Warranty"@en ;
-    rdfs:comment "This class represents the warranty phase, starting with WarrantyStart and ending with WarrantyEnd."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseF_DesignLife a owl:Class ;
-    rdfs:label "Phase F Design Life"@en ;
-    rdfs:comment "This class represents the design life phase, starting with DesignLifeStart and ending with DesignLifeEnd."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseG_Inspection a owl:Class ;
-    rdfs:label "Phase G Inspection"@en ;
-    rdfs:comment "This class represents the inspection phase, starting with the beginning of usage and ending with the beginning of deconstruction."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseH_SpecialEvents a owl:Class ;
-    rdfs:label "Phase H Special Events"@en ;
-    rdfs:comment "This class represents the special events phase, starting with the first special event and ending with the last."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseK_Damage a owl:Class ;
-    rdfs:label "Phase K Damage"@en ;
-    rdfs:comment "This class represents the damage phase, starting with DamageDetection and ending with repair completion or deconstruction start."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseL_Repair a owl:Class ;
-    rdfs:label "Phase L Repair"@en ;
-    rdfs:comment "This class represents the repair phase, starting with RepairStart and ending with RepairCompletion."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:PhaseM_Deconstruction a owl:Class ;
-    rdfs:label "Phase M Deconstruction"@en ;
-    rdfs:comment "This class represents the deconstruction phase, starting with DeconstructionStart and ending with DeconstructionCompletion."@en ;
-    rdfs:subClassOf occp:Phase .
-
-occp:RepairCompletion a owl:Class ;
-    rdfs:label "Repair Completion"@en ;
-    rdfs:comment "This class represents the instant marking the completion of damage repair works for a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseL_Instant .
-
-occp:RepairStart a owl:Class ;
-    rdfs:label "Repair Start"@en ;
-    rdfs:comment "This class represents the instant marking the beginning of damage repair works for a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseL_Instant .
-
 occp:ReviewApproval a owl:Class ;
     rdfs:label "Review Approval"@en ;
     rdfs:comment "This class represents the instant marking the reviewer’s acceptance of a planning model, ending the planning and review phases."@en ;
     rdfs:subClassOf occp:PhaseB_Instant .
 
-occp:Submission a owl:Class ;
-    rdfs:label "Submission"@en ;
-    rdfs:comment "This class represents the instant marking the end of the tendering process, serving as a transition to the construction phase."@en ;
-    rdfs:subClassOf occp:Transition .
-
 occp:SubmissionToReview a owl:Class ;
     rdfs:label "Submission to Review"@en ;
     rdfs:comment "This class represents the instant marking the submission of a planning draft to the reviewer, starting Phase B. Multiple events possible."@en ;
     rdfs:subClassOf occp:PhaseA_Instant .
-
-occp:UsageEnd a owl:Class ;
-    rdfs:label "Usage End"@en ;
-    rdfs:comment "This class represents the instant marking the end of usage for a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseD_Instant .
-
-occp:UsageStart a owl:Class ;
-    rdfs:label "Usage Start"@en ;
-    rdfs:comment "This class represents the instant marking the beginning of usage for a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseD_Instant .
-
-occp:WarrantyEnd a owl:Class ;
-    rdfs:label "Warranty End"@en ;
-    rdfs:comment "This class represents the instant marking the end of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
-    rdfs:subClassOf occp:PhaseE_Instant .
-
-occp:WarrantyStart a owl:Class ;
-    rdfs:label "Warranty Start"@en ;
-    rdfs:comment "This class represents the instant marking the beginning of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
-    rdfs:subClassOf occp:PhaseE_Instant .
-
-occp:WeatherEvent a owl:Class ;
-    rdfs:label "Weather Event"@en ;
-    rdfs:comment "This class represents the instant marking a weather event (e.g., flood) affecting a component or building. Multiple events possible."@en ;
-    rdfs:subClassOf occp:PhaseH_Instant .
 
 occp:after a owl:ObjectProperty,
         owl:TransitiveProperty ;
@@ -533,105 +485,15 @@ occp:endsBefore a owl:ObjectProperty,
     rdfs:subPropertyOf time:hasEnd ;
     owl:inverseOf occp:endsAfter .
 
-:instant_damage_end a time:Instant ;
-    occp:hasActualTime "2025-07-20"^^xsd:date .
-
-:instant_geological_event a occp:GeologicalEvent ;
-    occp:hasActualTime "2025-08-01"^^xsd:date .
-
-:instant_inspection_end a time:Instant ;
-    occp:hasActualTime "2025-07-02"^^xsd:date .
-
-:instant_weather_event a occp:WeatherEvent ;
-    occp:hasActualTime "2025-09-01"^^xsd:date .
-
-:phaseD a occp:PhaseD_Usage ;
-    occp:after :transitionD ;
-    occp:endsBefore :phaseM ;
-    occp:endsPhase :instant_usage_end ;
-    occp:hasActualBeginning :instant_usage_start ;
-    occp:hasActualEnd :instant_usage_end ;
-    occp:hasPhase :instant_usage_end,
-        :instant_usage_start ;
-    occp:startsPhase :instant_usage_start .
-
-:transitionA a occp:CompletionOfPlanning ;
-    occp:before :transitionB ;
-    occp:hasActualTime "2025-03-01"^^xsd:date .
-
-occp:CompletionOfConstruction a owl:Class ;
-    rdfs:label "Completion of Construction"@en ;
-    rdfs:comment "This class represents the instant marking the last acceptance and finish of construction works, serving as a transition between the construction and usage phases."@en ;
-    rdfs:subClassOf occp:Transition .
-
-occp:CompletionOfDeconstruction a owl:Class ;
-    rdfs:label "Completion of Deconstruction"@en ;
-    rdfs:comment "This class represents the instant marking the completion of the final deconstruction task, ending the lifecycle of a building or construction."@en ;
-    rdfs:subClassOf occp:Transition .
-
-occp:CompletionOfPlanning a owl:Class ;
-    rdfs:label "Completion of Planning"@en ;
-    rdfs:comment "This class represents the instant marking the last planning review acceptance, serving as a transition from the planning phase to the tendering process."@en ;
-    rdfs:subClassOf occp:Transition .
-
 occp:PhaseM_Instant a owl:Class ;
     rdfs:label "Phase M Instant"@en ;
     rdfs:comment "This class represents instants within Phase M (Deconstruction Phase), grouping all related events."@en ;
     rdfs:subClassOf time:Instant .
 
-:instant_beginning_of_planning a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2025-01-01"^^xsd:date .
-
-:instant_completion_of_construction a occp:CompletionOfConstruction ;
-    occp:hasActualTime "2025-06-01"^^xsd:date .
-
-:instant_construction_start a occp:ConstructionStart ;
-    occp:hasActualTime "2025-03-15"^^xsd:date .
-
-:instant_damage_detection a occp:DamageDetection ;
-    occp:hasActualTime "2025-07-15"^^xsd:date .
-
-:instant_deconstruction_start a occp:DeconstructionStart ;
-    occp:hasActualTime "2025-11-15"^^xsd:date .
-
-:instant_designlife_end a occp:DesignLifeEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
-
-:instant_designlife_start a occp:DesignLifeStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
-
-:instant_inspection_execution a occp:InspectionExecution ;
-    occp:hasActualTime "2025-07-01"^^xsd:date .
-
-:instant_repair_completion a occp:RepairCompletion ;
-    occp:hasActualTime "2025-07-25"^^xsd:date .
-
-:instant_repair_start a occp:RepairStart ;
-    occp:hasActualTime "2025-07-21"^^xsd:date .
-
-:instant_submission_to_review a occp:SubmissionToReview ;
-    occp:hasActualTime "2025-02-15"^^xsd:date .
-
-:instant_usage_end a occp:UsageEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
-
-:instant_usage_start a occp:UsageStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
-
-:instant_warranty_end a occp:WarrantyEnd ;
-    occp:hasActualTime "2025-11-01"^^xsd:date .
-
-:instant_warranty_start a occp:WarrantyStart ;
-    occp:hasActualTime "2025-06-02"^^xsd:date .
-
-:phaseC a occp:PhaseC_Construction ;
-    occp:after :transitionA,
-        :transitionC ;
-    occp:endsPhase :instant_completion_of_construction ;
-    occp:hasActualBeginning :instant_construction_start ;
-    occp:hasActualEnd :instant_completion_of_construction ;
-    occp:hasPhase :instant_construction_start ;
-    occp:startsPhase :instant_construction_start .
+occp:LifeCycle a owl:Class ;
+    rdfs:label "Life Cycle"@en ;
+    rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
+    rdfs:subClassOf time:Interval .
 
 occp:PhaseB_Instant a owl:Class ;
     rdfs:label "Phase B Instant"@en ;
@@ -672,35 +534,6 @@ occp:PhaseL_Instant a owl:Class ;
     rdfs:label "Phase L Instant"@en ;
     rdfs:comment "This class represents instants within Phase L (Repair Phase), grouping all related events."@en ;
     rdfs:subClassOf time:Instant .
-
-:instant_deconstruction_completion a occp:CompletionOfDeconstruction ;
-    occp:hasActualTime "2025-12-01"^^xsd:date .
-
-:instant_review_approval a occp:ReviewApproval ;
-    occp:hasActualTime "2025-02-28"^^xsd:date .
-
-:transitionC a occp:Submission ;
-    occp:before :phaseC ;
-    occp:hasActualTime "2025-03-10"^^xsd:date .
-
-occp:LifeCycle a owl:Class ;
-    rdfs:label "Life Cycle"@en ;
-    rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
-    rdfs:subClassOf time:Interval .
-
-:phaseM a occp:PhaseM_Deconstruction ;
-    occp:after :transitionD ;
-    occp:endsPhase :instant_deconstruction_completion ;
-    occp:hasActualBeginning :instant_deconstruction_start ;
-    occp:hasActualEnd :instant_deconstruction_completion ;
-    occp:hasPhase :instant_deconstruction_completion,
-        :instant_deconstruction_start ;
-    occp:startsPhase :instant_deconstruction_start .
-
-:transitionD a occp:CompletionOfConstruction ;
-    occp:after :transitionA ;
-    occp:before :phaseD ;
-    occp:hasActualTime "2025-06-01"^^xsd:date .
 
 occp:Cycle a owl:Class ;
     rdfs:label "Cycle"@en ;

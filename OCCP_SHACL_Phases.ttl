@@ -136,12 +136,20 @@
           sh:message "Each 'occp:PhaseA_Planning' must end before 'occp:CompletionOfConstruction' via 'occp:endsBefore'."@en ;
                 sh:severity sh:Violation
         ] ;  
-        sh:and (
-            [ sh:path occp:beginsBefore ; sh:class occp:PhaseB_Review ]
-            [ sh:path occp:beginsBefore ; sh:class occp:PhaseC_Construction ;
-              sh:message "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseB_Review' and 'occp:PhaseC_Construction' via 'occp:beginsBefore'."@en ;
-              sh:severity sh:Violation ]
-        ) ;
+        sh:property [
+            sh:path occp:beginsBefore ;
+            sh:class occp:PhaseB_Review ;
+            sh:minCount 1 ;
+            sh:message "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseB_Review' via 'occp:beginsBefore'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:beginsBefore ;
+            sh:class occp:PhaseC_Construction ;
+            sh:minCount 1 ;
+            sh:message "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseC_Construction' via 'occp:beginsBefore'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
         sh:property [
             sh:path occp:hasActualBeginning ;
             sh:class occp:BeginningOfPlanning ;
@@ -162,18 +170,30 @@
 
     osh:ShapeOfPhaseB a sh:NodeShape ;
         sh:targetClass occp:PhaseB_Review ;
-        sh:or (
-            [ sh:path occp:before ; sh:class occp:PhaseC_Construction ]
-            [ sh:path occp:beginsBefore ; sh:class occp:PhaseC_Construction ;
-              sh:message "Each 'occp:PhaseB_Review' must begin before 'occp:PhaseC_Construction' via 'occp:beginsBefore' or occur entirely before it via 'occp:before'."@en ;
-              sh:severity sh:Violation ]
-        ) ;
-        sh:or (
-            [ sh:path occp:before ; sh:class occp:CompletionOfPlanning ]
-            [ sh:path occp:endsWith ; sh:class occp:CompletionOfPlanning ;
-              sh:message "Each 'occp:PhaseB_Review' must end with 'occp:CompletionOfPlanning' via 'occp:endsWith' or occur entirely before it via 'occp:before'."@en ;
-              sh:severity sh:Violation ]
-        ) ;
+            sh:property [
+            sh:path occp:before ;
+            sh:class occp:PhaseC_Construction ;
+            sh:message "Each 'occp:PhaseB_Review' must occur entirely before 'occp:PhaseC_Construction' via 'occp:before'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:beginsBefore ;
+            sh:class occp:PhaseC_Construction ;
+            sh:message "Each 'occp:PhaseB_Review' must begin before 'occp:PhaseC_Construction' via 'occp:beginsBefore'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:before ;
+            sh:class occp:CompletionOfPlanning ;
+            sh:message "Each 'occp:PhaseB_Review' must occur entirely before 'occp:CompletionOfPlanning' via 'occp:before'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:endsWith ;
+            sh:class occp:CompletionOfPlanning ;
+            sh:message "Each 'occp:PhaseB_Review' must end with 'occp:CompletionOfPlanning' via 'occp:endsWith'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
         sh:property [
             sh:path occp:hasActualBeginning ;
             sh:class occp:SubmissionToReview ;
@@ -356,18 +376,18 @@
             sh:message "Each 'occp:PhaseF_DesignLife' should occur after 'occp:CompletionOfConstruction' via 'occp:after'."@en ;
             sh:severity sh:Warning ;
           ] ;
-        sh:or (                                       # Phase order options - Phase F
-          [
+        sh:property [
             sh:path occp:beginsBefore ;
             sh:class occp:PhaseD_Usage ;
-          ]
-          [
+            sh:message "Each 'occp:PhaseF_DesignLife' should begin before 'occp:PhaseD_Usage' via 'occp:beginsBefore'."@en ;
+            sh:severity sh:Warning ;
+        ] ;
+        sh:property [
             sh:path occp:beginsWith ;
             sh:class occp:PhaseD_Usage ;
-            sh:message "Each 'occp:PhaseF_DesignLife' should begin before 'occp:PhaseD_Usage' via 'occp:beginsBefore' or with 'occp:PhaseD_Usage' via 'occp:beginsWith'."@en ;
+            sh:message "Each 'occp:PhaseF_DesignLife' should begin with 'occp:PhaseD_Usage' via 'occp:beginsWith'."@en ;
             sh:severity sh:Warning ;
-          ]
-        ) ;
+        ] ;
         sh:property [
           sh:path occp:before ;
           sh:class occp:PhaseM_Deconstruction ;
@@ -392,11 +412,15 @@
     osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
         sh:targetClass occp:PhaseG_Inspection ;
         sh:property [
-            sh:or (
-                [ sh:path occp:beginsWith ; sh:class occp:PhaseD_Usage ]
-                [ sh:path occp:beginsAfter ; sh:class occp:UsageStart ]
-            ) ;
-            sh:message "Each 'occp:PhaseG_Inspection' must begin with 'occp:PhaseD_Usage' via 'occp:beginsWith' or after 'occp:UsageStart' via 'occp:beginsAfter'."@en ;
+            sh:path occp:beginsWith ;
+            sh:class occp:PhaseD_Usage ;
+            sh:message "Each 'occp:PhaseG_Inspection' must begin with 'occp:PhaseD_Usage' via 'occp:beginsWith'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:beginsAfter ;
+            sh:class occp:UsageStart ;
+            sh:message "Each 'occp:PhaseG_Inspection' must begin after 'occp:UsageStart' via 'occp:beginsAfter'."@en ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -489,11 +513,15 @@
     osh:ShapeOfPhaseL a sh:NodeShape ;              # Phase L (Repair)
         sh:targetClass occp:PhaseL_Repair ;
         sh:property [
-            sh:or (
-                [ sh:path occp:endsAfter ; sh:class occp:PhaseK_Damage ]
-                [ sh:path occp:endsWith ; sh:class occp:PhaseK_Damage ]
-            ) ;
-            sh:message "Each 'occp:PhaseL_Repair' must end after 'occp:PhaseK_Damage' via 'occp:endsAfter' or with 'occp:PhaseK_Damage' via 'occp:endsWith' to ensure repair resolves damage."@en ;
+            sh:path occp:endsAfter ;
+            sh:class occp:PhaseK_Damage ;
+            sh:message "Each 'occp:PhaseL_Repair' must end after 'occp:PhaseK_Damage' via 'occp:endsAfter'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:endsWith ;
+            sh:class occp:PhaseK_Damage ;
+            sh:message "Each 'occp:PhaseL_Repair' must end with 'occp:PhaseK_Damage' via 'occp:endsWith'."@en ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -548,18 +576,18 @@
 
     osh:ShapeOfTransitionE a sh:NodeShape ;         # Transition E (Completion Of Deconstruction)
         sh:targetClass occp:CompletionOfDeconstruction ; 
-        sh:or (                                       # Transition order options
-          [                       
-            sh:path occp:after ;                
-            sh:class occp:PhaseM_Deconstruction ;     
-          ]
-          [                       
-            sh:path occp:endsWith ;                
+        sh:property [
+            sh:path occp:after ;
             sh:class occp:PhaseM_Deconstruction ;
-            sh:message "Each 'occp:CompletionOfDeconstruction' must occur after 'occp:PhaseM_Deconstruction' via 'occp:after' or end with 'occp:PhaseM_Deconstruction' via 'occp:endsWith'."@en ;
+            sh:message "Each 'occp:CompletionOfDeconstruction' must occur after 'occp:PhaseM_Deconstruction' via 'occp:after'."@en ;
             sh:severity sh:Violation ;
-          ]
-        ) ;
+        ] ;
+        sh:property [
+            sh:path occp:endsWith ;
+            sh:class occp:PhaseM_Deconstruction ;
+            sh:message "Each 'occp:CompletionOfDeconstruction' must end with 'occp:PhaseM_Deconstruction' via 'occp:endsWith'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
         sh:property [                                 # Transition time (single point in time)
           sh:path occp:hasActualTime ;
           sh:minCount 1 ;
