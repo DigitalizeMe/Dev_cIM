@@ -1,0 +1,30 @@
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.example.de/example#component1> a ould:UpdatableEntity ;
+    occp:hasCycle <http://www.example.de/example#cycleA> ;
+    occp:hasPhase <http://www.example.de/example#phaseA> ;
+    ould:hasHash "abc123" ;
+    ould:hasIFCID "ifc:Wall1" .
+
+<http://www.example.de/example#instant_BeginningOfPlanning> a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:startsCycle <http://www.example.de/example#cycleA> ;
+    occp:startsPhase <http://www.example.de/example#phaseA> .
+
+<http://www.example.de/example#instant_ReviewApproval> a occp:ReviewApproval ;
+    occp:endsCycle <http://www.example.de/example#cycleA> ;
+    occp:endsPhase <http://www.example.de/example#phaseA> ;
+    occp:hasEstimatedTime "2025-02-28"^^xsd:date .
+
+<http://www.example.de/example#cycleA> a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning <http://www.example.de/example#instant_BeginningOfPlanning> ;
+    occp:hasCycleNumber 1 ;
+    occp:hasEstimatedEnd <http://www.example.de/example#instant_ReviewApproval> ;
+    occp:isInPhase <http://www.example.de/example#phaseA> .
+
+<http://www.example.de/example#phaseA> a occp:PhaseA_Planning ;
+    occp:hasActualBeginning <http://www.example.de/example#instant_BeginningOfPlanning> ;
+    occp:hasEstimatedEnd <http://www.example.de/example#instant_ReviewApproval> .
+

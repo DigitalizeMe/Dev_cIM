@@ -1,6 +1,5 @@
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
-@prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <http://www.example.de/example#> .
 
@@ -9,6 +8,11 @@
     occp:startsPhase :phaseA ;
     occp:startsCycle :cycleA .
 
+:instant_ReviewApproval a occp:ReviewApproval ;
+    occp:hasActualTime "2025-02-28"^^xsd:date ;
+    occp:endsPhase :phaseA ;
+    occp:endsCycle :cycleA .
+
 :component1 a ould:UpdatableEntity ;
     occp:hasPhase :phaseA ;
     occp:hasCycle :cycleA ;
@@ -16,9 +20,11 @@
     ould:hasHash "abc123" .
 
 :phaseA a occp:PhaseA_Planning ;
-    occp:hasActualBeginning :instant_BeginningOfPlanning .
+    occp:hasActualBeginning :instant_BeginningOfPlanning ;
+    occp:hasEstimatedEnd :instant_ReviewApproval .
 
 :cycleA a occp:CycleA_PlanningReview ;
     occp:hasCycleNumber 1 ;
-    occp:isInPhase :phaseA ;  # Inferiert basierend auf BeginningOfPlanning
-    occp:hasActualBeginning :instant_BeginningOfPlanning .
+    occp:isInPhase :phaseA ;
+    occp:hasActualBeginning :instant_BeginningOfPlanning ;
+    occp:hasEstimatedEnd :instant_ReviewApproval .

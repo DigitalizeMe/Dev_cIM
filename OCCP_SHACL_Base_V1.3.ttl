@@ -1,0 +1,70 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+
+#################################################################
+#    SHACL Rules
+#################################################################
+
+### GENERAL SHACL RULES
+
+    osh:GeneralDatePropertyShape a sh:PropertyShape ;
+        sh:path ( occp:hasActualTime occp:hasEstimatedTime ) ;
+        sh:datatype xsd:date ;
+        sh:message "Dates must be in YYYY-MM-DD format."@en ;
+        sh:severity sh:Violation .
+
+    osh:GeneralTimeShape a sh:NodeShape ;
+        sh:targetClass time:TemporalEntity ;
+        sh:property [
+            sh:path occp:hasActualBeginning ;
+            sh:class time:Instant ;
+            sh:maxCount 1 ;
+            sh:message "Each entity must have at most one actual beginning via 'occp:hasActualBeginning'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:hasActualEnd ;
+            sh:class time:Instant ;
+            sh:maxCount 1 ;
+            sh:message "Each entity must have at most one actual end via 'occp:hasActualEnd'."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        # Ensure at least one beginning (actual OR estimated)
+        sh:and (
+            [ sh:property [ sh:path occp:hasPhase ; sh:minCount 1 ] ] # Applies only to phases explicitly linked to an instant
+                [ sh:or (
+                    [ sh:property [ sh:path occp:hasActualBeginning ; sh:minCount 1 ] ]
+                    [ sh:property [ sh:path occp:hasEstimatedBeginning ; sh:minCount 1 ] ]
+                )
+                ]
+                [ sh:or (
+                    [ sh:property [ sh:path occp:hasActualEnd ; sh:minCount 1 ] ]
+                    [ sh:property [ sh:path occp:hasEstimatedEnd ; sh:minCount 1 ] ]
+                )
+                ]
+            ) ;
+            sh:message "Phases explicitly linked to an instant via 'occp:hasPhase' must have both at least one beginning (actual or estimated) AND one end (actual or estimated)."@en ;
+            sh:severity sh:Violation .
+
+    osh:InstantTimeShape a sh:NodeShape ;
+        sh:targetClass time:Instant ;
+        sh:property [
+            sh:path [ sh:alternativePath ( occp:hasActualTime occp:hasEstimatedTime ) ] ;
+            sh:qualifiedValueShape [
+                sh:datatype xsd:date ;
+            ] ;
+            sh:qualifiedMinCount 1 ;
+            sh:message "Each instant must have at least one timestamp (either 'occp:hasActualTime' or 'occp:hasEstimatedTime') of type xsd:date."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path occp:hasActualTime ;
+            sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:message "Each instant must have at most one actual timestamp via occp:hasActualTime of type xsd:date."@en ;
+            sh:severity sh:Violation ;
+        ] .
+

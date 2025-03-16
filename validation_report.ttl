@@ -1,58 +1,8 @@
-PREFIX :     <http://www.example.de/example#>
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX osh:  <http://www.occpshape.de/shape#>
-PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
-PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  false;
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_completion_of_construction;
-                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseD_Usage' via 'occp:before'."@en;
-                 sh:resultPath                 occp:before;
-                 sh:resultSeverity             sh:Warning;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b0;
-                 sh:value                      :phaseM
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :instant_completion_of_construction;
-                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseM_Deconstruction' via 'occp:before'."@en;
-                 sh:resultPath                 occp:before;
-                 sh:resultSeverity             sh:Warning;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b1;
-                 sh:value                      :phaseD
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :transitionD;
-                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseD_Usage' via 'occp:before'."@en;
-                 sh:resultPath                 occp:before;
-                 sh:resultSeverity             sh:Warning;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b0;
-                 sh:value                      :phaseM
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :transitionD;
-                 sh:resultMessage              "Each 'occp:CompletionOfConstruction' should occur before 'occp:PhaseM_Deconstruction' via 'occp:before'."@en;
-                 sh:resultPath                 occp:before;
-                 sh:resultSeverity             sh:Warning;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b1;
-                 sh:value                      :phaseD
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  :phaseA;
-                 sh:resultMessage              "Each 'occp:PhaseA_Planning' must begin before 'occp:PhaseB_Review' via 'occp:beginsBefore'."@en;
-                 sh:resultPath                 occp:beginsBefore;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                [] ;
-                 sh:value                      :phaseC
-               ]
+  sh:conforms  true
 ] .

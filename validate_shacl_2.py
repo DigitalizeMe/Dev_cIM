@@ -1,5 +1,3 @@
-#validate_shacl.py
-
 import os
 import subprocess
 import logging
@@ -18,10 +16,12 @@ logger = logging.getLogger(__name__)
 # Pfade und Namespace
 TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
-SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.2.ttl")
+SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.3.ttl")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
 JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")
 OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
+OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
+XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
 
 def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
     try:
@@ -48,6 +48,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
         if result.returncode == 0:
             with open(report_file, "r", encoding="utf-8") as f:
                 report_data = f.read()
+            logger.debug(f"SHACL Report: {report_data}")
             report_graph = Graph()
             report_graph.parse(data=report_data, format="turtle")
             conforms = False
@@ -57,10 +58,10 @@ def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
             if not conforms:
                 for s, p, o in report_graph.triples((None, SH.result, None)):
                     for result_obj in report_graph.objects(s, SH.result):
-                        message = report_graph.value(result_obj, SH.message) or "No message"
+                        message = report_graph.value(result_obj, SH.resultMessage) or "No specific message"
                         focus_node = report_graph.value(result_obj, SH.focusNode) or "Unknown"
-                        path = report_graph.value(result_obj, SH.path) or "Unknown"
-                        severity = report_graph.value(result_obj, SH.severity) or "Unknown"
+                        path = report_graph.value(result_obj, SH.resultPath) or "Unknown"
+                        severity = report_graph.value(result_obj, SH.resultSeverity) or "Unknown"
                         logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
             return conforms
         else:
@@ -72,11 +73,14 @@ def perform_shacl_jena_validation(data_file, shapes_path=SHAPES_PATH):
 
 if __name__ == "__main__":
     ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_1.ttl")
-    data_graph = Graph()
-    data_graph.parse(TBOX_PATH, format="turtle")
-    data_graph.parse(ABOX_PATH, format="turtle")
+    
+    # TBox und ABox getrennt laden
+    tbox_graph = Graph()
+    tbox_graph.parse(TBOX_PATH, format="turtle")
+    abox_graph = Graph()
+    abox_graph.parse(ABOX_PATH, format="turtle")
 
-    # Leichte Vorabprüfung: Gibt es Instants mit Zeitangaben?
+    # Leichte Vorabprüfung
     pre_check_query = """
         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
         ASK {
@@ -84,18 +88,18 @@ if __name__ == "__main__":
                      occp:hasActualTime ?time .
         }
     """
-    if not data_graph.query(pre_check_query).askAnswer:
+    if not abox_graph.query(pre_check_query).askAnswer:
         logger.error("PreI-ABox enthält keinen BeginningOfPlanning-Instant mit Zeitangabe!")
         exit(1)
 
-    # Schritt 1: SPARQL Construct ausführen
+    # Schritt 1: SPARQL Construct nur auf ABox
     construct_query = """
         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
         CONSTRUCT {
             ?phase occp:hasActualBeginning ?instantStart .
             ?cycle occp:hasActualBeginning ?instantStart .
             ?cycle occp:isInPhase ?phase .
-            ?cycle occp:hasCycleNumber ?newNumber .
+            ?cycle occp:hasCycleNumber ?cycleNumber .
             ?instantEnd occp:endsPhase ?phase .
             ?instantEnd occp:endsCycle ?cycle .
             ?phase occp:hasEstimatedEnd ?instantEnd .
@@ -112,26 +116,36 @@ if __name__ == "__main__":
                 occp:endsPhase ?phase ;
                 occp:endsCycle ?cycle ;
                 occp:hasEstimatedTime ?endTime .
-            {
-                SELECT ?component (COALESCE(MAX(?number), 0) AS ?newNumber)
-                WHERE {
-                    ?component occp:hasCycle ?prevCycle .
-                    ?prevCycle occp:hasCycleNumber ?number .
-                    FILTER (?prevCycle != ?cycle)
-                }
-                GROUP BY ?component
+            OPTIONAL {
+                ?cycle occp:hasCycleNumber ?existingNumber .
             }
+            BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
         }
     """
-    inferred_graph = data_graph + data_graph.query(construct_query).graph
+    construct_result = abox_graph.query(construct_query).graph
+    logger.info(f"CONSTRUCT hat {len(construct_result)} Triple erzeugt.")
+    for s, p, o in construct_result:
+        logger.debug(f"CONSTRUCT Triple: {s} {p} {o}")
+
+    # inferred_graph: Nur ABox + CONSTRUCT
+    inferred_graph = Graph()
+    inferred_graph += abox_graph  # Nur PreI-Daten
+    inferred_graph += construct_result  # CONSTRUCT-Triple
+    logger.info(f"Inferred Graph hat {len(inferred_graph)} Triple.")
+
+    # Namespace binden
+    inferred_graph.bind("occp", OCCP)
+    inferred_graph.bind("ould", OULD)
+    inferred_graph.bind("xsd", XSD)
+
     if len(inferred_graph) == 0:
-        logger.error("CONSTRUCT-Abfrage hat keine Triple erzeugt – PreI-ABox möglicherweise unvollständig!")
+        logger.error("Inferred Graph ist leer – PreI-ABox oder CONSTRUCT fehlerhaft!")
         exit(1)
     inferred_file = os.path.join(BASE_DIR, "OCCP_Post_1_inferred.ttl")
     inferred_graph.serialize(destination=inferred_file, format="turtle")
     logger.info(f"PostI-ABox erzeugt: {inferred_file}")
 
-    # Schritt 2: SHACL-Validierung auf PostI
+    # Schritt 2: SHACL-Validierung (TBox wird von Jena implizit geladen)
     conforms = perform_shacl_jena_validation(inferred_file)
     if conforms:
         logger.info("Validation successful: PostI conforms to SHACL.")
