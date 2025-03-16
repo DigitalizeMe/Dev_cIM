@@ -1,0 +1,65 @@
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.example.de/example#> .
+
+# Component
+ex:component1 a ould:UpdatableEntity ;
+    occp:hasPhase ex:phaseA ;
+    occp:hasPhase ex:phaseB ;
+    occp:hasPhase ex:phaseC ;
+    occp:hasCycle ex:cycleA1 ;
+    occp:hasCycle ex:cycleA2 ;
+    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasHash "abc123" .
+
+# Phase A: Planning
+ex:phaseA a occp:PhaseA_Planning .
+
+# Phase B: Review (spans both cycles)
+ex:phaseB a occp:PhaseB_Review .
+
+# Phase C: Construction
+ex:phaseC a occp:PhaseC_Construction .
+
+# Cycle A1: First planning/review cycle, rejected
+ex:cycleA1 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 .
+
+# Cycle A2: Second planning/review cycle, approved
+ex:cycleA2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 2 .
+
+# Instant 1: Beginning of Planning (starts PhaseA and CycleA1)
+ex:instant_BeginningOfPlanning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA ;
+    occp:startsCycle ex:cycleA1 .
+
+# Instant 2: Review Rejection (ends CycleA1)
+ex:instant_ReviewRejection a occp:ReviewRejection ;
+    occp:hasActualTime "2025-02-01"^^xsd:date ;
+    occp:endsCycle ex:cycleA1 ;
+    occp:startsCycle ex:cycleA2 . 
+
+# Instant 3: Submission to Review (starts PhaseB and CycleA2)
+ex:instant_SubmissionToReview a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-01-15"^^xsd:date ;
+    occp:startsPhase ex:phaseB ;
+    occp:startsCycle ex:cycleA2 .
+
+# Instant 4: Review Approval (ends CycleA2 and PhaseB)
+ex:instant_ReviewApproval a occp:ReviewApproval ;
+    occp:hasActualTime "2025-03-01"^^xsd:date ;
+    occp:endsCycle ex:cycleA2 ;
+    occp:endsPhase ex:phaseB .
+
+# Instant 5: Beginning of Construction (starts PhaseC)
+ex:instant_BeginningOfConstruction a occp:BeginningOfConstruction ;
+    occp:hasActualTime "2025-03-15"^^xsd:date ;
+    occp:startsPhase ex:phaseC .
+
+# Instant 6: Completion of Construction (ends PhaseC)
+ex:instant_CompletionOfConstruction a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2025-06-30"^^xsd:date ;
+    occp:endsPhase ex:phaseC .
