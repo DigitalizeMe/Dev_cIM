@@ -3,6 +3,7 @@
 @prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
+@prefix sparql: <http://www.example.de/sparql#> .
 
 
 #################################################################
@@ -236,3 +237,38 @@
       ] .
 
 
+### PHASE RELATED QUERIES
+
+    # PHASE A 
+
+    osh:beginningOfPlanningConstruct a sparql:ConstructQuery ;
+    sparql:queryText """
+        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+        CONSTRUCT {
+            ?phase occp:hasActualBeginning ?instantStart .
+            ?phase occp:hasActualEnd ?instantEnd .
+            ?cycle occp:hasActualBeginning ?instantStart .
+            ?cycle occp:hasActualEnd ?instantEnd .
+            ?cycle occp:isInPhase ?phase .
+            ?cycle occp:hasCycleNumber ?newNumber .
+        }
+        WHERE {
+            ?instantStart a occp:BeginningOfPlanning ;
+                occp:startsPhase ?phase ;
+                occp:startsCycle ?cycle ;
+                occp:hasActualTime ?startTime .
+            ?instantEnd occp:endsPhase ?phase ;
+                occp:endsCycle ?cycle ;
+                occp:hasActualTime ?endTime .
+            ?component occp:hasPhase ?phase ;
+                occp:hasCycle ?cycle .
+            {
+                SELECT ?component (COALESCE(MAX(?number), 0) + 1 AS ?newNumber)
+                WHERE {
+                    ?component occp:hasCycle ?prevCycle .
+                    ?prevCycle occp:hasCycleNumber ?number .
+                }
+                GROUP BY ?component
+            }
+        }
+    """ .

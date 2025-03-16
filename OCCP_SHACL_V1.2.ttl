@@ -39,13 +39,6 @@
             sh:maxCount 1 ;
             sh:message "Each entity must have at most one actual end via occp:hasActualEnd."@en ;
             sh:severity sh:Violation ;
-        ] ;
-        sh:property [
-            sh:path occp:hasEstimatedEnd ;  # Neu für Pre-Inferenz
-            sh:class time:Instant ;
-            sh:minCount 1 ;
-            sh:message "Each entity must have at least one estimated end via occp:hasEstimatedEnd in Pre-Inferenz."@en ;
-            sh:severity sh:Violation ;
         ] .
 
     osh:InstantTimeShape a sh:NodeShape ;
@@ -186,16 +179,16 @@
     osh:ShapeOfPhaseA a sh:NodeShape ;
         sh:targetClass occp:PhaseA_Planning ;
         sh:property [
-            sh:path occp:endsBefore ; 
-            sh:class occp:PhaseC_Construction ;
-            sh:message "Each 'occp:PhaseA_Planning' must end before 'occp:PhaseC_Construction' begins via 'occp:endsBefore'."@en ;
-            sh:severity sh:Warning
+          sh:path occp:endsBefore ; 
+          sh:class occp:PhaseC_Construction ;
+          sh:message "Each 'occp:PhaseA_Planning' must end before 'occp:PhaseC_Construction' begins via 'occp:endsBefore'."@en ;
+                sh:severity sh:Warning
         ] ;
         sh:property [
-            sh:path occp:endsBefore ; 
-            sh:class occp:CompletionOfConstruction ;
-            sh:message "Each 'occp:PhaseA_Planning' must end before 'occp:CompletionOfConstruction' via 'occp:endsBefore'."@en ;
-            sh:severity sh:Violation
+          sh:path occp:endsBefore ; 
+          sh:class occp:CompletionOfConstruction ;
+          sh:message "Each 'occp:PhaseA_Planning' must end before 'occp:CompletionOfConstruction' via 'occp:endsBefore'."@en ;
+                sh:severity sh:Violation
         ] ;  
         sh:property [
             sh:path occp:beginsBefore ;
@@ -214,28 +207,20 @@
         sh:property [
             sh:path occp:hasActualBeginning ;
             sh:class occp:BeginningOfPlanning ;
-            sh:minCount 1 ;  
             sh:maxCount 1 ;
             sh:message "Each 'occp:PhaseA_Planning' must have exactly one actual beginning via 'occp:hasActualBeginning' referencing 'occp:BeginningOfPlanning'."@en ;
             sh:severity sh:Violation ;
         ] ;
-        sh:property [
-            sh:path occp:hasEstimatedEnd ;  # Für Pre-Inferenz
-            sh:class occp:ReviewApproval ;
-            sh:minCount 1 ;
-            sh:message "Each 'occp:PhaseA_Planning' must have an estimated end via 'occp:hasEstimatedEnd' in Pre-Inferenz."@en ;
-            sh:severity sh:Violation ;
-        ] ;
-        sh:property [
-            sh:path occp:hasActualEnd ;
-            sh:or (
-                [ sh:class occp:ReviewApproval ]
-                [ sh:class occp:CompletionOfPlanning ]
-            ) ;
-            sh:maxCount 1 ;
-            sh:message "Each 'occp:PhaseA_Planning' must have exactly one actual end via 'occp:hasActualEnd' referencing 'occp:ReviewApproval' or 'occp:CompletionOfPlanning'."@en ;
-            sh:severity sh:Violation ;
-        ] .
+          sh:property [
+              sh:path occp:hasActualEnd ;
+              sh:or (
+                  [ sh:class occp:ReviewApproval ]
+                  [ sh:class occp:CompletionOfPlanning ]
+              ) ;
+              sh:maxCount 1 ;
+              sh:message "Each 'occp:PhaseA_Planning' must have exactly one actual end via 'occp:hasActualEnd' referencing 'occp:ReviewApproval' or 'occp:CompletionOfPlanning'."@en ;
+              sh:severity sh:Violation ;
+          ] .
 
     osh:ShapeOfPhaseB a sh:NodeShape ;
         sh:targetClass occp:PhaseB_Review ;
