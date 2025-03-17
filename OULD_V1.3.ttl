@@ -716,3 +716,151 @@
                 sh:message "Each LinkedData must have exactly one location."@en ;
                 sh:severity sh:Violation ;
             ] .
+
+
+### MODEL STRUCTURE SHAPE RULES
+
+    oush:ComponentHierarchyShape a sh:NodeShape ;
+    sh:targetClass ould:UpdatableEntity ;
+    # Ensure parent phase start is the earliest of all component phase starts
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?parentPhase ?compPhase ?startParent ?earliestCompStart
+            WHERE {
+                $this ould:consistsOf ?component .
+                $this occp:hasPhase ?parentPhase .
+                ?component occp:hasPhase ?compPhase .
+                # Get parent phase start (actual or estimated)
+                { ?parentPhase occp:hasActualBeginning ?startInstP . 
+                  ?startInstP occp:hasActualTime ?startParent . }
+                UNION
+                { ?parentPhase occp:hasEstimatedBeginning ?startInstP . 
+                  ?startInstP occp:hasEstimatedTime ?startParent . }
+                # Get earliest component phase start
+                {
+                    SELECT ?component (MIN(?startTime) AS ?earliestCompStart)
+                    WHERE {
+                        ?component occp:hasPhase ?cPhase .
+                        { ?cPhase occp:hasActualBeginning ?startInstC . 
+                          ?startInstC occp:hasActualTime ?startTime . }
+                        UNION
+                        { ?cPhase occp:hasEstimatedBeginning ?startInstC . 
+                          ?startInstC occp:hasEstimatedTime ?startTime . }
+                    }
+                    GROUP BY ?component
+                }
+                FILTER (?startParent > ?earliestCompStart)
+            }
+        """ ;
+        sh:message "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest component phase start (start: { ?earliestCompStart })."@en ;
+        sh:severity sh:Violation
+    ] ;
+    # Ensure parent phase end is the latest of all component phase ends
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+            WHERE {
+                $this ould:consistsOf ?component .
+                $this occp:hasPhase ?parentPhase .
+                ?component occp:hasPhase ?compPhase .
+                # Get parent phase end (actual or estimated)
+                { ?parentPhase occp:hasActualEnd ?endInstP . 
+                  ?endInstP occp:hasActualTime ?endParent . }
+                UNION
+                { ?parentPhase occp:hasEstimatedEnd ?endInstP . 
+                  ?endInstP occp:hasEstimatedTime ?endParent . }
+                # Get latest component phase end
+                {
+                    SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+                    WHERE {
+                        ?component occp:hasPhase ?cPhase .
+                        { ?cPhase occp:hasActualEnd ?endInstC . 
+                          ?endInstC occp:hasActualTime ?endTime . }
+                        UNION
+                        { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+                          ?endInstC occp:hasEstimatedTime ?endTime . }
+                    }
+                    GROUP BY ?component
+                }
+                FILTER (?endParent < ?latestCompEnd)
+            }
+        """ ;
+        sh:message "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest component phase end (end: { ?latestCompEnd })."@en ;
+        sh:severity sh:Violation
+    ] ;
+    # Ensure parent cycle number is the sum of max component cycle numbers
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+            SELECT $this ?parentCycle ?totalCompCycles ?parentCycleNum
+            WHERE {
+                $this ould:consistsOf ?component .
+                $this occp:hasCycle ?parentCycle .
+                ?parentCycle occp:hasCycleNumber ?parentCycleNum .
+                # Calculate sum of max cycle numbers from components
+                {
+                    SELECT (SUM(?maxCycleNum) AS ?totalCompCycles)
+                    WHERE {
+                        ?this ould:consistsOf ?comp .
+                        ?comp occp:hasCycle ?compCycle .
+                        ?compCycle occp:hasCycleNumber ?cycleNum .
+                        {
+                            SELECT ?comp (MAX(?cycleNum) AS ?maxCycleNum)
+                            WHERE {
+                                ?comp occp:hasCycle ?cCycle .
+                                ?cCycle occp:hasCycleNumber ?cycleNum .
+                            }
+                            GROUP BY ?comp
+                        }
+                    }
+                }
+                FILTER (?parentCycleNum != ?totalCompCycles)
+            }
+        """ ;
+        sh:message "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max component cycle numbers ({ ?totalCompCycles })."@en ;
+        sh:severity sh:Violation
+    ] ;
+    # Ensure CompletionOfPlanning only after all PhaseA and PhaseB of components are complete
+    sh:sparql [
+        sh:select """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+            WHERE {
+                $this ould:consistsOf ?component .
+                $this occp:hasPhase ?parentPhase .
+                ?parentPhase a occp:CompletionOfPlanning .
+                ?parentPhase occp:hasActualEnd ?endInstP .
+                ?endInstP occp:hasActualTime ?endParent .
+                ?component occp:hasPhase ?compPhase .
+                ?compPhase a ?compPhaseType .
+                FILTER (?compPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                # Get latest component PhaseA/PhaseB end
+                {
+                    SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+                    WHERE {
+                        ?component occp:hasPhase ?cPhase .
+                        ?cPhase a ?cPhaseType .
+                        FILTER (?cPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                        { ?cPhase occp:hasActualEnd ?endInstC . 
+                          ?endInstC occp:hasActualTime ?endTime . }
+                        UNION
+                        { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+                          ?endInstC occp:hasEstimatedTime ?endTime . }
+                    }
+                    GROUP BY ?component
+                }
+                FILTER (?endParent < ?latestCompEnd)
+            }
+        """ ;
+        sh:message "Parent phase CompletionOfPlanning { ?parentPhase } (end: { ?endParent }) must occur after all component PhaseA and PhaseB ends (latest: { ?latestCompEnd })."@en ;
+        sh:severity sh:Violation
+    ] .
