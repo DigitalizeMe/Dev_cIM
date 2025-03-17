@@ -68,6 +68,15 @@
             sh:severity sh:Violation ;
         ] .
 
+    osh:SiteShape a sh:NodeShape ;
+        sh:targetClass occp:Site ;
+        sh:property [
+            sh:path occp:hasLifecycle ;
+            sh:minCount 0 ;
+            sh:class occp:Lifecycle ;
+            sh:message "A Site must have at least one Lifecycle." 
+        ] .
+
 
 ### CYCLE RELATED SHACL RULES
 

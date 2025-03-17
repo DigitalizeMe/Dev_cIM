@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 # Paths and namespaces
 OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.4.ttl")  
 OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.0.ttl")  
-OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")  
+OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_2.0.ttl")  
 OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.3.ttl")  
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
@@ -58,7 +58,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
             conforms = False
             for s, p, o in report_graph.triples((None, SH.conforms, None)):
                 conforms = o.toPython()
-            logger.info(f"Conformité: {conforms}")
+            logger.info(f"Conformity: {conforms}")
             if not conforms:
                 # Deduplizierung der Fehler
                 seen_errors = set()
