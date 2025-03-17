@@ -117,8 +117,8 @@
 		rdfs:label "ends phase"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
-    occp:endsWith rdf:type owl:ObjectProperty ;
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
+	occp:endsWith rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
 		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
 		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
@@ -126,8 +126,8 @@
 		rdfs:label "ends with"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
-    occp:hasActualBeginning rdf:type owl:ObjectProperty ;
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
+	occp:hasActualBeginning rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
 		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
 		rdfs:range <http://www.w3.org/2006/time#Instant> ;

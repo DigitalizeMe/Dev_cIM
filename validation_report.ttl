@@ -1,6 +1,7 @@
+PREFIX ex:   <http://www.example.de/example#>
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX osh:  <http://www.occpshape.de/shape#>
 PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
@@ -10,29 +11,19 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 [ rdf:type     sh:ValidationReport;
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://www.example.de/example#instant_ReviewApproval>;
-                 sh:resultMessage              "Each 'occp:ReviewApproval' must end at most one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en;
-                 sh:resultPath                 occp:endsPhase;
+                 sh:focusNode                  ex:house;
+                 sh:resultMessage              "Not[NodeShape[_:8f31bd62c3d0058a90d82780499a7e00]] at focusNode <http://www.example.de/example#house>";
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                [] ;
-                 sh:value                      <http://www.example.de/example#phaseB>
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:house
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://www.example.de/example#phaseA>;
-                 sh:resultMessage              "Each 'occp:PhaseA_Planning' must have at most one actual end via 'occp:hasActualEnd' referencing 'occp:ReviewApproval' or 'occp:CompletionOfPlanning'."@en;
-                 sh:resultPath                 occp:hasActualEnd;
+                 sh:focusNode                  ex:wall;
+                 sh:resultMessage              "Not[NodeShape[_:8f31bd62c3d0058a90d82780499a7e00]] at focusNode <http://www.example.de/example#wall>";
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                [] ;
-                 sh:value                      <http://www.example.de/example#instant_ReviewRejection>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://www.example.de/example#instant_ReviewRejection>;
-                 sh:resultMessage              "Each 'occp:ReviewRejection' must start exactly one new 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en;
-                 sh:resultPath                 occp:startsCycle;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:wall
                ]
 ] .

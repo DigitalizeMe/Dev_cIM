@@ -17,7 +17,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Paths and namespaces
-OULD_TBOX_AND_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_V1.3.ttl")  
+OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.4.ttl")  
+OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.0.ttl")  
 OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_V0.3.ttl")  
 OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.3.ttl")  
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
@@ -26,8 +27,9 @@ JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")
 OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
 OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
 XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
+EX = Namespace("http://www.example.de/example#")  
 
-def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OULD_TBOX_AND_SHAPES_PATH]):
+def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OULD_SHAPES_PATH]):
     try:
         jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
         if not os.path.exists(jena_shacl_cmd):
@@ -58,13 +60,18 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
                 conforms = o.toPython()
             logger.info(f"Conformité: {conforms}")
             if not conforms:
+                # Deduplizierung der Fehler
+                seen_errors = set()
                 for s, p, o in report_graph.triples((None, SH.result, None)):
                     for result_obj in report_graph.objects(s, SH.result):
                         message = report_graph.value(result_obj, SH.resultMessage) or "No specific message"
                         focus_node = report_graph.value(result_obj, SH.focusNode) or "Unknown"
                         path = report_graph.value(result_obj, SH.resultPath) or "Unknown"
                         severity = report_graph.value(result_obj, SH.resultSeverity) or "Unknown"
-                        logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
+                        error_key = (str(message), str(focus_node), str(path), str(severity))  # Eindeutiger Schlüssel
+                        if error_key not in seen_errors:
+                            seen_errors.add(error_key)
+                            logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
             return conforms
         else:
             logger.error("Jena SHACL validation failed with non-zero exit code.")
@@ -74,12 +81,12 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
         return False
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_2.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_4.ttl")
     
     # Load TBox (OCCP and OULD)
     tbox_graph = Graph()
     tbox_graph.parse(OCCP_TBOX_PATH, format="turtle")
-    tbox_graph.parse(OULD_TBOX_AND_SHAPES_PATH, format="turtle")  # OULD TBox inklusive
+    tbox_graph.parse(OULD_TBOX_PATH, format="turtle") 
 
     # Load ABox
     abox_graph = Graph()
@@ -118,8 +125,12 @@ if __name__ == "__main__":
 
     # Combine graphs: TBox (optional) + ABox + CONSTRUCT
     inferred_graph = Graph()
-    inferred_graph += abox_graph  # PreI data
-    inferred_graph += construct_result  # CONSTRUCT triples
+    inferred_graph += abox_graph
+    inferred_graph += construct_result
+    inferred_graph.bind("occp", OCCP)
+    inferred_graph.bind("ould", OULD)
+    inferred_graph.bind("xsd", XSD)
+    inferred_graph.bind("ex", EX)  
 
     # Bind namespaces
     inferred_graph.bind("occp", OCCP)
