@@ -32,7 +32,7 @@ CONSTRUCT_BASE = """
 """
 
 # construct_queries.py
-CONSTRUCT_EXTENDED = """
+CONSTRUCT_EXTENDED_OLD = """
     PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
     CONSTRUCT {
         ?phase occp:hasActualBeginning ?startInstant .
@@ -81,4 +81,79 @@ CONSTRUCT_EXTENDED = """
             BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
         }
     }
+"""
+
+CONSTRUCT_EXTENDED = """
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+CONSTRUCT {
+    ?phase occp:hasActualBeginning ?startInstant .
+    ?phase occp:hasActualEnd ?endInstant .
+    ?phase occp:hasEstimatedBeginning ?startInstant .
+    ?phase occp:hasEstimatedEnd ?endInstant .
+    ?cycle occp:hasActualBeginning ?startInstant .
+    ?cycle occp:hasActualEnd ?endInstant .
+    ?cycle occp:hasEstimatedBeginning ?startInstant .
+    ?cycle occp:hasEstimatedEnd ?endInstant .
+    ?cycle occp:isInPhase ?phase .
+    ?cycle occp:hasCycleNumber ?cycleNumber .
+}
+WHERE {
+    # Start instants
+    { ?startInstant a ?startType ;
+        occp:startsPhase ?phase ;
+        occp:hasActualTime ?startTime .
+      VALUES ?startType { 
+        occp:BeginningOfPlanning 
+        occp:SubmissionToReview 
+        occp:BeginningOfConstruction 
+        occp:BeginningOfTenderingProcess 
+        occp:TenderSubmission 
+      }
+    }
+    UNION
+    { ?startInstant a ?startType ;
+        occp:startsPhase ?phase ;
+        occp:hasEstimatedTime ?startTime .
+      VALUES ?startType { 
+        occp:BeginningOfPlanning 
+        occp:SubmissionToReview 
+        occp:BeginningOfConstruction 
+        occp:BeginningOfTenderingProcess 
+        occp:TenderSubmission 
+      }
+    }
+    ?component occp:hasPhase ?phase .
+    # End instants
+    { ?endInstant a ?endType ;
+        occp:endsPhase ?phase ;
+        occp:hasActualTime ?endTime .
+      VALUES ?endType { 
+        occp:ReviewApproval 
+        occp:ReviewRejection 
+        occp:CompletionOfConstruction 
+        occp:CompletionOfPlanning 
+        occp:TenderAward 
+      }
+    }
+    UNION
+    { ?endInstant a ?endType ;
+        occp:endsPhase ?phase ;
+        occp:hasEstimatedTime ?endTime .
+      VALUES ?endType { 
+        occp:ReviewApproval 
+        occp:ReviewRejection 
+        occp:CompletionOfConstruction 
+        occp:CompletionOfPlanning 
+        occp:TenderAward 
+      }
+    }
+    # Optional cycles
+    OPTIONAL {
+        ?startInstant occp:startsCycle ?cycle .
+        ?component occp:hasCycle ?cycle .
+        ?endInstant occp:endsCycle ?cycle .
+        OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
+        BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
+    }
+} 
 """

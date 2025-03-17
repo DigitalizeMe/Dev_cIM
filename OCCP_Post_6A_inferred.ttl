@@ -1,0 +1,106 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Roof_Component2 a ould:UpdatableEntity ;
+    occp:hasCycle ex:cycleA1_Comp2,
+        ex:cycleA2_Comp2,
+        ex:cycleA3_Comp2 ;
+    occp:hasPhase ex:phaseA_Planning_Comp2,
+        ex:phaseB_Review_Comp2 ;
+    ould:hasHash "def456" ;
+    ould:hasIFCID "ifc:Roof_002" .
+
+ex:instant_BeginningOfPlanning_Comp2 a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-04-01"^^xsd:date ;
+    occp:startsCycle ex:cycleA1_Comp2 ;
+    occp:startsPhase ex:phaseA_Planning_Comp2 .
+
+ex:instant_CompletionOfPlanning_Comp2 a occp:CompletionOfPlanning ;
+    occp:endsPhase ex:phaseA_Planning_Comp2 ;
+    occp:hasActualTime "2025-05-25"^^xsd:date .
+
+ex:instant_DataProcurement_Comp2 a occp:DataProcurement ;
+    occp:hasActualTime "2025-04-05"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 ;
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 .
+
+ex:instant_Edit_ASTR1_Comp2 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-04-25"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA2_Comp2 ;
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 .
+
+ex:instant_Edit_ASTR2_Comp2 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-05-10"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA3_Comp2 ;
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 .
+
+ex:instant_Edit_BSTR_Comp2 a occp:Edit_BSTR ;
+    occp:hasActualTime "2025-04-10"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 ;
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 .
+
+ex:instant_ReviewRejection1_Comp2 a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA1_Comp2 ;
+    occp:hasActualTime "2025-04-20"^^xsd:date ;
+    occp:startsCycle ex:cycleA2_Comp2 .
+
+ex:instant_ReviewRejection2_Comp2 a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA2_Comp2 ;
+    occp:hasActualTime "2025-05-05"^^xsd:date ;
+    occp:startsCycle ex:cycleA3_Comp2 .
+
+ex:instant_ReviewStart1_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-04-16"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 ;
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 .
+
+ex:instant_ReviewStart2_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-05-01"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA2_Comp2 ;
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 .
+
+ex:instant_ReviewStart3_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-05-16"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA3_Comp2 ;
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 .
+
+ex:instant_SubmissionToReview2_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-04-30"^^xsd:date ;
+    occp:startsCycle ex:cycleA2_Comp2 .
+
+ex:instant_SubmissionToReview3_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-05-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA3_Comp2 .
+
+ex:instant_ReviewApproval_Comp2 a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA3_Comp2 ;
+    occp:endsPhase ex:phaseB_Review_Comp2 ;
+    occp:hasActualTime "2025-05-20"^^xsd:date .
+
+ex:instant_SubmissionToReview1_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-04-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA1_Comp2 ;
+    occp:startsPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleA2_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 2 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleA3_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 3 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleA1_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:phaseA_Planning_Comp2 a occp:PhaseA_Planning .
+
+ex:phaseB_Review_Comp2 a occp:PhaseB_Review ;
+    occp:hasActualBeginning ex:instant_SubmissionToReview1_Comp2 ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Comp2 ;
+    occp:hasEstimatedBeginning ex:instant_SubmissionToReview1_Comp2 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_Comp2 .
+

@@ -1,0 +1,151 @@
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.example.de/example#> .
+
+# Component
+ex:Roof_Component2 a ould:UpdatableEntity ;
+    occp:hasPhase ex:phaseA_Planning_Comp2 ;
+    occp:hasPhase ex:phaseB_Review_Comp2 ;
+    occp:hasPhase ex:phaseC_Tendering_Comp2 ;
+    occp:hasPhase ex:phaseD_Construction_Comp2 ;
+    occp:hasCycle ex:cycleA1_Comp2 ;
+    occp:hasCycle ex:cycleA2_Comp2 ;
+    occp:hasCycle ex:cycleA3_Comp2 ;
+    occp:hasCycle ex:cycleC1_Tendering_Comp2 ;
+    ould:hasIFCID "ifc:Roof_002" ;
+    ould:hasHash "def456" .
+
+# Phases
+ex:phaseA_Planning_Comp2 a occp:PhaseA_Planning .
+ex:phaseB_Review_Comp2 a occp:PhaseB_Review .
+ex:phaseC_Tendering_Comp2 a occp:PhaseC_Tendering .
+ex:phaseD_Construction_Comp2 a occp:PhaseD_Construction .
+
+# Cycles
+ex:cycleA1_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleA2_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 2 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleA3_Comp2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 3 ;
+    occp:isInPhase ex:phaseB_Review_Comp2 .
+
+ex:cycleC1_Tendering_Comp2 a occp:CycleC_Tendering ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase ex:phaseC_Tendering_Comp2 .
+
+# Instants
+ex:instant_BeginningOfPlanning_Comp2 a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-04-01"^^xsd:date ;  # +1 Monat
+    occp:startsPhase ex:phaseA_Planning_Comp2 ;
+    occp:startsCycle ex:cycleA1_Comp2 .
+
+ex:instant_DataProcurement_Comp2 a occp:DataProcurement ;
+    occp:hasActualTime "2025-04-05"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 .
+
+ex:instant_Edit_BSTR_Comp2 a occp:Edit_BSTR ;
+    occp:hasActualTime "2025-04-10"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 .
+
+ex:instant_SubmissionToReview1_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-04-15"^^xsd:date ;  # +1 Monat
+    occp:startsPhase ex:phaseB_Review_Comp2 ;
+    occp:startsCycle ex:cycleA1_Comp2 .
+
+ex:instant_ReviewStart1_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-04-16"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 ;
+    occp:isPartOfCycle ex:cycleA1_Comp2 .
+
+ex:instant_ReviewRejection1_Comp2 a occp:ReviewRejection ;
+    occp:hasActualTime "2025-04-20"^^xsd:date ;  # +1 Monat
+    occp:endsCycle ex:cycleA1_Comp2 ;
+    occp:startsCycle ex:cycleA2_Comp2 .
+
+ex:instant_Edit_ASTR1_Comp2 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-04-25"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 ;
+    occp:isPartOfCycle ex:cycleA2_Comp2 .
+
+ex:instant_SubmissionToReview2_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-04-30"^^xsd:date ;  # +1 Monat
+    occp:startsCycle ex:cycleA2_Comp2 .
+
+ex:instant_ReviewStart2_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-05-01"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 ;
+    occp:isPartOfCycle ex:cycleA2_Comp2 .
+
+ex:instant_ReviewRejection2_Comp2 a occp:ReviewRejection ;
+    occp:hasActualTime "2025-05-05"^^xsd:date ;  # +1 Monat
+    occp:endsCycle ex:cycleA2_Comp2 ;
+    occp:startsCycle ex:cycleA3_Comp2 .
+
+ex:instant_Edit_ASTR2_Comp2 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-05-10"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseA_Planning_Comp2 ;
+    occp:isPartOfCycle ex:cycleA3_Comp2 .
+
+ex:instant_SubmissionToReview3_Comp2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-05-15"^^xsd:date ;  # +1 Monat
+    occp:startsCycle ex:cycleA3_Comp2 .
+
+ex:instant_ReviewStart3_Comp2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-05-16"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseB_Review_Comp2 ;
+    occp:isPartOfCycle ex:cycleA3_Comp2 .
+
+ex:instant_ReviewApproval_Comp2 a occp:ReviewApproval ;
+    occp:hasActualTime "2025-05-20"^^xsd:date ;  # +1 Monat
+    occp:endsCycle ex:cycleA3_Comp2 ;
+    occp:endsPhase ex:phaseB_Review_Comp2 .
+
+ex:instant_CompletionOfPlanning_Comp2 a occp:CompletionOfPlanning ;
+    occp:hasActualTime "2025-05-25"^^xsd:date ;  # Zeitgleich mit Component1
+    occp:endsPhase ex:phaseA_Planning_Comp2 .
+
+# Neue Instants (Tendering bis Construction)
+ex:instant_BeginningOfTenderingProcess_Comp2 a occp:BeginningOfTenderingProcess ;
+    occp:hasActualTime "2025-06-26"^^xsd:date ;  # +1 Monat nach CompletionOfPlanning
+    occp:startsPhase ex:phaseC_Tendering_Comp2 ;
+    occp:startsCycle ex:cycleC1_Tendering_Comp2 .
+
+ex:instant_TenderPreparation_Comp2 a occp:TenderPreparation ;
+    occp:hasActualTime "2025-07-01"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseC_Tendering_Comp2 ;
+    occp:isPartOfCycle ex:cycleC1_Tendering_Comp2 .
+
+ex:instant_TenderSubmission_Comp2 a occp:TenderSubmission ;
+    occp:hasActualTime "2025-07-10"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseC_Tendering_Comp2 ;
+    occp:isPartOfCycle ex:cycleC1_Tendering_Comp2 .
+
+ex:instant_TenderEvaluationStart_Comp2 a occp:TenderEvaluationStart ;
+    occp:hasActualTime "2025-07-15"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseC_Tendering_Comp2 ;
+    occp:isPartOfCycle ex:cycleC1_Tendering_Comp2 .
+
+ex:instant_TenderAward_Comp2 a occp:TenderAward ;
+    occp:hasActualTime "2025-07-25"^^xsd:date ;  # +1 Monat
+    occp:endsCycle ex:cycleC1_Tendering_Comp2 ;
+    occp:endsPhase ex:phaseC_Tendering_Comp2 .
+
+ex:instant_BeginningOfConstruction_Comp2 a occp:BeginningOfConstruction ;
+    occp:hasActualTime "2025-08-01"^^xsd:date ;  # +1 Monat
+    occp:startsPhase ex:phaseD_Construction_Comp2 .
+
+ex:instant_ConstructionProgress_Comp2 a occp:ConstructionProgress ;
+    occp:hasActualTime "2025-09-01"^^xsd:date ;  # +1 Monat
+    occp:isPartOfPhase ex:phaseD_Construction_Comp2 .
+
+ex:instant_CompletionOfConstruction_Comp2 a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2025-10-30"^^xsd:date ;  # +1 Monat
+    occp:endsPhase ex:phaseD_Construction_Comp2 .
