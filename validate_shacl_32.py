@@ -80,7 +80,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
         return False
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_1E.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_4.ttl")
     
     # Load TBox (OCCP and OULD)
     tbox_graph = Graph()
@@ -112,7 +112,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Step 1: Apply CONSTRUCT queries using the new function
-    inferred_file = os.path.join(BASE_DIR, "OCCP_Post_1E_inferred.ttl")
+    inferred_file = os.path.join(BASE_DIR, "OCCP_Post_4_inferred.ttl")
     construct_result = generate_post_graph(ABOX_PATH, inferred_file)
     if len(construct_result) == 0:
         logger.error("CONSTRUCT generated no triples – PreI-ABox or query faulty!")

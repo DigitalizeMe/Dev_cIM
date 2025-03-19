@@ -1,8 +1,29 @@
+PREFIX ex:   <http://www.example.de/example#>
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  true
+  sh:conforms  false;
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:house;
+                 sh:resultMessage              "Not[NodeShape[_:44f8c2361b1935af485cf63048c23c06]] at focusNode <http://www.example.de/example#house>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:house
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:wall;
+                 sh:resultMessage              "Not[NodeShape[_:44f8c2361b1935af485cf63048c23c06]] at focusNode <http://www.example.de/example#wall>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:wall
+               ]
 ] .
