@@ -1,10 +1,10 @@
-# validate_shacl.py
+# validate_shacl_32.py
 
 import os
 import subprocess
 import logging
 from rdflib import Graph, Namespace, RDF, SH
-from construct_queries import CONSTRUCT_BASE, CONSTRUCT_EXTENDED  # Import queries
+from construct_queries import generate_post_graph  # Neue Funktion importieren
 
 # Logging configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -60,7 +60,6 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
                 conforms = o.toPython()
             logger.info(f"Conformity: {conforms}")
             if not conforms:
-                # Deduplizierung der Fehler
                 seen_errors = set()
                 for s, p, o in report_graph.triples((None, SH.result, None)):
                     for result_obj in report_graph.objects(s, SH.result):
@@ -68,7 +67,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
                         focus_node = report_graph.value(result_obj, SH.focusNode) or "Unknown"
                         path = report_graph.value(result_obj, SH.resultPath) or "Unknown"
                         severity = report_graph.value(result_obj, SH.resultSeverity) or "Unknown"
-                        error_key = (str(message), str(focus_node), str(path), str(severity))  # Eindeutiger Schlüssel
+                        error_key = (str(message), str(focus_node), str(path), str(severity))
                         if error_key not in seen_errors:
                             seen_errors.add(error_key)
                             logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
@@ -96,13 +95,11 @@ if __name__ == "__main__":
     pre_check_query = """
         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
         ASK {
-            # Check for a starting instant (e.g., BeginningOfPlanning or SubmissionToReview)
             ?instantStart a ?startType .
             VALUES ?startType { occp:BeginningOfPlanning occp:SubmissionToReview }
             { ?instantStart occp:hasActualTime ?startTime . }
             UNION
             { ?instantStart occp:hasEstimatedTime ?startTime . }
-            # Check for an ending instant (e.g., ReviewApproval or ReviewRejection)
             ?instantEnd a ?endType .
             VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
             { ?instantEnd occp:hasActualTime ?endTime . }
@@ -114,8 +111,9 @@ if __name__ == "__main__":
         logger.error("PreI-ABox lacks required instants (BeginningOfPlanning and ReviewApproval)!")
         exit(1)
 
-    # Step 1: Apply CONSTRUCT query
-    construct_result = abox_graph.query(CONSTRUCT_EXTENDED).graph  # Use base query for PreI_1.ttl
+    # Step 1: Apply CONSTRUCT queries using the new function
+    inferred_file = os.path.join(BASE_DIR, "OCCP_Post_1B_inferred.ttl")
+    construct_result = generate_post_graph(ABOX_PATH, inferred_file)
     if len(construct_result) == 0:
         logger.error("CONSTRUCT generated no triples – PreI-ABox or query faulty!")
         exit(1)
@@ -132,13 +130,7 @@ if __name__ == "__main__":
     inferred_graph.bind("xsd", XSD)
     inferred_graph.bind("ex", EX)  
 
-    # Bind namespaces
-    inferred_graph.bind("occp", OCCP)
-    inferred_graph.bind("ould", OULD)
-    inferred_graph.bind("xsd", XSD)
-
-    # Save inferred graph
-    inferred_file = os.path.join(BASE_DIR, "OCCP_Post_1B_inferred.ttl")
+    # Save inferred graph (bereits in generate_post_graph gemacht, aber hier für Konsistenz)
     inferred_graph.serialize(destination=inferred_file, format="turtle")
     logger.info(f"PostI-ABox generated: {inferred_file}")
 
