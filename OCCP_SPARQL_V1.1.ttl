@@ -1,0 +1,103 @@
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time:  <http://www.w3.org/2006/time#> .
+@prefix osh:   <http://www.occpshape.de/shape#> .
+@prefix sparql: <http://www.example.de/sparql#> .
+
+
+#################################################################
+#    SPARQL CONSTRUCT Queries
+#################################################################
+
+    osh:ConstructFullPhaseStructure
+        a sh:SPARQLConstructTemplate ;
+        sh:prefixes occp: ;
+        sh:construct """
+            CONSTRUCT {
+                ?obj occp:hasPhase ?phaseA .
+                ?phaseA a occp:PhaseA_Planning ;
+                        occp:hasActualBeginning ?beginA ;
+                        occp:hasActualEnd ?endA .
+                ?beginA a occp:BeginningOfPlanning ;
+                        occp:hasActualTime "2023-01-01"^^xsd:date .
+                ?endA a occp:CompletionOfPlanning ;
+                    occp:hasActualTime "2023-03-01"^^xsd:date .
+
+                ?obj occp:hasPhase ?phaseB .
+                ?phaseB a occp:PhaseB_Review ;
+                        occp:hasActualBeginning ?beginB ;
+                        occp:hasActualEnd ?endB .
+                ?beginB a occp:SubmissionToReview ;
+                        occp:hasActualTime "2023-03-02"^^xsd:date .
+                ?endB a occp:ReviewApproval ;
+                    occp:hasActualTime "2023-04-01"^^xsd:date .
+
+                ?obj occp:hasPhase ?phaseC .
+                ?phaseC a occp:PhaseC_Construction ;
+                        occp:hasActualBeginning ?beginC ;
+                        occp:hasActualEnd ?endC .
+                ?beginC a occp:StartOfConstruction ;
+                        occp:hasActualTime "2023-04-02"^^xsd:date .
+                ?endC a occp:CompletionOfConstruction ;
+                    occp:hasActualTime "2023-06-01"^^xsd:date .
+
+                ?cycleA1 a occp:CycleA_PlanningReview ;
+                        occp:includesPhase ?phaseA ;
+                        occp:includesPhase ?phaseB .
+                ?cycleA2 a occp:CycleA_Construction ;
+                        occp:includesPhase ?phaseC .
+            }
+            WHERE {
+                ?obj a occp:DataObject .
+                BIND(IRI(CONCAT(STR(?obj), "_phaseA")) AS ?phaseA)
+                BIND(IRI(CONCAT(STR(?obj), "_phaseB")) AS ?phaseB)
+                BIND(IRI(CONCAT(STR(?obj), "_phaseC")) AS ?phaseC)
+                BIND(IRI(CONCAT(STR(?obj), "_beginA")) AS ?beginA)
+                BIND(IRI(CONCAT(STR(?obj), "_endA")) AS ?endA)
+                BIND(IRI(CONCAT(STR(?obj), "_beginB")) AS ?beginB)
+                BIND(IRI(CONCAT(STR(?obj), "_endB")) AS ?endB)
+                BIND(IRI(CONCAT(STR(?obj), "_beginC")) AS ?beginC)
+                BIND(IRI(CONCAT(STR(?obj), "_endC")) AS ?endC)
+                BIND(IRI(CONCAT(STR(?obj), "_cycleA1")) AS ?cycleA1)
+                BIND(IRI(CONCAT(STR(?obj), "_cycleA2")) AS ?cycleA2)
+            }
+        """ .
+
+
+### PHASE RELATED QUERIES
+
+    # PHASE A 
+    
+    osh:beginningOfPlanningConstruct a osh:ConstructQuery ;
+        osh:queryText """
+            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            CONSTRUCT {
+                ?phase occp:hasActualBeginning ?instantStart .
+                ?cycle occp:hasActualBeginning ?instantStart .
+                ?cycle occp:isInPhase ?phase .
+                ?cycle occp:hasCycleNumber ?newNumber .
+                ?instantEnd occp:endsPhase ?phase .
+                ?instantEnd occp:endsCycle ?cycle .
+                ?phase occp:hasEstimatedEnd ?instantEnd .
+                ?cycle occp:hasEstimatedEnd ?instantEnd .
+            }
+            WHERE {
+                ?instantStart a occp:BeginningOfPlanning ;
+                    occp:startsPhase ?phase ;
+                    occp:startsCycle ?cycle ;
+                    occp:hasActualTime ?startTime .
+                ?component occp:hasPhase ?phase ;
+                    occp:hasCycle ?cycle .
+                ?phase occp:hasEstimatedEnd ?instantEnd .
+                ?cycle occp:hasEstimatedEnd ?instantEnd .
+                {
+                    SELECT ?component (COALESCE(MAX(?number), 0) + 1 AS ?newNumber)
+                    WHERE {
+                        ?component occp:hasCycle ?prevCycle .
+                        ?prevCycle occp:hasCycleNumber ?number .
+                    }
+                    GROUP BY ?component
+                }
+            }
+        """ .

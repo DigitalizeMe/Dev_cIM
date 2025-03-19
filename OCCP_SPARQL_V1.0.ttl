@@ -10,6 +10,34 @@
 #    SPARQL CONSTRUCT Queries
 #################################################################
 
+
+    osh:ConstructPhaseStructure
+        a sh:SPARQLConstructTemplate ;
+        sh:prefixes occp: ;
+        sh:construct """
+            CONSTRUCT {
+                ?obj occp:hasPhase ?phase .
+                ?phase a occp:Phase ;
+                    occp:phaseType ?phaseType ;
+                    occp:belongsToCycle ?cycle .
+                ?cycle a occp:Cycle ;
+                    occp:cycleType ?cycleType .
+            }
+            WHERE {
+                ?obj a occp:DataObject .
+                # Für jede Phase eine eindeutige IRI generieren
+                BIND(IRI(CONCAT(STR(?obj), "_phase_", ?phaseNum)) AS ?phase)
+                BIND(IRI(CONCAT(STR(?obj), "_cycle_", ?cycleNum)) AS ?cycle)
+                # Beispiel: Phasen A, B, C und Zyklen A1, A2
+                VALUES (?phaseNum ?phaseType ?cycleNum ?cycleType) {
+                    ("A" "PhaseA" "A1" "CycleA1")
+                    ("B" "PhaseB" "A2" "CycleA2")
+                    ("C" "PhaseC" "A2" "CycleA2")
+                }
+            }
+        """ .
+
+
 ### PHASE RELATED QUERIES
 
     # PHASE A 

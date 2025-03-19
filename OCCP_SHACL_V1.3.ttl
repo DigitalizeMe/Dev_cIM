@@ -902,116 +902,88 @@
             sh:severity sh:Violation
         ] .
 
-osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
-    sh:targetClass occp:PhaseG_Inspection ;
-    # Ensure PhaseG begins with or after UsageStart based on actual or estimated times
-    sh:sparql [
-        sh:select """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-            PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?usageStart ?startG ?timeUS
-            WHERE {
-                # Get start time of PhaseG (actual or estimated)
-                { $this occp:hasActualBeginning ?startInstantG . 
-                  ?startInstantG occp:hasActualTime ?startG . }
-                UNION
-                { $this occp:hasEstimatedBeginning ?startInstantG . 
-                  ?startInstantG occp:hasEstimatedTime ?startG . }
-                # Get time of UsageStart (actual or estimated)
-                ?usageStart a occp:UsageStart .
-                { ?usageStart occp:hasActualTime ?timeUS . }
-                UNION
-                { ?usageStart occp:hasEstimatedTime ?timeUS . }
-                FILTER (?startG < ?timeUS)
-            }
-        """ ;
-        sh:message "PhaseG_Inspection { $this } (start: { ?startG }) must begin with or after UsageStart { ?usageStart } (time: { ?timeUS })."@en ;
-        sh:severity sh:Violation
-    ] ;
-    # Ensure PhaseG occurs after CompletionOfConstruction based on actual or estimated times
-    sh:sparql [
-        sh:select """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-            PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?completion ?startG ?timeCOC
-            WHERE {
-                # Get start time of PhaseG (actual or estimated)
-                { $this occp:hasActualBeginning ?startInstantG . 
-                  ?startInstantG occp:hasActualTime ?startG . }
-                UNION
-                { $this occp:hasEstimatedBeginning ?startInstantG . 
-                  ?startInstantG occp:hasEstimatedTime ?startG . }
-                # Get time of CompletionOfConstruction (actual or estimated)
-                ?completion a occp:CompletionOfConstruction .
-                { ?completion occp:hasActualTime ?timeCOC . }
-                UNION
-                { ?completion occp:hasEstimatedTime ?timeCOC . }
-                FILTER (?startG <= ?timeCOC)
-            }
-        """ ;
-        sh:message "PhaseG_Inspection { $this } (start: { ?startG }) should occur after CompletionOfConstruction { ?completion } (time: { ?timeCOC })."@en ;
-        sh:severity sh:Warning
-    ] ;
-    # Ensure PhaseG occurs before PhaseM_Deconstruction based on actual or estimated times
-    sh:sparql [
-        sh:select """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-            PREFIX time: <http://www.w3.org/2006/time#>
-            SELECT $this ?phaseM ?endG ?startM
-            WHERE {
-                # Get end time of PhaseG (actual or estimated)
-                { $this occp:hasActualEnd ?endInstantG . 
-                  ?endInstantG occp:hasActualTime ?endG . }
-                UNION
-                { $this occp:hasEstimatedEnd ?endInstantG . 
-                  ?endInstantG occp:hasEstimatedTime ?endG . }
-                # Get start time of PhaseM_Deconstruction (actual or estimated)
-                ?phaseM a occp:PhaseM_Deconstruction .
-                { ?phaseM occp:hasActualBeginning ?startInstantM . 
-                  ?startInstantM occp:hasActualTime ?startM . }
-                UNION
-                { ?phaseM occp:hasEstimatedBeginning ?startInstantM . 
-                  ?startInstantM occp:hasEstimatedTime ?startM . }
-                FILTER (?endG >= ?startM)
-            }
-        """ ;
-        sh:message "PhaseG_Inspection { $this } (end: { ?endG }) should occur before PhaseM_Deconstruction { ?phaseM } (start: { ?startM })."@en ;
-        sh:severity sh:Warning
-    ] ;
-    # Constraint for hasActualBeginning
-    sh:property [
-        sh:path occp:hasActualBeginning ;
-        sh:class occp:InspectionExecution ;
-        sh:maxCount 1 ;
-        sh:message "Each 'occp:PhaseG_Inspection' must have at most one actual beginning via 'occp:hasActualBeginning' referencing 'occp:InspectionExecution'."@en ;
-        sh:severity sh:Violation
-    ] ;
-    # Constraint for hasActualEnd
-    sh:property [
-        sh:path occp:hasActualEnd ;
-        sh:class time:Instant ;
-        sh:maxCount 1 ;
-        sh:message "Each 'occp:PhaseG_Inspection' must have at most one actual end via 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
-        sh:severity sh:Violation
-    ] .
-
-
-    osh:ShapeOfPhaseH a sh:NodeShape ;              # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occur during or after the construction's life cycle.
-        sh:targetClass occp:PhaseH_SpecialEvents ;
-        # Ensure each PhaseH has at least one instant to mark specific events
-        sh:property [
-            sh:path occp:hasInstant ;
-            sh:class time:Instant ;
-            sh:minCount 1 ;
-            sh:message "Each 'occp:PhaseH_SpecialEvents' must have at least one instant via 'occp:hasInstant' referencing a 'time:Instant' (e.g., 'occp:GeologicalEvent', 'occp:WeatherEvent')."@en ;
+    osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
+        sh:targetClass occp:PhaseG_Inspection ;
+        # Ensure PhaseG begins with or after UsageStart based on actual or estimated times
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?usageStart ?startG ?timeUS
+                WHERE {
+                    # Get start time of PhaseG (actual or estimated)
+                    { $this occp:hasActualBeginning ?startInstantG . 
+                    ?startInstantG occp:hasActualTime ?startG . }
+                    UNION
+                    { $this occp:hasEstimatedBeginning ?startInstantG . 
+                    ?startInstantG occp:hasEstimatedTime ?startG . }
+                    # Get time of UsageStart (actual or estimated)
+                    ?usageStart a occp:UsageStart .
+                    { ?usageStart occp:hasActualTime ?timeUS . }
+                    UNION
+                    { ?usageStart occp:hasEstimatedTime ?timeUS . }
+                    FILTER (?startG < ?timeUS)
+                }
+            """ ;
+            sh:message "PhaseG_Inspection { $this } (start: { ?startG }) must begin with or after UsageStart { ?usageStart } (time: { ?timeUS })."@en ;
             sh:severity sh:Violation
+        ] ;
+        # Ensure PhaseG occurs after CompletionOfConstruction based on actual or estimated times
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?completion ?startG ?timeCOC
+                WHERE {
+                    # Get start time of PhaseG (actual or estimated)
+                    { $this occp:hasActualBeginning ?startInstantG . 
+                    ?startInstantG occp:hasActualTime ?startG . }
+                    UNION
+                    { $this occp:hasEstimatedBeginning ?startInstantG . 
+                    ?startInstantG occp:hasEstimatedTime ?startG . }
+                    # Get time of CompletionOfConstruction (actual or estimated)
+                    ?completion a occp:CompletionOfConstruction .
+                    { ?completion occp:hasActualTime ?timeCOC . }
+                    UNION
+                    { ?completion occp:hasEstimatedTime ?timeCOC . }
+                    FILTER (?startG <= ?timeCOC)
+                }
+            """ ;
+            sh:message "PhaseG_Inspection { $this } (start: { ?startG }) should occur after CompletionOfConstruction { ?completion } (time: { ?timeCOC })."@en ;
+            sh:severity sh:Warning
+        ] ;
+        # Ensure PhaseG occurs before PhaseM_Deconstruction based on actual or estimated times
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?phaseM ?endG ?startM
+                WHERE {
+                    # Get end time of PhaseG (actual or estimated)
+                    { $this occp:hasActualEnd ?endInstantG . 
+                    ?endInstantG occp:hasActualTime ?endG . }
+                    UNION
+                    { $this occp:hasEstimatedEnd ?endInstantG . 
+                    ?endInstantG occp:hasEstimatedTime ?endG . }
+                    # Get start time of PhaseM_Deconstruction (actual or estimated)
+                    ?phaseM a occp:PhaseM_Deconstruction .
+                    { ?phaseM occp:hasActualBeginning ?startInstantM . 
+                    ?startInstantM occp:hasActualTime ?startM . }
+                    UNION
+                    { ?phaseM occp:hasEstimatedBeginning ?startInstantM . 
+                    ?startInstantM occp:hasEstimatedTime ?startM . }
+                    FILTER (?endG >= ?startM)
+                }
+            """ ;
+            sh:message "PhaseG_Inspection { $this } (end: { ?endG }) should occur before PhaseM_Deconstruction { ?phaseM } (start: { ?startM })."@en ;
+            sh:severity sh:Warning
         ] ;
         # Constraint for hasActualBeginning
         sh:property [
             sh:path occp:hasActualBeginning ;
-            sh:class time:Instant ;
+            sh:class occp:InspectionExecution ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:PhaseH_SpecialEvents' must have at most one actual beginning via 'occp:hasActualBeginning' referencing a 'time:Instant'."@en ;
+            sh:message "Each 'occp:PhaseG_Inspection' must have at most one actual beginning via 'occp:hasActualBeginning' referencing 'occp:InspectionExecution'."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for hasActualEnd
@@ -1019,9 +991,37 @@ osh:ShapeOfPhaseG a sh:NodeShape ;              # Phase G (Inspection)
             sh:path occp:hasActualEnd ;
             sh:class time:Instant ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:PhaseH_SpecialEvents' must have at most one actual end via 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
+            sh:message "Each 'occp:PhaseG_Inspection' must have at most one actual end via 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
             sh:severity sh:Violation
         ] .
+
+
+        osh:ShapeOfPhaseH a sh:NodeShape ;              # Phase H (SpecialEvents) - Special events can occur anytime, so this is to be handled like a super-phase. It can be used to describe or record events that have shaped the landscape like earthquakes in the past, but also events that occur during or after the construction's life cycle.
+            sh:targetClass occp:PhaseH_SpecialEvents ;
+            # Ensure each PhaseH has at least one instant to mark specific events
+            sh:property [
+                sh:path occp:hasInstant ;
+                sh:class time:Instant ;
+                sh:minCount 1 ;
+                sh:message "Each 'occp:PhaseH_SpecialEvents' must have at least one instant via 'occp:hasInstant' referencing a 'time:Instant' (e.g., 'occp:GeologicalEvent', 'occp:WeatherEvent')."@en ;
+                sh:severity sh:Violation
+            ] ;
+            # Constraint for hasActualBeginning
+            sh:property [
+                sh:path occp:hasActualBeginning ;
+                sh:class time:Instant ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseH_SpecialEvents' must have at most one actual beginning via 'occp:hasActualBeginning' referencing a 'time:Instant'."@en ;
+                sh:severity sh:Violation
+            ] ;
+            # Constraint for hasActualEnd
+            sh:property [
+                sh:path occp:hasActualEnd ;
+                sh:class time:Instant ;
+                sh:maxCount 1 ;
+                sh:message "Each 'occp:PhaseH_SpecialEvents' must have at most one actual end via 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
+                sh:severity sh:Violation
+            ] .
 
     osh:ShapeOfPhaseK a sh:NodeShape ;              # Phase K (Damage)
         sh:targetClass occp:PhaseK_Damage ;
