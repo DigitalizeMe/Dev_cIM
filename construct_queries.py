@@ -314,55 +314,54 @@ WHERE {
 """
 
 CONSTRUCT_COMPONENTS = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-CONSTRUCT {
-      ?obj occp:hasPhase ?phaseA .
-      ?phaseA a occp:PhaseA_Planning ;
-              occp:hasActualBeginning ?beginA ;
-              occp:hasActualEnd ?endA .
-      ?beginA a occp:BeginningOfPlanning ;
-              occp:hasActualTime "2023-01-01"^^xsd:date .
-      ?endA a occp:CompletionOfPlanning ;
-          occp:hasActualTime "2023-03-01"^^xsd:date .
-
-      ?obj occp:hasPhase ?phaseB .
-      ?phaseB a occp:PhaseB_Review ;
-              occp:hasActualBeginning ?beginB ;
-              occp:hasActualEnd ?endB .
-      ?beginB a occp:SubmissionToReview ;
-              occp:hasActualTime "2023-03-02"^^xsd:date .
-      ?endB a occp:ReviewApproval ;
-          occp:hasActualTime "2023-04-01"^^xsd:date .
-
-      ?obj occp:hasPhase ?phaseC .
-      ?phaseC a occp:PhaseC_Construction ;
-              occp:hasActualBeginning ?beginC ;
-              occp:hasActualEnd ?endC .
-      ?beginC a occp:StartOfConstruction ;
-              occp:hasActualTime "2023-04-02"^^xsd:date .
-      ?endC a occp:CompletionOfConstruction ;
-          occp:hasActualTime "2023-06-01"^^xsd:date .
-
-      ?cycleA1 a occp:CycleA_PlanningReview ;
-              occp:includesPhase ?phaseA ;
-              occp:includesPhase ?phaseB .
-      ?cycleA2 a occp:CycleA_Construction ;
-              occp:includesPhase ?phaseC .
-  }
-  WHERE {
-      ?obj a occp:DataObject .
-      BIND(IRI(CONCAT(STR(?obj), "_phaseA")) AS ?phaseA)
-      BIND(IRI(CONCAT(STR(?obj), "_phaseB")) AS ?phaseB)
-      BIND(IRI(CONCAT(STR(?obj), "_phaseC")) AS ?phaseC)
-      BIND(IRI(CONCAT(STR(?obj), "_beginA")) AS ?beginA)
-      BIND(IRI(CONCAT(STR(?obj), "_endA")) AS ?endA)
-      BIND(IRI(CONCAT(STR(?obj), "_beginB")) AS ?beginB)
-      BIND(IRI(CONCAT(STR(?obj), "_endB")) AS ?endB)
-      BIND(IRI(CONCAT(STR(?obj), "_beginC")) AS ?beginC)
-      BIND(IRI(CONCAT(STR(?obj), "_endC")) AS ?endC)
-      BIND(IRI(CONCAT(STR(?obj), "_cycleA1")) AS ?cycleA1)
-      BIND(IRI(CONCAT(STR(?obj), "_cycleA2")) AS ?cycleA2)
-  }
+    PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+    CONSTRUCT {
+        ?phase occp:hasActualBeginning ?startInstant .
+        ?phase occp:hasActualEnd ?endInstant .
+        ?phase occp:hasEstimatedBeginning ?startInstant .
+        ?phase occp:hasEstimatedEnd ?endInstant .
+        ?cycle occp:hasActualBeginning ?startInstant .
+        ?cycle occp:hasActualEnd ?endInstant .
+        ?cycle occp:hasEstimatedBeginning ?startInstant .
+        ?cycle occp:hasEstimatedEnd ?endInstant .
+        ?cycle occp:isInPhase ?phase .
+        ?cycle occp:hasCycleNumber ?cycleNumber .
+    }
+    WHERE {
+        # Start instants
+        { ?startInstant a ?startType ;
+            occp:startsPhase ?phase ;
+            occp:hasActualTime ?startTime .
+          VALUES ?startType { occp:BeginningOfPlanning occp:SubmissionToReview occp:BeginningOfConstruction }
+        }
+        UNION
+        { ?startInstant a ?startType ;
+            occp:startsPhase ?phase ;
+            occp:hasEstimatedTime ?startTime .
+          VALUES ?startType { occp:BeginningOfPlanning occp:SubmissionToReview occp:BeginningOfConstruction }
+        }
+        ?component occp:hasPhase ?phase .
+        # End instants
+        { ?endInstant a ?endType ;
+            occp:endsPhase ?phase ;
+            occp:hasActualTime ?endTime .
+          VALUES ?endType { occp:ReviewApproval occp:ReviewRejection occp:CompletionOfConstruction }
+        }
+        UNION
+        { ?endInstant a ?endType ;
+            occp:endsPhase ?phase ;
+            occp:hasEstimatedTime ?endTime .
+          VALUES ?endType { occp:ReviewApproval occp:ReviewRejection occp:CompletionOfConstruction }
+        }
+        # Optional cycles
+        OPTIONAL {
+            ?startInstant occp:startsCycle ?cycle .
+            ?component occp:hasCycle ?cycle .
+            ?endInstant occp:endsCycle ?cycle .
+            OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
+            BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
+        }
+    }
 """
 
 def generate_post_graph(pre_file="OCCP_Pre_1B.ttl", output_file="OCCP_Post_1B_inferred.ttl"):

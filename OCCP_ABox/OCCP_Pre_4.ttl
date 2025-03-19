@@ -20,10 +20,10 @@ ex:door a ould:UpdatableEntity ;
     ould:hasIFCID "ifc:Door1" ;
     ould:hasHash "def456" .
 
-ex:instant_HouseStart a occp:BeginningOfPlanning ;
+ex:instant_HouseStart a occp:BeginningOfConstruction ;
     occp:hasActualTime "2025-01-01"^^xsd:date ;
     occp:startsPhase ex:housePhase .
-ex:instant_HouseEnd a occp:ReviewApproval ;
+ex:instant_HouseEnd a occp:CompletionOfConstruction ;
     occp:hasActualTime "2025-06-30"^^xsd:date ;
     occp:endsPhase ex:housePhase .
 
