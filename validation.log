@@ -1,4 +1,4 @@
-2025-03-18 00:15:41,160 - INFO - CONSTRUCT generated 22 triples.
-2025-03-18 00:15:41,175 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_Post_6B_inferred.ttl
-2025-03-18 00:15:42,364 - INFO - Conformity: True
-2025-03-18 00:15:42,364 - INFO - Validation successful: PostI conforms to SHACL.
+2025-03-18 01:02:38,500 - INFO - CONSTRUCT generated 8 triples.
+2025-03-18 01:02:38,510 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_Post_5C_inferred.ttl
+2025-03-18 01:02:40,092 - INFO - Conformity: True
+2025-03-18 01:02:40,092 - INFO - Validation successful: PostI conforms to SHACL.

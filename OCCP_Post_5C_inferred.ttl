@@ -1,0 +1,165 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Wall_Component1 a ould:UpdatableEntity ;
+    occp:hasCycle ex:cycleA1,
+        ex:cycleA2,
+        ex:cycleA3 ;
+    occp:hasPhase ex:phaseA_Planning,
+        ex:phaseB_Review,
+        ex:phaseC_Construction,
+        ex:phaseD_DefectElimination,
+        ex:phaseE_Usage,
+        ex:phaseF_Warranty ;
+    ould:hasHash "xyz789" ;
+    ould:hasIFCID "ifc:Wall_001" .
+
+ex:instant_ConstructionAcceptance a occp:ConstructionAcceptance ;
+    occp:hasActualTime "2025-07-06"^^xsd:date ;
+    occp:isPartOfPhase ex:phaseC_Construction .
+
+ex:instant_ConstructionCompletion a occp:ConstructionCompletion ;
+    occp:endsPhase ex:phaseC_Construction ;
+    occp:hasActualTime "2025-07-01"^^xsd:date,
+        "2025-07-06"^^xsd:date ;
+    occp:isPartOfPhase ex:phaseC_Construction .
+
+ex:instant_ConstructionStart a occp:ConstructionStart ;
+    occp:hasActualTime "2025-06-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_Construction .
+
+ex:instant_DataProcurement a occp:DataProcurement ;
+    occp:hasActualTime "2025-03-05"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1 ;
+    occp:isPartOfPhase ex:phaseA_Planning .
+
+ex:instant_DefectEliminationCompletion a occp:DefectEliminationCompletion ;
+    occp:endsPhase ex:phaseD_DefectElimination ;
+    occp:hasActualTime "2025-07-05"^^xsd:date .
+
+ex:instant_DefectEliminationStart a occp:DefectEliminationStart ;
+    occp:hasActualTime "2025-07-02"^^xsd:date ;
+    occp:startsPhase ex:phaseD_DefectElimination .
+
+ex:instant_Edit_ASTR1 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-03-25"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA2 ;
+    occp:isPartOfPhase ex:phaseA_Planning .
+
+ex:instant_Edit_ASTR2 a occp:Edit_ASTR ;
+    occp:hasActualTime "2025-04-10"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA3 ;
+    occp:isPartOfPhase ex:phaseA_Planning .
+
+ex:instant_Edit_BSTR a occp:Edit_BSTR ;
+    occp:hasActualTime "2025-03-10"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1 ;
+    occp:isPartOfPhase ex:phaseA_Planning .
+
+ex:instant_ReviewRejection1 a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA1 ;
+    occp:hasActualTime "2025-03-20"^^xsd:date ;
+    occp:startsCycle ex:cycleA2 .
+
+ex:instant_ReviewRejection2 a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA2 ;
+    occp:hasActualTime "2025-04-05"^^xsd:date ;
+    occp:startsCycle ex:cycleA3 .
+
+ex:instant_ReviewStart1 a occp:ReviewStart ;
+    occp:hasActualTime "2025-03-16"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA1 ;
+    occp:isPartOfPhase ex:phaseB_Review .
+
+ex:instant_ReviewStart2 a occp:ReviewStart ;
+    occp:hasActualTime "2025-03-31"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA2 ;
+    occp:isPartOfPhase ex:phaseB_Review .
+
+ex:instant_ReviewStart3 a occp:ReviewStart ;
+    occp:hasActualTime "2025-04-16"^^xsd:date ;
+    occp:isPartOfCycle ex:cycleA3 ;
+    occp:isPartOfPhase ex:phaseB_Review .
+
+ex:instant_SubmissionToReview2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-03-30"^^xsd:date ;
+    occp:startsCycle ex:cycleA2 .
+
+ex:instant_SubmissionToReview3 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-04-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA3 .
+
+ex:instant_UsageChange a occp:UsageChange ;
+    occp:hasActualTime "2025-09-01"^^xsd:date ;
+    occp:isPartOfPhase ex:phaseE_Usage .
+
+ex:instant_UsageEnd a occp:UsageEnd ;
+    occp:endsPhase ex:phaseE_Usage ;
+    occp:hasActualTime "2025-10-01"^^xsd:date .
+
+ex:instant_UsageStart a occp:UsageStart ;
+    occp:hasActualTime "2025-08-01"^^xsd:date ;
+    occp:startsPhase ex:phaseE_Usage .
+
+ex:instant_WarrantyChange a occp:WarrantyChange ;
+    occp:hasActualTime "2025-09-02"^^xsd:date ;
+    occp:isPartOfPhase ex:phaseF_Warranty .
+
+ex:instant_WarrantyEnd a occp:WarrantyEnd ;
+    occp:endsPhase ex:phaseF_Warranty ;
+    occp:hasActualTime "2027-09-01"^^xsd:date .
+
+ex:instant_WarrantyStart a occp:WarrantyStart ;
+    occp:hasActualTime "2025-07-06"^^xsd:date ;
+    occp:startsPhase ex:phaseF_Warranty .
+
+ex:instant_BeginningOfPlanning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-03-01"^^xsd:date ;
+    occp:startsCycle ex:cycleA1 ;
+    occp:startsPhase ex:phaseA_Planning .
+
+ex:instant_SubmissionToReview1 a occp:SubmissionToReview ;
+    occp:hasActualTime "2025-03-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA1 ;
+    occp:startsPhase ex:phaseB_Review .
+
+ex:phaseD_DefectElimination a occp:PhaseD_DefectElimination .
+
+ex:instant_ReviewApproval a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA3 ;
+    occp:endsPhase ex:phaseA_Planning,
+        ex:phaseB_Review ;
+    occp:hasActualTime "2025-04-20"^^xsd:date .
+
+ex:phaseE_Usage a occp:PhaseE_Usage .
+
+ex:phaseF_Warranty a occp:PhaseF_Warranty .
+
+ex:phaseC_Construction a occp:PhaseC_Construction .
+
+ex:cycleA2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 2 ;
+    occp:isInPhase ex:phaseB_Review .
+
+ex:cycleA3 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 3 ;
+    occp:isInPhase ex:phaseB_Review .
+
+ex:cycleA1 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 ;
+    occp:isInPhase ex:phaseB_Review .
+
+ex:phaseA_Planning a occp:PhaseA_Planning ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning ;
+    occp:hasActualEnd ex:instant_ReviewApproval ;
+    occp:hasEstimatedBeginning ex:instant_BeginningOfPlanning ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval .
+
+ex:phaseB_Review a occp:PhaseB_Review ;
+    occp:hasActualBeginning ex:instant_SubmissionToReview1 ;
+    occp:hasActualEnd ex:instant_ReviewApproval ;
+    occp:hasEstimatedBeginning ex:instant_SubmissionToReview1 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval .
+
