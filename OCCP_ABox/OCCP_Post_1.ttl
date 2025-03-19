@@ -25,6 +25,5 @@ ex:phaseA a occp:PhaseA_Planning ;
 
 ex:cycleA a occp:CycleA_PlanningReview ;
     occp:hasCycleNumber 1 ;
-    occp:isInPhase ex:phaseA ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning ;
     occp:hasEstimatedEnd ex:instant_ReviewApproval .

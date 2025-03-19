@@ -21,8 +21,7 @@
 <http://www.example.de/example#cycleA> a occp:CycleA_PlanningReview ;
     occp:hasActualBeginning <http://www.example.de/example#instant_BeginningOfPlanning> ;
     occp:hasCycleNumber 1 ;
-    occp:hasEstimatedEnd <http://www.example.de/example#instant_ReviewApproval> ;
-    occp:isInPhase <http://www.example.de/example#phaseA> .
+    occp:hasEstimatedEnd <http://www.example.de/example#instant_ReviewApproval> .
 
 <http://www.example.de/example#phaseA> a occp:PhaseA_Planning ;
     occp:hasActualBeginning <http://www.example.de/example#instant_BeginningOfPlanning> ;

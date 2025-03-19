@@ -5,7 +5,8 @@
 
 ex:component1 a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA ;
-    occp:hasPhase ex:phaseA ;
+    occp:hasPhase ex:phaseA,
+        ex:phaseB ;
     ould:hasHash "abc123" ;
     ould:hasIFCID "ifc:Wall1" .
 
@@ -13,13 +14,12 @@ ex:instant_Edit_BSTR a occp:Edit_BSTR ;
     occp:hasActualTime "2025-01-02"^^xsd:date ;
     occp:hasPhase ex:phaseA .
 
-ex:instant_ReviewStart a occp:Edit_BSTR ;
-    occp:hasActualTime "2025-01-11"^^xsd:date ;
-    occp:hasPhase ex:phaseB .
-
 ex:instant_SubmissionToReview a occp:SubmissionToReview ;
     occp:hasActualTime "2025-01-10"^^xsd:date ;
-    occp:hasPhase ex:phaseA ;
+    occp:hasPhase ex:phaseA .
+
+ex:instant_ReviewStart a occp:ReviewStart ;
+    occp:hasActualTime "2025-01-11"^^xsd:date ;
     occp:startsPhase ex:phaseB .
 
 ex:instant_BeginningOfPlanning a occp:BeginningOfPlanning ;
@@ -36,11 +36,10 @@ ex:instant_ReviewApproval a occp:ReviewApproval ;
     occp:endsCycle ex:cycleA ;
     occp:endsPhase ex:phaseA,
         ex:phaseB ;
-    occp:hasEstimatedTime "2025-01-12"^^xsd:date ;
-    occp:hasPhase ex:phaseB .
+    occp:hasEstimatedTime "2025-01-12"^^xsd:date .
 
 ex:phaseB a occp:PhaseB_Review ;
-    occp:hasActualBeginning ex:instant_SubmissionToReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart ;
     occp:hasEstimatedEnd ex:instant_ReviewApproval .
 
 ex:phaseA a occp:PhaseA_Planning ;

@@ -160,18 +160,7 @@
             ] ]
         ) ;
         sh:message "Each 'occp:CycleA_PlanningReview' must have at least one end (either 'occp:hasActualEnd' or 'occp:hasEstimatedEnd') referencing 'occp:ReviewApproval' or 'occp:ReviewRejection'."@en ;
-        sh:severity sh:Violation ;
-        # Constraint for isInPhase
-        sh:property [
-            sh:path occp:isInPhase ;
-            sh:or (
-                [ sh:class occp:PhaseA_Planning ]
-                [ sh:class occp:PhaseB_Review ]
-            ) ;
-            sh:minCount 1 ;
-            sh:message "Each 'occp:CycleA_PlanningReview' must be embedded in at least one 'occp:PhaseA_Planning' via 'occp:isInPhase'."@en ;
-            sh:severity sh:Violation
-        ] .
+        sh:severity sh:Violation .
 
     osh:LifeCycleShape a sh:NodeShape ;
         sh:targetClass occp:LifeCycle ;
@@ -616,9 +605,9 @@
         # Constraint for hasActualEnd
         sh:property [
             sh:path occp:hasActualEnd ;
-            sh:class occp:CompletionOfConstruction ;
+            sh:class occp:ConstructionAcceptance ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:PhaseC_Construction' must have at most one actual end via 'occp:hasActualEnd' referencing 'occp:CompletionOfConstruction'."@en ;
+            sh:message "Each 'occp:PhaseC_Construction' must have at most one actual end via 'occp:hasActualEnd' referencing 'occp:ConstructionAcceptance'."@en ;
             sh:severity sh:Violation
         ] .
 

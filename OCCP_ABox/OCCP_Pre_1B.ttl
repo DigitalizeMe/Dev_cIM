@@ -14,22 +14,21 @@ ex:instant_Edit_BSTR a occp:Edit_BSTR ;
 
 ex:instant_SubmissionToReview a occp:SubmissionToReview ;
     occp:hasActualTime "2025-01-10"^^xsd:date ;
-    occp:hasPhase ex:phaseA ;
-    occp:startsPhase ex:phaseB .
+    occp:hasPhase ex:phaseA .
 
-ex:instant_ReviewStart a occp:Edit_BSTR ;
+ex:instant_ReviewStart a occp:ReviewStart;
     occp:hasActualTime "2025-01-11"^^xsd:date ;
-    occp:hasPhase ex:phaseB .
+    occp:startsPhase ex:phaseB .
 
 ex:instant_ReviewApproval a occp:ReviewApproval ;
     occp:hasEstimatedTime "2025-01-12"^^xsd:date ;
-    occp:hasPhase ex:phaseB ;
     occp:endsPhase ex:phaseA ;
     occp:endsPhase ex:phaseB ;
     occp:endsCycle ex:cycleA .
 
 ex:component1 a ould:UpdatableEntity ;
     occp:hasPhase ex:phaseA ;
+    occp:hasPhase ex:phaseB ;
     occp:hasCycle ex:cycleA ;
     ould:hasIFCID "ifc:Wall1" ;
     ould:hasHash "abc123" .
@@ -39,3 +38,11 @@ ex:phaseA a occp:PhaseA_Planning .
 ex:phaseB a occp:PhaseB_Review .
 ex:cycleA a occp:CycleA_PlanningReview ;
     occp:hasCycleNumber 1 .
+
+
+# VALID
+# Expected result:
+#INFO - CONSTRUCT generated 7 triples.
+#INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_Post_1B_inferred.ttl
+#INFO - Conformity: True
+#INFO - Validation successful: PostI conforms to SHACL.

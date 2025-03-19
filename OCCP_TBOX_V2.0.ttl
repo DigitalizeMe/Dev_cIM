@@ -191,7 +191,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
     occp:hasInstant rdf:type owl:ObjectProperty ;
 		rdfs:range <http://www.w3.org/2006/time#Instant> ;
-		rdfs:comment "This property represents the link between an updatable entity and an instant, used to connect specific lifecycle events (e.g., BeginningOfPlanning) from the MsOCCP to components or models."@en ;
+		rdfs:comment "This property represents the link between an updatable entity and an instant, used to connect specific lifecycle events (e.g., Submission) from the MsOCCP to components or models."@en ;
 		rdfs:label "has instant"@en .
 
 
