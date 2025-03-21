@@ -173,7 +173,7 @@
     ould:hasHash rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
-        rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC component to record the current state of a IFC component. The hash value is also used to check for changes of the IFC component."@en ;
+        rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC model to record the current state of a IFC model. The hash value is also used to check for changes of the IFC model to ensure the consistency of the chronology."@en ;
         rdfs:label "has hash"@en .
 
 

@@ -5,7 +5,7 @@ import hashlib
 
 def parse_ifc_to_json(ifc_file_path, output_json_path):
     """
-    Parses an IFC file and saves the structure as a clustered JSON file with type count.
+    Parses an IFC file and saves the structure as a clustered JSON file with type count and model hash.
     """
     try:
         # Load the IFC file
@@ -14,6 +14,9 @@ def parse_ifc_to_json(ifc_file_path, output_json_path):
     except Exception as e:
         print(f"Error loading IFC file: {e}")
         return
+    
+    # Calculate hash of the entire IFC file
+    model_hash = calculate_file_hash(ifc_file_path)
 
     # Extract and cluster components
     components = {}
@@ -39,9 +42,13 @@ def parse_ifc_to_json(ifc_file_path, output_json_path):
         components[element_type][element_name]["GlobalIds"].append(element_global_id)
         components[element_type][element_name]["_count2"] += 1
 
-    # Add total type count to the JSON structure
+    # Add total type count and model hash to the JSON structure
     total_types = len(components)
-    result = {"_total_type_count": total_types, "Types": components}
+    result = {
+        "_total_type_count": total_types,
+        "model_hash": model_hash,  # Store the hash of the entire model
+        "Types": components
+    }
 
     # Save the result to a JSON file
     try:
@@ -51,6 +58,21 @@ def parse_ifc_to_json(ifc_file_path, output_json_path):
         print(f"JSON file successfully saved: {output_json_path}")
     except Exception as e:
         print(f"Error saving JSON file: {e}")
+
+def calculate_file_hash(file_path):
+    """
+    Calculates the SHA-256 hash of the entire file.
+    
+    Args:
+        file_path (str): Path to the file.
+    Returns:
+        str: The hexadecimal representation of the file's hash.
+    """
+    sha256 = hashlib.sha256()
+    with open(file_path, "rb") as f:
+        while chunk := f.read(8192):
+            sha256.update(chunk)
+    return sha256.hexdigest()        
 
 if __name__ == "__main__":
     # Path to the IFC file

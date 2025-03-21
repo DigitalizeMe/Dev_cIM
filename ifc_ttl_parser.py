@@ -10,7 +10,7 @@ RDF = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 
 def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     """
-    Creates a Turtle file from the JSON structure, including model and type hierarchy and hash values.
+    Creates a Turtle file from the JSON structure, including the model hash and model hierarchy.
     
     Args:
         json_file (str): Path to the input JSON file.
@@ -37,6 +37,7 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     model_uri = EX[f"{model_name}_parsed"]
     g.add((model_uri, RDF.type, OULD.UpdatableEntity))
     g.add((model_uri, OULD.hasIFCID, Literal("model_id_placeholder")))  # Placeholder for model IFCID
+    g.add((model_uri, OULD.hasHash, Literal(data["model_hash"])))  # Add model hash
 
     # Step 2: Process each type (e.g., IfcBuildingElementProxy)
     for type_name, type_data in data["Types"].items():
@@ -54,8 +55,7 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
             element_uri = EX[safe_uri(element_name)]  # e.g., ex:Group_No_18
             g.add((element_uri, RDF.type, OULD.UpdatableEntity))
             g.add((element_uri, OULD.hasIFCID, Literal(element_data["GlobalIds"][0])))
-            g.add((element_uri, OULD.hasHash, Literal(element_data["hash"])))  # Add hash value from JSON
-
+            
             # Connect element to its type
             g.add((type_uri, OULD.consistsOf, element_uri))
 
