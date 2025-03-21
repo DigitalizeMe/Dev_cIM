@@ -4,8 +4,6 @@
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ae:phaseA a occp:PhaseA_Planning .
-
 ex:Building-Structural_parsed a ould:UpdatableEntity ;
     ould:consistsOf ex:IfcBeam,
         ex:IfcBuilding,
@@ -20,18 +18,20 @@ ex:Building-Structural_parsed a ould:UpdatableEntity ;
     ould:hasHash "733d0ce844b9d044fabc17080cbd928e1798baff25be988a332b032089fa9e64" ;
     ould:hasIFCID "Building-Structural" .
 
+ex:instant_BeginningOfPlanning a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2025-01-01"^^xsd:date ;
+    occp:startsPhase ae:phaseA .
+
+ex:instant_DataProcurement a occp:DataProcurement ;
+    occp:hasEstimatedTime "2025-01-01"^^xsd:date ;
+    occp:startsPhase ae:phaseA .
+
 ex:00_groundfloor a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-01"^^xsd:date,
-        "24-01-02"^^xsd:date ;
+    occp:hasPhase ae:phaseA ;
     ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
 
 ex:GroupNo_21 a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-01"^^xsd:date,
-        "2024-01-02"^^xsd:date ;
+    occp:hasPhase ae:phaseA ;
     ould:hasIFCID "1CjP_CWub368bZVuVHeHs3" .
 
 ex:IfcBeam a ould:UpdatableEntity ;
@@ -81,99 +81,47 @@ ex:IfcWall a ould:UpdatableEntity ;
     ould:hasIFCID "IfcWall" .
 
 ex:Single-family_house a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-01"^^xsd:date ;
+    occp:hasPhase ae:phaseA ;
     ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" .
 
 ex:beam_shoe a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-02"^^xsd:date,
-        "2024-01-03"^^xsd:date ;
     ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" .
 
 ex:environment_-_site a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-03"^^xsd:date,
-        "2024-01-04"^^xsd:date ;
     ould:hasIFCID "23sFQGRy90RxVbRHD9iSE2" .
 
 ex:geo-reference a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-05"^^xsd:date,
-        "2024-01-06"^^xsd:date ;
     ould:hasIFCID "3Fit2Fad92zf2f6aWdJtF5" .
 
 ex:girder a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "20233-01-05"^^xsd:date,
-        "2024-01-05"^^xsd:date ;
     ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" .
 
 ex:house_-_chimney a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-05"^^xsd:date,
-        "2024-01-06"^^xsd:date ;
     ould:hasIFCID "3dkFAzOGrAIuOzY_RdrdVv" .
 
 ex:house_-_foundation a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-05"^^xsd:date,
-        "2024-0106"^^xsd:date ;
     ould:hasIFCID "0pFmhV8oD1dB40_b4pscr8" .
 
 ex:house_-_inner_wall a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-07"^^xsd:date,
-        "2024-01-09"^^xsd:date ;
     ould:hasIFCID "2gTJhghMT81QThk15l2VwR" .
 
 ex:house_-_outer_wall_-_house_back a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-08"^^xsd:date,
-        "2024-01-09"^^xsd:date ;
     ould:hasIFCID "0DyViLJJ175RvWQi1rE7a6" .
 
 ex:house_-_outer_wall_-_house_front a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-10"^^xsd:date,
-        "2024-01-11"^^xsd:date ;
     ould:hasIFCID "3SGBcf7Lv0r80vKtUCgOpf" .
 
 ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-12"^^xsd:date,
-        "2024-01-13"^^xsd:date ;
     ould:hasIFCID "3oNJ9yHi5FJuFnK8yg68Yt" .
 
 ex:house_-_roof a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-08"^^xsd:date,
-        "2024-01-09"^^xsd:date ;
     ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
 
 ex:house_-_site a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-11"^^xsd:date,
-        "2024-01-13"^^xsd:date ;
     ould:hasIFCID "1Pbuu0tu59NfhrTsztVBK1" .
 
 ex:origin a ould:UpdatableEntity ;
-    occp:hasState "A_Beginning of Planning",
-        "A_Data Procurement" ;
-    occp:timestamp "2024-01-14"^^xsd:date,
-        "2024-01-16"^^xsd:date ;
     ould:hasIFCID "2F44QMqSH3TOkM$SZoqCBe" .
+
+ae:phaseA a occp:PhaseA_Planning .
 
