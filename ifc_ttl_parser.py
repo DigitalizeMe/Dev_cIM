@@ -12,10 +12,6 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     """
     Creates a Turtle file from the JSON structure, including the model hash and model hierarchy.
     
-    Args:
-        json_file (str): Path to the input JSON file.
-        turtle_file (str): Path to the output Turtle file.
-        ifc_file_name (str): Name of the IFC file to derive the model name.
     """
     # Load JSON data
     with open(json_file, "r") as f:
@@ -33,10 +29,14 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
         return name.replace(" ", "_").replace("#", "No_").replace("ä", "ae").replace("ö", "oe").replace("ü", "ue")
 
     # Step 1: Create the model entity (top-level)
-    model_name = os.path.splitext(ifc_file_name)[0]  # Extract model name from IFC file (e.g., "Building-Architecture")
-    model_uri = EX[f"{model_name}_parsed"]
+    # Extract only the filename without path and extension
+    base_name = os.path.basename(ifc_file_name)  # e.g., "Building-Architecture.ifc" from "IFC/Building-Architecture.ifc"
+    model_name = os.path.splitext(base_name)[0]  # e.g., "Building-Architecture"
+    safe_model_name = safe_uri(model_name)  # e.g., "Building_Architecture"
+    model_uri = EX[safe_model_name + "_parsed"]  # e.g., ex:Building_Architecture_parsed
+
     g.add((model_uri, RDF.type, OULD.UpdatableEntity))
-    g.add((model_uri, OULD.hasIFCID, Literal("model_id_placeholder")))  # Placeholder for model IFCID
+    g.add((model_uri, OULD.hasIFCID, Literal(safe_model_name)))  # Placeholder for model IFCID
     g.add((model_uri, OULD.hasHash, Literal(data["model_hash"])))  # Add model hash
 
     # Step 2: Process each type (e.g., IfcBuildingElementProxy)
@@ -64,7 +64,7 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     print(f"Turtle file saved: {turtle_file}")
 
 if __name__ == "__main__":
-    json_file = "IFC/parsed/Building-Architecture_parsed.json"
-    turtle_file = "IFC/parsed/Building-Architecture_parsed.ttl"
-    ifc_file_name = "IFC/Building-Architecture.ifc"  
+    json_file = "IFC/parsed/Building-Structural_parsed.json"
+    turtle_file = "IFC/parsed/Building-Structural_parsed.ttl"
+    ifc_file_name = "IFC/Building-Structural.ifc"  
     create_turtle_from_json(json_file, turtle_file, ifc_file_name)

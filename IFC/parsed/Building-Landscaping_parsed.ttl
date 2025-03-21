@@ -1,0 +1,55 @@
+@prefix ex: <http://example.org/example#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+
+<http://example.org/example#IFC/Building-Landscaping_parsed> a ould:UpdatableEntity ;
+    ould:consistsOf ex:IfcBuildingElementProxy,
+        ex:IfcGeographicElement,
+        ex:IfcSite ;
+    ould:hasHash "de6bb6884bd8e92b317b2f74471f068878dabacb83d0792d17cb740324150216" ;
+    ould:hasIFCID "model_id_placeholder" .
+
+ex:GroupNo_17 a ould:UpdatableEntity ;
+    ould:hasIFCID "2n2Nw9YVPDWRM5Ya5dKpj4" .
+
+ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
+    ould:consistsOf ex:GroupNo_17,
+        ex:geo-reference,
+        ex:origin ;
+    ould:hasIFCID "IfcBuildingElementProxy" .
+
+ex:IfcGeographicElement a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_site_-_grass,
+        ex:house_-_site_-_soil,
+        ex:house_-_site_-_underground,
+        ex:tree ;
+    ould:hasIFCID "IfcGeographicElement" .
+
+ex:IfcSite a ould:UpdatableEntity ;
+    ould:consistsOf ex:environment_-_site,
+        ex:house_-_site ;
+    ould:hasIFCID "IfcSite" .
+
+ex:environment_-_site a ould:UpdatableEntity ;
+    ould:hasIFCID "23sFQGRy90RxVbRHD9iSE2" .
+
+ex:geo-reference a ould:UpdatableEntity ;
+    ould:hasIFCID "3Fit2Fad92zf2f6aWdJtF5" .
+
+ex:house_-_site a ould:UpdatableEntity ;
+    ould:hasIFCID "1Pbuu0tu59NfhrTsztVBK1" .
+
+ex:house_-_site_-_grass a ould:UpdatableEntity ;
+    ould:hasIFCID "3rjfgVlxX47xval0xizSlT" .
+
+ex:house_-_site_-_soil a ould:UpdatableEntity ;
+    ould:hasIFCID "1tnCBP2MXBYgVII_I4SNlD" .
+
+ex:house_-_site_-_underground a ould:UpdatableEntity ;
+    ould:hasIFCID "2pVtmJZNb8zwPoLLLgilXw" .
+
+ex:origin a ould:UpdatableEntity ;
+    ould:hasIFCID "2F44QMqSH3TOkM$SZoqCBe" .
+
+ex:tree a ould:UpdatableEntity ;
+    ould:hasIFCID "2zxheXkSbCUgmJF8PPqK6F" .
+

@@ -1,0 +1,78 @@
+{
+    "_total_type_count": 3,
+    "model_hash": "de6bb6884bd8e92b317b2f74471f068878dabacb83d0792d17cb740324150216",
+    "Types": {
+        "IfcBuildingElementProxy": {
+            "_count1": 3,
+            "origin": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2F44QMqSH3TOkM$SZoqCBe"
+                ],
+                "hash": "833747f795f8aaff445369e92d0b5c45eb3ff9b19dcff7c9c5afc76ce7e6d89b"
+            },
+            "Group#17": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2n2Nw9YVPDWRM5Ya5dKpj4"
+                ],
+                "hash": "6621663ddea09f87e99862e101ec95bc53c0385b514d95ded5686731e683871d"
+            },
+            "geo-reference": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3Fit2Fad92zf2f6aWdJtF5"
+                ],
+                "hash": "2c35f1305426bbcc8aa057b76534533b01821a4cd8ee3a5d4123f0c7841c9368"
+            }
+        },
+        "IfcGeographicElement": {
+            "_count1": 4,
+            "house - site - grass": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3rjfgVlxX47xval0xizSlT"
+                ],
+                "hash": "74f24bbf998a14fe763f4e0cf72586d5175b7ade1cef25c99dff904e4e9b9851"
+            },
+            "house - site - soil": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1tnCBP2MXBYgVII_I4SNlD"
+                ],
+                "hash": "037c0be3c0031ba9979c2b5be5722517d417f1ac51d54f91b9ee0b8fab4a75d0"
+            },
+            "house - site - underground": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2pVtmJZNb8zwPoLLLgilXw"
+                ],
+                "hash": "a9a63506afe8802cb1457638f4c32b73f4a7edd7df726db65df6e5248617014e"
+            },
+            "tree": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2zxheXkSbCUgmJF8PPqK6F"
+                ],
+                "hash": "3e6d8a374a0836c34b08edd51fcc714720c34b1bd63777a90721ae07c6e66bb1"
+            }
+        },
+        "IfcSite": {
+            "_count1": 2,
+            "environment - site": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "23sFQGRy90RxVbRHD9iSE2"
+                ],
+                "hash": "85d27ef120e479b4755cbed7b0f75c78cc7e77aa62b10452ac945ffb4156e7c0"
+            },
+            "house - site": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1Pbuu0tu59NfhrTsztVBK1"
+                ],
+                "hash": "952b7a5659899848c5966e91c33b09de10fa093b2890a5d67195a8b960cbc5af"
+            }
+        }
+    }
+}

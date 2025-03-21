@@ -46,7 +46,7 @@ def parse_ifc_to_json(ifc_file_path, output_json_path):
     total_types = len(components)
     result = {
         "_total_type_count": total_types,
-        "model_hash": model_hash,  # Store the hash of the entire model
+        "model_hash": model_hash,  
         "Types": components
     }
 
@@ -76,9 +76,9 @@ def calculate_file_hash(file_path):
 
 if __name__ == "__main__":
     # Path to the IFC file
-    ifc_file_path = "IFC/Building-Architecture.ifc"
+    ifc_file_path = "IFC/Building-Structural.ifc"
     # Path to the output JSON file
-    output_json_path = "IFC/parsed/Building-Architecture_parsed.json"
+    output_json_path = "IFC/parsed/Building-Structural_parsed.json"
 
     # Parse the IFC file and save the structure as JSON
     parse_ifc_to_json(ifc_file_path, output_json_path)

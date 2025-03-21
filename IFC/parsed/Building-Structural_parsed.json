@@ -1,0 +1,154 @@
+{
+    "_total_type_count": 10,
+    "model_hash": "733d0ce844b9d044fabc17080cbd928e1798baff25be988a332b032089fa9e64",
+    "Types": {
+        "IfcBeam": {
+            "_count1": 1,
+            "girder": {
+                "_count2": 6,
+                "GlobalIds": [
+                    "0fqX614OH1YO1Njdxms2$Q",
+                    "0rh7bRO0L9fg1NzgGKU$Ut",
+                    "3roxUKbVv98xiUcl22_T07",
+                    "0Lvk$Qa81D5et3l3a4S9Vk",
+                    "2ddLgAnQf4mBfh5IpUp54U",
+                    "2fjJuPht9EIQaZQYZfC1Op"
+                ],
+                "hash": "d70542ef383e321cf835e95ba11a8c2d64135aa38e33e27ce6962e1ffb19aa6a"
+            }
+        },
+        "IfcBuildingElementProxy": {
+            "_count1": 3,
+            "Group#21": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1CjP_CWub368bZVuVHeHs3"
+                ],
+                "hash": "566e602b5b2160f97fe00bfb1db273813f47e6ef92e48b150a38e70dd6cb6c26"
+            },
+            "origin": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2F44QMqSH3TOkM$SZoqCBe"
+                ],
+                "hash": "833747f795f8aaff445369e92d0b5c45eb3ff9b19dcff7c9c5afc76ce7e6d89b"
+            },
+            "geo-reference": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3Fit2Fad92zf2f6aWdJtF5"
+                ],
+                "hash": "2c35f1305426bbcc8aa057b76534533b01821a4cd8ee3a5d4123f0c7841c9368"
+            }
+        },
+        "IfcChimney": {
+            "_count1": 1,
+            "house - chimney": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3dkFAzOGrAIuOzY_RdrdVv"
+                ],
+                "hash": "99587d680b34e0b4b6814ac368e12bdf6d94e60564994ee9142e5dda0db42da1"
+            }
+        },
+        "IfcFooting": {
+            "_count1": 1,
+            "house - foundation": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0pFmhV8oD1dB40_b4pscr8"
+                ],
+                "hash": "7e92490c724bf34475dd11f23665f9679d4e61b908e34f515f1aec7c51609484"
+            }
+        },
+        "IfcRoof": {
+            "_count1": 1,
+            "house - roof": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2iPwJwpPDCSgMheXwk9cBT"
+                ],
+                "hash": "0f20ae6c60f09c99f1d0f77f34741241b586531e25d144020aaedce7e4f502fb"
+            }
+        },
+        "IfcWall": {
+            "_count1": 4,
+            "house - outer wall - house back": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0DyViLJJ175RvWQi1rE7a6"
+                ],
+                "hash": "6e86c23d3de75c6ebe2949ed971192b59fe1380a905e7ffb8ff3945f89692755"
+            },
+            "house - outer wall - house front": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3SGBcf7Lv0r80vKtUCgOpf"
+                ],
+                "hash": "2c914d41ee69540d00dbf1e319cf0dd3d7d53fc8a8a67aced27de9d09fa6efc5"
+            },
+            "house - outer wall - house front right": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3oNJ9yHi5FJuFnK8yg68Yt"
+                ],
+                "hash": "bad65c7766af90c9a2416309f771dddca277ca6498ee7700cd0e8285bd2065ac"
+            },
+            "house - inner wall": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2gTJhghMT81QThk15l2VwR"
+                ],
+                "hash": "90bb31408e5618c386b02b075265eacf1c7d5a4335a5aa3ce343ca60345b727b"
+            }
+        },
+        "IfcDiscreteAccessory": {
+            "_count1": 1,
+            "beam shoe": {
+                "_count2": 2,
+                "GlobalIds": [
+                    "2r_8UEywH9_RLHe8z$Xa8J",
+                    "2cc4uJUVv5BevbidUpn1H3"
+                ],
+                "hash": "7fd82a9b90f8b83286af415c235e11921818f25c5ce97f234b09ffc96dcc8095"
+            }
+        },
+        "IfcBuildingStorey": {
+            "_count1": 1,
+            "00 groundfloor": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1Ano2ZUxnEIvVQ_beukl8b"
+                ],
+                "hash": "55a60869c55f739c93986ad55cf0696bb21400b4428f5ab91636def0c8f9e593"
+            }
+        },
+        "IfcBuilding": {
+            "_count1": 1,
+            "Single-family house": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0c$N1CTon2BB2Sp89385G8"
+                ],
+                "hash": "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c"
+            }
+        },
+        "IfcSite": {
+            "_count1": 2,
+            "environment - site": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "23sFQGRy90RxVbRHD9iSE2"
+                ],
+                "hash": "85d27ef120e479b4755cbed7b0f75c78cc7e77aa62b10452ac945ffb4156e7c0"
+            },
+            "house - site": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1Pbuu0tu59NfhrTsztVBK1"
+                ],
+                "hash": "952b7a5659899848c5966e91c33b09de10fa093b2890a5d67195a8b960cbc5af"
+            }
+        }
+    }
+}
