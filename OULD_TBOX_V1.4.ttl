@@ -71,6 +71,7 @@
         rdfs:range owl:Thing ;
         rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC-ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
         rdfs:label "has updated value"@en .
+    
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedEvent
     ould:hasUpdatedEvent rdf:type owl:ObjectProperty ;

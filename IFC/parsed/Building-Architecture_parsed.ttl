@@ -1,0 +1,164 @@
+@prefix ex: <http://example.org/example#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+
+<http://example.org/example#IFC/Building-Architecture_parsed> a ould:UpdatableEntity ;
+    ould:consistsOf ex:IfcBuilding,
+        ex:IfcBuildingElementProxy,
+        ex:IfcBuildingStorey,
+        ex:IfcChimney,
+        ex:IfcEarthworksFill,
+        ex:IfcFurniture,
+        ex:IfcRoof,
+        ex:IfcSite,
+        ex:IfcSlab,
+        ex:IfcSpace,
+        ex:IfcSpatialZone,
+        ex:IfcWall ;
+    ould:hasIFCID "model_id_placeholder" .
+
+ex:00_groundfloor a ould:UpdatableEntity ;
+    ould:hasHash "55a60869c55f739c93986ad55cf0696bb21400b4428f5ab91636def0c8f9e593" ;
+    ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
+
+ex:GroupNo_18 a ould:UpdatableEntity ;
+    ould:hasHash "9cbac2f9f76528085832f288acbbb3cabf8074a0e2c876a9d3612667d52a08af" ;
+    ould:hasIFCID "1wADrO19H3w980h1wUyXLk" .
+
+ex:GroupNo_19 a ould:UpdatableEntity ;
+    ould:hasHash "daa90fcb574764b42ea4d9cab4c7057d9247af06c53d8e2f5c52b753ade822c2" ;
+    ould:hasIFCID "0bo7_K6az7AA$4RxkSNVNM" .
+
+ex:IfcBuilding a ould:UpdatableEntity ;
+    ould:consistsOf ex:Single-family_house ;
+    ould:hasIFCID "IfcBuilding" .
+
+ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
+    ould:consistsOf ex:GroupNo_18,
+        ex:GroupNo_19,
+        ex:geo-reference,
+        ex:origin ;
+    ould:hasIFCID "IfcBuildingElementProxy" .
+
+ex:IfcBuildingStorey a ould:UpdatableEntity ;
+    ould:consistsOf ex:00_groundfloor ;
+    ould:hasIFCID "IfcBuildingStorey" .
+
+ex:IfcChimney a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_chimney ;
+    ould:hasIFCID "IfcChimney" .
+
+ex:IfcEarthworksFill a ould:UpdatableEntity ;
+    ould:consistsOf ex:sand_bedding ;
+    ould:hasIFCID "IfcEarthworksFill" .
+
+ex:IfcFurniture a ould:UpdatableEntity ;
+    ould:consistsOf ex:kitchen ;
+    ould:hasIFCID "IfcFurniture" .
+
+ex:IfcRoof a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_roof ;
+    ould:hasIFCID "IfcRoof" .
+
+ex:IfcSite a ould:UpdatableEntity ;
+    ould:consistsOf ex:environment_-_site,
+        ex:house_-_site ;
+    ould:hasIFCID "IfcSite" .
+
+ex:IfcSlab a ould:UpdatableEntity ;
+    ould:consistsOf ex:floor,
+        ex:house_-_roof_-_slab_left,
+        ex:house_-_roof_-_slab_right ;
+    ould:hasIFCID "IfcSlab" .
+
+ex:IfcSpace a ould:UpdatableEntity ;
+    ould:consistsOf ex:entry_hall,
+        ex:living_room ;
+    ould:hasIFCID "IfcSpace" .
+
+ex:IfcSpatialZone a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_gross_volume ;
+    ould:hasIFCID "IfcSpatialZone" .
+
+ex:IfcWall a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_outer_wall_-_house_left,
+        ex:house_-_outer_wall_-_house_right_back,
+        ex:house_-_outer_wall_-_house_right_front,
+        ex:plumbing_wall ;
+    ould:hasIFCID "IfcWall" .
+
+ex:Single-family_house a ould:UpdatableEntity ;
+    ould:hasHash "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c" ;
+    ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" .
+
+ex:entry_hall a ould:UpdatableEntity ;
+    ould:hasHash "68f3fec4a5894b8c59f8893710ff50e12afbe7647f6133ac6b1c0a957e6914d4" ;
+    ould:hasIFCID "18QhMtUIXBvQktPHXXxs7H" .
+
+ex:environment_-_site a ould:UpdatableEntity ;
+    ould:hasHash "85d27ef120e479b4755cbed7b0f75c78cc7e77aa62b10452ac945ffb4156e7c0" ;
+    ould:hasIFCID "23sFQGRy90RxVbRHD9iSE2" .
+
+ex:floor a ould:UpdatableEntity ;
+    ould:hasHash "35599eb3242ca96804a8d68fbc3fc7b4374a4fa6e80346c662c36c4295b85e7b" ;
+    ould:hasIFCID "3zR0BOEcLADRKln4HYporH" .
+
+ex:geo-reference a ould:UpdatableEntity ;
+    ould:hasHash "2c35f1305426bbcc8aa057b76534533b01821a4cd8ee3a5d4123f0c7841c9368" ;
+    ould:hasIFCID "3Fit2Fad92zf2f6aWdJtF5" .
+
+ex:house_-_chimney a ould:UpdatableEntity ;
+    ould:hasHash "99587d680b34e0b4b6814ac368e12bdf6d94e60564994ee9142e5dda0db42da1" ;
+    ould:hasIFCID "3dkFAzOGrAIuOzY_RdrdVv" .
+
+ex:house_-_gross_volume a ould:UpdatableEntity ;
+    ould:hasHash "66437c88560493329e5481639d86bc179b5ea63aa2427bd11cae754f68eb4d5f" ;
+    ould:hasIFCID "1yP7NInQz5uQzbiOpVFFJr" .
+
+ex:house_-_outer_wall_-_house_left a ould:UpdatableEntity ;
+    ould:hasHash "a0185da17e47df115b00b2e654eca4d532815ce401e2fb493607d53e5965e4f4" ;
+    ould:hasIFCID "0OfZwWc8j9QP5uX8xPTxDH" .
+
+ex:house_-_outer_wall_-_house_right_back a ould:UpdatableEntity ;
+    ould:hasHash "106e5cc2d1ff411203800ad7c76b2e90b22d54e02c45420db1ef4d154a779226" ;
+    ould:hasIFCID "3wdauVJT5Fx9drrREiDqA$" .
+
+ex:house_-_outer_wall_-_house_right_front a ould:UpdatableEntity ;
+    ould:hasHash "3b8670a05dfbbc188171f5827f8d3ddb18965da42275130e03951841dff7ba1e" ;
+    ould:hasIFCID "1AQAupaRP1txwK1AGiN61V" .
+
+ex:house_-_roof a ould:UpdatableEntity ;
+    ould:hasHash "0f20ae6c60f09c99f1d0f77f34741241b586531e25d144020aaedce7e4f502fb" ;
+    ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
+
+ex:house_-_roof_-_slab_left a ould:UpdatableEntity ;
+    ould:hasHash "441055f5dd0366b64b7767a4be741b702e432e27f721ce49a271287a8ba9f264" ;
+    ould:hasIFCID "0ZTBBPo6f6bxqV2K7Oelrq" .
+
+ex:house_-_roof_-_slab_right a ould:UpdatableEntity ;
+    ould:hasHash "0146511cacd512149c65e2dc47ea8cf7505d74429c473af79afa45c866966422" ;
+    ould:hasIFCID "12UVOn4wvAJPMUExKdZLb8" .
+
+ex:house_-_site a ould:UpdatableEntity ;
+    ould:hasHash "952b7a5659899848c5966e91c33b09de10fa093b2890a5d67195a8b960cbc5af" ;
+    ould:hasIFCID "1Pbuu0tu59NfhrTsztVBK1" .
+
+ex:kitchen a ould:UpdatableEntity ;
+    ould:hasHash "804fb1e645109ab9e2f59a6d41c8814d846994a78c9b93715ba361d3bd6e93c8" ;
+    ould:hasIFCID "2e9pghUJbBqR4jTInsONQT" .
+
+ex:living_room a ould:UpdatableEntity ;
+    ould:hasHash "4aff5cf9e7bf589e51a1a059c9c82f70447645ba387c95efb760a769df23aa3b" ;
+    ould:hasIFCID "0xY$LvXaDEswJDk_VU74C_" .
+
+ex:origin a ould:UpdatableEntity ;
+    ould:hasHash "833747f795f8aaff445369e92d0b5c45eb3ff9b19dcff7c9c5afc76ce7e6d89b" ;
+    ould:hasIFCID "2F44QMqSH3TOkM$SZoqCBe" .
+
+ex:plumbing_wall a ould:UpdatableEntity ;
+    ould:hasHash "51573d4730eec45b783f096e4357e11c05ee7d365098c63f2d09f62144758a43" ;
+    ould:hasIFCID "1uS5vfZPn9R8PlAaVd73on" .
+
+ex:sand_bedding a ould:UpdatableEntity ;
+    ould:hasHash "95a5d7372f6901ff3bb236ef1f717a74d566d6ad78bf8f879392c48f081b98ee" ;
+    ould:hasIFCID "3_4VN63S96DfWiJjgG8j1C" .
+

@@ -22,6 +22,7 @@ OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.0.ttl")
 OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_V2.0.ttl")  
 OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.3.ttl")  
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
+ABOX_POST_DIR = os.path.join(ABOX_DIR, "POST_ABOX")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
 JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")
 OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
@@ -112,7 +113,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Step 1: Apply CONSTRUCT queries using the new function
-    inferred_file = os.path.join(BASE_DIR, "OCCP_Post_4_inferred.ttl")
+    inferred_file = os.path.join(ABOX_POST_DIR, "OCCP_Post_4_inferred.ttl")
     construct_result = generate_post_graph(ABOX_PATH, inferred_file)
     if len(construct_result) == 0:
         logger.error("CONSTRUCT generated no triples – PreI-ABox or query faulty!")

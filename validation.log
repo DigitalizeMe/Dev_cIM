@@ -1,6 +1,6 @@
-2025-03-20 00:04:14,585 - INFO - CONSTRUCT generated 12 triples.
-2025-03-20 00:04:14,591 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_Post_4_inferred.ttl
-2025-03-20 00:04:15,754 - INFO - Conformity: False
-2025-03-20 00:04:15,754 - ERROR - Validation error: Not[NodeShape[_:405f2513815df703475e4d21192f805a]] at focusNode <http://www.example.de/example#house> (Focus Node: http://www.example.de/example#house, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-20 00:04:15,754 - ERROR - Validation error: Not[NodeShape[_:405f2513815df703475e4d21192f805a]] at focusNode <http://www.example.de/example#wall> (Focus Node: http://www.example.de/example#wall, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-20 00:04:15,754 - ERROR - Validation failed.
+2025-03-21 15:57:56,056 - INFO - CONSTRUCT generated 12 triples.
+2025-03-21 15:57:56,060 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_4TT_inferred.ttl
+2025-03-21 15:57:57,363 - INFO - Conformity: False
+2025-03-21 15:57:57,363 - ERROR - Validation error: Not[NodeShape[_:b331c9abe0289121abdc7772b8c5223f]] at focusNode <http://www.example.de/example#house> (Focus Node: http://www.example.de/example#house, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-21 15:57:57,363 - ERROR - Validation error: Not[NodeShape[_:b331c9abe0289121abdc7772b8c5223f]] at focusNode <http://www.example.de/example#wall> (Focus Node: http://www.example.de/example#wall, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-21 15:57:57,363 - ERROR - Validation failed.
