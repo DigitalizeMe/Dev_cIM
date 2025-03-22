@@ -17,10 +17,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Paths and namespaces
-OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.4.ttl")  
+OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.5.ttl")  
 OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.0.ttl")  
-OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_V2.0.ttl")  
-OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.3.ttl")  
+OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_V2.2.ttl")  
+OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.5.ttl")  
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
 ABOX_POST_DIR = os.path.join(ABOX_DIR, "POST_ABOX")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
@@ -81,7 +81,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
         return False
 
 if __name__ == "__main__":
-    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_4.ttl")
+    ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_Site.ttl")
     
     # Load TBox (OCCP and OULD)
     tbox_graph = Graph()
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         exit(1)
 
     # Step 1: Apply CONSTRUCT queries using the new function
-    inferred_file = os.path.join(ABOX_POST_DIR, "OCCP_Post_4_inferred.ttl")
+    inferred_file = os.path.join(ABOX_POST_DIR, "OCCP_Post_Site_inferred.ttl")
     construct_result = generate_post_graph(ABOX_PATH, inferred_file)
     if len(construct_result) == 0:
         logger.error("CONSTRUCT generated no triples – PreI-ABox or query faulty!")
