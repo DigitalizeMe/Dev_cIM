@@ -64,7 +64,9 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     print(f"Turtle file saved: {turtle_file}")
 
 if __name__ == "__main__":
-    json_file = "IFC/parsed/Building-Structural_parsed.json"
-    turtle_file = "IFC/parsed/Building-Structural_parsed.ttl"
-    ifc_file_name = "IFC/Building-Structural.ifc"  
+    part_name = "IFC_Architecture"
+
+    json_file = f"IFC/parsed/{part_name}_parsed.json"
+    turtle_file = f"IFC/parsed/{part_name}_parsed.ttl"
+    ifc_file_name = f"IFC/{part_name}.ifc"  
     create_turtle_from_json(json_file, turtle_file, ifc_file_name)

@@ -1,0 +1,94 @@
+{
+    "_total_type_count": 6,
+    "model_hash": "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c",
+    "Types": {
+        "IfcEarthworksFill": {
+            "_count1": 1,
+            "sand bedding": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3_4VN63S96DfWiJjgG8j1C"
+                ],
+                "hash": "95a5d7372f6901ff3bb236ef1f717a74d566d6ad78bf8f879392c48f081b98ee"
+            }
+        },
+        "IfcRoof": {
+            "_count1": 1,
+            "house - roof": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "2iPwJwpPDCSgMheXwk9cBT"
+                ],
+                "hash": "0f20ae6c60f09c99f1d0f77f34741241b586531e25d144020aaedce7e4f502fb"
+            }
+        },
+        "IfcSlab": {
+            "_count1": 3,
+            "floor": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3zR0BOEcLADRKln4HYporH"
+                ],
+                "hash": "35599eb3242ca96804a8d68fbc3fc7b4374a4fa6e80346c662c36c4295b85e7b"
+            },
+            "house - roof - slab left": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0ZTBBPo6f6bxqV2K7Oelrq"
+                ],
+                "hash": "441055f5dd0366b64b7767a4be741b702e432e27f721ce49a271287a8ba9f264"
+            },
+            "house - roof - slab right": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "12UVOn4wvAJPMUExKdZLb8"
+                ],
+                "hash": "0146511cacd512149c65e2dc47ea8cf7505d74429c473af79afa45c866966422"
+            }
+        },
+        "IfcWall": {
+            "_count1": 3,
+            "house - outer wall - house right front": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1AQAupaRP1txwK1AGiN61V"
+                ],
+                "hash": "3b8670a05dfbbc188171f5827f8d3ddb18965da42275130e03951841dff7ba1e"
+            },
+            "house - outer wall - house right back": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "3wdauVJT5Fx9drrREiDqA$"
+                ],
+                "hash": "106e5cc2d1ff411203800ad7c76b2e90b22d54e02c45420db1ef4d154a779226"
+            },
+            "house - outer wall - house left": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0OfZwWc8j9QP5uX8xPTxDH"
+                ],
+                "hash": "a0185da17e47df115b00b2e654eca4d532815ce401e2fb493607d53e5965e4f4"
+            }
+        },
+        "IfcBuildingStorey": {
+            "_count1": 1,
+            "00 groundfloor": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "1Ano2ZUxnEIvVQ_beukl8b"
+                ],
+                "hash": "55a60869c55f739c93986ad55cf0696bb21400b4428f5ab91636def0c8f9e593"
+            }
+        },
+        "IfcBuilding": {
+            "_count1": 1,
+            "Single-family house": {
+                "_count2": 1,
+                "GlobalIds": [
+                    "0c$N1CTon2BB2Sp89385G8"
+                ],
+                "hash": "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c"
+            }
+        }
+    }
+}

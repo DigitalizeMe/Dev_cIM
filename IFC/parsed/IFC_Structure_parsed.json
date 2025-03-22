@@ -1,44 +1,27 @@
 {
-    "_total_type_count": 10,
-    "model_hash": "733d0ce844b9d044fabc17080cbd928e1798baff25be988a332b032089fa9e64",
+    "_total_type_count": 9,
+    "model_hash": "8a85255355b68da4c208550ea7e4f8158e3f5fd3d823980529d65070f3bd2dcf",
     "Types": {
         "IfcBeam": {
             "_count1": 1,
             "girder": {
-                "_count2": 6,
+                "_count2": 3,
                 "GlobalIds": [
                     "0fqX614OH1YO1Njdxms2$Q",
                     "0rh7bRO0L9fg1NzgGKU$Ut",
-                    "3roxUKbVv98xiUcl22_T07",
-                    "0Lvk$Qa81D5et3l3a4S9Vk",
-                    "2ddLgAnQf4mBfh5IpUp54U",
-                    "2fjJuPht9EIQaZQYZfC1Op"
+                    "3roxUKbVv98xiUcl22_T07"
                 ],
                 "hash": "d70542ef383e321cf835e95ba11a8c2d64135aa38e33e27ce6962e1ffb19aa6a"
             }
         },
         "IfcBuildingElementProxy": {
-            "_count1": 3,
+            "_count1": 1,
             "Group#21": {
                 "_count2": 1,
                 "GlobalIds": [
                     "1CjP_CWub368bZVuVHeHs3"
                 ],
                 "hash": "566e602b5b2160f97fe00bfb1db273813f47e6ef92e48b150a38e70dd6cb6c26"
-            },
-            "origin": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "2F44QMqSH3TOkM$SZoqCBe"
-                ],
-                "hash": "833747f795f8aaff445369e92d0b5c45eb3ff9b19dcff7c9c5afc76ce7e6d89b"
-            },
-            "geo-reference": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "3Fit2Fad92zf2f6aWdJtF5"
-                ],
-                "hash": "2c35f1305426bbcc8aa057b76534533b01821a4cd8ee3a5d4123f0c7841c9368"
             }
         },
         "IfcChimney": {
@@ -131,23 +114,6 @@
                     "0c$N1CTon2BB2Sp89385G8"
                 ],
                 "hash": "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c"
-            }
-        },
-        "IfcSite": {
-            "_count1": 2,
-            "environment - site": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "23sFQGRy90RxVbRHD9iSE2"
-                ],
-                "hash": "85d27ef120e479b4755cbed7b0f75c78cc7e77aa62b10452ac945ffb4156e7c0"
-            },
-            "house - site": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "1Pbuu0tu59NfhrTsztVBK1"
-                ],
-                "hash": "952b7a5659899848c5966e91c33b09de10fa093b2890a5d67195a8b960cbc5af"
             }
         }
     }

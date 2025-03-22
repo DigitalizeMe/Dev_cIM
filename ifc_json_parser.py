@@ -75,10 +75,12 @@ def calculate_file_hash(file_path):
     return sha256.hexdigest()        
 
 if __name__ == "__main__":
+    part_name = "IFC_Architecture"
+
     # Path to the IFC file
-    ifc_file_path = "IFC/Building-Structural.ifc"
+    ifc_file_path = f"IFC/{part_name}.ifc"
     # Path to the output JSON file
-    output_json_path = "IFC/parsed/Building-Structural_parsed.json"
+    output_json_path = f"IFC/parsed/{part_name}_parsed.json"
 
     # Parse the IFC file and save the structure as JSON
     parse_ifc_to_json(ifc_file_path, output_json_path)

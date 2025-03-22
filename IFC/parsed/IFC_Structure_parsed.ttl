@@ -1,10 +1,7 @@
-@prefix ae: <http://example.org/autoedit#> .
 @prefix ex: <http://example.org/example#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:Building-Structural_parsed a ould:UpdatableEntity ;
+ex:IFC_Structure_parsed a ould:UpdatableEntity ;
     ould:consistsOf ex:IfcBeam,
         ex:IfcBuilding,
         ex:IfcBuildingElementProxy,
@@ -13,33 +10,14 @@ ex:Building-Structural_parsed a ould:UpdatableEntity ;
         ex:IfcDiscreteAccessory,
         ex:IfcFooting,
         ex:IfcRoof,
-        ex:IfcSite,
         ex:IfcWall ;
-    ould:hasHash "733d0ce844b9d044fabc17080cbd928e1798baff25be988a332b032089fa9e64" ;
-    ould:hasIFCID "Building-Structural" .
-
-ex:instant_BeginningOfPlanning_00_groundfloor a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2025-01-01"^^xsd:date ;
-    occp:startsPhase ae:phaseA_00_groundfloor .
-
-ex:instant_BeginningOfPlanning_GroupNo_21 a occp:BeginningOfPlanning ;
-    occp:hasEstimatedTime "2025-01-05"^^xsd:date ;
-    occp:startsPhase ae:phaseA_GroupNo_21 .
-
-ex:instant_DataProcurement_00_groundfloor a occp:DataProcurement ;
-    occp:hasActualTime "2025-01-02"^^xsd:date ;
-    occp:startsPhase ae:phaseA_00_groundfloor .
-
-ex:instant_DataProcurement_GroupNo_21 a occp:DataProcurement ;
-    occp:hasEstimatedTime "2025-01-06"^^xsd:date ;
-    occp:startsPhase ae:phaseA_GroupNo_21 .
+    ould:hasHash "8a85255355b68da4c208550ea7e4f8158e3f5fd3d823980529d65070f3bd2dcf" ;
+    ould:hasIFCID "IFC_Structure" .
 
 ex:00_groundfloor a ould:UpdatableEntity ;
-    occp:hasPhase ae:phaseA_00_groundfloor ;
     ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
 
 ex:GroupNo_21 a ould:UpdatableEntity ;
-    occp:hasPhase ae:phaseA_GroupNo_21 ;
     ould:hasIFCID "1CjP_CWub368bZVuVHeHs3" .
 
 ex:IfcBeam a ould:UpdatableEntity ;
@@ -51,9 +29,7 @@ ex:IfcBuilding a ould:UpdatableEntity ;
     ould:hasIFCID "IfcBuilding" .
 
 ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
-    ould:consistsOf ex:GroupNo_21,
-        ex:geo-reference,
-        ex:origin ;
+    ould:consistsOf ex:GroupNo_21 ;
     ould:hasIFCID "IfcBuildingElementProxy" .
 
 ex:IfcBuildingStorey a ould:UpdatableEntity ;
@@ -76,11 +52,6 @@ ex:IfcRoof a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_roof ;
     ould:hasIFCID "IfcRoof" .
 
-ex:IfcSite a ould:UpdatableEntity ;
-    ould:consistsOf ex:environment_-_site,
-        ex:house_-_site ;
-    ould:hasIFCID "IfcSite" .
-
 ex:IfcWall a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_inner_wall,
         ex:house_-_outer_wall_-_house_back,
@@ -93,12 +64,6 @@ ex:Single-family_house a ould:UpdatableEntity ;
 
 ex:beam_shoe a ould:UpdatableEntity ;
     ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" .
-
-ex:environment_-_site a ould:UpdatableEntity ;
-    ould:hasIFCID "23sFQGRy90RxVbRHD9iSE2" .
-
-ex:geo-reference a ould:UpdatableEntity ;
-    ould:hasIFCID "3Fit2Fad92zf2f6aWdJtF5" .
 
 ex:girder a ould:UpdatableEntity ;
     ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" .
@@ -123,14 +88,4 @@ ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
 
 ex:house_-_roof a ould:UpdatableEntity ;
     ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
-
-ex:house_-_site a ould:UpdatableEntity ;
-    ould:hasIFCID "1Pbuu0tu59NfhrTsztVBK1" .
-
-ex:origin a ould:UpdatableEntity ;
-    ould:hasIFCID "2F44QMqSH3TOkM$SZoqCBe" .
-
-ae:phaseA_00_groundfloor a occp:PhaseA_Planning .
-
-ae:phaseA_GroupNo_21 a occp:PhaseA_Planning .
 

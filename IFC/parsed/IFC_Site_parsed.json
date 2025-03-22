@@ -1,23 +1,9 @@
 {
     "_total_type_count": 3,
-    "model_hash": "de6bb6884bd8e92b317b2f74471f068878dabacb83d0792d17cb740324150216",
+    "model_hash": "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb",
     "Types": {
         "IfcBuildingElementProxy": {
-            "_count1": 3,
-            "origin": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "2F44QMqSH3TOkM$SZoqCBe"
-                ],
-                "hash": "833747f795f8aaff445369e92d0b5c45eb3ff9b19dcff7c9c5afc76ce7e6d89b"
-            },
-            "Group#17": {
-                "_count2": 1,
-                "GlobalIds": [
-                    "2n2Nw9YVPDWRM5Ya5dKpj4"
-                ],
-                "hash": "6621663ddea09f87e99862e101ec95bc53c0385b514d95ded5686731e683871d"
-            },
+            "_count1": 1,
             "geo-reference": {
                 "_count2": 1,
                 "GlobalIds": [
