@@ -15,24 +15,6 @@ ex:IFC_Architecture_parsed a ould:UpdatableEntity ;
     ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
     ould:hasIFCID "IFC_Architecture" .
 
-ex:instant_ConstructionCompletion_building a occp:ConstructionCompletion ;
-    occp:endsPhase ex:phaseC_building ;
-    occp:hasActualTime "2002-10-31"^^xsd:date ;
-    occp:hasPhase ex:phaseC_building .
-
-ex:instant_ConstructionCompletion_storey a occp:ConstructionCompletion ;
-    occp:endsPhase ex:phaseC_storey ;
-    occp:hasActualTime "2002-12-31"^^xsd:date .
-
-ex:instant_ConstructionStart_building a occp:ConstructionStart ;
-    occp:hasActualTime "2002-01-01"^^xsd:date ;
-    occp:hasPhase ex:phaseC_building ;
-    occp:startsPhase ex:phaseC_building .
-
-ex:instant_ConstructionStart_storey a occp:ConstructionStart ;
-    occp:hasActualTime "2002-04-01"^^xsd:date ;
-    occp:startsPhase ex:phaseC_storey .
-
 ex:instant_DataProcurement_building a occp:DataProcurement ;
     occp:hasActualTime "2000-01-08"^^xsd:date ;
     occp:hasPhase ex:phaseA_building .
@@ -41,44 +23,16 @@ ex:instant_DataProcurement_storey a occp:DataProcurement ;
     occp:hasActualTime "2000-01-12"^^xsd:date ;
     occp:hasPhase ex:phaseA_storey .
 
-ex:instant_DeconstructionCompletion_building a occp:DeconstructionCompletion ;
-    occp:endsPhase ex:phaseM_building ;
-    occp:hasActualTime "2015-05-31"^^xsd:date ;
-    occp:hasPhase ex:phaseM_building .
-
-ex:instant_DeconstructionCompletion_storey a occp:DeconstructionCompletion ;
-    occp:endsPhase ex:phaseM_storey ;
-    occp:hasActualTime "2015-05-31"^^xsd:date .
-
-ex:instant_DeconstructionStart_building a occp:DeconstructionStart ;
-    occp:hasActualTime "2015-05-01"^^xsd:date ;
-    occp:hasPhase ex:phaseM_building ;
-    occp:startsPhase ex:phaseM_building .
-
-ex:instant_DeconstructionStart_storey a occp:DeconstructionStart ;
-    occp:hasActualTime "2015-05-01"^^xsd:date ;
-    occp:startsPhase ex:phaseM_storey .
-
 ex:instant_EDIT_ASTR_storey a occp:ReviewRejection ;
     occp:hasActualTime "2000-02-23"^^xsd:date ;
     occp:hasPhase ex:phaseA_storey ;
     occp:startsCycle ex:cycleA_storey2 .
 
-ex:instant_ReviewStart_building a occp:ReviewStart ;
-    occp:hasActualTime "2000-02-15"^^xsd:date ;
-    occp:hasPhase ex:phaseB_building ;
-    occp:startsCycle ex:cycleA_building ;
-    occp:startsPhase ex:phaseB_building .
-
-ex:instant_ReviewStart_storey a occp:ReviewStart ;
-    occp:hasActualTime "2000-02-17"^^xsd:date ;
-    occp:startsCycle ex:cycleA_storey ;
-    occp:startsPhase ex:phaseB_storey .
-
-ex:instant_ReviewStart_storey2 a occp:ReviewStart ;
-    occp:hasActualTime "2000-02-25"^^xsd:date ;
-    occp:hasPhase ex:phaseB_storey ;
-    occp:startsCycle ex:cycleA_storey2 .
+ex:instant_ReviewApproval_storey2 a occp:ReviewRecjection ;
+    occp:endsCycle ex:cycleA_storey ;
+    occp:endsPhase ex:phaseA_storey,
+        ex:phaseB_storey ;
+    occp:hasEstimatedTime "2000-02-18"^^xsd:date .
 
 ex:instant_SubmissionToReview_building a occp:SubmissionToReview ;
     occp:hasActualTime "2000-02-01"^^xsd:date ;
@@ -91,24 +45,6 @@ ex:instant_SubmissionToReview_storey a occp:SubmissionToReview ;
 ex:instant_SubmissionToReview_storey2 a occp:SubmissionToReview ;
     occp:hasActualTime "2000-02-24"^^xsd:date ;
     occp:hasPhase ex:phaseA_storey .
-
-ex:instant_UsageEnd_building a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_building ;
-    occp:hasActualTime "2015-04-30"^^xsd:date ;
-    occp:hasPhase ex:phaseD_building .
-
-ex:instant_UsageEnd_storey a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_storey ;
-    occp:hasActualTime "2015-04-30"^^xsd:date .
-
-ex:instant_UsageStart_building a occp:UsageStart ;
-    occp:hasActualTime "2003-01-01"^^xsd:date ;
-    occp:hasPhase ex:phaseD_building ;
-    occp:startsPhase ex:phaseD_building .
-
-ex:instant_UsageStart_storey a occp:UsageStart ;
-    occp:hasActualTime "2003-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseD_storey .
 
 ex:IfcBuilding a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_building ;
@@ -128,12 +64,125 @@ ex:IfcBuildingStorey a ould:UpdatableEntity ;
     ould:hasIFCID "IfcBuildingStorey" .
 
 ex:cycleA_arch a occp:CycleA_PlanningReview ;
-    occp:hasCycleNumber 3 .
+    occp:hasCycleNumber 1,
+        3 .
+
+ex:instant_BeginningOfPlanning_building a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-01-01"^^xsd:date ;
+    occp:hasPhase ex:phaseA_building ;
+    occp:startsPhase ex:phaseA_building .
+
+ex:instant_BeginningOfPlanning_storey a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-03-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_storey .
+
+ex:instant_BeginningOfPlanning_storey2 a occp:BeginningOfPlanning ;
+    occp:hasEstimatedTime "2000-03-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_storey .
+
+ex:instant_ConstructionCompletion_building a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_building ;
+    occp:hasActualTime "2002-10-31"^^xsd:date ;
+    occp:hasPhase ex:phaseC_building .
+
+ex:instant_ConstructionCompletion_storey a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_storey ;
+    occp:hasActualTime "2002-12-31"^^xsd:date .
+
+ex:instant_ConstructionCompletion_storey2 a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_storey ;
+    occp:hasEstimatedTime "2002-12-31"^^xsd:date .
+
+ex:instant_ConstructionStart_building a occp:ConstructionStart ;
+    occp:hasActualTime "2002-01-01"^^xsd:date ;
+    occp:hasPhase ex:phaseC_building ;
+    occp:startsPhase ex:phaseC_building .
+
+ex:instant_ConstructionStart_storey a occp:ConstructionStart ;
+    occp:hasActualTime "2002-04-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_storey .
+
+ex:instant_ConstructionStart_storey2 a occp:ConstructionStart ;
+    occp:hasEstimatedTime "2002-04-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_storey .
+
+ex:instant_DeconstructionCompletion_building a occp:DeconstructionCompletion ;
+    occp:endsPhase ex:phaseM_building ;
+    occp:hasActualTime "2015-05-31"^^xsd:date ;
+    occp:hasPhase ex:phaseM_building .
+
+ex:instant_DeconstructionCompletion_storey a occp:DeconstructionCompletion ;
+    occp:endsPhase ex:phaseM_storey ;
+    occp:hasActualTime "2015-05-31"^^xsd:date .
+
+ex:instant_DeconstructionCompletion_storey2 a occp:DeconstructionCompletion ;
+    occp:endsPhase ex:phaseM_storey ;
+    occp:hasEstimatedTime "2015-05-31"^^xsd:date .
+
+ex:instant_DeconstructionStart_building a occp:DeconstructionStart ;
+    occp:hasActualTime "2015-05-01"^^xsd:date ;
+    occp:hasPhase ex:phaseM_building ;
+    occp:startsPhase ex:phaseM_building .
+
+ex:instant_DeconstructionStart_storey a occp:DeconstructionStart ;
+    occp:hasActualTime "2015-05-01"^^xsd:date ;
+    occp:startsPhase ex:phaseM_storey .
+
+ex:instant_DeconstructionStart_storey2 a occp:DeconstructionStart ;
+    occp:hasEstimatedTime "2015-05-01"^^xsd:date ;
+    occp:startsPhase ex:phaseM_storey .
+
+ex:instant_ReviewApproval_storey a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA_storey ;
+    occp:endsPhase ex:phaseA_storey,
+        ex:phaseB_storey ;
+    occp:hasEstimatedTime "2000-02-17"^^xsd:date .
 
 ex:instant_ReviewRejection_storey a occp:ReviewRejection ;
     occp:endsCycle ex:cycleA_storey ;
     occp:hasActualTime "2000-02-18"^^xsd:date ;
     occp:hasPhase ex:phaseB_storey .
+
+ex:instant_ReviewStart_storey3 a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-25"^^xsd:date ;
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewStart_storey4 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-25"^^xsd:date ;
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewStart_storey5 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-24"^^xsd:date ;
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_UsageEnd_building a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_building ;
+    occp:hasActualTime "2015-04-30"^^xsd:date ;
+    occp:hasPhase ex:phaseD_building .
+
+ex:instant_UsageEnd_storey a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_storey ;
+    occp:hasActualTime "2015-04-30"^^xsd:date .
+
+ex:instant_UsageEnd_storey2 a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_storey ;
+    occp:hasEstimatedTime "2015-04-30"^^xsd:date .
+
+ex:instant_UsageStart_building a occp:UsageStart ;
+    occp:hasActualTime "2003-01-01"^^xsd:date ;
+    occp:hasPhase ex:phaseD_building ;
+    occp:startsPhase ex:phaseD_building .
+
+ex:instant_UsageStart_storey a occp:UsageStart ;
+    occp:hasActualTime "2003-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseD_storey .
+
+ex:instant_UsageStart_storey2 a occp:UsageStart ;
+    occp:hasEstimatedTime "2003-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseD_storey .
 
 ex:phaseA_arch a occp:PhaseA_Planning .
 
@@ -145,21 +194,25 @@ ex:phaseD_arch a occp:PhaseD_Usage .
 
 ex:phaseM_arch a occp:PhaseM_Deconstruction .
 
-ex:instant_BeginningOfPlanning_building a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2000-01-01"^^xsd:date ;
-    occp:hasPhase ex:phaseA_building ;
-    occp:startsPhase ex:phaseA_building .
+ex:instant_ReviewStart_building a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-15"^^xsd:date ;
+    occp:hasPhase ex:phaseB_building ;
+    occp:startsCycle ex:cycleA_building ;
+    occp:startsPhase ex:phaseB_building .
 
-ex:instant_BeginningOfPlanning_storey a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2000-03-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_storey .
+ex:instant_ReviewStart_storey a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-17"^^xsd:date ;
+    occp:startsCycle ex:cycleA_storey ;
+    occp:startsPhase ex:phaseB_storey .
+
+ex:instant_ReviewStart_storey2 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-17"^^xsd:date ;
+    occp:startsCycle ex:cycleA_storey ;
+    occp:startsPhase ex:phaseB_storey .
 
 ex:cycleA_building a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_building ;
     occp:hasActualEnd ex:instant_ReviewApproval_building ;
-    occp:hasCycleNumber 1 .
-
-ex:cycleA_storey a occp:CycleA_PlanningReview ;
-    occp:hasActualEnd ex:instant_ReviewRejection_storey ;
     occp:hasCycleNumber 1 .
 
 ex:instant_ReviewApproval_building a occp:ReviewApproval ;
@@ -169,41 +222,89 @@ ex:instant_ReviewApproval_building a occp:ReviewApproval ;
     occp:hasActualTime "2000-02-18"^^xsd:date ;
     occp:hasPhase ex:phaseA_building .
 
-ex:instant_ReviewApproval_storey a occp:ReviewApproval ;
+ex:instant_ReviewApproval_storey3 a occp:ReviewApproval ;
     occp:endsCycle ex:cycleA_storey2 ;
     occp:endsPhase ex:phaseA_storey,
         ex:phaseB_storey ;
     occp:hasActualTime "2000-03-01"^^xsd:date .
 
-ex:phaseB_building a occp:PhaseB_Review .
+ex:instant_ReviewApproval_storey4 a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_storey2 ;
+    occp:endsPhase ex:phaseA_storey,
+        ex:phaseB_storey ;
+    occp:hasEstimatedTime "2000-03-01"^^xsd:date .
 
-ex:phaseC_storey a occp:PhaseC_Construction .
+ex:instant_ReviewApproval_storey5 a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_storey2 ;
+    occp:endsPhase ex:phaseA_storey,
+        ex:phaseB_storey ;
+    occp:hasEstimatedTime "2000-02-28"^^xsd:date .
 
-ex:phaseD_storey a occp:PhaseD_Usage .
+ex:phaseB_building a occp:PhaseB_Review ;
+    occp:hasActualBeginning ex:instant_ReviewStart_building ;
+    occp:hasActualEnd ex:instant_ReviewApproval_building .
 
-ex:phaseM_storey a occp:PhaseM_Deconstruction .
+ex:phaseC_building a occp:PhaseC_Construction ;
+    occp:hasActualBeginning ex:instant_ConstructionStart_building ;
+    occp:hasActualEnd ex:instant_ConstructionCompletion_building .
 
-ex:cycleA_storey2 a occp:CycleA_PlanningReview ;
-    occp:hasActualEnd ex:instant_ReviewApproval_storey ;
-    occp:hasCycleNumber 2 .
+ex:phaseC_storey a occp:PhaseC_Construction ;
+    occp:hasActualBeginning ex:instant_ConstructionStart_storey ;
+    occp:hasActualEnd ex:instant_ConstructionCompletion_storey ;
+    occp:hasEstimatedBeginning ex:instant_ConstructionStart_storey2 ;
+    occp:hasEstimatedEnd ex:instant_ConstructionCompletion_storey2 .
 
-ex:phaseB_storey a occp:PhaseB_Review .
+ex:phaseD_building a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_building ;
+    occp:hasActualEnd ex:instant_UsageEnd_building .
 
-ex:phaseC_building a occp:PhaseC_Construction .
+ex:phaseD_storey a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_storey ;
+    occp:hasActualEnd ex:instant_UsageEnd_storey ;
+    occp:hasEstimatedBeginning ex:instant_UsageStart_storey2 ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_storey2 .
 
-ex:phaseD_building a occp:PhaseD_Usage .
+ex:phaseM_building a occp:PhaseM_Deconstruction ;
+    occp:hasActualBeginning ex:instant_DeconstructionStart_building ;
+    occp:hasActualEnd ex:instant_DeconstructionCompletion_building .
 
-ex:phaseM_building a occp:PhaseM_Deconstruction .
+ex:phaseM_storey a occp:PhaseM_Deconstruction ;
+    occp:hasActualBeginning ex:instant_DeconstructionStart_storey ;
+    occp:hasActualEnd ex:instant_DeconstructionCompletion_storey ;
+    occp:hasEstimatedBeginning ex:instant_DeconstructionStart_storey2 ;
+    occp:hasEstimatedEnd ex:instant_DeconstructionCompletion_storey2 .
+
+ex:cycleA_storey a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_storey ;
+    occp:hasActualEnd ex:instant_ReviewRejection_storey ;
+    occp:hasCycleNumber 1 ;
+    occp:hasEstimatedBeginning ex:instant_ReviewStart_storey2 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey .
 
 ex:phaseA_building a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_building ;
-    occp:hasActualEnd ex:instant_ReviewApproval_building ;
-    occp:hasEstimatedBeginning ex:instant_BeginningOfPlanning_building ;
-    occp:hasEstimatedEnd ex:instant_ReviewApproval_building .
+    occp:hasActualEnd ex:instant_ReviewApproval_building .
+
+ex:cycleA_storey2 a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_storey3 ;
+    occp:hasActualEnd ex:instant_ReviewApproval_storey3 ;
+    occp:hasCycleNumber 2 ;
+    occp:hasEstimatedBeginning ex:instant_ReviewStart_storey4,
+        ex:instant_ReviewStart_storey5 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey4,
+        ex:instant_ReviewApproval_storey5 .
+
+ex:phaseB_storey a occp:PhaseB_Review ;
+    occp:hasActualBeginning ex:instant_ReviewStart_storey ;
+    occp:hasActualEnd ex:instant_ReviewApproval_storey3 ;
+    occp:hasEstimatedBeginning ex:instant_ReviewStart_storey2 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey4,
+        ex:instant_ReviewApproval_storey5 .
 
 ex:phaseA_storey a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_storey ;
-    occp:hasActualEnd ex:instant_ReviewApproval_storey ;
-    occp:hasEstimatedBeginning ex:instant_BeginningOfPlanning_storey ;
-    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey .
+    occp:hasActualEnd ex:instant_ReviewApproval_storey3 ;
+    occp:hasEstimatedBeginning ex:instant_BeginningOfPlanning_storey2 ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey4,
+        ex:instant_ReviewApproval_storey5 .
 

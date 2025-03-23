@@ -117,14 +117,14 @@ WHERE {
                          occp:endsPhase ?phase ;
                          occp:hasActualTime ?endTimeActual .
         FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?endType { occp:ConstructionAcceptance occp:CompletionOfConstruction }
+        VALUES ?endType { occp:ConstructionAcceptance }
     }
     OPTIONAL {
         ?endInstantEstimated a ?endType ;
                             occp:endsPhase ?phase ;
                             occp:hasEstimatedTime ?endTimeEstimated .
         FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?endType { occp:ConstructionAcceptance occp:CompletionOfConstruction }
+        VALUES ?endType { occp:ConstructionAcceptance }
     }
 }
 """
@@ -242,6 +242,8 @@ WHERE {
 """
 
 CONSTRUCT_CYCLE_A = """
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
 CONSTRUCT {
     ?cycle occp:hasActualBeginning ?startInstantActual .
     ?cycle occp:hasActualEnd ?endInstantActual .
@@ -252,15 +254,15 @@ CONSTRUCT {
 WHERE {
     ?cycle a occp:CycleA_PlanningReview .
     ?component occp:hasCycle ?cycle .
-    FILTER NOT EXISTS { ?component ould:consistsOf ?any }  # Child-Components only
+    FILTER NOT EXISTS { ?component ould:consistsOf ?any }  # Nur Blattkomponenten
     OPTIONAL {
-        ?startInstantActual a occp:ReviewStart ;
+        ?startInstantActual a occp:SubmissionToReview ;
                            occp:startsCycle ?cycle ;
                            occp:hasActualTime ?startTimeActual .
         FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
     }
     OPTIONAL {
-        ?startInstantEstimated a occp:ReviewStart ;
+        ?startInstantEstimated a occp:SubmissionToReview ;
                               occp:startsCycle ?cycle ;
                               occp:hasEstimatedTime ?startTimeEstimated .
         FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
@@ -270,91 +272,17 @@ WHERE {
                          occp:endsCycle ?cycle ;
                          occp:hasActualTime ?endTimeActual .
         FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+        VALUES ?endType { occp:ReviewRejection occp:ReviewApproval }
     }
     OPTIONAL {
         ?endInstantEstimated a ?endType ;
                             occp:endsCycle ?cycle ;
                             occp:hasEstimatedTime ?endTimeEstimated .
         FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+        VALUES ?endType { occp:ReviewRejection occp:ReviewApproval }
     }
     OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
     BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
-}
-"""
-
-CONSTRUCT_CYCLE_A_ACTUAL = """
-CONSTRUCT {
-    ?cycle occp:hasActualBeginning ?startInstantActual .
-    ?cycle occp:hasActualEnd ?endInstantActual .
-}
-WHERE {
-    ?cycle a occp:CycleA_PlanningReview .
-    ?component occp:hasCycle ?cycle .
-    FILTER NOT EXISTS { ?component ould:consistsOf ?any }
-    OPTIONAL {
-        SELECT ?cycle ?startInstantActual
-        WHERE {
-            ?component occp:hasCycle ?cycle .
-            ?startInstantActual a occp:ReviewStart ;
-                               occp:startsCycle ?cycle ;
-                               occp:hasActualTime ?startTimeActual .
-            FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        }
-        ORDER BY ?startTimeActual
-        LIMIT 1
-    }
-    OPTIONAL {
-        SELECT ?cycle ?endInstantActual
-        WHERE {
-            ?component occp:hasCycle ?cycle .
-            ?endInstantActual occp:endsCycle ?cycle ;
-                             occp:hasActualTime ?endTimeActual .
-            FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-            ?endInstantActual a ?endType .
-            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
-        }
-        ORDER BY DESC(?endTimeActual)
-        LIMIT 1
-    }
-}
-"""
-
-CONSTRUCT_CYCLE_A_ESTIMATED = """
-CONSTRUCT {
-    ?cycle occp:hasEstimatedBeginning ?startInstantEstimated .
-    ?cycle occp:hasEstimatedEnd ?endInstantEstimated .
-}
-WHERE {
-    ?cycle a occp:CycleA_PlanningReview .
-    ?component occp:hasCycle ?cycle .
-    FILTER NOT EXISTS { ?component ould:consistsOf ?any }
-    OPTIONAL {
-        SELECT ?cycle ?startInstantEstimated
-        WHERE {
-            ?component occp:hasCycle ?cycle .
-            ?startInstantEstimated a occp:ReviewStart ;
-                                  occp:startsCycle ?cycle ;
-                                  occp:hasEstimatedTime ?startTimeEstimated .
-            FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
-        }
-        ORDER BY ?startTimeEstimated
-        LIMIT 1
-    }
-    OPTIONAL {
-        SELECT ?cycle ?endInstantEstimated
-        WHERE {
-            ?component occp:hasCycle ?cycle .
-            ?endInstantEstimated occp:endsCycle ?cycle ;
-                                occp:hasEstimatedTime ?endTimeEstimated .
-            FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-            ?endInstantEstimated a ?endType .
-            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
-        }
-        ORDER BY DESC(?endTimeEstimated)
-        LIMIT 1
-    }
 }
 """
 
@@ -435,135 +363,10 @@ WHERE {
 }
 """
 
-CONSTRUCT_PARENT_PHASES = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
-CONSTRUCT {
-    ?parentPhase occp:hasActualBeginning ?earliestActualStart .
-    ?parentPhase occp:hasActualEnd ?latestActualEnd .
-    ?parentPhase occp:hasEstimatedBeginning ?earliestEstimatedStart .
-    ?parentPhase occp:hasEstimatedEnd ?latestEstimatedEnd .
-}
-WHERE {
-    ?parentComponent occp:hasPhase ?parentPhase .
-    ?parentComponent ould:consistsOf ?childComponent .
-    ?childComponent occp:hasPhase ?childPhase .
-
-    # Earliest Actual Beginning
-    OPTIONAL {
-        SELECT ?parentPhase ?earliestActualStart
-        WHERE {
-            ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentComponent ould:consistsOf ?childComponent .
-            ?childComponent occp:hasPhase ?childPhase .
-            ?startInstant occp:startsPhase ?childPhase ;
-                          occp:hasActualTime ?startTime .
-            FILTER NOT EXISTS { ?startInstant occp:hasEstimatedTime ?anyEstimatedTime . }
-        }
-        ORDER BY ?startTime
-        LIMIT 1
-    }
-
-    # Latest Actual End
-    OPTIONAL {
-        SELECT ?parentPhase ?latestActualEnd
-        WHERE {
-            ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentComponent ould:consistsOf ?childComponent .
-            ?childComponent occp:hasPhase ?childPhase .
-            ?endInstant occp:endsPhase ?childPhase ;
-                        occp:hasActualTime ?endTime .
-            FILTER NOT EXISTS { ?endInstant occp:hasEstimatedTime ?anyEstimatedTime . }
-            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
-            ?endInstant a ?endType .
-        }
-        ORDER BY DESC(?endTime)
-        LIMIT 1
-    }
-
-    # Earliest Estimated Beginning
-    OPTIONAL {
-        SELECT ?parentPhase ?earliestEstimatedStart
-        WHERE {
-            ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentComponent ould:consistsOf ?childComponent .
-            ?childComponent occp:hasPhase ?childPhase .
-            ?startInstant occp:startsPhase ?childPhase ;
-                          occp:hasEstimatedTime ?startTime .
-            FILTER NOT EXISTS { ?startInstant occp:hasActualTime ?anyActualTime . }
-        }
-        ORDER BY ?startTime
-        LIMIT 1
-    }
-
-    # Latest Estimated End
-    OPTIONAL {
-        SELECT ?parentPhase ?latestEstimatedEnd
-        WHERE {
-            ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentComponent ould:consistsOf ?childComponent .
-            ?childComponent occp:hasPhase ?childPhase .
-            ?endInstant occp:endsPhase ?childPhase ;
-                        occp:hasEstimatedTime ?endTime .
-            FILTER NOT EXISTS { ?endInstant occp:hasActualTime ?anyActualTime . }
-            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
-            ?endInstant a ?endType .
-        }
-        ORDER BY DESC(?endTime)
-        LIMIT 1
-    }
-}
-"""
-
-CONSTRUCT_PARENT_CYCLES = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-CONSTRUCT {
-    ?cycle occp:hasActualBeginning ?startInstantActual .
-    ?cycle occp:hasActualEnd ?endInstantActual .
-    ?cycle occp:hasEstimatedBeginning ?startInstantEstimated .
-    ?cycle occp:hasEstimatedEnd ?endInstantEstimated .
-    ?cycle occp:hasCycleNumber ?cycleNumber .
-}
-WHERE {
-    ?cycle a occp:CycleA_PlanningReview .
-    ?component occp:hasCycle ?cycle .
-    OPTIONAL {
-        ?startInstantActual a occp:ReviewStart ;
-                           occp:startsCycle ?cycle ;
-                           occp:hasActualTime ?startTimeActual .
-        FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-    }
-    OPTIONAL {
-        ?endInstantActual a ?endType ;
-                         occp:endsCycle ?cycle ;
-                         occp:hasActualTime ?endTimeActual .
-        FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?endType { occp:ReviewRejection occp:ReviewApproval }
-    }
-    OPTIONAL {
-        ?startInstantEstimated a occp:ReviewStart ;
-                              occp:startsCycle ?cycle ;
-                              occp:hasEstimatedTime ?startTimeEstimated .
-        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
-    }
-    OPTIONAL {
-        ?endInstantEstimated a ?endType ;
-                            occp:endsCycle ?cycle ;
-                            occp:hasEstimatedTime ?endTimeEstimated .
-        FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?endType { occp:ReviewRejection occp:ReviewApproval }
-    }
-    OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
-    BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
-}
-"""
-
-
-
 def generate_post_graph(pre_file, output_file):
     pre_graph = Graph().parse(pre_file, format="turtle")
     post_graph = Graph()
-    # Order of CONSTRUCT-Queries is imporant!
+    
     post_graph += pre_graph.query(CONSTRUCT_PHASE_A1).graph
     post_graph += pre_graph.query(CONSTRUCT_PHASE_A2).graph
     post_graph += pre_graph.query(CONSTRUCT_PHASE_B).graph
@@ -571,9 +374,6 @@ def generate_post_graph(pre_file, output_file):
     post_graph += pre_graph.query(CONSTRUCT_PHASE_D).graph
     post_graph += pre_graph.query(CONSTRUCT_PHASE_M).graph
     post_graph += pre_graph.query(CONSTRUCT_CYCLE_A).graph
-    
-    post_graph += pre_graph.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph += pre_graph.query(CONSTRUCT_PARENT_CYCLES).graph
     post_graph += pre_graph.query(CONSTRUCT_CYCLENUMBER).graph
 
     post_graph.serialize(output_file, format="turtle")

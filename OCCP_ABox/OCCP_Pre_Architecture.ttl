@@ -81,7 +81,7 @@ ex:instant_ConstructionStart_building a occp:ConstructionStart ;
     occp:hasPhase ex:phaseC_building ;
     occp:startsPhase ex:phaseC_building .
 
-ex:instant_ConstructionCompletion_building a occp:ConstructionCompletion ;
+ex:instant_ConstructionCompletion_building a occp:CompletionOfConstruction ;
     occp:hasActualTime "2002-10-31"^^xsd:date ;     # Before top-level entity
     occp:hasPhase ex:phaseC_building ;
     occp:endsPhase ex:phaseC_building .
@@ -135,6 +135,10 @@ ex:instant_BeginningOfPlanning_storey a occp:BeginningOfPlanning ;
     occp:hasActualTime "2000-03-01"^^xsd:date ;  # Later than top-level
     occp:startsPhase ex:phaseA_storey .
 
+ex:instant_BeginningOfPlanning_storey2 a occp:BeginningOfPlanning ;
+    occp:hasEstimatedTime "2000-03-01"^^xsd:date ;  # Later than top-level
+    occp:startsPhase ex:phaseA_storey .
+
 ex:instant_DataProcurement_storey a occp:DataProcurement ;
     occp:hasActualTime "2000-01-12"^^xsd:date ;
     occp:hasPhase ex:phaseA_storey .
@@ -148,9 +152,26 @@ ex:instant_ReviewStart_storey a occp:ReviewStart ;
     occp:startsPhase ex:phaseB_storey ;
     occp:startsCycle ex:cycleA_storey .
 
+ex:instant_ReviewStart_storey2 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-17"^^xsd:date ;     # Later than top-level
+    occp:startsPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey .
+
 ex:instant_ReviewRejection_storey a occp:ReviewRejection ;
     occp:hasActualTime "2000-02-18"^^xsd:date ; 
     occp:hasPhase ex:phaseB_storey ;    
+    occp:endsCycle ex:cycleA_storey .
+
+ex:instant_ReviewApproval_storey a occp:ReviewRejection ;
+    occp:hasEstimatedTime "2000-02-17"^^xsd:date ;     
+    occp:endsPhase ex:phaseA_storey ;
+    occp:endsPhase ex:phaseB_storey ;
+    occp:endsCycle ex:cycleA_storey .
+
+ex:instant_ReviewApproval_storey2 a occp:ReviewRecjection ;
+    occp:hasEstimatedTime "2000-02-18"^^xsd:date ;     
+    occp:endsPhase ex:phaseA_storey ;
+    occp:endsPhase ex:phaseB_storey ;
     occp:endsCycle ex:cycleA_storey .
 
 ex:instant_EDIT_ASTR_storey a occp:ReviewRejection ;
@@ -162,13 +183,35 @@ ex:instant_SubmissionToReview_storey2 a occp:SubmissionToReview ;
     occp:hasActualTime "2000-02-24"^^xsd:date ;
     occp:hasPhase ex:phaseA_storey .
     
-ex:instant_ReviewStart_storey2 a occp:ReviewStart ;
+ex:instant_ReviewStart_storey3 a occp:ReviewStart ;
     occp:hasActualTime "2000-02-25"^^xsd:date ;     
     occp:hasPhase ex:phaseB_storey ;
     occp:startsCycle ex:cycleA_storey2 .
 
-ex:instant_ReviewApproval_storey a occp:ReviewApproval ;
+ex:instant_ReviewStart_storey4 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-25"^^xsd:date ;     
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewStart_storey5 a occp:ReviewStart ;
+    occp:hasEstimatedTime "2000-02-24"^^xsd:date ;     
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewApproval_storey3 a occp:ReviewApproval ;
     occp:hasActualTime "2000-03-01"^^xsd:date ;     # Aligned with top-level
+    occp:endsPhase ex:phaseA_storey ;
+    occp:endsPhase ex:phaseB_storey ;
+    occp:endsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewApproval_storey4 a occp:ReviewApproval ;
+    occp:hasEstimatedTime "2000-03-01"^^xsd:date ;     # Aligned with top-level
+    occp:endsPhase ex:phaseA_storey ;
+    occp:endsPhase ex:phaseB_storey ;
+    occp:endsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewApproval_storey5 a occp:ReviewApproval ;
+    occp:hasEstimatedTime "2000-02-28"^^xsd:date ;     # Aligned with top-level
     occp:endsPhase ex:phaseA_storey ;
     occp:endsPhase ex:phaseB_storey ;
     occp:endsCycle ex:cycleA_storey2 .
@@ -177,22 +220,46 @@ ex:instant_ConstructionStart_storey a occp:ConstructionStart ;
     occp:hasActualTime "2002-04-01"^^xsd:date ;     # Later than top-level
     occp:startsPhase ex:phaseC_storey .
 
-ex:instant_ConstructionCompletion_storey a occp:ConstructionCompletion ;
+ex:instant_ConstructionStart_storey2 a occp:ConstructionStart ;
+    occp:hasEstimatedTime "2002-04-01"^^xsd:date ;     # Later than top-level
+    occp:startsPhase ex:phaseC_storey .
+
+ex:instant_ConstructionCompletion_storey a occp:CompletionOfConstruction ;
     occp:hasActualTime "2002-12-31"^^xsd:date ;     # Aligned with top-level
+    occp:endsPhase ex:phaseC_storey .
+
+ex:instant_ConstructionCompletion_storey2 a occp:CompletionOfConstruction ;
+    occp:hasEstimatedTime "2002-12-31"^^xsd:date ;     # Aligned with top-level
     occp:endsPhase ex:phaseC_storey .
 
 ex:instant_UsageStart_storey a occp:UsageStart ;
     occp:hasActualTime "2003-01-01"^^xsd:date ;  # Aligned with top-level
     occp:startsPhase ex:phaseD_storey .
 
+ex:instant_UsageStart_storey2 a occp:UsageStart ;
+    occp:hasEstimatedTime "2003-01-01"^^xsd:date ;  # Aligned with top-level
+    occp:startsPhase ex:phaseD_storey .
+
 ex:instant_UsageEnd_storey a occp:UsageEnd ;
     occp:hasActualTime "2015-04-30"^^xsd:date ;
+    occp:endsPhase ex:phaseD_storey .
+
+ex:instant_UsageEnd_storey2 a occp:UsageEnd ;
+    occp:hasEstimatedTime "2015-04-30"^^xsd:date ;
     occp:endsPhase ex:phaseD_storey .
 
 ex:instant_DeconstructionStart_storey a occp:DeconstructionStart ;
     occp:hasActualTime "2015-05-01"^^xsd:date ;
     occp:startsPhase ex:phaseM_storey .
 
+ex:instant_DeconstructionStart_storey2 a occp:DeconstructionStart ;
+    occp:hasEstimatedTime "2015-05-01"^^xsd:date ;
+    occp:startsPhase ex:phaseM_storey .
+
 ex:instant_DeconstructionCompletion_storey a occp:DeconstructionCompletion ;
     occp:hasActualTime "2015-05-31"^^xsd:date ;
+    occp:endsPhase ex:phaseM_storey .
+
+ex:instant_DeconstructionCompletion_storey2 a occp:DeconstructionCompletion ;
+    occp:hasEstimatedTime "2015-05-31"^^xsd:date ;
     occp:endsPhase ex:phaseM_storey .

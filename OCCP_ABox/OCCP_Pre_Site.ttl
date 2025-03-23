@@ -1,8 +1,9 @@
-@prefix ex: <http://example.org/example#> .
+@prefix ex: <http://www.example.de/example#> .
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
+# Top-level entity:
 ex:IFC_Site_parsed a ould:UpdatableEntity ;
     ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
     ould:hasIFCID "IFC_Site" ;
@@ -39,7 +40,7 @@ ex:instant_ReviewStart_site a occp:ReviewStart ;
     occp:hasActualTime "2000-02-15"^^xsd:date ;
     occp:startsPhase ex:phaseB_site .
 
-ex:instant_ReviewApproval_site a occp:ReviewApproval ;
+ex:instant_ReviewApproval_site33 a occp:ReviewApproval ;
     occp:hasActualTime "2000-05-01"^^xsd:date ;
     occp:endsPhase ex:phaseA_site ;
     occp:endsPhase ex:phaseB_site ;

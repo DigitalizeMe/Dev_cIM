@@ -85,11 +85,11 @@
         ] ;
         # Constraint for hasActualBeginning
         sh:property [
-            sh:path time:hasActualBeginning ;
+            sh:path occp:hasActualBeginning ;
             sh:class time:Instant ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:Cycle' must have exactly one 'time:hasActualBeginning' referencing a 'time:Instant' to mark its start."@en ;
+            sh:message "Each 'occp:Cycle' must have exactly one 'occp:hasActualBeginning' referencing a 'time:Instant' to mark its start."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for end (at least one end: actual or estimated, but max 1 actualEnd)
@@ -592,9 +592,12 @@
         # Constraint for hasActualEnd
         sh:property [
             sh:path occp:hasActualEnd ;
-            sh:class occp:ConstructionAcceptance ;
+            sh:or (
+                [ sh:class occp:ConstructionAcceptance ]
+                [ sh:class occp:CompletionOfConstruction ]
+            ) ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:PhaseC_Construction' must have at most one actual end via 'occp:hasActualEnd' referencing 'occp:ConstructionAcceptance'."@en ;
+            sh:message "Each 'occp:PhaseC_Construction' must have at most one actual end via 'occp:hasActualEnd' referencing 'occp:ConstructionAcceptance' or 'occp:CompletionOfConstruction'."@en ;
             sh:severity sh:Violation
         ] .
 
@@ -1449,14 +1452,6 @@
                     """ ;
                     sh:message "SubmissionToReview { $this } (time: { ?timeSub }) must occur after Edit_BSTR or Edit_ASTR { ?editEvent } (time: { ?timeEdit })."@en ;
                     sh:severity sh:Violation
-                ] ;
-                # Instant starts a CycleA_PlanningReview
-                sh:property [
-                    sh:path occp:startsCycle ;
-                    sh:class occp:CycleA_PlanningReview ;
-                    sh:maxCount 1 ;
-                    sh:message "Each 'occp:SubmissionToReview' must start at most one 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en ;
-                    sh:severity sh:Violation
                 ] .
 
             osh:Edit_ASTRShape a sh:NodeShape ;             # Instant Edit After Submission To Review (Phase A - Planning)
@@ -1532,6 +1527,15 @@
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
                     sh:message "Each 'occp:ReviewStart' must start exactly one 'occp:PhaseB_Review' via 'occp:startsPhase'."@en ;
+                    sh:severity sh:Violation
+                ] ;
+                # Instant starts a CycleA_PlanningReview
+                sh:property [
+                    sh:path occp:startsCycle ;
+                    sh:class occp:CycleA_PlanningReview ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each 'occp:ReviewStart' must start exactly one 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en ;
                     sh:severity sh:Violation
                 ] ;
                 # Ensure ReviewStart occurs before ReviewApproval based on actual or estimated times
@@ -1748,13 +1752,26 @@
                     sh:message "Each 'occp:ReviewRejection' must end exactly one 'occp:CycleA_PlanningReview' via 'occp:endsCycle'."@en ;
                     sh:severity sh:Violation
                 ] ;
-                # Instant (Review Rejection) starts a new Cycle A (Planning/Review)
-                sh:property [
-                    sh:path occp:startsCycle ;
-                    sh:class occp:CycleA_PlanningReview ;
-                    sh:minCount 1 ;
-                    sh:maxCount 1 ;
-                    sh:message "Each 'occp:ReviewRejection' must start exactly one new 'occp:CycleA_PlanningReview' via 'occp:startsCycle'."@en ;
+                # Ensure ReviewRejection occurs after ReviewStart if it exists
+                sh:sparql [
+                    sh:select """
+                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX time: <http://www.w3.org/2006/time#>
+                        SELECT $this ?reviewStart ?timeRA ?timeRS
+                        WHERE {
+                            # Get time of ReviewRejection (actual or estimated)
+                            { $this occp:hasActualTime ?timeRA . }
+                            UNION
+                            { $this occp:hasEstimatedTime ?timeRA . }
+                            # Get time of ReviewStart (actual or estimated)
+                            ?reviewStart a occp:ReviewStart .
+                            { ?reviewStart occp:hasActualTime ?timeRS . }
+                            UNION
+                            { ?reviewStart occp:hasEstimatedTime ?timeRS . }
+                            FILTER (?timeRA <= ?timeRS)
+                        }
+                    """ ;
+                    sh:message "ReviewRejection { $this } (time: { ?timeRA }) must occur after ReviewStart { ?reviewStart } (time: { ?timeRS })."@en ;
                     sh:severity sh:Violation
                 ] .
 
