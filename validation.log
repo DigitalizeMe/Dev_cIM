@@ -1,1 +1,4 @@
-2025-03-23 10:50:33,837 - WARNING - G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\OCCP_Pre_1C3.ttl does not look like a valid URI, trying to serialize this will break.
+2025-03-23 10:59:50,263 - INFO - CONSTRUCT generated 10 triples.
+2025-03-23 10:59:50,268 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_Site_inferred.ttl
+2025-03-23 10:59:51,405 - INFO - Conformity: True
+2025-03-23 10:59:51,406 - INFO - Validation successful: PostI conforms to SHACL.
