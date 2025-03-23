@@ -1,0 +1,198 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Top-level entity: ex:IFC_Architecture_parsed
+ex:IFC_Architecture_parsed a ould:UpdatableEntity ;
+    ould:consistsOf ex:IfcBuilding,
+        ex:IfcBuildingStorey ;
+    ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
+    ould:hasIFCID "IFC_Architecture" ;
+    occp:hasPhase ex:phaseA_arch,
+        ex:phaseB_arch,
+        ex:phaseC_arch,
+        ex:phaseD_arch,
+        ex:phaseM_arch ;
+    occp:hasCycle ex:cycleA_arch .
+
+# Phases for ex:IFC_Architecture_parsed
+ex:phaseA_arch a occp:PhaseA_Planning .
+ex:phaseB_arch a occp:PhaseB_Review .
+ex:phaseC_arch a occp:PhaseC_Construction .
+ex:phaseD_arch a occp:PhaseD_Usage .
+ex:phaseM_arch a occp:PhaseM_Deconstruction .
+
+# Cycles for ex:IFC_Architecture_parsed
+ex:cycleA_arch a occp:CycleA_PlanningReview .
+
+
+# Building component group: ex:IfcBuilding
+ex:IfcBuilding a ould:UpdatableEntity ;
+    ould:hasIFCID "IfcBuilding" ;
+    occp:hasPhase ex:phaseA_building,
+        ex:phaseC_building,
+        ex:phaseD_building,
+        ex:phaseM_building ;
+    occp:hasCycle ex:cycleA_building .
+
+# Phases for ex:IfcBuilding
+ex:phaseA_building a occp:PhaseA_Planning .
+
+ex:phaseB_building a occp:PhaseB_Review .
+
+ex:phaseC_building a occp:PhaseC_Construction .
+ex:phaseD_building a occp:PhaseD_Usage .
+ex:phaseM_building a occp:PhaseM_Deconstruction .
+
+# Cycles for ex:IfcBuilding
+ex:cycleA_building a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 .
+
+# Instants for ex:IfcBuilding
+ex:instant_BeginningOfPlanning_building a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-01-01"^^xsd:date ;  # Aligned with top-level
+    occp:hasPhase ex:phaseA_building ;
+    occp:startsPhase ex:phaseA_building .
+
+ex:instant_DataProcurement_building a occp:DataProcurement ;
+    occp:hasActualTime "2000-01-08"^^xsd:date ;
+    occp:hasPhase ex:phaseA_building .
+
+ex:instant_SubmissionToReview_building a occp:SubmissionToReview ;
+    occp:hasActualTime "2000-02-01"^^xsd:date ;     # Aligned with top-level
+    occp:hasPhase ex:phaseA_building .
+
+ex:instant_ReviewStart_building a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-15"^^xsd:date ;     # Aligned with top-level
+    occp:hasPhase ex:phaseB_building ;
+    occp:startsPhase ex:phaseB_building ;
+    occp:startsCycle ex:cycleA_building .
+
+ex:instant_ReviewApproval_building a occp:ReviewApproval ;
+    occp:hasActualTime "2000-02-18"^^xsd:date ;     # Before top-level entity
+    occp:hasPhase ex:phaseA_building ;
+    occp:endsPhase ex:phaseA_building ;
+    occp:endsPhase ex:phaseB_building ;
+    occp:endsCycle ex:cycleA_building .
+
+ex:instant_ConstructionStart_building a occp:ConstructionStart ;
+    occp:hasActualTime "2002-01-01"^^xsd:date ;     # Aligned with top-level
+    occp:hasPhase ex:phaseC_building ;
+    occp:startsPhase ex:phaseC_building .
+
+ex:instant_ConstructionCompletion_building a occp:ConstructionCompletion ;
+    occp:hasActualTime "2002-10-31"^^xsd:date ;     # Before top-level entity
+    occp:hasPhase ex:phaseC_building ;
+    occp:endsPhase ex:phaseC_building .
+
+ex:instant_UsageStart_building a occp:UsageStart ;
+    occp:hasActualTime "2003-01-01"^^xsd:date ;  # Aligned with top-level
+    occp:hasPhase ex:phaseD_building ;
+    occp:startsPhase ex:phaseD_building .
+
+ex:instant_UsageEnd_building a occp:UsageEnd ;
+    occp:hasActualTime "2015-04-30"^^xsd:date ;  
+    occp:hasPhase ex:phaseD_building ;
+    occp:endsPhase ex:phaseD_building .
+
+ex:instant_DeconstructionStart_building a occp:DeconstructionStart ;
+    occp:hasActualTime "2015-05-01"^^xsd:date ;
+    occp:hasPhase ex:phaseM_building ;
+    occp:startsPhase ex:phaseM_building .
+
+ex:instant_DeconstructionCompletion_building a occp:DeconstructionCompletion ;
+    occp:hasActualTime "2015-05-31"^^xsd:date ;  
+    occp:hasPhase ex:phaseM_building ;
+    occp:endsPhase ex:phaseM_building .
+
+# Building component group: ex:IfcBuildingStorey
+ex:IfcBuildingStorey a ould:UpdatableEntity ;
+    ould:hasIFCID "IfcBuildingStorey" ;
+    occp:hasPhase ex:phaseA_storey,
+        ex:phaseC_storey,
+        ex:phaseD_storey,
+        ex:phaseM_storey ;
+    occp:hasCycle ex:cycleA_storey ,
+    ex:cycleA_storey2 .
+
+# Phases for ex:IfcBuildingStorey
+ex:phaseA_storey a occp:PhaseA_Planning .
+ex:phaseB_storey a occp:PhaseB_Review .
+ex:phaseC_storey a occp:PhaseC_Construction .
+ex:phaseD_storey a occp:PhaseD_Usage .
+ex:phaseM_storey a occp:PhaseM_Deconstruction .
+
+# Cycles for ex:IfcBuildingStorey
+ex:cycleA_storey a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 1 .
+
+ex:cycleA_storey2 a occp:CycleA_PlanningReview ;
+    occp:hasCycleNumber 2 .
+
+# Instants for ex:IfcBuildingStorey
+ex:instant_BeginningOfPlanning_storey a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-03-01"^^xsd:date ;  # Later than top-level
+    occp:startsPhase ex:phaseA_storey .
+
+ex:instant_DataProcurement_storey a occp:DataProcurement ;
+    occp:hasActualTime "2000-01-12"^^xsd:date ;
+    occp:hasPhase ex:phaseA_storey .
+
+ex:instant_SubmissionToReview_storey a occp:SubmissionToReview ;
+    occp:hasActualTime "2000-02-15"^^xsd:date ;     # Later than top-level
+    occp:hasPhase ex:phaseA_storey .
+    
+ex:instant_ReviewStart_storey a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-17"^^xsd:date ;     # Later than top-level
+    occp:startsPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey .
+
+ex:instant_ReviewRejection_storey a occp:ReviewRejection ;
+    occp:hasActualTime "2000-02-18"^^xsd:date ; 
+    occp:hasPhase ex:phaseB_storey ;    
+    occp:endsCycle ex:cycleA_storey .
+
+ex:instant_EDIT_ASTR_storey a occp:ReviewRejection ;
+    occp:hasActualTime "2000-02-23"^^xsd:date ;
+    occp:startsCycle ex:cycleA_storey2 ;    
+    occp:hasPhase ex:phaseA_storey .
+
+ex:instant_SubmissionToReview_storey2 a occp:SubmissionToReview ;
+    occp:hasActualTime "2000-02-24"^^xsd:date ;
+    occp:hasPhase ex:phaseA_storey .
+    
+ex:instant_ReviewStart_storey2 a occp:ReviewStart ;
+    occp:hasActualTime "2000-02-25"^^xsd:date ;     
+    occp:hasPhase ex:phaseB_storey ;
+    occp:startsCycle ex:cycleA_storey2 .
+
+ex:instant_ReviewApproval_storey a occp:ReviewApproval ;
+    occp:hasActualTime "2000-03-01"^^xsd:date ;     # Aligned with top-level
+    occp:endsPhase ex:phaseA_storey ;
+    occp:endsPhase ex:phaseB_storey ;
+    occp:endsCycle ex:cycleA_storey2 .
+
+ex:instant_ConstructionStart_storey a occp:ConstructionStart ;
+    occp:hasActualTime "2002-04-01"^^xsd:date ;     # Later than top-level
+    occp:startsPhase ex:phaseC_storey .
+
+ex:instant_ConstructionCompletion_storey a occp:ConstructionCompletion ;
+    occp:hasActualTime "2002-12-31"^^xsd:date ;     # Aligned with top-level
+    occp:endsPhase ex:phaseC_storey .
+
+ex:instant_UsageStart_storey a occp:UsageStart ;
+    occp:hasActualTime "2003-01-01"^^xsd:date ;  # Aligned with top-level
+    occp:startsPhase ex:phaseD_storey .
+
+ex:instant_UsageEnd_storey a occp:UsageEnd ;
+    occp:hasActualTime "2015-04-30"^^xsd:date ;
+    occp:endsPhase ex:phaseD_storey .
+
+ex:instant_DeconstructionStart_storey a occp:DeconstructionStart ;
+    occp:hasActualTime "2015-05-01"^^xsd:date ;
+    occp:startsPhase ex:phaseM_storey .
+
+ex:instant_DeconstructionCompletion_storey a occp:DeconstructionCompletion ;
+    occp:hasActualTime "2015-05-31"^^xsd:date ;
+    occp:endsPhase ex:phaseM_storey .

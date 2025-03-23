@@ -161,12 +161,11 @@
 		rdfs:label "has actual time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycleNumber
-    occp:hasCycleNumber rdf:type owl:DatatypeProperty ;
-		rdfs:domain occp:Cycle ;
-		rdfs:range xsd:integer ;
-		rdfs:comment "This property represents the number of iterations in a cycle, used to specify how many times a process like a planning review repeats (e.g., in CycleA_PlanningReview)."@en ;
-		rdfs:label "has cycle number"@en .
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycle
+    occp:hasCycle rdf:type owl:ObjectProperty ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property represents the connection between a model (component) and a cycle."@en ;
+		rdfs:label "has cycle"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
@@ -249,6 +248,14 @@
 #    Datatype Properties
 #################################################################
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycleNumber
+    occp:hasCycleNumber rdf:type owl:DatatypeProperty ;
+		rdfs:domain occp:Cycle ;
+		rdfs:range xsd:integer ;
+		rdfs:comment "This property represents the number of iterations in a cycle, used to specify how many times a process like a planning review repeats (e.g., in CycleA_PlanningReview)."@en ;
+		rdfs:label "has cycle number"@en .
+
+
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifeCycleID
 	occp:hasLifeCycleID rdf:type owl:DatatypeProperty ;
 		rdfs:domain occp:LifeCycle ;
@@ -327,7 +334,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CycleA_PlanningReview
     occp:CycleA_PlanningReview rdf:type owl:Class ;
 		rdfs:subClassOf occp:Cycle ;
-		rdfs:comment "This class represents a cycle starting with plan submission and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
+		rdfs:comment "This class represents a cycle starting with the review start and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
 		rdfs:label "Cycle A Planning Review"@en .
 
 
