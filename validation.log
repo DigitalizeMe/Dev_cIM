@@ -1,8 +1,8 @@
-2025-03-23 18:22:35,858 - INFO - CONSTRUCT generated 255 triples.
-2025-03-23 18:22:35,874 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_Architecture_inferred.ttl
-2025-03-23 18:22:37,309 - INFO - Conformity: False
-2025-03-23 18:22:37,310 - ERROR - Validation error: Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-23 18:22:37,310 - ERROR - Validation error: Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-23 18:22:37,310 - ERROR - Validation error: Not[NodeShape[_:8a43a6c5e53065ad02955c8bfaca34b2]] at focusNode <http://www.example.de/example#IFC_Architecture_parsed> (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-23 18:22:37,312 - ERROR - Validation error: Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component cycle numbers ({ ?totalCompCycles }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-23 18:22:38,214 - ERROR - Validation failed.
+2025-03-23 21:12:12,353 - INFO - CONSTRUCT generated 256 triples.
+2025-03-23 21:12:12,369 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_Architecture_inferred.ttl
+2025-03-23 21:12:13,759 - INFO - Conformity: False
+2025-03-23 21:12:13,759 - ERROR - Validation error: Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-23 21:12:13,759 - ERROR - Validation error: Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-23 21:12:13,761 - ERROR - Validation error: Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component cycle numbers ({ ?totalCompCycles }). (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-23 21:12:13,763 - ERROR - Validation error: Not[NodeShape[_:9621c63e3b59f756f8170e579165f61e]] at focusNode <http://www.example.de/example#IFC_Architecture_parsed> (Focus Node: http://www.example.de/example#IFC_Architecture_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-03-23 21:12:14,645 - ERROR - Validation failed.

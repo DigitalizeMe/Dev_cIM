@@ -161,7 +161,7 @@ ex:instant_ReviewApproval_storey a occp:ReviewRejection ;
     occp:endsPhase ex:phaseB_storey ;
     occp:endsCycle ex:cycleA_storey .
 
-ex:instant_ReviewApproval_storey2 a occp:ReviewRecjection ;
+ex:instant_ReviewApproval_storey2 a occp:ReviewRejection ;
     occp:hasEstimatedTime "2000-02-18"^^xsd:date ;     
     occp:endsPhase ex:phaseA_storey ;
     occp:endsPhase ex:phaseB_storey ;

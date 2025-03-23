@@ -1,0 +1,230 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Top-level entity: ex:IFC_Structure_parsed
+    ex:IFC_Structure_parsed a ould:UpdatableEntity ;
+        ould:consistsOf ex:IfcBeam,
+            ex:IfcBuilding,
+            ex:IfcBuildingElementProxy,
+            ex:IfcBuildingStorey,
+            ex:IfcChimney,
+            ex:IfcDiscreteAccessory,
+            ex:IfcFooting,
+            ex:IfcRoof,
+            ex:IfcWall ;
+        ould:hasHash "8a85255355b68da4c208550ea7e4f8158e3f5fd3d823980529d65070f3bd2dcf" ;
+        ould:hasIFCID "IFC_Structure" ;
+        occp:hasPhase ex:phaseA_struc,
+            ex:phaseB_struc,
+            ex:phaseC_struc,
+            ex:phaseD_struc;
+        occp:hasCycle ex:cycleA_struc .
+
+    # Phases for ex:IFC_Structure_parsed
+        ex:phaseA_struc a occp:PhaseA_Planning .
+        ex:phaseB_struc a occp:PhaseB_Review .
+        ex:phaseC_struc a occp:PhaseC_Construction .
+        ex:phaseD_struc a occp:PhaseD_Usage .
+
+    # Cycles for ex:IFC_Structure_parsed
+        ex:cycleA_struc a occp:CycleA_PlanningReview .
+
+# Individuals for ex:IfcBeam
+    ex:IfcBeam a ould:UpdatableEntity ;
+        ould:consistsOf ex:girder ;
+        ould:hasIFCID "IfcBeam" ;
+        occp:hasPhase ex:phaseA_IfcBeam,
+            ex:phaseB_IfcBeam,
+            ex:phaseC_IfcBeam,
+            ex:phaseD_IfcBeam;
+        occp:hasCycle ex:cycleA_IfcBeam .
+
+    # Phases for ex:IfcBuilding
+        ex:phaseA_IfcBeam a occp:PhaseA_Planning .
+        ex:phaseB_IfcBeam a occp:PhaseB_Review .
+        ex:phaseC_IfcBeam a occp:PhaseC_Construction .
+        ex:phaseD_IfcBeam a occp:PhaseD_Usage .
+
+    # Cycles for ex:IFC_Architecture_parsed
+        ex:cycleA_IfcBeam a occp:CycleA_PlanningReview .
+
+    # Individuals for ex:girder
+        ex:girder a ould:UpdatableEntity ;
+            ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" ;
+            occp:hasPhase ex:phaseA_girder,
+            ex:phaseB_girder,
+            ex:phaseC_girder,
+            ex:phaseD_girder;
+            occp:hasCycle ex:cycleA_girder .
+
+        # Phases for ex:girder
+            ex:phaseA_girder a occp:PhaseA_Planning .
+            ex:phaseB_girder a occp:PhaseB_Review .
+            ex:phaseC_girder a occp:PhaseC_Construction .
+            ex:phaseD_girder a occp:PhaseD_Usage .
+
+        # Cycles for ex:girder
+            ex:cycleA_girder a occp:CycleA_PlanningReview ;
+                occp:hasCycleNumber 1 .
+        
+        # Instants for ex:girder
+            ex:instant_BeginningOfPlanning_girder a occp:BeginningOfPlanning ;
+                occp:hasActualTime "2015-01-01"^^xsd:date ;  
+                occp:startsPhase ex:phaseA_girder .
+
+            ex:instant_DataProcurement_girder a occp:DataProcurement ;
+                occp:hasActualTime "2015-01-08"^^xsd:date ;
+                occp:hasPhase ex:phaseA_girder .
+
+            ex:instant_SubmissionToReview_girder a occp:SubmissionToReview ;
+                occp:hasActualTime "2051-02-01"^^xsd:date ;     
+                occp:hasPhase ex:phaseA_girder .
+
+            ex:instant_ReviewStart_girder a occp:ReviewStart ;
+                occp:hasActualTime "2015-02-15"^^xsd:date ;     
+                occp:startsPhase ex:phaseB_girder ;
+                occp:startsCycle ex:cycleA_girder .
+
+            ex:instant_ReviewApproval_girder a occp:ReviewApproval ;
+                occp:hasActualTime "2015-02-18"^^xsd:date ;     
+                occp:endsPhase ex:phaseA_girder ;
+                occp:endsPhase ex:phaseB_girder ;
+                occp:endsCycle ex:cycleA_girder .
+
+            ex:instant_ConstructionStart_girder a occp:ConstructionStart ;
+                occp:hasActualTime "2015-06-01"^^xsd:date ;     
+                occp:startsPhase ex:phaseC_girder .
+
+            ex:instant_ConstructionCompletion_girder a occp:CompletionOfConstruction ;
+                occp:hasActualTime "2016-03-30"^^xsd:date ;     
+                occp:endsPhase ex:phaseC_girder .
+
+            ex:instant_UsageStart_girder a occp:UsageStart ;
+                occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                occp:startsPhase ex:phaseD_girder .
+
+
+# Individuals for ex:IfcBuilding
+    ex:IfcBuilding a ould:UpdatableEntity ;
+        ould:consistsOf ex:Single-family_house ;
+        ould:hasIFCID "IfcBuilding" ;
+        occp:hasPhase ex:phaseA_IfcBuilding,
+            ex:phaseB_IfcBuilding,
+            ex:phaseC_IfcBuilding,
+            ex:phaseD_IfcBuilding;
+        occp:hasCycle ex:cycleA_IfcBuilding .
+
+    # Phases for ex:IfcBuilding
+        ex:phaseA_IfcBuilding a occp:PhaseA_Planning .
+        ex:phaseB_IfcBuilding a occp:PhaseB_Review .
+        ex:phaseC_IfcBuilding a occp:PhaseC_Construction .
+        ex:phaseD_IfcBuilding a occp:PhaseD_Usage .
+
+    # Cycles for ex:IfcBuilding
+        ex:cycleA_building a occp:CycleA_PlanningReview .
+
+    # Individuals for ex:Single-family_house
+        ex:Single-family_house a ould:UpdatableEntity ;
+            ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" ;
+            occp:hasPhase ex:phaseA_building,
+                ex:phaseB_building,
+                ex:phaseC_building,
+                ex:phaseD_building;
+            occp:hasCycle ex:cycleA_building .
+
+        # Phases for ex:Single-family_house
+            ex:phaseA_building a occp:PhaseA_Planning .
+            ex:phaseB_building a occp:PhaseB_Review .
+            ex:phaseC_building a occp:PhaseC_Construction .
+            ex:phaseD_building a occp:PhaseD_Usage .
+
+        # Cycles for ex:Single-family_house
+            ex:cycleA_building a occp:CycleA_PlanningReview .
+
+ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
+    ould:consistsOf ex:GroupNo_21 ;
+    ould:hasIFCID "IfcBuildingElementProxy" .
+
+    ex:GroupNo_21 a ould:UpdatableEntity ;
+        ould:hasIFCID "1CjP_CWub368bZVuVHeHs3" .
+
+ex:IfcBuildingStorey a ould:UpdatableEntity ;
+    ould:consistsOf ex:00_groundfloor ;
+    ould:hasIFCID "IfcBuildingStorey" .
+
+    ex:00_groundfloor a ould:UpdatableEntity ;
+        ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
+
+
+
+
+
+
+
+
+
+
+ex:IfcChimney a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_chimney ;
+    ould:hasIFCID "IfcChimney" .
+
+    ex:house_-_chimney a ould:UpdatableEntity ;
+        ould:hasIFCID "3dkFAzOGrAIuOzY_RdrdVv" .
+
+ex:IfcDiscreteAccessory a ould:UpdatableEntity ;
+    ould:consistsOf ex:beam_shoe ;
+    ould:hasIFCID "IfcDiscreteAccessory" .
+
+    ex:beam_shoe a ould:UpdatableEntity ;
+        ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" .
+
+ex:IfcFooting a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_foundation ;
+    ould:hasIFCID "IfcFooting" .
+
+    ex:house_-_foundation a ould:UpdatableEntity ;
+        ould:hasIFCID "0pFmhV8oD1dB40_b4pscr8" .
+
+ex:IfcRoof a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_roof ;
+    ould:hasIFCID "IfcRoof" .
+
+    ex:house_-_roof a ould:UpdatableEntity ;
+        ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
+
+ex:IfcWall a ould:UpdatableEntity ;
+    ould:consistsOf ex:house_-_inner_wall,
+        ex:house_-_outer_wall_-_house_back,
+        ex:house_-_outer_wall_-_house_front,
+        ex:house_-_outer_wall_-_house_front_right ;
+    ould:hasIFCID "IfcWall" .
+
+    ex:house_-_inner_wall a ould:UpdatableEntity ;
+        ould:hasIFCID "2gTJhghMT81QThk15l2VwR" .
+    
+    ex:house_-_outer_wall_-_house_back a ould:UpdatableEntity ;
+        ould:hasIFCID "0DyViLJJ175RvWQi1rE7a6" .
+
+    ex:house_-_outer_wall_-_house_front a ould:UpdatableEntity ;
+        ould:hasIFCID "3SGBcf7Lv0r80vKtUCgOpf" .
+
+    ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
+        ould:hasIFCID "3oNJ9yHi5FJuFnK8yg68Yt" .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

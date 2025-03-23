@@ -28,12 +28,6 @@ ex:instant_EDIT_ASTR_storey a occp:ReviewRejection ;
     occp:hasPhase ex:phaseA_storey ;
     occp:startsCycle ex:cycleA_storey2 .
 
-ex:instant_ReviewApproval_storey2 a occp:ReviewRecjection ;
-    occp:endsCycle ex:cycleA_storey ;
-    occp:endsPhase ex:phaseA_storey,
-        ex:phaseB_storey ;
-    occp:hasEstimatedTime "2000-02-18"^^xsd:date .
-
 ex:instant_SubmissionToReview_building a occp:SubmissionToReview ;
     occp:hasActualTime "2000-02-01"^^xsd:date ;
     occp:hasPhase ex:phaseA_building .
@@ -93,6 +87,12 @@ ex:instant_ReviewApproval_storey a occp:ReviewRejection ;
     occp:endsPhase ex:phaseA_storey,
         ex:phaseB_storey ;
     occp:hasEstimatedTime "2000-02-17"^^xsd:date .
+
+ex:instant_ReviewApproval_storey2 a occp:ReviewRejection ;
+    occp:endsCycle ex:cycleA_storey ;
+    occp:endsPhase ex:phaseA_storey,
+        ex:phaseB_storey ;
+    occp:hasEstimatedTime "2000-02-18"^^xsd:date .
 
 ex:instant_ReviewRejection_storey a occp:ReviewRejection ;
     occp:endsCycle ex:cycleA_storey ;
@@ -295,7 +295,8 @@ ex:cycleA_storey a occp:CycleA_PlanningReview ;
     occp:hasActualEnd ex:instant_ReviewRejection_storey ;
     occp:hasCycleNumber 1 ;
     occp:hasEstimatedBeginning ex:instant_ReviewStart_storey2 ;
-    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey .
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_storey,
+        ex:instant_ReviewApproval_storey2 .
 
 ex:cycleA_storey2 a occp:CycleA_PlanningReview ;
     occp:hasActualBeginning ex:instant_ReviewStart_storey3 ;
@@ -320,3 +321,4 @@ ex:phaseB_storey a occp:PhaseB_Review ;
     occp:hasEstimatedEnd ex:instant_ReviewApproval_storey4,
         ex:instant_ReviewApproval_storey5 .
 
+                                            
