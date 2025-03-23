@@ -83,7 +83,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
 if __name__ == "__main__":
      
      # Variable for testing efficiency
-    part_name3 = "Architecture"  
+    part_name3 = "Structure"  
 
     ABox_Pre_file = f"OCCP_Pre_{part_name3}.ttl"
 

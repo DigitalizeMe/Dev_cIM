@@ -321,4 +321,3 @@ ex:phaseB_storey a occp:PhaseB_Review ;
     occp:hasEstimatedEnd ex:instant_ReviewApproval_storey4,
         ex:instant_ReviewApproval_storey5 .
 
-                                            

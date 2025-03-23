@@ -105,4 +105,8 @@
                 occp:hasActualTime "2016-03-31"^^xsd:date ;  
                 occp:startsPhase ex:phaseD_girder .
 
+            ex:instant_UsageEnd_girder a occp:UsageEnd ;
+                occp:hasEstimatedTime "2025-01-01"^^xsd:date ;  
+                occp:endsPhase ex:phaseD_girder .
+
 
