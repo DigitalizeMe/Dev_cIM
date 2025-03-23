@@ -12,7 +12,127 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IFC_Architecture_parsed;
-                 sh:resultMessage              "Not[NodeShape[_:d80bd68cbb017885c7179bde879e58d8]] at focusNode <http://www.example.de/example#IFC_Architecture_parsed>";
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Not[NodeShape[_:8a43a6c5e53065ad02955c8bfaca34b2]] at focusNode <http://www.example.de/example#IFC_Architecture_parsed>";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:NotConstraintComponent;
                  sh:sourceShape                oush:ComponentShape;
@@ -20,7 +140,319 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IFC_Architecture_parsed;
-                 sh:resultMessage              "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component cycle numbers ({ ?totalCompCycles }).";
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
                  sh:sourceShape                oush:ComponentHierarchyShape;
@@ -36,7 +468,575 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IFC_Architecture_parsed;
-                 sh:resultMessage              "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component cycle numbers ({ ?totalCompCycles }).";
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
                  sh:sourceShape                oush:ComponentHierarchyShape;
@@ -45,6 +1045,270 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IFC_Architecture_parsed;
                  sh:resultMessage              "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component cycle numbers ({ ?totalCompCycles }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct component phase start (start: { ?earliestCompStart }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                oush:ComponentHierarchyShape;
+                 sh:value                      ex:IFC_Architecture_parsed
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IFC_Architecture_parsed;
+                 sh:resultMessage              "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase end (end: { ?latestCompEnd }).";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
                  sh:sourceShape                oush:ComponentHierarchyShape;

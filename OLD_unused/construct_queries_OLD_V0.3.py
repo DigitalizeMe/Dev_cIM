@@ -284,6 +284,80 @@ WHERE {
 }
 """
 
+CONSTRUCT_CYCLE_A_ACTUAL = """
+CONSTRUCT {
+    ?cycle occp:hasActualBeginning ?startInstantActual .
+    ?cycle occp:hasActualEnd ?endInstantActual .
+}
+WHERE {
+    ?cycle a occp:CycleA_PlanningReview .
+    ?component occp:hasCycle ?cycle .
+    FILTER NOT EXISTS { ?component ould:consistsOf ?any }
+    OPTIONAL {
+        SELECT ?cycle ?startInstantActual
+        WHERE {
+            ?component occp:hasCycle ?cycle .
+            ?startInstantActual a occp:ReviewStart ;
+                               occp:startsCycle ?cycle ;
+                               occp:hasActualTime ?startTimeActual .
+            FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
+        }
+        ORDER BY ?startTimeActual
+        LIMIT 1
+    }
+    OPTIONAL {
+        SELECT ?cycle ?endInstantActual
+        WHERE {
+            ?component occp:hasCycle ?cycle .
+            ?endInstantActual occp:endsCycle ?cycle ;
+                             occp:hasActualTime ?endTimeActual .
+            FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
+            ?endInstantActual a ?endType .
+            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+        }
+        ORDER BY DESC(?endTimeActual)
+        LIMIT 1
+    }
+}
+"""
+
+CONSTRUCT_CYCLE_A_ESTIMATED = """
+CONSTRUCT {
+    ?cycle occp:hasEstimatedBeginning ?startInstantEstimated .
+    ?cycle occp:hasEstimatedEnd ?endInstantEstimated .
+}
+WHERE {
+    ?cycle a occp:CycleA_PlanningReview .
+    ?component occp:hasCycle ?cycle .
+    FILTER NOT EXISTS { ?component ould:consistsOf ?any }
+    OPTIONAL {
+        SELECT ?cycle ?startInstantEstimated
+        WHERE {
+            ?component occp:hasCycle ?cycle .
+            ?startInstantEstimated a occp:ReviewStart ;
+                                  occp:startsCycle ?cycle ;
+                                  occp:hasEstimatedTime ?startTimeEstimated .
+            FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
+        }
+        ORDER BY ?startTimeEstimated
+        LIMIT 1
+    }
+    OPTIONAL {
+        SELECT ?cycle ?endInstantEstimated
+        WHERE {
+            ?component occp:hasCycle ?cycle .
+            ?endInstantEstimated occp:endsCycle ?cycle ;
+                                occp:hasEstimatedTime ?endTimeEstimated .
+            FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
+            ?endInstantEstimated a ?endType .
+            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+        }
+        ORDER BY DESC(?endTimeEstimated)
+        LIMIT 1
+    }
+}
+"""
+
 CONSTRUCT_CYCLENUMBER = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
 PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
@@ -364,75 +438,76 @@ WHERE {
 CONSTRUCT_PARENT_PHASES = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
 PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
-PREFIX ex: <http://www.example.de/example#>
-CONSTRUCT {
-    ?parentPhase occp:hasActualBeginning ?startInstant .
-    ?parentPhase occp:hasActualEnd ?endInstant .
-}
-WHERE {
-    ?parentComponent occp:hasPhase ?parentPhase .
-    ?parentPhase a ?parentPhaseType .
-    ?parentComponent ould:consistsOf ?childComponent .
-    ?childComponent occp:hasPhase ?childPhase .
-    ?childPhase a ?childPhaseType .
-    ?childPhase occp:hasActualBeginning ?startInstant .
-    ?childPhase occp:hasActualEnd ?endInstant .
-
-    # Sicherstellen, dass Parent- und Child-Phasen denselben Typ haben
-    FILTER (?parentPhaseType = ?childPhaseType)
-    
-    # Alle Phasen-Typen explizit auflisten
-    VALUES ?parentPhaseType {
-        occp:PhaseA_Planning
-        occp:PhaseB_Review
-        occp:PhaseC_Construction
-        occp:PhaseD_Usage
-        occp:PhaseM_Deconstruction
-    }
-}
-"""
-
-CONSTRUCT_PARENT_PHASES_A = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
 CONSTRUCT {
     ?parentPhase occp:hasActualBeginning ?earliestActualStart .
     ?parentPhase occp:hasActualEnd ?latestActualEnd .
+    ?parentPhase occp:hasEstimatedBeginning ?earliestEstimatedStart .
+    ?parentPhase occp:hasEstimatedEnd ?latestEstimatedEnd .
 }
 WHERE {
     ?parentComponent occp:hasPhase ?parentPhase .
-    ?parentPhase a occp:PhaseA_Planning .  # Nur Phase A für Parent
     ?parentComponent ould:consistsOf ?childComponent .
     ?childComponent occp:hasPhase ?childPhase .
-    ?childPhase a occp:PhaseA_Planning .  # Nur Phase A für Child-Phasen
 
-    # Frühester Actual Beginning
+    # Earliest Actual Beginning
     OPTIONAL {
         SELECT ?parentPhase ?earliestActualStart
         WHERE {
             ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentPhase a occp:PhaseA_Planning .
             ?parentComponent ould:consistsOf ?childComponent .
             ?childComponent occp:hasPhase ?childPhase .
-            ?childPhase a occp:PhaseA_Planning .
-            ?childPhase occp:hasActualBeginning ?startInstant .
-            ?startInstant occp:hasActualTime ?startTime .
+            ?startInstant occp:startsPhase ?childPhase ;
+                          occp:hasActualTime ?startTime .
+            FILTER NOT EXISTS { ?startInstant occp:hasEstimatedTime ?anyEstimatedTime . }
         }
         ORDER BY ?startTime
         LIMIT 1
     }
 
-    # Spätester Actual End
+    # Latest Actual End
     OPTIONAL {
         SELECT ?parentPhase ?latestActualEnd
         WHERE {
             ?parentComponent occp:hasPhase ?parentPhase .
-            ?parentPhase a occp:PhaseA_Planning .
             ?parentComponent ould:consistsOf ?childComponent .
             ?childComponent occp:hasPhase ?childPhase .
-            ?childPhase a occp:PhaseA_Planning .
-            ?childPhase occp:hasActualEnd ?endInstant .
-            ?endInstant occp:hasActualTime ?endTime .
+            ?endInstant occp:endsPhase ?childPhase ;
+                        occp:hasActualTime ?endTime .
+            FILTER NOT EXISTS { ?endInstant occp:hasEstimatedTime ?anyEstimatedTime . }
+            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+            ?endInstant a ?endType .
+        }
+        ORDER BY DESC(?endTime)
+        LIMIT 1
+    }
+
+    # Earliest Estimated Beginning
+    OPTIONAL {
+        SELECT ?parentPhase ?earliestEstimatedStart
+        WHERE {
+            ?parentComponent occp:hasPhase ?parentPhase .
+            ?parentComponent ould:consistsOf ?childComponent .
+            ?childComponent occp:hasPhase ?childPhase .
+            ?startInstant occp:startsPhase ?childPhase ;
+                          occp:hasEstimatedTime ?startTime .
+            FILTER NOT EXISTS { ?startInstant occp:hasActualTime ?anyActualTime . }
+        }
+        ORDER BY ?startTime
+        LIMIT 1
+    }
+
+    # Latest Estimated End
+    OPTIONAL {
+        SELECT ?parentPhase ?latestEstimatedEnd
+        WHERE {
+            ?parentComponent occp:hasPhase ?parentPhase .
+            ?parentComponent ould:consistsOf ?childComponent .
+            ?childComponent occp:hasPhase ?childPhase .
+            ?endInstant occp:endsPhase ?childPhase ;
+                        occp:hasEstimatedTime ?endTime .
+            FILTER NOT EXISTS { ?endInstant occp:hasActualTime ?anyActualTime . }
+            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
+            ?endInstant a ?endType .
         }
         ORDER BY DESC(?endTime)
         LIMIT 1
@@ -447,24 +522,11 @@ CONSTRUCT {
     ?cycle occp:hasActualEnd ?endInstantActual .
     ?cycle occp:hasEstimatedBeginning ?startInstantEstimated .
     ?cycle occp:hasEstimatedEnd ?endInstantEstimated .
-    ?cycle occp:hasCycleNumber ?maxCycleNumber .
+    ?cycle occp:hasCycleNumber ?cycleNumber .
 }
 WHERE {
     ?cycle a occp:CycleA_PlanningReview .
     ?component occp:hasCycle ?cycle .
-
-    # Ermittle den maximalen hasCycleNumber-Wert
-    {
-        SELECT ?cycle (MAX(?existingNumber) AS ?maxCycleNumber)
-        WHERE {
-            ?cycle a occp:CycleA_PlanningReview .
-            ?component occp:hasCycle ?cycle .
-            ?cycle occp:hasCycleNumber ?existingNumber .
-        }
-        GROUP BY ?cycle
-    }
-
-    # Bestehende OPTIONALS für Zeitstempel
     OPTIONAL {
         ?startInstantActual a occp:ReviewStart ;
                            occp:startsCycle ?cycle ;
@@ -491,35 +553,32 @@ WHERE {
         FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
         VALUES ?endType { occp:ReviewRejection occp:ReviewApproval }
     }
+    OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
+    BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
 }
 """
 
 
 
 def generate_post_graph(pre_file, output_file):
-    # Lade pre_graph
     pre_graph = Graph().parse(pre_file, format="turtle")
+    post_graph = Graph()
+    # Order of CONSTRUCT-Queries is imporant!
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_A1).graph
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_A2).graph
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_B).graph
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_C).graph
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_D).graph
+    post_graph += pre_graph.query(CONSTRUCT_PHASE_M).graph
+    post_graph += pre_graph.query(CONSTRUCT_CYCLE_A).graph
     
-    # Erstelle post_graph_1 mit den inferierten Child-Daten
-    post_graph_1 = Graph()
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_A1).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_A2).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_B).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_C).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_D).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_M).graph
-    post_graph_1 += pre_graph.query(CONSTRUCT_CYCLE_A).graph
+    parent_phases_result = post_graph.query(CONSTRUCT_PARENT_PHASES)
+    post_graph += parent_phases_result.graph
+    post_graph += pre_graph.query(CONSTRUCT_PARENT_CYCLES).graph
+    post_graph += pre_graph.query(CONSTRUCT_CYCLENUMBER).graph
 
-    post_graph_2 = pre_graph + post_graph_1
-
-    # Weitere Abfragen (falls nötig)
-    post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_2 += post_graph_2.query(CONSTRUCT_CYCLENUMBER).graph
-
-    # Speichere das Ergebnis
-    post_graph_2.serialize(output_file, format="turtle")
-    return post_graph_2
+    post_graph.serialize(output_file, format="turtle")
+    return post_graph
 
 if __name__ == "__main__":
     generate_post_graph()

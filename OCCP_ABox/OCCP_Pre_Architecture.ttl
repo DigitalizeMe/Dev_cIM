@@ -31,6 +31,7 @@ ex:cycleA_arch a occp:CycleA_PlanningReview .
 ex:IfcBuilding a ould:UpdatableEntity ;
     ould:hasIFCID "IfcBuilding" ;
     occp:hasPhase ex:phaseA_building,
+        ex:phaseB_building,
         ex:phaseC_building,
         ex:phaseD_building,
         ex:phaseM_building ;
@@ -52,7 +53,6 @@ ex:cycleA_building a occp:CycleA_PlanningReview ;
 # Instants for ex:IfcBuilding
 ex:instant_BeginningOfPlanning_building a occp:BeginningOfPlanning ;
     occp:hasActualTime "2000-01-01"^^xsd:date ;  # Aligned with top-level
-    occp:hasPhase ex:phaseA_building ;
     occp:startsPhase ex:phaseA_building .
 
 ex:instant_DataProcurement_building a occp:DataProcurement ;
@@ -65,51 +65,44 @@ ex:instant_SubmissionToReview_building a occp:SubmissionToReview ;
 
 ex:instant_ReviewStart_building a occp:ReviewStart ;
     occp:hasActualTime "2000-02-15"^^xsd:date ;     # Aligned with top-level
-    occp:hasPhase ex:phaseB_building ;
     occp:startsPhase ex:phaseB_building ;
     occp:startsCycle ex:cycleA_building .
 
 ex:instant_ReviewApproval_building a occp:ReviewApproval ;
     occp:hasActualTime "2000-02-18"^^xsd:date ;     # Before top-level entity
-    occp:hasPhase ex:phaseA_building ;
     occp:endsPhase ex:phaseA_building ;
     occp:endsPhase ex:phaseB_building ;
     occp:endsCycle ex:cycleA_building .
 
 ex:instant_ConstructionStart_building a occp:ConstructionStart ;
     occp:hasActualTime "2002-01-01"^^xsd:date ;     # Aligned with top-level
-    occp:hasPhase ex:phaseC_building ;
     occp:startsPhase ex:phaseC_building .
 
 ex:instant_ConstructionCompletion_building a occp:CompletionOfConstruction ;
     occp:hasActualTime "2002-10-31"^^xsd:date ;     # Before top-level entity
-    occp:hasPhase ex:phaseC_building ;
     occp:endsPhase ex:phaseC_building .
 
 ex:instant_UsageStart_building a occp:UsageStart ;
     occp:hasActualTime "2003-01-01"^^xsd:date ;  # Aligned with top-level
-    occp:hasPhase ex:phaseD_building ;
     occp:startsPhase ex:phaseD_building .
 
 ex:instant_UsageEnd_building a occp:UsageEnd ;
     occp:hasActualTime "2015-04-30"^^xsd:date ;  
-    occp:hasPhase ex:phaseD_building ;
     occp:endsPhase ex:phaseD_building .
 
 ex:instant_DeconstructionStart_building a occp:DeconstructionStart ;
     occp:hasActualTime "2015-05-01"^^xsd:date ;
-    occp:hasPhase ex:phaseM_building ;
     occp:startsPhase ex:phaseM_building .
 
 ex:instant_DeconstructionCompletion_building a occp:DeconstructionCompletion ;
     occp:hasActualTime "2015-05-31"^^xsd:date ;  
-    occp:hasPhase ex:phaseM_building ;
     occp:endsPhase ex:phaseM_building .
 
 # Building component group: ex:IfcBuildingStorey
 ex:IfcBuildingStorey a ould:UpdatableEntity ;
     ould:hasIFCID "IfcBuildingStorey" ;
     occp:hasPhase ex:phaseA_storey,
+        ex:phaseB_storey,
         ex:phaseC_storey,
         ex:phaseD_storey,
         ex:phaseM_storey ;
