@@ -364,6 +364,7 @@ WHERE {
 CONSTRUCT_PARENT_PHASES = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
 PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX ex: <http://www.example.de/example#>
 CONSTRUCT {
     ?parentPhase occp:hasActualBeginning ?startInstant .
     ?parentPhase occp:hasActualEnd ?endInstant .
@@ -376,7 +377,11 @@ WHERE {
     ?childPhase a ?childPhaseType .
     ?childPhase occp:hasActualBeginning ?startInstant .
     ?childPhase occp:hasActualEnd ?endInstant .
+
+    # Sicherstellen, dass Parent- und Child-Phasen denselben Typ haben
     FILTER (?parentPhaseType = ?childPhaseType)
+    
+    # Alle Phasen-Typen explizit auflisten
     VALUES ?parentPhaseType {
         occp:PhaseA_Planning
         occp:PhaseB_Review
@@ -387,85 +392,53 @@ WHERE {
 }
 """
 
-CONSTRUCT_PARENT_PHASES_ESTIMATED = """
+CONSTRUCT_PARENT_PHASES_A = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
 PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
 CONSTRUCT {
-    ?parentPhase occp:hasEstimatedBeginning ?startInstant .
-    ?parentPhase occp:hasEstimatedEnd ?endInstant .
+    ?parentPhase occp:hasActualBeginning ?earliestActualStart .
+    ?parentPhase occp:hasActualEnd ?latestActualEnd .
 }
 WHERE {
     ?parentComponent occp:hasPhase ?parentPhase .
-    ?parentPhase a ?parentPhaseType .
+    ?parentPhase a occp:PhaseA_Planning .  # Nur Phase A für Parent
     ?parentComponent ould:consistsOf ?childComponent .
     ?childComponent occp:hasPhase ?childPhase .
-    ?childPhase a ?childPhaseType .
-    FILTER (?parentPhaseType = ?childPhaseType)
-    VALUES ?parentPhaseType {
-        occp:PhaseA_Planning
-        occp:PhaseB_Review
-        occp:PhaseC_Construction
-        occp:PhaseD_Usage
-        occp:PhaseM_Deconstruction
-    }
-    
-    # Estimated Beginning
+    ?childPhase a occp:PhaseA_Planning .  # Nur Phase A für Child-Phasen
+
+    # Frühester Actual Beginning
     OPTIONAL {
-        ?childPhase occp:hasEstimatedBeginning ?startInstant .
-        ?startInstant occp:hasEstimatedTime ?startTime .
+        SELECT ?parentPhase ?earliestActualStart
+        WHERE {
+            ?parentComponent occp:hasPhase ?parentPhase .
+            ?parentPhase a occp:PhaseA_Planning .
+            ?parentComponent ould:consistsOf ?childComponent .
+            ?childComponent occp:hasPhase ?childPhase .
+            ?childPhase a occp:PhaseA_Planning .
+            ?childPhase occp:hasActualBeginning ?startInstant .
+            ?startInstant occp:hasActualTime ?startTime .
+        }
+        ORDER BY ?startTime
+        LIMIT 1
     }
-    
-    # Estimated End
+
+    # Spätester Actual End
     OPTIONAL {
-        ?childPhase occp:hasEstimatedEnd ?endInstant .
-        ?endInstant occp:hasEstimatedTime ?endTime .
+        SELECT ?parentPhase ?latestActualEnd
+        WHERE {
+            ?parentComponent occp:hasPhase ?parentPhase .
+            ?parentPhase a occp:PhaseA_Planning .
+            ?parentComponent ould:consistsOf ?childComponent .
+            ?childComponent occp:hasPhase ?childPhase .
+            ?childPhase a occp:PhaseA_Planning .
+            ?childPhase occp:hasActualEnd ?endInstant .
+            ?endInstant occp:hasActualTime ?endTime .
+        }
+        ORDER BY DESC(?endTime)
+        LIMIT 1
     }
 }
 """
-
-CONSTRUCT_PARENT_PHASES_FILTER = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-CONSTRUCT {
-    ?parentPhase occp:hasActualBeginning ?earliestStartInstant .
-    ?parentPhase occp:hasActualEnd ?latestEndInstant .
-}
-WHERE {
-    ?parentPhase a ?parentPhaseType .
-    
-    # Frühester Start
-    {
-        SELECT ?parentPhase (SAMPLE(?startInst) AS ?earliestStartInstant)
-        WHERE {
-            ?parentPhase occp:hasActualBeginning ?startInst .
-            ?startInst occp:hasActualTime ?startTime .
-            {
-                SELECT ?parentPhase (MIN(?st) AS ?minStartTime)
-                WHERE {
-                    ?parentPhase occp:hasActualBeginning ?si .
-                    ?si occp:hasActualTime ?st .
-                }
-                GROUP BY ?parentPhase
-            }
-            FILTER (?startTime = ?minStartTime)
-        }
-        GROUP BY ?parentPhase
-    }
-    
-    # Spätestes Ende
-    {
-        SELECT ?parentPhase (MAX(?endTime) AS ?latestEndTime) (SAMPLE(?endInst) AS ?latestEndInstant)
-        WHERE {
-            ?parentPhase occp:hasActualEnd ?endInst .
-            ?endInst occp:hasActualTime ?endTime .
-        }
-        GROUP BY ?parentPhase
-        HAVING (COUNT(?endInst) > 0)
-    }
-}
-"""
-
-
 
 CONSTRUCT_PARENT_CYCLES = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
@@ -521,11 +494,13 @@ WHERE {
 }
 """
 
-from rdflib import Graph
+
 
 def generate_post_graph(pre_file, output_file):
+    # Lade pre_graph
     pre_graph = Graph().parse(pre_file, format="turtle")
     
+    # Erstelle post_graph_1 mit den inferierten Child-Daten
     post_graph_1 = Graph()
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_A1).graph
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_A2).graph
@@ -536,22 +511,15 @@ def generate_post_graph(pre_file, output_file):
     post_graph_1 += pre_graph.query(CONSTRUCT_CYCLE_A).graph
 
     post_graph_2 = pre_graph + post_graph_1
+
+    # Weitere Abfragen (falls nötig)
     post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_PHASES).graph
     post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_CYCLES).graph
     post_graph_2 += post_graph_2.query(CONSTRUCT_CYCLENUMBER).graph
 
-    post_graph_3 = post_graph_2
-    post_graph_3 += post_graph_3.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_3 += post_graph_3.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_3 += post_graph_3.query(CONSTRUCT_CYCLENUMBER).graph
+    # Speichere das Ergebnis
+    post_graph_2.serialize(output_file, format="turtle")
+    return post_graph_2
 
-    post_graph_4 = post_graph_3
-    post_graph_4 += post_graph_4.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_4 += post_graph_4.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_4 += post_graph_4.query(CONSTRUCT_CYCLENUMBER).graph
-
-    post_graph_final = post_graph_4.query(CONSTRUCT_PARENT_PHASES_FILTER).graph
-    post_graph_final += post_graph_4.query(CONSTRUCT_PARENT_PHASES_ESTIMATED).graph
-    
-    post_graph_final.serialize(output_file, format="turtle")
-    return post_graph_final
+if __name__ == "__main__":
+    generate_post_graph()

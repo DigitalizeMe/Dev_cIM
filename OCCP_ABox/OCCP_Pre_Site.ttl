@@ -50,7 +50,7 @@ ex:instant_ConstructionStart_site a occp:ConstructionStart ;
     occp:hasActualTime "2002-01-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_site .
 
-ex:instant_ConstructionCompletion_site a occp:ConstructionCompletion ;
+ex:instant_ConstructionCompletion_site a occp:CompletionOfConstruction ;
     occp:hasActualTime "2002-12-31"^^xsd:date ;
     occp:endsPhase ex:phaseC_site .
 

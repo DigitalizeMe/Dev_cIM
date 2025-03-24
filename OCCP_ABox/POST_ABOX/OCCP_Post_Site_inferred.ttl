@@ -12,17 +12,22 @@ ex:IFC_Site_parsed a ould:UpdatableEntity ;
     ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
     ould:hasIFCID "IFC_Site" .
 
-ex:instant_ConstructionCompletion_site a occp:ConstructionCompletion ;
-    occp:endsPhase ex:phaseC_site ;
-    occp:hasActualTime "2002-12-31"^^xsd:date .
-
 ex:instant_DataProcurement_site a occp:DataProcurement ;
     occp:hasActualTime "2000-01-06"^^xsd:date ;
     occp:hasPhase ex:phaseA_site .
 
+ex:instant_SubmissionToReview_site a occp:SubmissionToReview ;
+    occp:hasActualTime "2000-02-01"^^xsd:date ;
+    occp:hasPhase ex:phaseA_site ;
+    occp:startsCycle ex:cycleA_site .
+
 ex:instant_BeginningOfPlanning_site a occp:BeginningOfPlanning ;
     occp:hasActualTime "2000-01-01"^^xsd:date ;
     occp:startsPhase ex:phaseA_site .
+
+ex:instant_ConstructionCompletion_site a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_site ;
+    occp:hasActualTime "2002-12-31"^^xsd:date .
 
 ex:instant_ConstructionStart_site a occp:ConstructionStart ;
     occp:hasActualTime "2002-01-01"^^xsd:date ;
@@ -31,11 +36,6 @@ ex:instant_ConstructionStart_site a occp:ConstructionStart ;
 ex:instant_ReviewStart_site a occp:ReviewStart ;
     occp:hasActualTime "2000-02-15"^^xsd:date ;
     occp:startsPhase ex:phaseB_site .
-
-ex:instant_SubmissionToReview_site a occp:SubmissionToReview ;
-    occp:hasActualTime "2000-02-01"^^xsd:date ;
-    occp:hasPhase ex:phaseA_site ;
-    occp:startsCycle ex:cycleA_site .
 
 ex:instant_UsageEnd_site a occp:UsageEnd ;
     occp:endsPhase ex:phaseD_site ;
@@ -46,11 +46,10 @@ ex:instant_UsageStart_site a occp:UsageStart ;
     occp:startsPhase ex:phaseD_site .
 
 ex:cycleA_site a occp:CycleA_PlanningReview ;
-    occp:hasActualBeginning ex:instant_SubmissionToReview_site ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site ;
+    occp:hasActualEnd ex:instant_ReviewApproval_site33 ;
     occp:hasCycleNumber 1 .
 
-ex:instant_ReviewApproval_site a occp:ReviewApproval ;
+ex:instant_ReviewApproval_site33 a occp:ReviewApproval ;
     occp:endsCycle ex:cycleA_site ;
     occp:endsPhase ex:phaseA_site,
         ex:phaseB_site ;
@@ -58,10 +57,11 @@ ex:instant_ReviewApproval_site a occp:ReviewApproval ;
 
 ex:phaseB_site a occp:PhaseB_Review ;
     occp:hasActualBeginning ex:instant_ReviewStart_site ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site .
+    occp:hasActualEnd ex:instant_ReviewApproval_site33 .
 
 ex:phaseC_site a occp:PhaseC_Construction ;
-    occp:hasActualBeginning ex:instant_ConstructionStart_site .
+    occp:hasActualBeginning ex:instant_ConstructionStart_site ;
+    occp:hasActualEnd ex:instant_ConstructionCompletion_site .
 
 ex:phaseD_site a occp:PhaseD_Usage ;
     occp:hasActualBeginning ex:instant_UsageStart_site ;
@@ -69,5 +69,5 @@ ex:phaseD_site a occp:PhaseD_Usage ;
 
 ex:phaseA_site a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_site ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site .
+    occp:hasActualEnd ex:instant_ReviewApproval_site33 .
 
