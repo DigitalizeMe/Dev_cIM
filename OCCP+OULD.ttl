@@ -1,8 +1,1024 @@
-@prefix sh:    <http://www.w3.org/ns/shacl#> .
-@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix time:  <http://www.w3.org/2006/time#> .
-@prefix osh:   <http://www.occpshape.de/shape#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> .
+@prefix sh:     <http://www.w3.org/ns/shacl#> .
+@prefix time:   <http://www.w3.org/2006/time#> .
+@prefix osh:    <http://www.occpshape.de/shape#> .
+@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+
+<http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
+                                                                        owl:imports <http://www.w3.org/2006/time#> ;
+                                                                        rdfs:comment "First workaround to implement time tracking features to models"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#after
+	occp:after rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#after> ;
+		owl:inverseOf occp:before ;
+		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents a transitive relation between temporal entities, used to ensure that if A occurs after B and B occurs after C, then A occurs after C."@en ;
+		rdfs:label "after (transitive)"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#before
+	occp:before rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#before> ;
+		owl:inverseOf occp:after ;
+		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents a transitive relation between temporal entities, used to ensure that if A occurs before B and B occurs before C, then A occurs before C."@en ;
+		rdfs:label "before (transitive)"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsAfter
+	occp:beginsAfter rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		owl:inverseOf occp:beginsBefore ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents the chronological order of beginnings between two temporal entities, used to indicate that T1’s beginning occurs after T2’s beginning, without defining the order of their ends."@en ;
+		rdfs:label "begins after"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsBefore
+	occp:beginsBefore rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		owl:inverseOf occp:beginsAfter ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents the chronological order of beginnings between two temporal entities, used to indicate that T1’s beginning occurs before T2’s beginning, without defining the order of their ends."@en ;
+		rdfs:label "begins before"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsWith
+	occp:beginsWith rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:comment "This property represents the chronological order of beginnings between two temporal entities, used to indicate that T1’s beginning occurs on the same day as T2’s beginning, without defining the order of their ends."@en ;
+		rdfs:label "begins with"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifeCycle							
+	occp:belongsToLifeCycle rdf:type owl:ObjectProperty ;
+		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range occp:LifeCycle ;
+		rdfs:comment "This property represents the connection of a phase or instant (mainly transitions) to its lifecycle, used to link temporal entities to the overarching lifecycle they belong to."@en ;
+		rdfs:label "belongs to lifecycle"@en .								
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToPhase
+    occp:belongsToPhase rdf:type owl:ObjectProperty ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the connection between an instant and a phase, used to link time instants to their respective phases."@en ;
+		rdfs:label "belongs to phase"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsAfter
+	occp:endsAfter rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		owl:inverseOf occp:endsBefore ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents the chronological order of endings between two temporal entities, used to indicate that T1’s end occurs after T2’s end, without defining the order of their beginnings."@en ;
+		rdfs:label "ends after"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsBefore
+	occp:endsBefore rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		owl:inverseOf occp:endsAfter ;
+		rdf:type owl:TransitiveProperty ;
+		rdfs:comment "This property represents the chronological order of endings between two temporal entities, used to indicate that T1’s end occurs before T2’s end, without defining the order of their beginnings."@en ;
+		rdfs:label "ends before"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsCycle
+	occp:endsCycle rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property represents the relationship between an instant and a cycle, used to mark instants that end an ongoing cycle within a phase."@en ;
+		rdfs:label "ends cycle"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsPhase
+	occp:endsPhase rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the relationship between an instant and a phase, used to mark instants that end an ongoing phase."@en ;
+		rdfs:label "ends phase"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsWith
+	occp:endsWith rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:comment "This property represents the chronological order of endings between two temporal entities, used to indicate that T1’s end occurs on the same day as T2’s end, without defining the order of their beginnings."@en ;
+		rdfs:label "ends with"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualBeginning
+	occp:hasActualBeginning rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This property represents the connection between an interval and an instant, used to mark the actual beginning of a phase."@en ;
+		rdfs:label "has actual beginning"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualEnd
+    occp:hasActualEnd rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range  <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This property represents the connection between an interval and an instant, used to mark the actual end of a phase."@en ;
+		rdfs:label "has actual end"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualTime
+    occp:hasActualTime rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range  xsd:date ;
+		rdfs:comment "This property represents the connection between an instant and a date, used to mark the actual point in time of an instant."@en ;
+		rdfs:label "has actual time"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycle
+    occp:hasCycle rdf:type owl:ObjectProperty ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property represents the connection between a model (component) and a cycle."@en ;
+		rdfs:label "has cycle"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
+    occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range  <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This property represents the connection between an interval and an instant, used to mark the estimated beginning of a phase."@en ;
+		rdfs:label "has estimated beginning"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedEnd
+    occp:hasEstimatedEnd rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasEnd> ;
+		rdfs:domain <http://www.w3.org/2006/time#Interval> ;
+		rdfs:range  <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This property represents the connection between an interval and an instant, used to mark the estimated end of a phase."@en ;
+		rdfs:label "has estimated end"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
+    occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range  xsd:date ;
+		rdfs:comment "This property represents the connection between an instant and a date, used to mark the estimated point in time of an instant."@en ;
+		rdfs:label "has estimated time"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
+    occp:hasInstant rdf:type owl:ObjectProperty ;
+		rdfs:range <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This property represents the link between an updatable entity and an instant, used to connect specific lifecycle events (e.g., Submission) from the MsOCCP to components or models."@en ;
+		rdfs:label "has instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifecycle
+    occp:hasLifecycle a rdf:Property ;
+        rdfs:domain occp:Phase ;
+        rdfs:range occp:Lifecycle ;
+		owl:inverseOf occp:isInPhase ;
+        rdfs:comment "Links a phase to a specific lifecycle." ;
+        rdfs:label "has Lifecycle" .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
+    occp:hasPhase rdf:type owl:ObjectProperty ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the connection between a model (component) and a phase."@en ;
+		rdfs:label "has phase"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
+    occp:isInPhase rdf:type owl:ObjectProperty ;
+		rdfs:domain occp:LifeCycle ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the embedding of a lifecycle within a phase, used to link a lifecycle to the overarching phase it belongs to."@en ;
+		rdfs:label "is in phase"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#startsCycle
+    occp:startsCycle rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property represents the relationship between an instant and a cycle, used to mark instants that start a new cycle within a phase."@en ;
+		rdfs:label "starts cycle"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#startsPhase
+    occp:startsPhase rdf:type owl:ObjectProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the relationship between an instant and a phase, used to mark instants that start a new phase."@en ;
+		rdfs:label "starts phase"@en . 
+
+
+#################################################################
+#    Datatype Properties
+#################################################################
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycleNumber
+    occp:hasCycleNumber rdf:type owl:DatatypeProperty ;
+		rdfs:domain occp:Cycle ;
+		rdfs:range xsd:integer ;
+		rdfs:comment "This property represents the number of iterations in a cycle, used to specify how many times a process like a planning review repeats (e.g., in CycleA_PlanningReview)."@en ;
+		rdfs:label "has cycle number"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifeCycleID
+	occp:hasLifeCycleID rdf:type owl:DatatypeProperty ;
+		rdfs:domain occp:LifeCycle ;
+		rdfs:range xsd:string ;
+		rdfs:comment "This property represents the unique identifier of a lifecycle, used to provide a distinct ID for tracking purposes."@en ;
+		rdfs:label "has lifecycle ID"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginOfTenderingProcess
+    occp:BeginOfTenderingProcess rdf:type owl:Class ;
+		rdfs:subClassOf occp:Transition ;
+		rdfs:comment "This class represents the instant marking the start of the tendering process, a transition between the planning and construction phases, occurring after the completion of planning."@en ;
+		rdfs:label "Begin of Tendering Process"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginningOfPlanning
+    occp:BeginningOfPlanning rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:comment "This class represents the instant marking the official start of the planning phase."@en ;
+		rdfs:label "Beginning of Planning"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfConstruction
+    occp:CompletionOfConstruction rdf:type owl:Class ;
+		rdfs:subClassOf occp:Transition ;
+		rdfs:comment "This class represents the instant marking the last acceptance and finish of construction works, serving as a transition between the construction and usage phases."@en ;
+		rdfs:label "Completion of Construction"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfDeconstruction
+    occp:CompletionOfDeconstruction rdf:type owl:Class ;
+		rdfs:subClassOf occp:Transition ;
+		rdfs:comment "This class represents the instant marking the completion of the final deconstruction task, ending the lifecycle of a building or construction."@en ;
+		rdfs:label "Completion of Deconstruction"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CompletionOfPlanning
+    occp:CompletionOfPlanning rdf:type owl:Class ;
+		rdfs:subClassOf occp:Transition ;
+		rdfs:comment "This class represents the instant marking the last planning review acceptance, serving as a transition from the planning phase to the tendering process."@en ;
+		rdfs:label "Completion of Planning"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionAcceptance
+    occp:ConstructionAcceptance rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:comment "This class represents the instant marking the final acceptance of a construction or component, occurring after completion or defect elimination."@en ;
+		rdfs:label "Construction Acceptance"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionCompletion
+    occp:ConstructionCompletion rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:comment "This class represents the instant marking the completion of construction for a model component or building."@en ;
+		rdfs:label "Construction Completion"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionStart
+    occp:ConstructionStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of construction works for a model component or building."@en ;
+		rdfs:label "Construction Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Cycle
+    occp:Cycle rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
+		rdfs:comment "This class represents a recurring time span with a starting point, period, and duration, used to track iterating processes like multiple planning reviews."@en ;
+		rdfs:label "Cycle"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#CycleA_PlanningReview
+    occp:CycleA_PlanningReview rdf:type owl:Class ;
+		rdfs:subClassOf occp:Cycle ;
+		rdfs:comment "This class represents a cycle starting with the review start and ending with approval or rejection, used to track planning and review iterations. Multiple events possible if rejected."@en ;
+		rdfs:label "Cycle A Planning Review"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageDetection
+    occp:DamageDetection rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:comment "This class represents the instant marking the detection of damage affecting a component or building. Multiple events possible."@en ;
+		rdfs:label "Damage Detection"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageObservation
+    occp:DamageObservation rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:comment "This class represents the instant marking the observation of a known defect or damage, typically linked to inspections or monitoring systems. Multiple events possible."@en ;
+		rdfs:label "Damage Observation"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageRepair
+    occp:DamageRepair rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:comment "This class represents the instant marking the repair of a defect or damage, typically coinciding with the end of repair measures."@en ;
+		rdfs:label "Damage Repair"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DataProcurement
+    occp:DataProcurement rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:comment "This class represents the instant marking data procurement actions, such as geodetic measures or adding data to planning models. Multiple events possible."@en ;
+		rdfs:label "Data Procurement"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionCompletion
+    occp:DeconstructionCompletion rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseM_Instant ;
+		rdfs:comment "This class represents the instant marking the completion of deconstruction works, ending the lifecycle of a component or building."@en ;
+		rdfs:label "Deconstruction Completion"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionStart
+    occp:DeconstructionStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseM_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of deconstruction works for a component or building."@en ;
+		rdfs:label "Deconstruction Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimCompletion
+    occp:DefectElimCompletion rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:comment "This class represents the instant marking the completion of construction works related to defect elimination for a model component or building."@en ;
+		rdfs:label "Defect Elimination Completion"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimStart
+    occp:DefectElimStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of construction works related to defect elimination for a model component or building."@en ;
+		rdfs:label "Defect Elimination Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeChange
+    occp:DesignLifeChange rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:comment "This class represents the instant marking a change in the estimated design life due to factors like repairs or usage changes. Multiple events possible."@en ;
+		rdfs:label "Design Life Change"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeEnd
+    occp:DesignLifeEnd rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:comment "This class represents the instant marking the end of the estimated design life of a component or building. Multiple events possible due to estimation changes."@en ;
+		rdfs:label "Design Life End"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeStart
+    occp:DesignLifeStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:comment "This class represents the instant marking the start of the estimated design life of a component or building."@en ;
+		rdfs:label "Design Life Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_ASTR
+    occp:Edit_ASTR rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:comment "This class represents the instant marking significant changes to a planning model after submission to review (ASTR = After Submission To Review). Multiple events possible."@en ;
+		rdfs:label "Edit ASTR"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_BSTR
+    occp:Edit_BSTR rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:comment "This class represents the instant marking significant changes to a planning model before submission to review (BSTR = Before Submission To Review). Multiple events possible."@en ;
+		rdfs:label "Edit BSTR"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#GeologicalEvent
+    occp:GeologicalEvent rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:comment "This class represents the instant marking a geological event (e.g., earthquake) affecting a component or building. Multiple events possible."@en ;
+		rdfs:label "Geological Event"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#InspectionExecution
+    occp:InspectionExecution rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:comment "This class represents the instant marking the execution of a regular inspection. Multiple events possible over the lifecycle."@en ;
+		rdfs:label "Inspection Execution"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#IrregularInspection
+    occp:IrregularInspection rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:comment "This class represents the instant marking the execution of an irregular inspection. Multiple events possible over the lifecycle."@en ;
+		rdfs:label "Irregular Inspection"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LifeCycle		
+	occp:LifeCycle rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
+		rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
+		rdfs:label "Life Cycle"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent
+    occp:LoadEvent rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:comment "This class represents the instant marking an irregular load event affecting a component or building. Multiple events possible."@en ;
+		rdfs:label "Load Event"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NewComponent
+    occp:NewComponent rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:comment "This class represents the instant marking the addition of a new component to an existing structure, potentially initiating a sub-lifecycle. Multiple events possible."@en ;
+		rdfs:label "New Component"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NextRegularInspection
+    occp:NextRegularInspection rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:comment "This class represents the instant marking the planned date of the next regular inspection, based on the inspection interval. Multiple events possible over the lifecycle."@en ;
+		rdfs:label "Next Regular Inspection"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Phase
+    occp:Phase rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
+		rdfs:comment "This class represents the main chronological blocks of a building’s lifecycle (e.g., planning, construction, usage), serving as a customizable base structure."@en ;
+		rdfs:label "Phase"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Instant
+    occp:PhaseA_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase A (Planning Phase), grouping all related events."@en ;
+		rdfs:label "Phase A Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Planning
+    occp:PhaseA_Planning rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the planning phase, starting with BeginningOfPlanning and ending with CompletionOfPlanning."@en ;
+		rdfs:label "Phase A Planning"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Instant
+    occp:PhaseB_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase B (Review Phase), grouping all related events."@en ;
+		rdfs:label "Phase B Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Review
+    occp:PhaseB_Review rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the review phase, starting with the first submission to review and ending with CompletionOfPlanning."@en ;
+		rdfs:label "Phase B Review"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Construction
+    occp:PhaseC_Construction rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the construction phase, starting with ConstructionStart and ending with CompletionOfConstruction."@en ;
+		rdfs:label "Phase C Construction"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Instant
+    occp:PhaseC_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase C (Construction Phase), grouping all related events."@en ;
+		rdfs:label "Phase C Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Instant
+    occp:PhaseD_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase D (Usage Phase), grouping all related events."@en ;
+		rdfs:label "Phase D Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Usage
+    occp:PhaseD_Usage rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the usage phase, starting with UsageStart and ending with UsageEnd."@en ;
+		rdfs:label "Phase D Usage"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Instant
+    occp:PhaseE_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase E (Warranty Phase), grouping all related events."@en ;
+		rdfs:label "Phase E Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty
+    occp:PhaseE_Warranty rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the warranty phase, starting with WarrantyStart and ending with WarrantyEnd."@en ;
+		rdfs:label "Phase E Warranty"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_DesignLife
+    occp:PhaseF_DesignLife rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the design life phase, starting with DesignLifeStart and ending with DesignLifeEnd."@en ;
+		rdfs:label "Phase F Design Life"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_Instant
+    occp:PhaseF_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase F (Design Life Phase), grouping all related events."@en ;
+		rdfs:label "Phase F Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection
+    occp:PhaseG_Inspection rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the inspection phase, starting with the beginning of usage and ending with the beginning of deconstruction."@en ;
+		rdfs:label "Phase G Inspection"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Instant
+    occp:PhaseG_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase G (Inspection Phase), grouping all related events."@en ;
+		rdfs:label "Phase G Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_Instant
+    occp:PhaseH_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase H (Special Events Phase), grouping all related events."@en ;
+		rdfs:label "Phase H Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_SpecialEvents
+    occp:PhaseH_SpecialEvents rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the special events phase, starting with the first special event and ending with the last."@en ;
+		rdfs:label "Phase H Special Events"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Damage
+    occp:PhaseK_Damage rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the damage phase, starting with DamageDetection and ending with repair completion or deconstruction start."@en ;
+		rdfs:label "Phase K Damage"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Instant
+    occp:PhaseK_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase K (Damage Phase), grouping all related events."@en ;
+		rdfs:label "Phase K Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Instant
+    occp:PhaseL_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase L (Repair Phase), grouping all related events."@en ;
+		rdfs:label "Phase L Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair
+    occp:PhaseL_Repair rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the repair phase, starting with RepairStart and ending with RepairCompletion."@en ;
+		rdfs:label "Phase L Repair"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Deconstruction
+    occp:PhaseM_Deconstruction rdf:type owl:Class ;
+		rdfs:subClassOf occp:Phase ;
+		rdfs:comment "This class represents the deconstruction phase, starting with DeconstructionStart and ending with DeconstructionCompletion."@en ;
+		rdfs:label "Phase M Deconstruction"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Instant
+    occp:PhaseM_Instant rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents instants within Phase M (Deconstruction Phase), grouping all related events."@en ;
+		rdfs:label "Phase M Instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion
+    occp:RepairCompletion rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:comment "This class represents the instant marking the completion of damage repair works for a component or building. Multiple events possible."@en ;
+		rdfs:label "Repair Completion"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairStart
+    occp:RepairStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of damage repair works for a component or building. Multiple events possible."@en ;
+		rdfs:label "Repair Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewApproval
+    occp:ReviewApproval rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:comment "This class represents the instant marking the reviewer’s acceptance of a planning model, ending the planning and review phases."@en ;
+		rdfs:label "Review Approval"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewRejection
+    occp:ReviewRejection rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:comment "This class represents the instant marking the reviewer’s rejection of a planning model. Multiple events possible."@en ;
+		rdfs:label "Review Rejection"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewStart
+    occp:ReviewStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:comment "This class represents the instant marking the start of the review process. Multiple events possible with rejections."@en ;
+		rdfs:label "Review Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Submission
+    occp:Submission rdf:type owl:Class ;
+		rdfs:subClassOf occp:Transition ;
+		rdfs:comment "This class represents the instant marking the end of the tendering process, serving as a transition to the construction phase."@en ;
+		rdfs:label "Submission"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#SubmissionToReview
+    occp:SubmissionToReview rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:comment "This class represents the instant marking the submission of a planning draft to the reviewer, starting Phase B. Multiple events possible."@en ;
+		rdfs:label "Submission to Review"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition
+    occp:Transition rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+		rdfs:comment "This class represents key milestones or triggering events between phases, typically enabling the start of the next phase or marking phase completion."@en ;
+		rdfs:label "Transition"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange
+    occp:UsageChange rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:comment "This class represents the instant marking a change in usage of a component or building, potentially ending one or more usage phases and initiating new ones. Multiple events possible."@en ;
+		rdfs:label "Usage Change"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageEnd
+    occp:UsageEnd rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:comment "This class represents the instant marking the end of usage for a component or building. Multiple events possible."@en ;
+		rdfs:label "Usage End"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageStart
+    occp:UsageStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of usage for a component or building. Multiple events possible."@en ;
+		rdfs:label "Usage Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyChange
+    occp:WarrantyChange rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:comment "This class represents the instant marking a change in warranty due to repairs or extensions. Multiple events possible."@en ;
+		rdfs:label "Warranty Change"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyEnd
+    occp:WarrantyEnd rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:comment "This class represents the instant marking the end of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
+		rdfs:label "Warranty End"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyStart
+    occp:WarrantyStart rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:comment "This class represents the instant marking the beginning of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
+		rdfs:label "Warranty Start"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WeatherEvent
+    occp:WeatherEvent rdf:type owl:Class ;
+		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:comment "This class represents the instant marking a weather event (e.g., flood) affecting a component or building. Multiple events possible."@en ;
+		rdfs:label "Weather Event"@en .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#consistsOf
+    ould:consistsOf a owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:UpdatableEntity ;
+        rdfs:label "consists of"@en ;
+        rdfs:comment "Indicates that an entity consists of another entity as a component."@en .
+
+    
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasLinkedData
+    ould:hasLinkedData rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:LinkedData ;
+        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored either online or locally (see also: ould:hasOnlineData and ould:hasOfflineData for online/offline specifics)."@en ;
+        rdfs:label "has linked data"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdate
+    ould:hasUpdate rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:Update ;
+        rdfs:comment "Connects an UpdatableEntity to an existing Update. If a prior Update exists, a new UpdateChain is initiated to track subsequent modifications."@en ;
+        rdfs:label "has update"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPredecessor
+    ould:hasPredecessor rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdate ;
+        rdfs:domain ould:Update ;
+        rdfs:range ould:Update ;
+        owl:inverseOf ould:hasSuccessor ;
+        rdf:type owl:TransitiveProperty ;
+        rdfs:comment "Links an update to its predecessor, enabling chronological tracking of entity changes (e.g., replacements or modifications). The predecessor is an update entry recording the prior state."@en ;
+        rdfs:label "has predecessor"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSuccessor
+    ould:hasSuccessor rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdate ;
+        rdfs:domain ould:Update ;
+        rdfs:range ould:Update;
+        owl:inverseOf ould:hasPredecessor ;
+        rdf:type owl:TransitiveProperty ;
+        rdfs:comment "Links an update to a subsequent update, enabling chronological tracking of entity changes (e.g., replacements or modifications)."@en ;
+        rdfs:label "has successor"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedValue
+    ould:hasUpdatedValue rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range owl:Thing ;
+        rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC-ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
+        rdfs:label "has updated value"@en .
+    
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedEvent
+    ould:hasUpdatedEvent rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdatedValue ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+        rdfs:comment "The object property \"hasUpdatedEvent\" links a temporal entity (phase, cycle, transition, or instant) to an update typically recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
+        rdfs:label "has updated event"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewValue
+    ould:hasNewValue rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdatedValue ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range owl:Thing ;
+        owl:inverseOf ould:hasPreviousValue ;
+        rdfs:comment "Links an update to the newly recorded value of a modified property."@en ;
+        rdfs:label "has new value"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousValue
+    ould:hasPreviousValue rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdatedValue ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range owl:Thing ;
+        owl:inverseOf ould:hasNewValue ;
+        rdfs:comment "Links an update to the previous recorded value of a modified property."@en ;
+        rdfs:label "has previous value"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousChain
+    ould:hasPreviousChain rdf:type owl:ObjectProperty ;
+        owl:inverseOf ould:hasNextChain ;
+        rdf:type owl:TransitiveProperty ;
+        rdfs:domain ould:UpdateChain ;
+        rdfs:range ould:UpdateChain ;
+        rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles, e.g., linking sequential modifications of an IFC component."@en ;
+        rdfs:label "has previous chain"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNextChain
+    ould:hasNextChain rdf:type owl:ObjectProperty ;
+        owl:inverseOf ould:hasPreviousChain ;
+        rdf:type owl:TransitiveProperty ;
+        rdfs:domain ould:UpdateChain ;
+        rdfs:range ould:UpdateChain ;
+        rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance   to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
+        rdfs:label "has next chain"@en .    
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdateChain
+    ould:hasUpdateChain rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:UpdateChain ;
+        rdfs:comment "The object property \"hasUpdateChain\" links an UpdatableEntity to an \"UpdateChain\", grouping multiple related Updates (in contrast to ould:hasUpdate for single Updates)."@en ;
+        rdfs:label "has update chain"@en .  
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#entryTime
+    ould:entryTime rdf:type owl:DatatypeProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:dateTime ;
+        rdfs:comment "Specifies the timestamp (YYYY-MM-DDThh:mm:ss) when an entry was made in the MsOCCP for the entity."@en ;
+        rdfs:label "entry time"@en .
+    
+    
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOnlineData
+    ould:hasOnlineData rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasLinkedData ; 
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:anyURI ;
+        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored online."@en ;
+        rdfs:label "has online data"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOfflineData
+    ould:hasOfflineData rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasLinkedData ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Links an IFC component to an external dataset, document, or other reference stored offline."@en ;
+        rdfs:label "has offline data"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasDataLocation
+    ould:hasDataLocation rdf:type owl:DatatypeProperty ;
+        rdfs:domain ould:LinkedData ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasDataLocation\" specifies the location of the linked data and is used in conjunction with ould:hasOnlineData or ould:hasOfflineData to specify the exact location. It can be a URI (for online storage) or a local file path (for offline storage)."@en ;
+        rdfs:label "has data location"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasHash
+    ould:hasHash rdf:type owl:DatatypeProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasHash\" is used to store the hash value of an IFC model to record the current state of a IFC model. The hash value is also used to check for changes of the IFC model to ensure the consistency of the chronology."@en ;
+        rdfs:label "has hash"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasIFCID
+    ould:hasIFCID rdf:type owl:DatatypeProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
+        rdfs:label "has IFC ID"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewHash
+    ould:hasNewHash rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasHash ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasNewHash\" is used to update an existing hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasPreviousHash."@en ;
+        rdfs:label "has new hash"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewIFCID
+    ould:hasNewIFCID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasIFCID ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
+        rdfs:label "has new IFC ID"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewTime
+    ould:hasNewTime rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+        rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( ould:Update time:Instant ) ] ;
+        rdfs:range xsd:date ;
+        rdfs:comment "The data property \"hasNewTime\" is used to record the updated timestamp of an event in an MsOCCP (Model-specific OCCP) file. It ensures that every change to a temporal entity is chronologically documented, allowing for a complete reconstruction of modifications and their sequence."@en ;
+        rdfs:label "has new time"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
+    ould:hasPreviousTime rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+        rdfs:domain [ rdf:type owl:Class ;
+                owl:unionOf ( ould:Update time:Instant ) ] ;
+        rdfs:range xsd:date ;
+        rdfs:comment "The data property \"hasPreviousTime\" is used to record the previously set timestamp (created using the original entry property, e.g., time:hasTime) of an existing and prerecorded event (of which the temporal information needs to be changed/corrected) in an MsOCCP (Model-specific OCCP) file. It can be used to keep track of the chronology of entries, allowing for a complete reconstruction of modifications and their sequence."@en ;
+        rdfs:label "has previous time"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousHash
+    ould:hasPreviousHash rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasHash ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasPreviousHash\" is used to store the old hash value of an IFC component to record and establish a connection between the old and the new hash. It is used in combination with ould:hasNewHash."@en ;
+        rdfs:label "has previous hash"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCID
+    ould:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasIFCID ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range xsd:string ;
+        rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
+        rdfs:label "has previous IFC ID"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#LinkedData
+    ould:LinkedData rdf:type owl:Class ;
+        rdfs:subClassOf ould:UpdatableEntity ;
+        rdfs:comment "Represents an external dataset, document, or reference that is linked to an IFC component. This class enables structured integration of additional information into the MsOCCP."@en ;
+        rdfs:label "Linked Data"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity
+    ould:UpdatableEntity rdf:type owl:Class ;
+        owl:disjointWith ould:UpdateChain ;
+        rdfs:comment "A superclass representing any entity that can undergo updates. This includes IFC components, MsOCCP records, temporal entities and other objects that require chronological modification tracking, e.g., attached or linked data."@en ;
+        rdfs:label "Updatable Entity"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#Update
+    ould:Update rdf:type owl:Class ;
+        rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
+        rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
+        rdfs:label "Update"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain
+    ould:UpdateChain rdf:type owl:Class ;
+        owl:disjointWith ould:UpdatableEntity ;
+        rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 21 ould:UpdateChainElement(s) for performance reasons."@en ;
+        rdfs:label "Update Chain"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChainElement
+    ould:UpdateChainElement rdf:type owl:Class ;
+        rdfs:subClassOf ould:Update ;
+        rdfs:comment "The class \"UpdateChainElement\" represents an update that is part of an \"UpdateChain\". It maintains sequential tracking of updates, ensuring chronological integrity of changes to IFC components and other time-bound entities."@en ;
+        rdfs:label "Update Chain Element"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateReplacement
+    ould:UpdateReplacement rdf:type owl:Class ;
+        rdfs:subClassOf ould:Update ;
+        rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCID, ould:hasNewIFCID, ould:hasPreviousHash, and ould:hasNewHash."@en ;
+        rdfs:label "Update Replacement"@en .          
+
+
 
 #################################################################
 #    SHACL Rules
@@ -3966,5 +4982,620 @@
                 }
             """ ;
             sh:message "The latest end of { $this } (time: { ?endTimeThis }) must equal the latest end of { ?other } (time: { ?endTimeOther }) via 'occp:endsWith'."@en ;
+            sh:severity sh:Violation
+        ] .
+
+	#################################################################
+#    SHACL SHAPES
+#################################################################
+
+### GENERAL SHAPE RULES
+
+    oush:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
+        sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ould:hasNewTime ould:hasPreviousTime ) ] ;
+        sh:datatype xsd:date ;
+        sh:message "The date must be in the format YYYY-MM-DD." ;
+        sh:severity sh:Violation .
+
+
+### UPDATE SHAPE RULES
+
+    oush:UpdateShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each Update must have exactly one time stamp (time:hasTime) - min./max. count = 1." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+        sh:path ould:hasNewTime ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:minCount 0 ;  # Optional
+        sh:message "Each Update may have at most one ould:hasNewTime timestamp." ;
+        sh:severity sh:Violation
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousTime ;
+            sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;  # Optional
+            sh:message "Each Update may have at most one ould:hasPreviousTime value." ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If hasNewTime is specified, hasPreviousTime must also be provided, and vice versa." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    { $this ould:hasNewTime ?newTime . 
+                    FILTER NOT EXISTS { $this ould:hasPreviousTime ?prevTime . } }
+                    UNION
+                    { $this ould:hasPreviousTime ?prevTime . 
+                    FILTER NOT EXISTS { $this ould:hasNewTime ?newTime . } }
+                }
+            """
+        ] ;
+        sh:property [
+            sh:path ould:hasUpdatedEvent ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each Update must reference exactly one updated event (time:instant or time:interval)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasIFCID ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+            sh:message "Each Update can only be linked to one IFC component via ould:hasIFCID." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasHash ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+            sh:message "Each Update can be linked to at most one IFC component's hash value via ould:hasHash." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "hasNewTime must be later than hasPreviousTime if both exist." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?prevTime ?newTime
+                WHERE {
+                    $this ould:hasPreviousTime ?prevTime .
+                    $this ould:hasNewTime ?newTime .
+                    FILTER (?newTime <= ?prevTime)
+                }
+            """ ;
+        ] .
+
+    oush:UpdateChainShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateChain ;
+        sh:property [
+            sh:path ould:hasNextChain ;
+            sh:class ould:UpdateChain ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain may be linked to at most one next chain." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousChain ;
+            sh:class ould:UpdateChain ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain may be linked to at most one previous chain." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasUpdate ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:maxCount 21 ;
+            sh:message "Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path time:hasBeginning ;
+            sh:datatype xsd:date ; 
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain must have a beginning in format xsd:date." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path time:hasEnd ;
+            sh:datatype xsd:date ; 
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain must have a End in format xsd:date." ;
+            sh:severity sh:Violation ;    
+        ] ;
+        sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "time:hasBeginning must match the earliest time:hasTime of its Updates." ;
+        sh:severity sh:Violation ;
+        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                      sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+        sh:select """
+            SELECT $this ?begin ?earliest
+            WHERE {
+                $this time:hasBeginning ?begin .
+                $this ould:hasUpdate ?update .
+                ?update time:hasTime ?updateTime .
+                {
+                    SELECT $this (MIN(?time) AS ?earliest)
+                    WHERE {
+                        $this ould:hasUpdate ?u .
+                        ?u time:hasTime ?time .
+                    }
+                    GROUP BY $this
+                }
+                FILTER (?begin != ?earliest)
+            }
+        """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "time:hasEnd must match the latest time:hasTime of its Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                        sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+            sh:select """
+                SELECT $this ?end ?latest
+                WHERE {
+                    $this time:hasEnd ?end .
+                    $this ould:hasUpdate ?update .
+                    ?update time:hasTime ?updateTime .
+                    {
+                        SELECT $this (MAX(?time) AS ?latest)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?u time:hasTime ?time .
+                        }
+                        GROUP BY $this
+                    }
+                    FILTER (?end != ?latest)
+                }
+            """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "An UpdateChain must contain all Updates of its UpdatableEntity once it exists." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?entity ?update
+                WHERE {
+                    ?entity ould:hasUpdateChain $this .
+                    ?entity ould:hasUpdate ?update .
+                    FILTER NOT EXISTS { $this ould:hasUpdate ?update . }
+                    {
+                        SELECT ?entity (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            ?entity ould:hasUpdate ?u .
+                        }
+                        GROUP BY ?entity
+                        HAVING (?updateCount > 1)
+                    }
+                }
+            """ ;
+        ] .
+
+    oush:UpdateChainContinuityConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateChain ;
+        sh:sparql [
+            sh:message "An UpdateChain must not contain more than 21 Updates." ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this ould:hasUpdate ?u .
+                }
+                GROUP BY $this
+                HAVING (COUNT(?u) > 21)
+            """
+        ] .
+
+    oush:UpdateChainElementShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateChainElement ;
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChainElement must have exactly one time:hasTime timestamp." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasUpdatedEvent ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChainElement must reference exactly one updated event (time:instant or time:interval)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasIFCID ;
+            sh:minCount 0 ;
+            sh:maxCount 2 ;
+            sh:message "Each UpdateChainElement can be linked to max. two IFC components via ould:hasIFCID." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasHash ;
+            sh:minCount 0 ;
+            sh:maxCount 2 ;
+            sh:message "Each UpdateChainElement can have max. two recorded hash values via ould:hasHash." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasNewTime ;
+            sh:datatype xsd:date ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChainElement can have at most one ould:hasNewTime timestamp in xsd:date format." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousTime ;
+            sh:maxCount 1 ;
+            sh:message "An UpdateChainElement may have at most one ould:hasPreviousTime value." ;
+            sh:severity sh:Warning ;
+        ] .
+
+    oush:UpdateChainSplitConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain. After split, the old chain must have max 20 Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?chain ?updateCount
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    $this ould:hasUpdateChain ?chain .
+                    {
+                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?chain ould:hasUpdate ?u .
+                        }
+                        GROUP BY $this ?chain
+                        HAVING (?updateCount > 21)  
+                    }
+                }
+            """
+        ] .
+
+    oush:UpdatableEntityShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:property [
+            sh:path ould:hasIFCID ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each 'ould:UpdatableEntity' must have exactly one 'ould:hasIFCID' of type xsd:string."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:property [
+            sh:path ould:hasHash ;
+            sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "Each 'ould:UpdatableEntity' can have at most one 'ould:hasHash' of type xsd:string."@en ;
+            sh:severity sh:Violation
+        ] .
+
+    oush:UpdatableEntityBaselineShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCID." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    FILTER NOT EXISTS { ?update ould:hasIFCID ?ifcid . }
+                }
+            """ ;
+        ] .
+
+    oush:UpdateReplacementShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPredecessor ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:message "Each UpdateReplacement must reference at least one predecessor Update via ould:hasPredecessor." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasSuccessor ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "An UpdateReplacement may have at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:ReplacementChronologyConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "The successor UpdateReplacement must have a later timestamp than its predecessor Update." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ 
+                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+            ] ;
+            sh:select """
+                SELECT $this ?prevTime ?newTime
+                WHERE {
+                    $this ould:hasPredecessor ?prevUpdate .
+                    ?prevUpdate time:hasTime ?prevTime .
+                    $this time:hasTime ?newTime .
+                    FILTER (?prevTime > ?newTime) 
+                }
+            """ ;
+        ] .
+
+    oush:PredecessorConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:sparql [
+            sh:message "Each UpdateReplacement must reference a valid predecessor Update that exists." ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this a ould:UpdateReplacement .
+                    FILTER NOT EXISTS { $this ould:hasPredecessor ?pred . }
+                }
+            """
+        ] .
+
+    oush:SuccessorConstraint a sh:NodeShape ;
+        sh:targetSubjectsOf ould:hasSuccessor ;
+        sh:property [
+            sh:path ould:hasSuccessor ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "Each ould:Update may reference at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdateEntityShape a sh:NodeShape ;
+        sh:targetSubjectsOf ould:hasUpdate ;
+        sh:property [
+            sh:path ould:hasUpdate ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:message "Each entity with an update must be linked to at least one ould:Update instance." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdatedValueShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property [
+            sh:path ould:hasUpdatedValue ;
+            sh:minCount 1 ;
+            sh:message "Each update must reference at least one modified entity (e.g., IFC component, phase, or instant)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdatedEventShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property [
+            sh:path ould:hasUpdatedEvent ;
+            sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each update must be linked to exactly one modified temporal entity (e.g., phase, cycle, transition, or instant)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+
+### LINKED DATA SHAPE RULES
+
+    oush:LinkedDataPropertyShape a sh:PropertyShape ;
+        sh:path ( ould:hasOnlineData ould:hasOfflineData ) ;
+        sh:or (
+            [ sh:datatype xsd:anyURI ]
+            [ sh:datatype xsd:string ]
+        ) ;
+        sh:message "Must be a URI (online) or string (offline)."@en ;
+        sh:severity sh:Violation .
+
+    oush:LinkedDataShape a sh:NodeShape ;
+        sh:targetClass ould:LinkedData ;
+            sh:property [
+                sh:path ould:hasDataLocation ;
+                sh:datatype xsd:string ;
+                sh:minCount 1 ;
+                sh:message "Each LinkedData must have exactly one location."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### MODEL STRUCTURE SHAPE RULES
+
+    oush:ComponentShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:not [
+            sh:property [
+                sh:path ould:consistsOf ;
+                sh:minCount 1
+            ]
+        ] .
+
+  oush:CompositeEntityShape a sh:NodeShape ;
+      sh:targetSubjectsOf ould:consistsOf ;  
+      sh:property [
+          sh:path ould:consistsOf ;
+          sh:minCount 1 ;
+          sh:message "Each composite entity must consist of at least one component via 'ould:consistsOf'."@en ;
+          sh:severity sh:Violation
+      ] .
+    
+    oush:ComponentHierarchyShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        # Ensure parent phase start is the earliest of all direct component phase starts
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX time: <http://www.w3.org/2006/time#>
+#                SELECT $this ?parentPhase ?compPhase ?startParent ?earliestCompStart
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasPhase ?parentPhase .
+#                    ?component occp:hasPhase ?compPhase .
+#                    # Get parent phase start (actual or estimated)
+#                    { ?parentPhase occp:hasActualBeginning ?startInstP . 
+#                    ?startInstP occp:hasActualTime ?startParent . }
+#                    UNION
+#                    { ?parentPhase occp:hasEstimatedBeginning ?startInstP . 
+#                    ?startInstP occp:hasEstimatedTime ?startParent . }
+#                    # Get earliest direct component phase start
+#                    {
+#                        SELECT ?component (MIN(?startTime) AS ?earliestCompStart)
+#                        WHERE {
+#                            ?component occp:hasPhase ?cPhase .
+#                            { ?cPhase occp:hasActualBeginning ?startInstC . 
+#                            ?startInstC occp:hasActualTime ?startTime . }
+#                            UNION
+#                            { ?cPhase occp:hasEstimatedBeginning ?startInstC . 
+#                            ?startInstC occp:hasEstimatedTime ?startTime . }
+#                        }
+#                        GROUP BY ?component
+#                    }
+#                    FILTER (?startParent > ?earliestCompStart)
+#                }
+#            """ ;
+#            sh:message "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct #component phase start (start: { ?earliestCompStart })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure parent phase end is the latest of all direct component phase ends
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX time: <http://www.w3.org/2006/time#>
+#                SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasPhase ?parentPhase .
+#                    ?component occp:hasPhase ?compPhase .
+#                    # Get parent phase end (actual or estimated)
+#                    { ?parentPhase occp:hasActualEnd ?endInstP . 
+#                    ?endInstP occp:hasActualTime ?endParent . }
+#                    UNION
+#                    { ?parentPhase occp:hasEstimatedEnd ?endInstP . 
+#                    ?endInstP occp:hasEstimatedTime ?endParent . }
+#                    # Get latest direct component phase end
+#                    {
+#                        SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+#                       WHERE {
+#                            ?component occp:hasPhase ?cPhase .
+#                            { ?cPhase occp:hasActualEnd ?endInstC . 
+#                            ?endInstC occp:hasActualTime ?endTime . }
+#                            UNION
+#                            { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+#                            ?endInstC occp:hasEstimatedTime ?endTime . }
+#                        }
+#                        GROUP BY ?component
+#                    }
+#                    FILTER (?endParent < ?latestCompEnd)
+#                }
+#            """ ;
+#            sh:message "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase #end (end: { ?latestCompEnd })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure parent cycle number is the sum of max direct component cycle numbers
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                SELECT $this ?parentCycle ?totalCompCycles ?parentCycleNum
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasCycle ?parentCycle .
+#                    ?parentCycle occp:hasCycleNumber ?parentCycleNum .
+#                    # Calculate sum of max cycle numbers from direct components
+#                    {
+#                        SELECT (SUM(?maxCycleNum) AS ?totalCompCycles)
+#                        WHERE {
+#                            $this ould:consistsOf ?comp .
+#                            ?comp occp:hasCycle ?compCycle .
+#                            ?compCycle occp:hasCycleNumber ?cycleNum .
+#                            {
+#                                SELECT ?comp (MAX(?cycleNum) AS ?maxCycleNum)
+#                                WHERE {
+#                                    ?comp occp:hasCycle ?cCycle .
+#                                    ?cCycle occp:hasCycleNumber ?cycleNum .
+#                                }
+#                                GROUP BY ?comp
+#                            }
+#                        }
+#                    }
+#                    FILTER (?parentCycleNum != ?totalCompCycles)
+#                }
+#            """ ;
+#            sh:message "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component #cycle numbers ({ ?totalCompCycles })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure CompletionOfPlanning only after all PhaseA and PhaseB of direct components are complete
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+                WHERE {
+                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+                    $this occp:hasPhase ?parentPhase .
+                    ?parentPhase a occp:CompletionOfPlanning .
+                    ?parentPhase occp:hasActualEnd ?endInstP .
+                    ?endInstP occp:hasActualTime ?endParent .
+                    ?component occp:hasPhase ?compPhase .
+                    ?compPhase a ?compPhaseType .
+                    FILTER (?compPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                    # Get latest direct component PhaseA/PhaseB end
+                    {
+                        SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+                        WHERE {
+                            ?component occp:hasPhase ?cPhase .
+                            ?cPhase a ?cPhaseType .
+                            FILTER (?cPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                            { ?cPhase occp:hasActualEnd ?endInstC . 
+                            ?endInstC occp:hasActualTime ?endTime . }
+                            UNION
+                            { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+                            ?endInstC occp:hasEstimatedTime ?endTime . }
+                        }
+                        GROUP BY ?component
+                    }
+                    FILTER (?endParent < ?latestCompEnd)
+                }
+            """ ;
+            sh:message "Parent phase CompletionOfPlanning { ?parentPhase } (end: { ?endParent }) must occur after all direct component PhaseA and PhaseB ends (latest: { ?latestCompEnd })."@en ;
             sh:severity sh:Violation
         ] .

@@ -117,50 +117,6 @@ ex:instant_SubmissionToReview_house_-_roof a occp:SubmissionToReview ;
     occp:hasActualTime "2015-02-01"^^xsd:date ;
     occp:hasPhase ex:phaseA_house_-_roof .
 
-ex:instant_UsageStart_00_groundfloor a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_00_groundfloor .
-
-ex:instant_UsageStart_GroupNo_21 a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_GroupNo_21 .
-
-ex:instant_UsageStart_Single-family_house a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_Single-family_house .
-
-ex:instant_UsageStart_beam_shoe a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_beam_shoe .
-
-ex:instant_UsageStart_girder a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_girder .
-
-ex:instant_UsageStart_house_-_chimney a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_chimney .
-
-ex:instant_UsageStart_house_-_foundation a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_foundation .
-
-ex:instant_UsageStart_house_-_inner_wall a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_inner_wall .
-
-ex:instant_UsageStart_house_-_outer_wall_-_house_back a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_back .
-
-ex:instant_UsageStart_house_-_outer_wall_-_house_front a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_front .
-
-ex:instant_UsageStart_house_-_outer_wall_-_house_front_right a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_front_right .
-
 ex:00_groundfloor a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_00_groundfloor ;
     occp:hasPhase ex:phaseA_00_groundfloor,
@@ -278,33 +234,82 @@ ex:beam_shoe a ould:UpdatableEntity ;
     ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" .
 
 ex:cycleA_IfcBeam a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_girder ;
+    occp:hasActualEnd ex:instant_ReviewApproval_girder ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcBuilding a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_Single-family_house ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Single-family_house ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcBuildingElementProxy a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_GroupNo_21 ;
+    occp:hasActualEnd ex:instant_ReviewApproval_GroupNo_21 ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcBuildingStorey a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_00_groundfloor ;
+    occp:hasActualEnd ex:instant_ReviewApproval_00_groundfloor ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcChimney a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_house_-_chimney ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_chimney ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcDiscreteAccessory a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_beam_shoe ;
+    occp:hasActualEnd ex:instant_ReviewApproval_beam_shoe ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcFooting a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_house_-_foundation ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_foundation ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcRoof a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_house_-_roof ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_roof ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_IfcWall a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_house_-_inner_wall,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_inner_wall,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right ;
     occp:hasCycleNumber 1 .
 
-ex:cycleA_struc a occp:CycleA_PlanningReview .
+ex:cycleA_struc a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_00_groundfloor,
+        ex:instant_ReviewStart_GroupNo_21,
+        ex:instant_ReviewStart_Single-family_house,
+        ex:instant_ReviewStart_beam_shoe,
+        ex:instant_ReviewStart_girder,
+        ex:instant_ReviewStart_house_-_chimney,
+        ex:instant_ReviewStart_house_-_foundation,
+        ex:instant_ReviewStart_house_-_inner_wall,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right,
+        ex:instant_ReviewStart_house_-_roof ;
+    occp:hasActualEnd ex:instant_ReviewApproval_00_groundfloor,
+        ex:instant_ReviewApproval_GroupNo_21,
+        ex:instant_ReviewApproval_Single-family_house,
+        ex:instant_ReviewApproval_beam_shoe,
+        ex:instant_ReviewApproval_girder,
+        ex:instant_ReviewApproval_house_-_chimney,
+        ex:instant_ReviewApproval_house_-_foundation,
+        ex:instant_ReviewApproval_house_-_inner_wall,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right,
+        ex:instant_ReviewApproval_house_-_roof ;
+    occp:hasCycleNumber 1 .
 
 ex:girder a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_girder ;
@@ -370,95 +375,15 @@ ex:house_-_roof a ould:UpdatableEntity ;
         ex:phaseD_house_-_roof ;
     ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
 
-ex:instant_BeginningOfPlanning_house_-_inner_wall a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2015-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_house_-_inner_wall .
-
-ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_back a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2015-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_back .
-
-ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2015-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_front .
-
-ex:instant_ConstructionCompletion_house_-_inner_wall a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_house_-_inner_wall ;
-    occp:hasActualTime "2016-03-30"^^xsd:date .
-
 ex:instant_ConstructionCompletion_house_-_inner_wall2 a occp:CompletionOfConstruction ;
     occp:endsPhase ex:phaseC_house_-_inner_wall ;
     occp:hasEstimatedTime "2016-03-29"^^xsd:date,
         "2016-03-30"^^xsd:date .
 
-ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_back a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_back ;
-    occp:hasActualTime "2016-03-30"^^xsd:date .
-
-ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front_right a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_front_right ;
-    occp:hasActualTime "2016-03-30"^^xsd:date .
-
 ex:instant_ConstructionStart_house_-_inner_wall2 a occp:ConstructionStart ;
     occp:hasEstimatedTime "2015-05-01"^^xsd:date,
         "2015-06-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_house_-_inner_wall .
-
-ex:instant_ConstructionStart_house_-_outer_wall_-_house_back a occp:ConstructionStart ;
-    occp:hasActualTime "2015-06-01"^^xsd:date ;
-    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_back .
-
-ex:instant_ConstructionStart_house_-_outer_wall_-_house_front a occp:ConstructionStart ;
-    occp:hasActualTime "2015-06-01"^^xsd:date ;
-    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_front .
-
-ex:instant_ConstructionStart_house_-_outer_wall_-_house_front_right a occp:ConstructionStart ;
-    occp:hasActualTime "2015-06-01"^^xsd:date ;
-    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_front_right .
-
-ex:instant_UsageEnd_00_groundfloor a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_GroupNo_21 a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_Single-family_house a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_beam_shoe a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_chimney a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_foundation a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_inner_wall a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_outer_wall_-_house_back a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_outer_wall_-_house_front a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
-
-ex:instant_UsageEnd_house_-_roof a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
-    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
 
 ex:phaseA_IfcBeam a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_girder ;
@@ -493,12 +418,18 @@ ex:phaseA_IfcRoof a occp:PhaseA_Planning ;
     occp:hasActualEnd ex:instant_ReviewApproval_house_-_roof .
 
 ex:phaseA_IfcWall a occp:PhaseA_Planning ;
-    occp:hasActualBeginning ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front_right ;
-    occp:hasActualEnd ex:instant_ReviewApproval_house_-_outer_wall_-_house_front .
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_house_-_inner_wall,
+        ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_back,
+        ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front,
+        ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front_right ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_inner_wall,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right .
 
 ex:phaseA_struc a occp:PhaseA_Planning ;
-    occp:hasActualBeginning ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front_right ;
-    occp:hasActualEnd ex:instant_ReviewApproval_Single-family_house .
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_00_groundfloor ;
+    occp:hasActualEnd ex:instant_ReviewApproval_00_groundfloor .
 
 ex:phaseB_IfcBeam a occp:PhaseB_Review ;
     occp:hasActualBeginning ex:instant_ReviewStart_girder ;
@@ -533,12 +464,18 @@ ex:phaseB_IfcRoof a occp:PhaseB_Review ;
     occp:hasActualEnd ex:instant_ReviewApproval_house_-_roof .
 
 ex:phaseB_IfcWall a occp:PhaseB_Review ;
-    occp:hasActualBeginning ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right ;
-    occp:hasActualEnd ex:instant_ReviewApproval_house_-_outer_wall_-_house_front .
+    occp:hasActualBeginning ex:instant_ReviewStart_house_-_inner_wall,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right ;
+    occp:hasActualEnd ex:instant_ReviewApproval_house_-_inner_wall,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_back,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front,
+        ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right .
 
 ex:phaseB_struc a occp:PhaseB_Review ;
-    occp:hasActualBeginning ex:instant_ReviewStart_Single-family_house ;
-    occp:hasActualEnd ex:instant_ReviewApproval_Single-family_house .
+    occp:hasActualBeginning ex:instant_ReviewStart_GroupNo_21 ;
+    occp:hasActualEnd ex:instant_ReviewApproval_00_groundfloor .
 
 ex:phaseC_IfcBeam a occp:PhaseC_Construction ;
     occp:hasActualBeginning ex:instant_ConstructionStart_girder ;
@@ -573,35 +510,78 @@ ex:phaseC_IfcRoof a occp:PhaseC_Construction ;
     occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_roof .
 
 ex:phaseC_IfcWall a occp:PhaseC_Construction ;
-    occp:hasActualBeginning ex:instant_ConstructionStart_house_-_inner_wall ;
-    occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front ;
-    occp:hasEstimatedBeginning ex:instant_ConstructionStart_house_-_inner_wall2 ;
-    occp:hasEstimatedEnd ex:instant_ConstructionCompletion_house_-_inner_wall2 .
+    occp:hasActualBeginning ex:instant_ConstructionStart_house_-_inner_wall,
+        ex:instant_ConstructionStart_house_-_outer_wall_-_house_back,
+        ex:instant_ConstructionStart_house_-_outer_wall_-_house_front,
+        ex:instant_ConstructionStart_house_-_outer_wall_-_house_front_right ;
+    occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_inner_wall,
+        ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_back,
+        ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front,
+        ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front_right .
 
 ex:phaseC_struc a occp:PhaseC_Construction ;
     occp:hasActualBeginning ex:instant_ConstructionStart_house_-_foundation ;
-    occp:hasActualEnd ex:instant_ConstructionCompletion_Single-family_house .
+    occp:hasActualEnd ex:instant_ConstructionCompletion_beam_shoe .
 
-ex:phaseD_IfcBeam a occp:PhaseD_Usage .
+ex:phaseD_IfcBeam a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_girder ;
+    occp:hasActualEnd ex:instant_UsageEnd_girder .
 
-ex:phaseD_IfcBuilding a occp:PhaseD_Usage .
+ex:phaseD_IfcBuilding a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_Single-family_house ;
+    occp:hasActualEnd ex:instant_UsageEnd_Single-family_house .
 
-ex:phaseD_IfcBuildingElementProxy a occp:PhaseD_Usage .
+ex:phaseD_IfcBuildingElementProxy a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_GroupNo_21 ;
+    occp:hasActualEnd ex:instant_UsageEnd_GroupNo_21 .
 
-ex:phaseD_IfcBuildingStorey a occp:PhaseD_Usage .
+ex:phaseD_IfcBuildingStorey a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_00_groundfloor ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_00_groundfloor .
 
-ex:phaseD_IfcChimney a occp:PhaseD_Usage .
+ex:phaseD_IfcChimney a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_chimney ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_chimney .
 
-ex:phaseD_IfcDiscreteAccessory a occp:PhaseD_Usage .
+ex:phaseD_IfcDiscreteAccessory a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_beam_shoe ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_beam_shoe .
 
-ex:phaseD_IfcFooting a occp:PhaseD_Usage .
+ex:phaseD_IfcFooting a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_foundation ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_foundation .
 
 ex:phaseD_IfcRoof a occp:PhaseD_Usage ;
     occp:hasActualBeginning ex:instant_UsageStart_house_-_roof ;
-    occp:hasActualEnd ex:instant_UsageEnd_girder ;
-    occp:hasEstimatedEnd ex:instant_UsageEnd_00_groundfloor,
-        ex:instant_UsageEnd_GroupNo_21,
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_roof .
+
+ex:phaseD_IfcWall a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_inner_wall,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_back,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_front,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_front_right ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_inner_wall,
+        ex:instant_UsageEnd_house_-_outer_wall_-_house_back,
+        ex:instant_UsageEnd_house_-_outer_wall_-_house_front,
+        ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right .
+
+ex:phaseD_struc a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_00_groundfloor,
+        ex:instant_UsageStart_GroupNo_21,
+        ex:instant_UsageStart_Single-family_house,
+        ex:instant_UsageStart_beam_shoe,
+        ex:instant_UsageStart_girder,
+        ex:instant_UsageStart_house_-_chimney,
+        ex:instant_UsageStart_house_-_foundation,
+        ex:instant_UsageStart_house_-_inner_wall,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_back,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_front,
+        ex:instant_UsageStart_house_-_outer_wall_-_house_front_right,
+        ex:instant_UsageStart_house_-_roof ;
+    occp:hasActualEnd ex:instant_UsageEnd_GroupNo_21,
         ex:instant_UsageEnd_Single-family_house,
+        ex:instant_UsageEnd_girder ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_00_groundfloor,
         ex:instant_UsageEnd_beam_shoe,
         ex:instant_UsageEnd_house_-_chimney,
         ex:instant_UsageEnd_house_-_foundation,
@@ -610,16 +590,6 @@ ex:phaseD_IfcRoof a occp:PhaseD_Usage ;
         ex:instant_UsageEnd_house_-_outer_wall_-_house_front,
         ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right,
         ex:instant_UsageEnd_house_-_roof .
-
-ex:phaseD_IfcWall a occp:PhaseD_Usage .
-
-ex:phaseD_struc a occp:PhaseD_Usage ;
-    occp:hasActualBeginning ex:instant_UsageStart_house_-_roof ;
-    occp:hasActualEnd ex:instant_UsageEnd_girder .
-
-ex:instant_BeginningOfPlanning_00_groundfloor a occp:BeginningOfPlanning ;
-    occp:hasActualTime "2015-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_00_groundfloor .
 
 ex:instant_BeginningOfPlanning_GroupNo_21 a occp:BeginningOfPlanning ;
     occp:hasActualTime "2015-01-01"^^xsd:date ;
@@ -645,6 +615,22 @@ ex:instant_BeginningOfPlanning_house_-_foundation a occp:BeginningOfPlanning ;
     occp:hasActualTime "2015-01-01"^^xsd:date ;
     occp:startsPhase ex:phaseA_house_-_foundation .
 
+ex:instant_BeginningOfPlanning_house_-_inner_wall a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2015-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_house_-_inner_wall .
+
+ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_back a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2015-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_back .
+
+ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2015-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_front .
+
+ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front_right a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2015-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_front_right .
+
 ex:instant_BeginningOfPlanning_house_-_roof a occp:BeginningOfPlanning ;
     occp:hasActualTime "2015-01-01"^^xsd:date ;
     occp:startsPhase ex:phaseA_house_-_roof .
@@ -657,8 +643,8 @@ ex:instant_ConstructionCompletion_GroupNo_21 a occp:CompletionOfConstruction ;
     occp:endsPhase ex:phaseC_GroupNo_21 ;
     occp:hasActualTime "2016-03-30"^^xsd:date .
 
-ex:instant_ConstructionCompletion_beam_shoe a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_beam_shoe ;
+ex:instant_ConstructionCompletion_Single-family_house a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_Single-family_house ;
     occp:hasActualTime "2016-03-30"^^xsd:date .
 
 ex:instant_ConstructionCompletion_girder a occp:CompletionOfConstruction ;
@@ -673,8 +659,20 @@ ex:instant_ConstructionCompletion_house_-_foundation a occp:CompletionOfConstruc
     occp:endsPhase ex:phaseC_house_-_foundation ;
     occp:hasActualTime "2015-05-30"^^xsd:date .
 
+ex:instant_ConstructionCompletion_house_-_inner_wall a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_house_-_inner_wall ;
+    occp:hasActualTime "2016-03-30"^^xsd:date .
+
+ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_back a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_back ;
+    occp:hasActualTime "2016-03-30"^^xsd:date .
+
 ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front a occp:CompletionOfConstruction ;
     occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_front ;
+    occp:hasActualTime "2016-03-30"^^xsd:date .
+
+ex:instant_ConstructionCompletion_house_-_outer_wall_-_house_front_right a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_front_right ;
     occp:hasActualTime "2016-03-30"^^xsd:date .
 
 ex:instant_ConstructionCompletion_house_-_roof a occp:CompletionOfConstruction ;
@@ -709,46 +707,21 @@ ex:instant_ConstructionStart_house_-_inner_wall a occp:ConstructionStart ;
     occp:hasActualTime "2015-06-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_house_-_inner_wall .
 
+ex:instant_ConstructionStart_house_-_outer_wall_-_house_back a occp:ConstructionStart ;
+    occp:hasActualTime "2015-06-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_back .
+
+ex:instant_ConstructionStart_house_-_outer_wall_-_house_front a occp:ConstructionStart ;
+    occp:hasActualTime "2015-06-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_front .
+
+ex:instant_ConstructionStart_house_-_outer_wall_-_house_front_right a occp:ConstructionStart ;
+    occp:hasActualTime "2015-06-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_house_-_outer_wall_-_house_front_right .
+
 ex:instant_ConstructionStart_house_-_roof a occp:ConstructionStart ;
     occp:hasActualTime "2015-06-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_house_-_roof .
-
-ex:instant_ReviewStart_house_-_inner_wall a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_inner_wall ;
-    occp:startsPhase ex:phaseB_house_-_inner_wall .
-
-ex:instant_ReviewStart_house_-_outer_wall_-_house_back a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_back ;
-    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_back .
-
-ex:instant_ReviewStart_house_-_outer_wall_-_house_front a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_front ;
-    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_front .
-
-ex:phaseD_00_groundfloor a occp:PhaseD_Usage .
-
-ex:phaseD_GroupNo_21 a occp:PhaseD_Usage .
-
-ex:phaseD_Single-family_house a occp:PhaseD_Usage .
-
-ex:phaseD_beam_shoe a occp:PhaseD_Usage .
-
-ex:phaseD_girder a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_chimney a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_foundation a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_inner_wall a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_outer_wall_-_house_back a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_outer_wall_-_house_front a occp:PhaseD_Usage .
-
-ex:phaseD_house_-_outer_wall_-_house_front_right a occp:PhaseD_Usage .
 
 ex:cycleA_00_groundfloor a occp:CycleA_PlanningReview ;
     occp:hasActualBeginning ex:instant_ReviewStart_00_groundfloor ;
@@ -810,79 +783,109 @@ ex:cycleA_house_-_roof a occp:CycleA_PlanningReview ;
     occp:hasActualEnd ex:instant_ReviewApproval_house_-_roof ;
     occp:hasCycleNumber 1 .
 
-ex:instant_BeginningOfPlanning_house_-_outer_wall_-_house_front_right a occp:BeginningOfPlanning ;
+ex:instant_BeginningOfPlanning_00_groundfloor a occp:BeginningOfPlanning ;
     occp:hasActualTime "2015-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_house_-_outer_wall_-_house_front_right .
+    occp:startsPhase ex:phaseA_00_groundfloor .
 
-ex:instant_ConstructionCompletion_Single-family_house a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_Single-family_house ;
+ex:instant_ConstructionCompletion_beam_shoe a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_beam_shoe ;
     occp:hasActualTime "2016-03-30"^^xsd:date .
 
 ex:instant_ConstructionStart_house_-_foundation a occp:ConstructionStart ;
     occp:hasActualTime "2015-05-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_house_-_foundation .
 
-ex:instant_ReviewApproval_house_-_inner_wall a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_inner_wall ;
-    occp:endsPhase ex:phaseA_house_-_inner_wall,
-        ex:phaseB_house_-_inner_wall ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_UsageEnd_00_groundfloor a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_00_groundfloor ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
 
-ex:instant_ReviewApproval_house_-_outer_wall_-_house_back a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_back ;
-    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_back,
-        ex:phaseB_house_-_outer_wall_-_house_back ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_UsageEnd_GroupNo_21 a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_GroupNo_21 ;
+    occp:hasActualTime "2025-10-10"^^xsd:date .
 
-ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_front_right ;
-    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_front_right,
-        ex:phaseB_house_-_outer_wall_-_house_front_right ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_UsageEnd_Single-family_house a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_Single-family_house ;
+    occp:hasActualTime "2025-09-11"^^xsd:date .
 
-ex:instant_ReviewStart_00_groundfloor a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_00_groundfloor ;
-    occp:startsPhase ex:phaseB_00_groundfloor .
-
-ex:instant_ReviewStart_GroupNo_21 a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_GroupNo_21 ;
-    occp:startsPhase ex:phaseB_GroupNo_21 .
-
-ex:instant_ReviewStart_beam_shoe a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_beam_shoe ;
-    occp:startsPhase ex:phaseB_beam_shoe .
-
-ex:instant_ReviewStart_girder a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_girder ;
-    occp:startsPhase ex:phaseB_girder .
-
-ex:instant_ReviewStart_house_-_chimney a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_chimney ;
-    occp:startsPhase ex:phaseB_house_-_chimney .
-
-ex:instant_ReviewStart_house_-_foundation a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_foundation ;
-    occp:startsPhase ex:phaseB_house_-_foundation .
-
-ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_front_right ;
-    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_front_right .
-
-ex:instant_ReviewStart_house_-_roof a occp:ReviewStart ;
-    occp:hasActualTime "2015-02-15"^^xsd:date ;
-    occp:startsCycle ex:cycleA_house_-_roof ;
-    occp:startsPhase ex:phaseB_house_-_roof .
+ex:instant_UsageEnd_beam_shoe a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_beam_shoe ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
 
 ex:instant_UsageEnd_girder a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_house_-_roof ;
+    occp:endsPhase ex:phaseD_girder ;
     occp:hasActualTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_chimney a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_chimney ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_foundation a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_foundation ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_inner_wall a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_inner_wall ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_outer_wall_-_house_back a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_back ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_outer_wall_-_house_front a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_front ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_front_right ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageEnd_house_-_roof a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_house_-_roof ;
+    occp:hasEstimatedTime "2025-09-11"^^xsd:date .
+
+ex:instant_UsageStart_00_groundfloor a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_00_groundfloor .
+
+ex:instant_UsageStart_GroupNo_21 a occp:UsageStart ;
+    occp:hasActualTime "2016-03-30"^^xsd:date ;
+    occp:startsPhase ex:phaseD_GroupNo_21 .
+
+ex:instant_UsageStart_Single-family_house a occp:UsageStart ;
+    occp:hasActualTime "2016-03-30"^^xsd:date ;
+    occp:startsPhase ex:phaseD_Single-family_house .
+
+ex:instant_UsageStart_beam_shoe a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_beam_shoe .
+
+ex:instant_UsageStart_girder a occp:UsageStart ;
+    occp:hasActualTime "2016-03-29"^^xsd:date ;
+    occp:startsPhase ex:phaseD_girder .
+
+ex:instant_UsageStart_house_-_chimney a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_chimney .
+
+ex:instant_UsageStart_house_-_foundation a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_foundation .
+
+ex:instant_UsageStart_house_-_inner_wall a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_inner_wall .
+
+ex:instant_UsageStart_house_-_outer_wall_-_house_back a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_back .
+
+ex:instant_UsageStart_house_-_outer_wall_-_house_front a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_front .
+
+ex:instant_UsageStart_house_-_outer_wall_-_house_front_right a occp:UsageStart ;
+    occp:hasActualTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_front_right .
 
 ex:instant_UsageStart_house_-_roof a occp:UsageStart ;
     occp:hasActualTime "2016-03-31"^^xsd:date ;
@@ -980,58 +983,108 @@ ex:phaseC_house_-_roof a occp:PhaseC_Construction ;
     occp:hasActualBeginning ex:instant_ConstructionStart_house_-_roof ;
     occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_roof .
 
+ex:phaseD_00_groundfloor a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_00_groundfloor ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_00_groundfloor .
+
+ex:phaseD_GroupNo_21 a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_GroupNo_21 ;
+    occp:hasActualEnd ex:instant_UsageEnd_GroupNo_21 .
+
+ex:phaseD_Single-family_house a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_Single-family_house ;
+    occp:hasActualEnd ex:instant_UsageEnd_Single-family_house .
+
+ex:phaseD_beam_shoe a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_beam_shoe ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_beam_shoe .
+
+ex:phaseD_girder a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_girder ;
+    occp:hasActualEnd ex:instant_UsageEnd_girder .
+
+ex:phaseD_house_-_chimney a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_chimney ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_chimney .
+
+ex:phaseD_house_-_foundation a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_foundation ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_foundation .
+
+ex:phaseD_house_-_inner_wall a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_inner_wall ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_inner_wall .
+
+ex:phaseD_house_-_outer_wall_-_house_back a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_outer_wall_-_house_back ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_outer_wall_-_house_back .
+
+ex:phaseD_house_-_outer_wall_-_house_front a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_outer_wall_-_house_front ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_outer_wall_-_house_front .
+
+ex:phaseD_house_-_outer_wall_-_house_front_right a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_outer_wall_-_house_front_right ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right .
+
+ex:phaseD_house_-_roof a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_house_-_roof ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_house_-_roof .
+
+ex:instant_ReviewStart_00_groundfloor a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_00_groundfloor ;
+    occp:startsPhase ex:phaseB_00_groundfloor .
+
 ex:instant_ReviewStart_Single-family_house a occp:ReviewStart ;
     occp:hasActualTime "2015-02-15"^^xsd:date ;
     occp:startsCycle ex:cycleA_Single-family_house ;
     occp:startsPhase ex:phaseB_Single-family_house .
 
-ex:instant_ReviewApproval_00_groundfloor a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_00_groundfloor ;
-    occp:endsPhase ex:phaseA_00_groundfloor,
-        ex:phaseB_00_groundfloor ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_beam_shoe a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_beam_shoe ;
+    occp:startsPhase ex:phaseB_beam_shoe .
 
-ex:instant_ReviewApproval_GroupNo_21 a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_GroupNo_21 ;
-    occp:endsPhase ex:phaseA_GroupNo_21,
-        ex:phaseB_GroupNo_21 ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_girder a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_girder ;
+    occp:startsPhase ex:phaseB_girder .
 
-ex:instant_ReviewApproval_beam_shoe a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_beam_shoe ;
-    occp:endsPhase ex:phaseA_beam_shoe,
-        ex:phaseB_beam_shoe ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_chimney a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_chimney ;
+    occp:startsPhase ex:phaseB_house_-_chimney .
 
-ex:instant_ReviewApproval_girder a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_girder ;
-    occp:endsPhase ex:phaseA_girder,
-        ex:phaseB_girder ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_foundation a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_foundation ;
+    occp:startsPhase ex:phaseB_house_-_foundation .
 
-ex:instant_ReviewApproval_house_-_chimney a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_chimney ;
-    occp:endsPhase ex:phaseA_house_-_chimney,
-        ex:phaseB_house_-_chimney ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_inner_wall a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_inner_wall ;
+    occp:startsPhase ex:phaseB_house_-_inner_wall .
 
-ex:instant_ReviewApproval_house_-_foundation a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_foundation ;
-    occp:endsPhase ex:phaseA_house_-_foundation,
-        ex:phaseB_house_-_foundation ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_outer_wall_-_house_back a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_back ;
+    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_back .
 
-ex:instant_ReviewApproval_house_-_outer_wall_-_house_front a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_front ;
-    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_front,
-        ex:phaseB_house_-_outer_wall_-_house_front ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_outer_wall_-_house_front a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_front ;
+    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_front .
 
-ex:instant_ReviewApproval_house_-_roof a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_house_-_roof ;
-    occp:endsPhase ex:phaseA_house_-_roof,
-        ex:phaseB_house_-_roof ;
-    occp:hasActualTime "2015-02-18"^^xsd:date .
+ex:instant_ReviewStart_house_-_outer_wall_-_house_front_right a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_outer_wall_-_house_front_right ;
+    occp:startsPhase ex:phaseB_house_-_outer_wall_-_house_front_right .
+
+ex:instant_ReviewStart_house_-_roof a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_house_-_roof ;
+    occp:startsPhase ex:phaseB_house_-_roof .
 
 ex:phaseA_00_groundfloor a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_00_groundfloor ;
@@ -1083,7 +1136,20 @@ ex:phaseA_house_-_roof a occp:PhaseA_Planning ;
 
 ex:phaseC_house_-_inner_wall a occp:PhaseC_Construction ;
     occp:hasActualBeginning ex:instant_ConstructionStart_house_-_inner_wall ;
-    occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_inner_wall .
+    occp:hasActualEnd ex:instant_ConstructionCompletion_house_-_inner_wall ;
+    occp:hasEstimatedBeginning ex:instant_ConstructionStart_house_-_inner_wall2 ;
+    occp:hasEstimatedEnd ex:instant_ConstructionCompletion_house_-_inner_wall2 .
+
+ex:instant_ReviewStart_GroupNo_21 a occp:ReviewStart ;
+    occp:hasActualTime "2015-02-15"^^xsd:date ;
+    occp:startsCycle ex:cycleA_GroupNo_21 ;
+    occp:startsPhase ex:phaseB_GroupNo_21 .
+
+ex:instant_ReviewApproval_GroupNo_21 a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_GroupNo_21 ;
+    occp:endsPhase ex:phaseA_GroupNo_21,
+        ex:phaseB_GroupNo_21 ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
 
 ex:instant_ReviewApproval_Single-family_house a occp:ReviewApproval ;
     occp:endsCycle ex:cycleA_Single-family_house ;
@@ -1091,7 +1157,63 @@ ex:instant_ReviewApproval_Single-family_house a occp:ReviewApproval ;
         ex:phaseB_Single-family_house ;
     occp:hasActualTime "2015-02-18"^^xsd:date .
 
-ex:phaseD_house_-_roof a occp:PhaseD_Usage ;
-    occp:hasActualBeginning ex:instant_UsageStart_house_-_roof ;
-    occp:hasActualEnd ex:instant_UsageEnd_girder .
+ex:instant_ReviewApproval_beam_shoe a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_beam_shoe ;
+    occp:endsPhase ex:phaseA_beam_shoe,
+        ex:phaseB_beam_shoe ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_girder a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_girder ;
+    occp:endsPhase ex:phaseA_girder,
+        ex:phaseB_girder ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_chimney a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_chimney ;
+    occp:endsPhase ex:phaseA_house_-_chimney,
+        ex:phaseB_house_-_chimney ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_foundation a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_foundation ;
+    occp:endsPhase ex:phaseA_house_-_foundation,
+        ex:phaseB_house_-_foundation ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_inner_wall a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_inner_wall ;
+    occp:endsPhase ex:phaseA_house_-_inner_wall,
+        ex:phaseB_house_-_inner_wall ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_outer_wall_-_house_back a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_back ;
+    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_back,
+        ex:phaseB_house_-_outer_wall_-_house_back ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_outer_wall_-_house_front a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_front ;
+    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_front,
+        ex:phaseB_house_-_outer_wall_-_house_front ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_outer_wall_-_house_front_right a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_outer_wall_-_house_front_right ;
+    occp:endsPhase ex:phaseA_house_-_outer_wall_-_house_front_right,
+        ex:phaseB_house_-_outer_wall_-_house_front_right ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_house_-_roof a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_house_-_roof ;
+    occp:endsPhase ex:phaseA_house_-_roof,
+        ex:phaseB_house_-_roof ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
+
+ex:instant_ReviewApproval_00_groundfloor a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_00_groundfloor ;
+    occp:endsPhase ex:phaseA_00_groundfloor,
+        ex:phaseB_00_groundfloor ;
+    occp:hasActualTime "2015-02-18"^^xsd:date .
 

@@ -12,82 +12,82 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IfcFooting;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcFooting>";
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcFooting>";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:NotConstraintComponent;
                  sh:sourceShape                oush:ComponentShape;
                  sh:value                      ex:IfcFooting
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcRoof;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcRoof>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcRoof
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcWall;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcWall>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcWall
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcChimney;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcChimney>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcChimney
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcBuildingElementProxy;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcBuildingElementProxy>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcBuildingElementProxy
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcBuildingStorey;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcBuildingStorey>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcBuildingStorey
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcBeam;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcBeam>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcBeam
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcBuilding;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcBuilding>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcBuilding
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IFC_Structure_parsed;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IFC_Structure_parsed>";
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IFC_Structure_parsed>";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:NotConstraintComponent;
                  sh:sourceShape                oush:ComponentShape;
                  sh:value                      ex:IFC_Structure_parsed
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcRoof;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcRoof>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcRoof
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcBuildingStorey;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcBuildingStorey>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcBuildingStorey
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcChimney;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcChimney>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcChimney
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcBeam;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcBeam>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcBeam
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcWall;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcWall>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcWall
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
                  sh:focusNode                  ex:IfcDiscreteAccessory;
-                 sh:resultMessage              "Not[NodeShape[_:829d236030280e9d403f3d0c9675d785]] at focusNode <http://www.example.de/example#IfcDiscreteAccessory>";
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcDiscreteAccessory>";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:NotConstraintComponent;
                  sh:sourceShape                oush:ComponentShape;
                  sh:value                      ex:IfcDiscreteAccessory
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcBuildingElementProxy;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcBuildingElementProxy>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcBuildingElementProxy
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:IfcBuilding;
+                 sh:resultMessage              "Not[NodeShape[_:f24270eac6d0a6f5e5b29a5dc426caca]] at focusNode <http://www.example.de/example#IfcBuilding>";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
+                 sh:sourceShape                oush:ComponentShape;
+                 sh:value                      ex:IfcBuilding
                ]
 ] .

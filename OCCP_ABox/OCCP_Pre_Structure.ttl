@@ -103,12 +103,12 @@
                     occp:endsPhase ex:phaseC_girder .
 
                 ex:instant_UsageStart_girder a occp:UsageStart ;
-                    occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                    occp:hasActualTime "2016-03-29"^^xsd:date ;  
                     occp:startsPhase ex:phaseD_girder .
 
                 ex:instant_UsageEnd_girder a occp:UsageEnd ;
                     occp:hasActualTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_girder .
 
 
     # Individuals for ex:IfcBuilding
@@ -183,12 +183,12 @@
                     occp:endsPhase ex:phaseC_Single-family_house .
 
                 ex:instant_UsageStart_Single-family_house a occp:UsageStart ;
-                    occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                    occp:hasActualTime "2016-03-30"^^xsd:date ;  #earliest Start
                     occp:startsPhase ex:phaseD_Single-family_house .
 
                 ex:instant_UsageEnd_Single-family_house a occp:UsageEnd ;
-                    occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:hasActualTime "2025-09-11"^^xsd:date ;  
+                    occp:endsPhase ex:phaseD_Single-family_house .
 
 
     # Individuals for ex:IfcBuildingElementProxy
@@ -263,12 +263,12 @@
                     occp:endsPhase ex:phaseC_GroupNo_21 .
 
                 ex:instant_UsageStart_GroupNo_21 a occp:UsageStart ;
-                    occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                    occp:hasActualTime "2016-03-30"^^xsd:date ;  #earliest Start
                     occp:startsPhase ex:phaseD_GroupNo_21 .
 
                 ex:instant_UsageEnd_GroupNo_21 a occp:UsageEnd ;
-                    occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:hasActualTime "2025-10-10"^^xsd:date ;  #latest end
+                    occp:endsPhase ex:phaseD_GroupNo_21 .
 
 
 
@@ -350,7 +350,7 @@
 
                 ex:instant_UsageEnd_00_groundfloor a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_00_groundfloor .
 
 
     # Individuals for ex:IfcChimney
@@ -430,7 +430,7 @@
 
                 ex:instant_UsageEnd_house_-_chimney a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof . 
+                    occp:endsPhase ex:phaseD_house_-_chimney . 
 
 
     # Individuals for ex:IfcDiscreteAccessory
@@ -510,7 +510,7 @@
 
                 ex:instant_UsageEnd_beam_shoe a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof . 
+                    occp:endsPhase ex:phaseD_beam_shoe . 
 
 
     # Individuals for ex:IfcFooting
@@ -590,7 +590,7 @@
 
                 ex:instant_UsageEnd_house_-_foundation a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof . 
+                    occp:endsPhase ex:phaseD_house_-_foundation . 
 
 
     # Individuals for ex:IfcRoof 
@@ -769,7 +769,7 @@
 
                 ex:instant_UsageEnd_house_-_inner_wall a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_house_-_inner_wall .
 
         # Individuals for ex:house_-_outer_wall_-_house_back  
             ex:house_-_outer_wall_-_house_back a ould:UpdatableEntity ;
@@ -828,7 +828,7 @@
 
                 ex:instant_UsageEnd_house_-_outer_wall_-_house_back a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_back .
 
 
         # Individuals for ex:house_-_outer_wall_-_house_front
@@ -888,7 +888,7 @@
 
                 ex:instant_UsageEnd_house_-_outer_wall_-_house_front a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_front .
 
         # Individuals for ex:house_-_outer_wall_-_house_front_right
             ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
@@ -947,7 +947,7 @@
 
                 ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right a occp:UsageEnd ;
                     occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
-                    occp:endsPhase ex:phaseD_house_-_roof .
+                    occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_front_right .
 
 
 

@@ -39,10 +39,13 @@ ex:IfcBeam a ould:UpdatableEntity ;
     ould:hasIFCID "IfcBeam" .
 
 ex:cycleA_IfcBeam a occp:CycleA_PlanningReview ;
+    occp:hasActualBeginning ex:instant_ReviewStart_girder ;
+    occp:hasActualEnd ex:instant_ReviewApproval_girder ;
     occp:hasCycleNumber 1 .
 
 ex:cycleA_struc a occp:CycleA_PlanningReview ;
-    occp:hasCycleNumber 1 .
+    occp:hasActualBeginning ex:instant_ReviewStart_girder ;
+    occp:hasActualEnd ex:instant_ReviewApproval_girder .
 
 ex:girder a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_girder ;
@@ -51,14 +54,6 @@ ex:girder a ould:UpdatableEntity ;
         ex:phaseC_girder,
         ex:phaseD_girder ;
     ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" .
-
-ex:instant_UsageEnd_girder a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_girder ;
-    occp:hasEstimatedTime "2025-01-01"^^xsd:date .
-
-ex:instant_UsageStart_girder a occp:UsageStart ;
-    occp:hasActualTime "2016-03-31"^^xsd:date ;
-    occp:startsPhase ex:phaseD_girder .
 
 ex:phaseA_IfcBeam a occp:PhaseA_Planning ;
     occp:hasActualBeginning ex:instant_BeginningOfPlanning_girder ;
@@ -84,9 +79,13 @@ ex:phaseC_struc a occp:PhaseC_Construction ;
     occp:hasActualBeginning ex:instant_ConstructionStart_girder ;
     occp:hasActualEnd ex:instant_ConstructionCompletion_girder .
 
-ex:phaseD_IfcBeam a occp:PhaseD_Usage .
+ex:phaseD_IfcBeam a occp:PhaseD_Usage ;
+    occp:hasActualEnd ex:instant_UsageEnd_girder ;
+    occp:hasEstimatedBeginning ex:instant_UsageStart_girder .
 
-ex:phaseD_struc a occp:PhaseD_Usage .
+ex:phaseD_struc a occp:PhaseD_Usage ;
+    occp:hasActualEnd ex:instant_UsageEnd_girder ;
+    occp:hasEstimatedBeginning ex:instant_UsageStart_girder .
 
 ex:cycleA_girder a occp:CycleA_PlanningReview ;
     occp:hasActualBeginning ex:instant_ReviewStart_girder ;
@@ -105,6 +104,14 @@ ex:instant_ConstructionStart_girder a occp:ConstructionStart ;
     occp:hasActualTime "2015-06-01"^^xsd:date ;
     occp:startsPhase ex:phaseC_girder .
 
+ex:instant_UsageEnd_girder a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_girder ;
+    occp:hasActualTime "2025-01-01"^^xsd:date .
+
+ex:instant_UsageStart_girder a occp:UsageStart ;
+    occp:hasEstimatedTime "2016-03-31"^^xsd:date ;
+    occp:startsPhase ex:phaseD_girder .
+
 ex:phaseB_girder a occp:PhaseB_Review ;
     occp:hasActualBeginning ex:instant_ReviewStart_girder ;
     occp:hasActualEnd ex:instant_ReviewApproval_girder .
@@ -114,17 +121,17 @@ ex:phaseC_girder a occp:PhaseC_Construction ;
     occp:hasActualEnd ex:instant_ConstructionCompletion_girder .
 
 ex:phaseD_girder a occp:PhaseD_Usage ;
-    occp:hasActualBeginning ex:instant_UsageStart_girder ;
-    occp:hasEstimatedEnd ex:instant_UsageEnd_girder .
+    occp:hasActualEnd ex:instant_UsageEnd_girder ;
+    occp:hasEstimatedBeginning ex:instant_UsageStart_girder .
+
+ex:phaseA_girder a occp:PhaseA_Planning ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_girder ;
+    occp:hasActualEnd ex:instant_ReviewApproval_girder .
 
 ex:instant_ReviewStart_girder a occp:ReviewStart ;
     occp:hasActualTime "2015-02-15"^^xsd:date ;
     occp:startsCycle ex:cycleA_girder ;
     occp:startsPhase ex:phaseB_girder .
-
-ex:phaseA_girder a occp:PhaseA_Planning ;
-    occp:hasActualBeginning ex:instant_BeginningOfPlanning_girder ;
-    occp:hasActualEnd ex:instant_ReviewApproval_girder .
 
 ex:instant_ReviewApproval_girder a occp:ReviewApproval ;
     occp:endsCycle ex:cycleA_girder ;

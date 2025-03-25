@@ -54,9 +54,9 @@
         ex:girder a ould:UpdatableEntity ;
             ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" ;
             occp:hasPhase ex:phaseA_girder,
-            ex:phaseB_girder,
-            ex:phaseC_girder,
-            ex:phaseD_girder;
+                ex:phaseB_girder,
+                ex:phaseC_girder,
+                ex:phaseD_girder;
             occp:hasCycle ex:cycleA_girder .
 
         # Phases for ex:girder
@@ -102,11 +102,11 @@
                 occp:endsPhase ex:phaseC_girder .
 
             ex:instant_UsageStart_girder a occp:UsageStart ;
-                occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                occp:hasEstimatedTime "2016-03-31"^^xsd:date ;  
                 occp:startsPhase ex:phaseD_girder .
 
             ex:instant_UsageEnd_girder a occp:UsageEnd ;
-                occp:hasEstimatedTime "2025-01-01"^^xsd:date ;  
+                occp:hasActualTime "2025-01-01"^^xsd:date ;  
                 occp:endsPhase ex:phaseD_girder .
 
 

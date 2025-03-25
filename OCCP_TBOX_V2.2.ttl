@@ -18,7 +18,7 @@
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#after
 	occp:after rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf time:after ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#after> ;
 		owl:inverseOf occp:before ;
 		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
 		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
@@ -29,7 +29,7 @@
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#before
 	occp:before rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf time:before ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#before> ;
 		owl:inverseOf occp:after ;
 		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
 		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
@@ -71,9 +71,9 @@
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifeCycle							
 	occp:belongsToLifeCycle rdf:type owl:ObjectProperty ;
-		rdfs:domain time:TemporalEntity ;
+		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
 		rdfs:range occp:LifeCycle ;
-		rdfs:comment "This property represents the connection of a phase or instant to its lifecycle, used to link temporal entities to the overarching lifecycle they belong to."@en ;
+		rdfs:comment "This property represents the connection of a phase or instant (mainly transitions) to its lifecycle, used to link temporal entities to the overarching lifecycle they belong to."@en ;
 		rdfs:label "belongs to lifecycle"@en .								
 
 
@@ -452,7 +452,7 @@
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LifeCycle		
 	occp:LifeCycle rdf:type owl:Class ;
-		rdfs:subClassOf time:Interval ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
 		rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
 		rdfs:label "Life Cycle"@en .
 

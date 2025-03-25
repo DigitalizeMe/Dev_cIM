@@ -131,6 +131,7 @@ WHERE {
 
 CONSTRUCT_PHASE_D = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -140,61 +141,63 @@ CONSTRUCT {
 WHERE {
     ?phase a occp:PhaseD_Usage .
     ?component occp:hasPhase ?phase .
+
+    # Actual Beginning (direkt oder über Hierarchie)
     OPTIONAL {
-        ?startInstantActual a ?startType ;
-                           occp:startsPhase ?phase ;
-                           occp:hasActualTime ?startTimeActual .
-        FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?startType { occp:UsageStart }
+        { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
+        UNION
+        { ?component ould:consistsOf+ ?subComponent .
+          ?subComponent occp:hasPhase ?subPhase .
+          ?subPhase a occp:PhaseD_Usage .
+          ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
+        ?startInstantActual occp:hasActualTime ?startTimeActual .
+        FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime }
     }
+
+    # Actual End (direkt oder über Hierarchie)
     OPTIONAL {
-        ?startInstantEstimated a ?startType ;
-                              occp:startsPhase ?phase ;
-                              occp:hasEstimatedTime ?startTimeEstimated .
-        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?startType { occp:UsageStart  }
+        { ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?phase }
+        UNION
+        { ?component ould:consistsOf+ ?subComponent .
+          ?subComponent occp:hasPhase ?subPhase .
+          ?subPhase a occp:PhaseD_Usage .
+          ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?subPhase }
+        ?endInstantActual occp:hasActualTime ?endTimeActual .
+        FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime }
     }
-      OPTIONAL {
-        ?startInstantActual a ?startType ;
-                           occp:startsPhase ?phase ;
-                           occp:hasActualTime ?startTimeActual .
-        FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?startType { occp:UsageChange }
-    }
+
+    # Estimated Beginning (direkt oder über Hierarchie)
     OPTIONAL {
-        ?startInstantEstimated a ?startType ;
-                              occp:startsPhase ?phase ;
-                              occp:hasEstimatedTime ?startTimeEstimated .
-        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?startType { occp:UsageChange  }
+        { ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?phase }
+        UNION
+        { ?component ould:consistsOf+ ?subComponent .
+          ?subComponent occp:hasPhase ?subPhase .
+          ?subPhase a occp:PhaseD_Usage .
+          ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?subPhase }
+        ?startInstantEstimated occp:hasEstimatedTime ?startTimeEstimated .
+        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime }
     }
+
+    # Estimated End (direkt oder über Hierarchie)
     OPTIONAL {
-        ?endInstantActual a ?endType ;
-                         occp:endsPhase ?phase ;
-                         occp:hasActualTime ?endTimeActual .
-        FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?endType { occp:UsageEnd }
+        { ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?phase }
+        UNION
+        { ?component ould:consistsOf+ ?subComponent .
+          ?subComponent occp:hasPhase ?subPhase .
+          ?subPhase a occp:PhaseD_Usage .
+          ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?subPhase }
+        ?endInstantEstimated occp:hasEstimatedTime ?endTimeEstimated .
+        FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime }
     }
-    OPTIONAL {
-        ?endInstantEstimated a ?endType ;
-                            occp:endsPhase ?phase ;
-                            occp:hasEstimatedTime ?endTimeEstimated .
-        FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?endType { occp:UsageEnd }
+
+    # Max 1 Actual Beginning/End
+    FILTER NOT EXISTS {
+        ?phase occp:hasActualBeginning ?otherStartActual .
+        FILTER (?otherStartActual != ?startInstantActual)
     }
-    OPTIONAL {
-        ?endInstantActual a ?endType ;
-                         occp:endsPhase ?phase ;
-                         occp:hasActualTime ?endTimeActual .
-        FILTER NOT EXISTS { ?endInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-        VALUES ?endType { occp:UsageChange }
-    }
-    OPTIONAL {
-        ?endInstantEstimated a ?endType ;
-                            occp:endsPhase ?phase ;
-                            occp:hasEstimatedTime ?endTimeEstimated .
-        FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
-        VALUES ?endType { occp:UsageChange }
+    FILTER NOT EXISTS {
+        ?phase occp:hasActualEnd ?otherEndActual .
+        FILTER (?otherEndActual != ?endInstantActual)
     }
 }
 """
@@ -252,18 +255,13 @@ CONSTRUCT {
 WHERE {
     ?cycle a occp:CycleA_PlanningReview .
     ?component occp:hasCycle ?cycle .
-    FILTER NOT EXISTS { ?component ould:consistsOf ?any }  # Child-Components only
+
+    # Zeitliche Instants
     OPTIONAL {
         ?startInstantActual a occp:ReviewStart ;
                            occp:startsCycle ?cycle ;
                            occp:hasActualTime ?startTimeActual .
         FILTER NOT EXISTS { ?startInstantActual occp:hasEstimatedTime ?anyEstimatedTime . }
-    }
-    OPTIONAL {
-        ?startInstantEstimated a occp:ReviewStart ;
-                              occp:startsCycle ?cycle ;
-                              occp:hasEstimatedTime ?startTimeEstimated .
-        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
     }
     OPTIONAL {
         ?endInstantActual a ?endType ;
@@ -273,14 +271,26 @@ WHERE {
         VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
     }
     OPTIONAL {
+        ?startInstantEstimated a occp:ReviewStart ;
+                              occp:startsCycle ?cycle ;
+                              occp:hasEstimatedTime ?startTimeEstimated .
+        FILTER NOT EXISTS { ?startInstantEstimated occp:hasActualTime ?anyActualTime . }
+    }
+    OPTIONAL {
         ?endInstantEstimated a ?endType ;
                             occp:endsCycle ?cycle ;
                             occp:hasEstimatedTime ?endTimeEstimated .
         FILTER NOT EXISTS { ?endInstantEstimated occp:hasActualTime ?anyActualTime . }
         VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
     }
-    OPTIONAL { ?cycle occp:hasCycleNumber ?existingNumber . }
-    BIND(COALESCE(?existingNumber, 1) AS ?cycleNumber)
+
+    # CycleNumber aus untergeordneten Komponenten oder Standardwert 1
+    OPTIONAL {
+        ?component ould:consistsOf ?childComponent .
+        ?childComponent occp:hasCycle ?childCycle .
+        ?childCycle occp:hasCycleNumber ?childCycleNumber .
+    }
+    BIND(COALESCE(?childCycleNumber) AS ?cycleNumber)
 }
 """
 
@@ -465,9 +475,29 @@ WHERE {
 }
 """
 
+CONSTRUCT_PARENT_CYCLES_ACTUAL = """
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+CONSTRUCT {
+    ?parentCycle occp:hasActualBeginning ?startInstant .
+    ?parentCycle occp:hasActualEnd ?endInstant .
+}
+WHERE {
+    ?parentComponent occp:hasCycle ?parentCycle .
+    ?parentCycle a ?parentCycleType .
+    ?parentComponent ould:consistsOf ?childComponent .
+    ?childComponent occp:hasCycle ?childCycle .
+    ?childCycle a ?childCycleType .
+    ?childCycle occp:hasActualBeginning ?startInstant .
+    ?childCycle occp:hasActualEnd ?endInstant .
+    FILTER (?parentCycleType = ?childCycleType)
+    VALUES ?parentCycleType {
+        occp:CycleA_PlanningReview
+    }
+}
+"""
 
-
-CONSTRUCT_PARENT_CYCLES = """
+CONSTRUCT_PARENT_CYCLES_OLD = """
 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?cycle occp:hasActualBeginning ?startInstantActual .
@@ -521,6 +551,75 @@ WHERE {
 }
 """
 
+CONSTRUCT_FILTER_ACTUAL_BEGINNING = """
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+CONSTRUCT {
+    ?phase occp:hasActualBeginning ?earliestStartInstant .
+}
+WHERE {
+    ?phase a occp:PhaseD_Usage .
+    {
+        SELECT ?phase ?earliestStartInstant
+        WHERE {
+            {
+                SELECT ?phase ?startInstantActual ?startTimeActual
+                WHERE {
+                    { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
+                    UNION
+                    { ?component occp:hasPhase ?phase .
+                      ?component ould:consistsOf ?subComponent .
+                      ?subComponent occp:hasPhase ?subPhase .
+                      ?subPhase a occp:PhaseD_Usage .
+                      ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
+                    ?startInstantActual occp:hasActualTime ?startTimeActual .
+                }
+                ORDER BY ?startTimeActual
+                LIMIT 1
+            }
+            BIND (?startInstantActual AS ?earliestStartInstant)
+        }
+        GROUP BY ?phase ?earliestStartInstant
+    }
+}
+"""
+
+CONSTRUCT_FILTER_ACTUAL_END = """
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+CONSTRUCT {
+    ?phase occp:hasActualBeginning ?startInstantActual .
+    ?phase occp:hasActualEnd ?latestEndInstant .
+    ?phase occp:hasEstimatedBeginning ?startInstantEstimated .
+    ?phase occp:hasEstimatedEnd ?endInstantEstimated .
+}
+WHERE {
+    # Bestehende Zuordnungen übernehmen
+    ?phase occp:hasActualBeginning ?startInstantActual .
+    ?phase occp:hasEstimatedBeginning ?startInstantEstimated .
+    ?phase occp:hasEstimatedEnd ?endInstantEstimated .
+
+    # Spätestes Actual End auswählen
+    {
+        SELECT ?phase ?latestEndInstant
+        WHERE {
+            ?phase occp:hasActualEnd ?endInstantActual .
+            ?endInstantActual occp:hasActualTime ?endTimeActual .
+            {
+                SELECT ?phase (MAX(?et) AS ?maxEndTime)
+                WHERE {
+                    ?phase occp:hasActualEnd ?ei .
+                    ?ei occp:hasActualTime ?et .
+                }
+                GROUP BY ?phase
+            }
+            FILTER (?endTimeActual = ?maxEndTime)
+        }
+        GROUP BY ?phase ?latestEndInstant
+    }
+}
+"""
+
 from rdflib import Graph
 
 def generate_post_graph(pre_file, output_file):
@@ -532,26 +631,26 @@ def generate_post_graph(pre_file, output_file):
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_B).graph
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_C).graph
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_D).graph
+
     post_graph_1 += pre_graph.query(CONSTRUCT_PHASE_M).graph
     post_graph_1 += pre_graph.query(CONSTRUCT_CYCLE_A).graph
 
     post_graph_2 = pre_graph + post_graph_1
     post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_2 += post_graph_2.query(CONSTRUCT_CYCLENUMBER).graph
+    post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_CYCLES_ACTUAL).graph
 
-    post_graph_3 = post_graph_2
+
+    post_graph_3 = pre_graph + post_graph_2 + post_graph_1
     post_graph_3 += post_graph_3.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_3 += post_graph_3.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_3 += post_graph_3.query(CONSTRUCT_CYCLENUMBER).graph
+    post_graph_2 += post_graph_2.query(CONSTRUCT_PARENT_CYCLES_ACTUAL).graph
 
-    post_graph_4 = post_graph_3
-    post_graph_4 += post_graph_4.query(CONSTRUCT_PARENT_PHASES).graph
-    post_graph_4 += post_graph_4.query(CONSTRUCT_PARENT_CYCLES).graph
-    post_graph_4 += post_graph_4.query(CONSTRUCT_CYCLENUMBER).graph
 
-    post_graph_final = post_graph_4.query(CONSTRUCT_PARENT_PHASES_FILTER).graph
-    post_graph_final += post_graph_4.query(CONSTRUCT_PARENT_PHASES_ESTIMATED).graph
-    
+    post_graph_3 = post_graph_3.query(CONSTRUCT_PARENT_PHASES_FILTER).graph
+    post_graph_3 += post_graph_3.query(CONSTRUCT_PARENT_PHASES_ESTIMATED).graph
+    post_graph_3 += post_graph_3.query(CONSTRUCT_FILTER_ACTUAL_BEGINNING).graph
+
+
+    post_graph_final = post_graph_3 + post_graph_2 + post_graph_1 + pre_graph
+
     post_graph_final.serialize(output_file, format="turtle")
     return post_graph_final
