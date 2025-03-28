@@ -1,37 +1,8 @@
-PREFIX ex:   <http://www.example.de/example#>
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
-PREFIX oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
-PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  false;
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IFC_Structure_parsed;
-                 sh:resultMessage              "Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IFC_Structure_parsed>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IFC_Structure_parsed
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcFooting;
-                 sh:resultMessage              "Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IfcFooting>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcFooting
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:IfcWall;
-                 sh:resultMessage              "Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IfcWall>";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:NotConstraintComponent;
-                 sh:sourceShape                oush:ComponentShape;
-                 sh:value                      ex:IfcWall
-               ]
+  sh:conforms  true
 ] .

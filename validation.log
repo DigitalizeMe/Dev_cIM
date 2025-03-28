@@ -1,7 +1,4 @@
-2025-03-26 13:00:26,845 - INFO - CONSTRUCT generated 410 triples.
-2025-03-26 13:00:26,868 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_Structure_mini_inferred.ttl
-2025-03-26 13:00:28,129 - INFO - Conformity: False
-2025-03-26 13:00:28,129 - ERROR - Validation error: Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IFC_Structure_parsed> (Focus Node: http://www.example.de/example#IFC_Structure_parsed, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-26 13:00:28,129 - ERROR - Validation error: Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IfcFooting> (Focus Node: http://www.example.de/example#IfcFooting, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-26 13:00:28,129 - ERROR - Validation error: Not[NodeShape[_:ebf3f96b86454e8eea07791025967e89]] at focusNode <http://www.example.de/example#IfcWall> (Focus Node: http://www.example.de/example#IfcWall, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-03-26 13:00:28,129 - ERROR - Validation failed.
+2025-03-28 21:26:00,148 - INFO - CONSTRUCT generated 1007 triples.
+2025-03-28 21:26:00,204 - INFO - PostI-ABox generated: G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\POST_ABOX\OCCP_Post_Structure_copy_inferred.ttl
+2025-03-28 21:26:01,445 - INFO - Conformity: True
+2025-03-28 21:26:01,445 - INFO - Validation successful: PostI conforms to SHACL.

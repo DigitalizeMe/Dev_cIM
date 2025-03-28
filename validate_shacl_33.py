@@ -17,7 +17,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Paths and namespaces
-OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.5.ttl")  
+OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.6.ttl")  
 OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.1.ttl")  
 OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_V2.2.ttl")  
 OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.6.ttl")  
@@ -83,7 +83,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
 if __name__ == "__main__":
      
      # Variable for testing efficiency
-    part_name3 = "Structure_mini"  
+    part_name3 = "Structure_copy"  
 
     ABox_Pre_file = f"OCCP_Pre_{part_name3}.ttl"
 

@@ -1,5 +1,4 @@
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix oql: <> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -20,17 +19,9 @@
 #    Object Properties
 #################################################################
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#consistsOf
-    ould:consistsOf a owl:ObjectProperty ;
-        rdfs:domain ould:UpdatableEntity ;
-        rdfs:range ould:UpdatableEntity ;
-        rdfs:label "consists of"@en ;
-        rdfs:comment "Indicates that an entity consists of another entity as a component."@en .
-
-
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#containsModel    
     ould:containsModel a owl:ObjectProperty ;
-        rdfs:domain occp:Site ;
+        rdfs:domain ould:Site ;
         rdfs:range ould:UpdatableEntity ;
         owl:inverseOf ould:containsModel ; 
         rdfs:comment "Relates an occp:Site to the updatable entities (e.g., IFC models or components) it contains." .
@@ -114,7 +105,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSite
     ould:hasSite a owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
-        rdfs:range occp:Site ;
+        rdfs:range ould:Site ;
         owl:inverseOf ould:containsModel ;
         rdfs:comment "Indicates the occp:Site to which an updatable entity belongs." .
 

@@ -146,7 +146,7 @@ WHERE {
     OPTIONAL {
         { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
         UNION
-        { ?component ould:hasChild+ ?subComponent .
+        { ?component ould:consistsOf+ ?subComponent .
           ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
@@ -158,7 +158,7 @@ WHERE {
     OPTIONAL {
         { ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?phase }
         UNION
-        { ?component ould:hasChild+ ?subComponent .
+        { ?component ould:consistsOf+ ?subComponent .
           ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?subPhase }
@@ -170,7 +170,7 @@ WHERE {
     OPTIONAL {
         { ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?phase }
         UNION
-        { ?component ould:hasChild+ ?subComponent .
+        { ?component ould:consistsOf+ ?subComponent .
           ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?subPhase }
@@ -182,7 +182,7 @@ WHERE {
     OPTIONAL {
         { ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?phase }
         UNION
-        { ?component ould:hasChild+ ?subComponent .
+        { ?component ould:consistsOf+ ?subComponent .
           ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?subPhase }
@@ -286,7 +286,7 @@ WHERE {
 
     # CycleNumber aus untergeordneten Komponenten oder Standardwert 1
     OPTIONAL {
-        ?component ould:hasChild ?childComponent .
+        ?component ould:consistsOf ?childComponent .
         ?childComponent occp:hasCycle ?childCycle .
         ?childCycle occp:hasCycleNumber ?childCycleNumber .
     }
@@ -305,7 +305,7 @@ WHERE {
         SELECT ?parentCycle (COUNT(DISTINCT ?childCycle) AS ?parentCycleNumber)
         WHERE {
             ?parentComponent occp:hasCycle ?parentCycle .
-            ?parentComponent ould:hasChild ?childComponent .
+            ?parentComponent ould:consistsOf ?childComponent .
             ?childComponent occp:hasCycle ?childCycle .
             ?childCycle occp:hasCycleNumber ?childCycleNumber .
         }
@@ -381,7 +381,7 @@ CONSTRUCT {
 WHERE {
     ?parentComponent occp:hasPhase ?parentPhase .
     ?parentPhase a ?parentPhaseType .
-    ?parentComponent ould:hasChild ?childComponent .
+    ?parentComponent ould:consistsOf ?childComponent .
     ?childComponent occp:hasPhase ?childPhase .
     ?childPhase a ?childPhaseType .
     ?childPhase occp:hasActualBeginning ?startInstant .
@@ -407,7 +407,7 @@ CONSTRUCT {
 WHERE {
     ?parentComponent occp:hasPhase ?parentPhase .
     ?parentPhase a ?parentPhaseType .
-    ?parentComponent ould:hasChild ?childComponent .
+    ?parentComponent ould:consistsOf ?childComponent .
     ?childComponent occp:hasPhase ?childPhase .
     ?childPhase a ?childPhaseType .
     FILTER (?parentPhaseType = ?childPhaseType)
@@ -485,7 +485,7 @@ CONSTRUCT {
 WHERE {
     ?parentComponent occp:hasCycle ?parentCycle .
     ?parentCycle a ?parentCycleType .
-    ?parentComponent ould:hasChild ?childComponent .
+    ?parentComponent ould:consistsOf ?childComponent .
     ?childComponent occp:hasCycle ?childCycle .
     ?childCycle a ?childCycleType .
     ?childCycle occp:hasActualBeginning ?startInstant .
@@ -568,7 +568,7 @@ WHERE {
                     { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
                     UNION
                     { ?component occp:hasPhase ?phase .
-                      ?component ould:hasChild ?subComponent .
+                      ?component ould:consistsOf ?subComponent .
                       ?subComponent occp:hasPhase ?subPhase .
                       ?subPhase a occp:PhaseD_Usage .
                       ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
