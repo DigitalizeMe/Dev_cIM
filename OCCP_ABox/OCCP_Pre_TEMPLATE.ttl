@@ -8,7 +8,7 @@
 
 # Building component group: ex:IfcBuildingTEMP
 ex:IfcBuilding a ould:UpdatableEntity ;
-    ould:hasIFCID "IfcBuilding" ;
+    ould:hasIFCModelID "IfcBuilding" ;
     occp:hasPhase ex:phaseA_building,
         ex:phaseB_building,
         ex:phaseC_building,

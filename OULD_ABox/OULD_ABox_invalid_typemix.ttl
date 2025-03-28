@@ -6,14 +6,14 @@ ould:Chain2 a ould:UpdateChain, ould:UpdatableEntity ;  # Fehler: Disjunkte Klas
     ould:hasUpdate ould:Update1 ;
     time:hasBeginning "2025-03-01"^^xsd:date ;
     time:hasEnd "2025-03-01"^^xsd:date ;
-    ould:hasIFCID "ifc:Chain2" ;
+    ould:hasIFCModelID "ifc:Chain2" ;
     ould:hasHash "abc123" .
 
 ould:Update1 a ould:Update ;
     time:hasTime "2025-03-01"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event1 ;
     ould:hasUpdatedValue ould:Chain2 ;
-    ould:hasIFCID "ifc:Chain2" ;
+    ould:hasIFCModelID "ifc:Chain2" ;
     ould:hasHash "def456" .
 
 ould:Event1 a time:TemporalEntity .

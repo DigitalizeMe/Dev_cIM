@@ -73,11 +73,11 @@
             sh:severity sh:Violation ;
         ] ;
         sh:property [
-            sh:path ould:hasIFCID ;
+            sh:path ould:hasIFCModelID ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
             sh:datatype xsd:string ;
-            sh:message "Each Update can only be linked to one IFC component via ould:hasIFCID." ;
+            sh:message "Each Update can only be linked to one IFC component via ould:hasIFCModelID." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -246,10 +246,10 @@
             sh:severity sh:Violation ;
         ] ;
         sh:property [
-            sh:path ould:hasIFCID ;
+            sh:path ould:hasIFCModelID ;
             sh:minCount 0 ;
             sh:maxCount 2 ;
-            sh:message "Each UpdateChainElement can be linked to max. two IFC components via ould:hasIFCID." ;
+            sh:message "Each UpdateChainElement can be linked to max. two IFC components via ould:hasIFCModelID." ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
@@ -302,11 +302,11 @@
     oush:UpdatableEntityShape a sh:NodeShape ;
         sh:targetClass ould:UpdatableEntity ;
         sh:property [
-            sh:path ould:hasIFCID ;
+            sh:path ould:hasIFCModelID ;
             sh:datatype xsd:string ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "Each 'ould:UpdatableEntity' must have exactly one 'ould:hasIFCID' of type xsd:string."@en ;
+            sh:message "Each 'ould:UpdatableEntity' must have exactly one 'ould:hasIFCModelID' of type xsd:string."@en ;
             sh:severity sh:Violation
         ] ;
         sh:property [
@@ -322,14 +322,14 @@
         sh:targetClass ould:UpdatableEntity ;
         sh:sparql [
             a sh:SPARQLConstraint ;
-            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCID." ;
+            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCModelID." ;
             sh:severity sh:Violation ;
             sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this
                 WHERE {
                     $this ould:hasUpdate ?update .
-                    FILTER NOT EXISTS { ?update ould:hasIFCID ?ifcid . }
+                    FILTER NOT EXISTS { ?update ould:hasIFCModelID ?ifcid . }
                 }
             """ ;
         ] .

@@ -30,7 +30,7 @@ ex:instant_ReviewRejection a occp:ReviewRejection ;
     occp:startsCycle ex:cycleA2 ;
     occp:endsCycle ex:cycleA .
 
-ex:instant_Edit_ASTR a occp:Edit_ASTR ;
+ex:instant_EditAfterSubmissionToReview a occp:EditAfterSubmissionToReview ;
     occp:hasActualTime "2025-01-13"^^xsd:date ;
     occp:hasPhase ex:phaseA .
 
@@ -59,7 +59,7 @@ ex:component1 a ould:UpdatableEntity ;
     occp:hasPhase ex:phaseB ;
     occp:hasCycle ex:cycleA ;
     occp:hasCycle ex:cycleA2 ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" .
 
 ex:phaseA a occp:PhaseA_Planning .

@@ -9,9 +9,9 @@ ex:component1 a ould:UpdatableEntity ;
     occp:hasPhase ex:phaseA,
         ex:phaseB ;
     ould:hasHash "abc123" ;
-    ould:hasIFCID "ifc:Wall1" .
+    ould:hasIFCModelID "ifc:Wall1" .
 
-ex:instant_Edit_ASTR a occp:Edit_ASTR ;
+ex:instant_EditAfterSubmissionToReview a occp:EditAfterSubmissionToReview ;
     occp:hasActualTime "2025-01-13"^^xsd:date ;
     occp:hasPhase ex:phaseA .
 

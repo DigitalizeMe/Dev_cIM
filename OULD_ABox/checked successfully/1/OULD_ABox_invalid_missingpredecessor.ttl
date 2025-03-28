@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdate ould:UpdateReplacement1 .
 
@@ -16,11 +16,11 @@ ould:UpdateReplacement1 a ould:UpdateReplacement ;
     ould:hasPreviousHash "abc123" ;
     ould:hasUpdatedEvent ould:Event1 ;
     ould:hasUpdatedValue ould:Wall1 ;
-    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasIFCModelID "ifc:Wall2" ;
     ould:hasHash "xyz789" .
 
 ould:Wall2 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall2" ;
+    ould:hasIFCModelID "ifc:Wall2" ;
     ould:hasHash "xyz789" ;
     ould:hasUpdate ould:UpdateReplacement1 .
 

@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdate ould:Update1 .
 
@@ -11,9 +11,9 @@ ould:Update1 a ould:Update ;
     time:hasTime "2025-03-05"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event1 ;
     ould:hasUpdatedValue ould:Wall1 .
-    # Fehler: Kein hasIFCID und hasHash
+    # Fehler: Kein hasIFCModelID und hasHash
 
 ould:Event1 a time:TemporalEntity .
 
 # Erwartete Fehleranzahl: 1
-# - Violation bei UpdatableEntityBaselineShape: "Each UpdatableEntity must have at least one Update with a hasIFCID and hasHash."
+# - Violation bei UpdatableEntityBaselineShape: "Each UpdatableEntity must have at least one Update with a hasIFCModelID and hasHash."

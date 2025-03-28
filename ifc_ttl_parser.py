@@ -36,14 +36,14 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
     model_uri = EX[safe_model_name + "_parsed"]  # e.g., ex:Building_Architecture_parsed
 
     g.add((model_uri, RDF.type, OULD.UpdatableEntity))
-    g.add((model_uri, OULD.hasIFCID, Literal(safe_model_name)))  # Placeholder for model IFCID
+    g.add((model_uri, OULD.hasIFCModelID, Literal(safe_model_name)))  # Placeholder for model IFCModelID
     g.add((model_uri, OULD.hasHash, Literal(data["model_hash"])))  # Add model hash
 
     # Step 2: Process each type (e.g., IfcBuildingElementProxy)
     for type_name, type_data in data["Types"].items():
         type_uri = EX[safe_uri(type_name)]  # e.g., ex:IfcBuildingElementProxy
         g.add((type_uri, RDF.type, OULD.UpdatableEntity))
-        g.add((type_uri, OULD.hasIFCID, Literal(type_name)))  # Use type name as IFCID for now
+        g.add((type_uri, OULD.hasIFCModelID, Literal(type_name)))  # Use type name as IFCModelID for now
 
         # Connect type to the model
         g.add((model_uri, OULD.consistsOf, type_uri))
@@ -54,7 +54,7 @@ def create_turtle_from_json(json_file, turtle_file, ifc_file_name):
                 continue
             element_uri = EX[safe_uri(element_name)]  # e.g., ex:Group_No_18
             g.add((element_uri, RDF.type, OULD.UpdatableEntity))
-            g.add((element_uri, OULD.hasIFCID, Literal(element_data["GlobalIds"][0])))
+            g.add((element_uri, OULD.hasIFCModelID, Literal(element_data["GlobalIds"][0])))
             
             # Connect element to its type
             g.add((type_uri, OULD.consistsOf, element_uri))

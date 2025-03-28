@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdateChain ould:Chain1 .
 
@@ -16,14 +16,14 @@ ould:Update1 a ould:Update ;
     time:hasTime "2025-03-01"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event1 ;
     ould:hasUpdatedValue ould:Wall1 ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "def456" .
 
 ould:Update2 a ould:Update ;
     time:hasTime "2025-03-02"^^xsd:date ;
     ould:hasUpdatedEvent ould:Event2 ;
     ould:hasUpdatedValue ould:Wall1 ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "ghi789" .
 
 ould:Event1 a time:TemporalEntity .

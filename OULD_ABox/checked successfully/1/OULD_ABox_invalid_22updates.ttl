@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdateChain ould:Chain1 .
 

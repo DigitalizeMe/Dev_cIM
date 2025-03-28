@@ -69,7 +69,7 @@
     ould:hasUpdatedValue rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range owl:Thing ;
-        rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC-ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
+        rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC Model ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
         rdfs:label "has updated value"@en .
     
 
@@ -177,12 +177,12 @@
         rdfs:label "has hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasIFCID
-    ould:hasIFCID rdf:type owl:DatatypeProperty ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasIFCModelID
+    ould:hasIFCModelID rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
-        rdfs:comment "The data property \"hasIFCID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
-        rdfs:label "has IFC ID"@en .
+        rdfs:comment "The data property \"hasIFCModelID\" is used to store the IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between an IFC component and the MsOCCP (Model-specific OCCP)."@en ;
+        rdfs:label "has IFC Model ID"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewHash
@@ -194,12 +194,12 @@
         rdfs:label "has new hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewIFCID
-    ould:hasNewIFCID rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf ould:hasIFCID ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewIFCModelID
+    ould:hasNewIFCModelID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasIFCModelID ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
-        rdfs:comment "The data property \"hasNewIFCID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCID."@en ;
+        rdfs:comment "The data property \"hasNewIFCModelID\" is used to store the IFC new Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasPreviousIFCModelID."@en ;
         rdfs:label "has new IFC ID"@en .
 
 
@@ -232,12 +232,12 @@
         rdfs:label "has previous hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCID
-    ould:hasPreviousIFCID rdf:type owl:DatatypeProperty ;
-        rdfs:subPropertyOf ould:hasIFCID ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCModelID
+    ould:hasPreviousIFCModelID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf ould:hasIFCModelID ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
-        rdfs:comment "The data property \"hasPreviousIFCID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCID."@en ;
+        rdfs:comment "The data property \"hasPreviousIFCModelID\" is used to store the old IFC Identifier (e.g., the IFC component's GlobalID) of a component to record and establish a connection between the old and the new ID. It is used in combination with ould:hasNewIFCModelID."@en ;
         rdfs:label "has previous IFC ID"@en .
 
 
@@ -284,7 +284,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateReplacement
     ould:UpdateReplacement rdf:type owl:Class ;
         rdfs:subClassOf ould:Update ;
-        rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCID, ould:hasNewIFCID, ould:hasPreviousHash, and ould:hasNewHash."@en ;
+        rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCModelID, ould:hasNewIFCModelID, ould:hasPreviousHash, and ould:hasNewHash."@en ;
         rdfs:label "Update Replacement"@en .          
 
 

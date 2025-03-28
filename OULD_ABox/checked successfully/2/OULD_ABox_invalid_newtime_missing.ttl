@@ -3,7 +3,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ould:Wall1 a ould:UpdatableEntity ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "abc123" ;
     ould:hasUpdate ould:Update1 .
 
@@ -12,7 +12,7 @@ ould:Update1 a ould:Update ;
     ould:hasPreviousTime "2025-03-01"^^xsd:date ;  # Fehler: hasPreviousTime ohne hasNewTime
     ould:hasUpdatedEvent ould:Event1 ;
     ould:hasUpdatedValue ould:Wall1 ;
-    ould:hasIFCID "ifc:Wall1" ;
+    ould:hasIFCModelID "ifc:Wall1" ;
     ould:hasHash "def456" .
 
 ould:Event1 a time:TemporalEntity .

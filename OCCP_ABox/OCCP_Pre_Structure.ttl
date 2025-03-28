@@ -15,7 +15,7 @@
             ex:IfcRoof,
             ex:IfcWall ;
         ould:hasHash "8a85255355b68da4c208550ea7e4f8158e3f5fd3d823980529d65070f3bd2dcf" ;
-        ould:hasIFCID "IFC_Structure" ;
+        ould:hasIFCModelID "IFC_Structure" ;
         occp:hasPhase ex:phaseA_struc,
             ex:phaseB_struc,
             ex:phaseC_struc,
@@ -33,27 +33,28 @@
 
     # Individuals for ex:IfcBeam
         ex:IfcBeam a ould:UpdatableEntity ;
+            ould:hasHash "d70542ef383e321cf835e95ba11a8c2d64135aa38e33e27ce6962e1ffb19aa6a" ;
             ould:consistsOf ex:girder ;
-            ould:hasIFCID "IfcBeam" ;
+            ould:hasIFCModelID "IfcBeam" ;
             occp:hasPhase ex:phaseA_IfcBeam,
                 ex:phaseB_IfcBeam,
                 ex:phaseC_IfcBeam,
                 ex:phaseD_IfcBeam;
             occp:hasCycle ex:cycleA_IfcBeam .
 
-        # Phases for ex:IfcBuilding
+        # Phases for ex:IfcBeam
             ex:phaseA_IfcBeam a occp:PhaseA_Planning .
             ex:phaseB_IfcBeam a occp:PhaseB_Review .
             ex:phaseC_IfcBeam a occp:PhaseC_Construction .
             ex:phaseD_IfcBeam a occp:PhaseD_Usage .
 
-        # Cycles for ex:IFC_Architecture_parsed
+        # Cycles for ex:IfcBeam
             ex:cycleA_IfcBeam a occp:CycleA_PlanningReview ;
                 occp:hasCycleNumber 1 .
 
         # Individuals for ex:girder
             ex:girder a ould:UpdatableEntity ;
-                ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" ;
+                ould:hasIFCModelID "0fqX614OH1YO1Njdxms2$Q" ;
                 occp:hasPhase ex:phaseA_girder,
                     ex:phaseB_girder,
                     ex:phaseC_girder,
@@ -113,8 +114,9 @@
 
     # Individuals for ex:IfcBuilding
         ex:IfcBuilding a ould:UpdatableEntity ;
+            ould:hasHash "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c" ;
             ould:consistsOf ex:Single-family_house ;
-            ould:hasIFCID "IfcBuilding" ;
+            ould:hasIFCModelID "IfcBuilding" ;
             occp:hasPhase ex:phaseA_IfcBuilding,
                 ex:phaseB_IfcBuilding,
                 ex:phaseC_IfcBuilding,
@@ -133,7 +135,7 @@
 
         # Individuals for ex:Single-family_house
             ex:Single-family_house a ould:UpdatableEntity ;
-                ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" ;
+                ould:hasIFCModelID "0c$N1CTon2BB2Sp89385G8" ;
                 occp:hasPhase ex:phaseA_Single-family_house,
                     ex:phaseB_Single-family_house,
                     ex:phaseC_Single-family_house,
@@ -193,8 +195,9 @@
 
     # Individuals for ex:IfcBuildingElementProxy
         ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
+            ould:hasHash "566e602b5b2160f97fe00bfb1db273813f47e6ef92e48b150a38e70dd6cb6c26" ;
             ould:consistsOf ex:GroupNo_21 ;
-            ould:hasIFCID "IfcBuildingElementProxy" ;
+            ould:hasIFCModelID "IfcBuildingElementProxy" ;
             occp:hasPhase ex:phaseA_IfcBuildingElementProxy,
                 ex:phaseB_IfcBuildingElementProxy,
                 ex:phaseC_IfcBuildingElementProxy,
@@ -213,7 +216,7 @@
 
         # Individuals for ex:GroupNo_21
             ex:GroupNo_21 a ould:UpdatableEntity ;
-                ould:hasIFCID "1CjP_CWub368bZVuVHeHs3" ;
+                ould:hasIFCModelID "1CjP_CWub368bZVuVHeHs3" ;
                 occp:hasPhase ex:phaseA_GroupNo_21,
                     ex:phaseB_GroupNo_21,
                     ex:phaseC_GroupNo_21,
@@ -274,8 +277,9 @@
 
     # Individuals for ex:IfcBuildingStorey
         ex:IfcBuildingStorey a ould:UpdatableEntity ;
+            ould:hasHash "55a60869c55f739c93986ad55cf0696bb21400b4428f5ab91636def0c8f9e593" ;
             ould:consistsOf ex:00_groundfloor ;
-            ould:hasIFCID "IfcBuildingStorey" ;
+            ould:hasIFCModelID "IfcBuildingStorey" ;
             occp:hasPhase ex:phaseA_IfcBuildingStorey,
                 ex:phaseB_IfcBuildingStorey,
                 ex:phaseC_IfcBuildingStorey,
@@ -295,7 +299,7 @@
 
         # Individuals for ex:00_groundfloor 
             ex:00_groundfloor a ould:UpdatableEntity ;
-                ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" ;
+                ould:hasIFCModelID "1Ano2ZUxnEIvVQ_beukl8b" ;
                 occp:hasPhase ex:phaseA_00_groundfloor,
                     ex:phaseB_00_groundfloor,
                     ex:phaseC_00_groundfloor,
@@ -355,8 +359,9 @@
 
     # Individuals for ex:IfcChimney
         ex:IfcChimney a ould:UpdatableEntity ;
+            ould:hasHash "99587d680b34e0b4b6814ac368e12bdf6d94e60564994ee9142e5dda0db42da1" ;
             ould:consistsOf ex:house_-_chimney ;
-            ould:hasIFCID "IfcChimney" ;
+            ould:hasIFCModelID "IfcChimney" ;
             occp:hasPhase ex:phaseA_IfcChimney,
                 ex:phaseB_IfcChimney,
                 ex:phaseC_IfcChimney,
@@ -375,7 +380,7 @@
 
         # Individuals for ex:house_-_chimney
             ex:house_-_chimney a ould:UpdatableEntity ;
-                ould:hasIFCID "3dkFAzOGrAIuOzY_RdrdVv" ;
+                ould:hasIFCModelID "3dkFAzOGrAIuOzY_RdrdVv" ;
                 occp:hasPhase ex:phaseA_house_-_chimney,
                     ex:phaseB_house_-_chimney,
                     ex:phaseC_house_-_chimney,
@@ -435,8 +440,9 @@
 
     # Individuals for ex:IfcDiscreteAccessory
         ex:IfcDiscreteAccessory a ould:UpdatableEntity ;
+            ould:hasHash "7fd82a9b90f8b83286af415c235e11921818f25c5ce97f234b09ffc96dcc8095" ;
             ould:consistsOf ex:beam_shoe ;
-            ould:hasIFCID "IfcDiscreteAccessory" ;
+            ould:hasIFCModelID "IfcDiscreteAccessory" ;
             occp:hasPhase ex:phaseA_IfcDiscreteAccessory,
                 ex:phaseB_IfcDiscreteAccessory,
                 ex:phaseC_IfcDiscreteAccessory,
@@ -455,7 +461,7 @@
 
         # Individuals for ex:beam_shoe
             ex:beam_shoe a ould:UpdatableEntity ;
-                ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" ;
+                ould:hasIFCModelID "2r_8UEywH9_RLHe8z$Xa8J" ;
                 occp:hasPhase ex:phaseA_beam_shoe,
                     ex:phaseB_beam_shoe,
                     ex:phaseC_beam_shoe,
@@ -515,8 +521,9 @@
 
     # Individuals for ex:IfcFooting
         ex:IfcFooting a ould:UpdatableEntity ;
+            ould:hasHash "7e92490c724bf34475dd11f23665f9679d4e61b908e34f515f1aec7c51609484" ;
             ould:consistsOf ex:house_-_foundation ;
-            ould:hasIFCID "IfcFooting" ;
+            ould:hasIFCModelID "IfcFooting" ;
             occp:hasPhase ex:phaseA_IfcFooting,
                 ex:phaseB_IfcFooting,
                 ex:phaseC_IfcFooting,
@@ -535,7 +542,7 @@
 
         # Individuals for ex:house_-_foundation
             ex:house_-_foundation a ould:UpdatableEntity ;
-                ould:hasIFCID "0pFmhV8oD1dB40_b4pscr8" ;
+                ould:hasIFCModelID "0pFmhV8oD1dB40_b4pscr8" ;
                 occp:hasPhase ex:phaseA_house_-_foundation,
                     ex:phaseB_house_-_foundation,
                     ex:phaseC_house_-_foundation,
@@ -595,8 +602,9 @@
 
     # Individuals for ex:IfcRoof 
         ex:IfcRoof a ould:UpdatableEntity ;
+            ould:hasHash "0f20ae6c60f09c99f1d0f77f34741241b586531e25d144020aaedce7e4f502fb" ;
             ould:consistsOf ex:house_-_roof ;
-            ould:hasIFCID "IfcRoof" ;
+            ould:hasIFCModelID "IfcRoof" ;
             occp:hasPhase ex:phaseA_IfcRoof,
                 ex:phaseB_IfcRoof,
                 ex:phaseC_IfcRoof,
@@ -615,7 +623,7 @@
 
         # Individuals for ex:house_-_roof
             ex:house_-_roof a ould:UpdatableEntity ;
-                ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" ;
+                ould:hasIFCModelID "2iPwJwpPDCSgMheXwk9cBT" ;
                 occp:hasPhase ex:phaseA_house_-_roof,
                     ex:phaseB_house_-_roof,
                     ex:phaseC_house_-_roof,
@@ -679,7 +687,7 @@
                 ex:house_-_outer_wall_-_house_back,
                 ex:house_-_outer_wall_-_house_front,
                 ex:house_-_outer_wall_-_house_front_right ;
-            ould:hasIFCID "IfcWall" ;
+            ould:hasIFCModelID "IfcWall" ;
             occp:hasPhase ex:phaseA_IfcWall ,
                 ex:phaseB_IfcWall ,
                 ex:phaseC_IfcWall ,
@@ -698,7 +706,8 @@
 
         # Individuals for ex:house_-_inner_wall
             ex:house_-_inner_wall a ould:UpdatableEntity ;
-                ould:hasIFCID "2gTJhghMT81QThk15l2VwR" ;
+                ould:hasHash "90bb31408e5618c386b02b075265eacf1c7d5a4335a5aa3ce343ca60345b727b" ;
+                ould:hasIFCModelID "2gTJhghMT81QThk15l2VwR" ;
                 occp:hasPhase ex:phaseA_house_-_inner_wall,
                     ex:phaseB_house_-_inner_wall,
                     ex:phaseC_house_-_inner_wall,
@@ -773,7 +782,8 @@
 
         # Individuals for ex:house_-_outer_wall_-_house_back  
             ex:house_-_outer_wall_-_house_back a ould:UpdatableEntity ;
-                ould:hasIFCID "0DyViLJJ175RvWQi1rE7a6" ;
+                ould:hasHash "6e86c23d3de75c6ebe2949ed971192b59fe1380a905e7ffb8ff3945f89692755" ;
+                ould:hasIFCModelID "0DyViLJJ175RvWQi1rE7a6" ;
                 occp:hasPhase ex:phaseA_house_-_outer_wall_-_house_back,
                     ex:phaseB_house_-_outer_wall_-_house_back,
                     ex:phaseC_house_-_outer_wall_-_house_back,
@@ -833,7 +843,8 @@
 
         # Individuals for ex:house_-_outer_wall_-_house_front
             ex:house_-_outer_wall_-_house_front a ould:UpdatableEntity ;
-                ould:hasIFCID "3SGBcf7Lv0r80vKtUCgOpf" ;
+                ould:hasHash "2c914d41ee69540d00dbf1e319cf0dd3d7d53fc8a8a67aced27de9d09fa6efc5" ;
+                ould:hasIFCModelID "3SGBcf7Lv0r80vKtUCgOpf" ;
                 occp:hasPhase ex:phaseA_house_-_outer_wall_-_house_front,
                     ex:phaseB_house_-_outer_wall_-_house_front,
                     ex:phaseC_house_-_outer_wall_-_house_front,
@@ -892,7 +903,8 @@
 
         # Individuals for ex:house_-_outer_wall_-_house_front_right
             ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
-                ould:hasIFCID "3oNJ9yHi5FJuFnK8yg68Yt" ;
+                ould:hasHash "bad65c7766af90c9a2416309f771dddca277ca6498ee7700cd0e8285bd2065ac" ;
+                ould:hasIFCModelID "3oNJ9yHi5FJuFnK8yg68Yt" ;
                 occp:hasPhase ex:phaseA_house_-_outer_wall_-_house_front_right,
                     ex:phaseB_house_-_outer_wall_-_house_front_right,
                     ex:phaseC_house_-_outer_wall_-_house_front_right,
@@ -942,11 +954,11 @@
                     occp:endsPhase ex:phaseC_house_-_outer_wall_-_house_front_right .
 
                 ex:instant_UsageStart_house_-_outer_wall_-_house_front_right a occp:UsageStart ;
-                    occp:hasActualTime "2016-03-31"^^xsd:date ;  
+                    occp:hasActualTime "2016-03-30"^^xsd:date ;  
                     occp:startsPhase ex:phaseD_house_-_outer_wall_-_house_front_right .
 
                 ex:instant_UsageEnd_house_-_outer_wall_-_house_front_right a occp:UsageEnd ;
-                    occp:hasEstimatedTime "2025-09-11"^^xsd:date ;  
+                    occp:hasEstimatedTime "2025-09-12"^^xsd:date ;  
                     occp:endsPhase ex:phaseD_house_-_outer_wall_-_house_front_right .
 
 

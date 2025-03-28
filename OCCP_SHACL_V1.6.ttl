@@ -1403,16 +1403,16 @@
                     sh:severity sh:Warning
                 ] .
 
-            osh:Edit_BSTRShape a sh:NodeShape ;             # Instant Edit Before Submission To Review (Phase A - Planning)
-                sh:targetClass occp:Edit_BSTR ;
-                # Ensure Edit_BSTR occurs after BeginningOfPlanning based on actual or estimated times
+            osh:EditBeforeSubmissionToReviewShape a sh:NodeShape ;             # Instant Edit Before Submission To Review (Phase A - Planning)
+                sh:targetClass occp:EditBeforeSubmissionToReview ;
+                # Ensure EditBeforeSubmissionToReview occurs after BeginningOfPlanning based on actual or estimated times
                 sh:sparql [
                     sh:select """
                         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this ?beginPlanning ?timeEdit ?timeBOP
                         WHERE {
-                            # Get time of Edit_BSTR (actual or estimated)
+                            # Get time of EditBeforeSubmissionToReview (actual or estimated)
                             { $this occp:hasActualTime ?timeEdit . }
                             UNION
                             { $this occp:hasEstimatedTime ?timeEdit . }
@@ -1424,17 +1424,17 @@
                             FILTER (?timeEdit <= ?timeBOP)
                         }
                     """ ;
-                    sh:message "Edit_BSTR { $this } (time: { ?timeEdit }) must occur after BeginningOfPlanning { ?beginPlanning } (time: { ?timeBOP })."@en ;
+                    sh:message "EditBeforeSubmissionToReview { $this } (time: { ?timeEdit }) must occur after BeginningOfPlanning { ?beginPlanning } (time: { ?timeBOP })."@en ;
                     sh:severity sh:Violation
                 ] ;
-                # Ensure Edit_BSTR occurs before SubmissionToReview based on actual or estimated times
+                # Ensure EditBeforeSubmissionToReview occurs before SubmissionToReview based on actual or estimated times
                 sh:sparql [
                     sh:select """
                         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this ?submission ?timeEdit ?timeSub
                         WHERE {
-                            # Get time of Edit_BSTR (actual or estimated)
+                            # Get time of EditBeforeSubmissionToReview (actual or estimated)
                             { $this occp:hasActualTime ?timeEdit . }
                             UNION
                             { $this occp:hasEstimatedTime ?timeEdit . }
@@ -1446,13 +1446,13 @@
                             FILTER (?timeEdit >= ?timeSub)
                         }
                     """ ;
-                    sh:message "Edit_BSTR { $this } (time: { ?timeEdit }) must occur before SubmissionToReview { ?submission } (time: { ?timeSub })."@en ;
+                    sh:message "EditBeforeSubmissionToReview { $this } (time: { ?timeEdit }) must occur before SubmissionToReview { ?submission } (time: { ?timeSub })."@en ;
                     sh:severity sh:Violation
                 ] .
 
             osh:SubmissionToReviewShape a sh:NodeShape ;    # Instant Submission To Review (Phase A - Planning)
                 sh:targetClass occp:SubmissionToReview ;
-                # Ensure SubmissionToReview occurs after Edit_BSTR or Edit_ASTR based on actual or estimated times
+                # Ensure SubmissionToReview occurs after EditBeforeSubmissionToReview or EditAfterSubmissionToReview based on actual or estimated times
                 sh:sparql [
                     sh:select """
                         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
@@ -1463,29 +1463,29 @@
                             { $this occp:hasActualTime ?timeSub . }
                             UNION
                             { $this occp:hasEstimatedTime ?timeSub . }
-                            # Get time of Edit_BSTR or Edit_ASTR (actual or estimated)
+                            # Get time of EditBeforeSubmissionToReview or EditAfterSubmissionToReview (actual or estimated)
                             ?editEvent a ?editClass .
-                            FILTER (?editClass IN (occp:Edit_BSTR, occp:Edit_ASTR))
+                            FILTER (?editClass IN (occp:EditBeforeSubmissionToReview, occp:EditAfterSubmissionToReview))
                             { ?editEvent occp:hasActualTime ?timeEdit . }
                             UNION
                             { ?editEvent occp:hasEstimatedTime ?timeEdit . }
                             FILTER (?timeSub <= ?timeEdit)
                         }
                     """ ;
-                    sh:message "SubmissionToReview { $this } (time: { ?timeSub }) must occur after Edit_BSTR or Edit_ASTR { ?editEvent } (time: { ?timeEdit })."@en ;
+                    sh:message "SubmissionToReview { $this } (time: { ?timeSub }) must occur after EditBeforeSubmissionToReview or EditAfterSubmissionToReview { ?editEvent } (time: { ?timeEdit })."@en ;
                     sh:severity sh:Violation
                 ] .
 
-            osh:Edit_ASTRShape a sh:NodeShape ;             # Instant Edit After Submission To Review (Phase A - Planning)
-                sh:targetClass occp:Edit_ASTR ;
-                # Ensure Edit_ASTR occurs after SubmissionToReview based on actual or estimated times
+            osh:EditAfterSubmissionToReviewShape a sh:NodeShape ;             # Instant Edit After Submission To Review (Phase A - Planning)
+                sh:targetClass occp:EditAfterSubmissionToReview ;
+                # Ensure EditAfterSubmissionToReview occurs after SubmissionToReview based on actual or estimated times
                 sh:sparql [
                     sh:select """
                         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this ?submission ?timeEdit ?timeSub
                         WHERE {
-                            # Get time of Edit_ASTR (actual or estimated)
+                            # Get time of EditAfterSubmissionToReview (actual or estimated)
                             { $this occp:hasActualTime ?timeEdit . }
                             UNION
                             { $this occp:hasEstimatedTime ?timeEdit . }
@@ -1497,17 +1497,17 @@
                             FILTER (?timeEdit <= ?timeSub)
                         }
                     """ ;
-                    sh:message "Edit_ASTR { $this } (time: { ?timeEdit }) must occur after SubmissionToReview { ?submission } (time: { ?timeSub })."@en ;
+                    sh:message "EditAfterSubmissionToReview { $this } (time: { ?timeEdit }) must occur after SubmissionToReview { ?submission } (time: { ?timeSub })."@en ;
                     sh:severity sh:Violation
                 ] ;
-                # Ensure Edit_ASTR occurs before CompletionOfPlanning based on actual or estimated times
+                # Ensure EditAfterSubmissionToReview occurs before CompletionOfPlanning based on actual or estimated times
                 sh:sparql [
                     sh:select """
                         PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this ?completion ?timeEdit ?timeCOP
                         WHERE {
-                            # Get time of Edit_ASTR (actual or estimated)
+                            # Get time of EditAfterSubmissionToReview (actual or estimated)
                             { $this occp:hasActualTime ?timeEdit . }
                             UNION
                             { $this occp:hasEstimatedTime ?timeEdit . }
@@ -1519,7 +1519,7 @@
                             FILTER (?timeEdit >= ?timeCOP)
                         }
                     """ ;
-                    sh:message "Edit_ASTR { $this } (time: { ?timeEdit }) should occur before CompletionOfPlanning { ?completion } (time: { ?timeCOP })."@en ;
+                    sh:message "EditAfterSubmissionToReview { $this } (time: { ?timeEdit }) should occur before CompletionOfPlanning { ?completion } (time: { ?timeCOP })."@en ;
                     sh:severity sh:Warning
                 ] .
 

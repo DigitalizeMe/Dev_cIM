@@ -6,7 +6,7 @@
 # Top-level entity:
 ex:IFC_Site_parsed a ould:UpdatableEntity ;
     ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
-    ould:hasIFCID "IFC_Site" ;
+    ould:hasIFCModelID "IFC_Site" ;
     occp:hasPhase ex:phaseA_site ;
     occp:hasPhase ex:phaseB_site ;
     occp:hasPhase ex:phaseC_site ;

@@ -9,63 +9,63 @@ ex:IFC_Architecture_parsed a ould:UpdatableEntity ;
         ex:IfcSlab,
         ex:IfcWall ;
     ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
-    ould:hasIFCID "IFC_Architecture" .
+    ould:hasIFCModelID "IFC_Architecture" .
 
 ex:00_groundfloor a ould:UpdatableEntity ;
-    ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
+    ould:hasIFCModelID "1Ano2ZUxnEIvVQ_beukl8b" .
 
 ex:IfcBuilding a ould:UpdatableEntity ;
     ould:consistsOf ex:Single-family_house ;
-    ould:hasIFCID "IfcBuilding" .
+    ould:hasIFCModelID "IfcBuilding" .
 
 ex:IfcBuildingStorey a ould:UpdatableEntity ;
     ould:consistsOf ex:00_groundfloor ;
-    ould:hasIFCID "IfcBuildingStorey" .
+    ould:hasIFCModelID "IfcBuildingStorey" .
 
 ex:IfcEarthworksFill a ould:UpdatableEntity ;
     ould:consistsOf ex:sand_bedding ;
-    ould:hasIFCID "IfcEarthworksFill" .
+    ould:hasIFCModelID "IfcEarthworksFill" .
 
 ex:IfcRoof a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_roof ;
-    ould:hasIFCID "IfcRoof" .
+    ould:hasIFCModelID "IfcRoof" .
 
 ex:IfcSlab a ould:UpdatableEntity ;
     ould:consistsOf ex:floor,
         ex:house_-_roof_-_slab_left,
         ex:house_-_roof_-_slab_right ;
-    ould:hasIFCID "IfcSlab" .
+    ould:hasIFCModelID "IfcSlab" .
 
 ex:IfcWall a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_outer_wall_-_house_left,
         ex:house_-_outer_wall_-_house_right_back,
         ex:house_-_outer_wall_-_house_right_front ;
-    ould:hasIFCID "IfcWall" .
+    ould:hasIFCModelID "IfcWall" .
 
 ex:Single-family_house a ould:UpdatableEntity ;
-    ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" .
+    ould:hasIFCModelID "0c$N1CTon2BB2Sp89385G8" .
 
 ex:floor a ould:UpdatableEntity ;
-    ould:hasIFCID "3zR0BOEcLADRKln4HYporH" .
+    ould:hasIFCModelID "3zR0BOEcLADRKln4HYporH" .
 
 ex:house_-_outer_wall_-_house_left a ould:UpdatableEntity ;
-    ould:hasIFCID "0OfZwWc8j9QP5uX8xPTxDH" .
+    ould:hasIFCModelID "0OfZwWc8j9QP5uX8xPTxDH" .
 
 ex:house_-_outer_wall_-_house_right_back a ould:UpdatableEntity ;
-    ould:hasIFCID "3wdauVJT5Fx9drrREiDqA$" .
+    ould:hasIFCModelID "3wdauVJT5Fx9drrREiDqA$" .
 
 ex:house_-_outer_wall_-_house_right_front a ould:UpdatableEntity ;
-    ould:hasIFCID "1AQAupaRP1txwK1AGiN61V" .
+    ould:hasIFCModelID "1AQAupaRP1txwK1AGiN61V" .
 
 ex:house_-_roof a ould:UpdatableEntity ;
-    ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
+    ould:hasIFCModelID "2iPwJwpPDCSgMheXwk9cBT" .
 
 ex:house_-_roof_-_slab_left a ould:UpdatableEntity ;
-    ould:hasIFCID "0ZTBBPo6f6bxqV2K7Oelrq" .
+    ould:hasIFCModelID "0ZTBBPo6f6bxqV2K7Oelrq" .
 
 ex:house_-_roof_-_slab_right a ould:UpdatableEntity ;
-    ould:hasIFCID "12UVOn4wvAJPMUExKdZLb8" .
+    ould:hasIFCModelID "12UVOn4wvAJPMUExKdZLb8" .
 
 ex:sand_bedding a ould:UpdatableEntity ;
-    ould:hasIFCID "3_4VN63S96DfWiJjgG8j1C" .
+    ould:hasIFCModelID "3_4VN63S96DfWiJjgG8j1C" .
 

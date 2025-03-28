@@ -6,42 +6,42 @@ ex:IFC_Site_parsed a ould:UpdatableEntity ;
         ex:IfcGeographicElement,
         ex:IfcSite ;
     ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
-    ould:hasIFCID "IFC_Site" .
+    ould:hasIFCModelID "IFC_Site" .
 
 ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
     ould:consistsOf ex:geo-reference ;
-    ould:hasIFCID "IfcBuildingElementProxy" .
+    ould:hasIFCModelID "IfcBuildingElementProxy" .
 
 ex:IfcGeographicElement a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_site_-_grass,
         ex:house_-_site_-_soil,
         ex:house_-_site_-_underground,
         ex:tree ;
-    ould:hasIFCID "IfcGeographicElement" .
+    ould:hasIFCModelID "IfcGeographicElement" .
 
 ex:IfcSite a ould:UpdatableEntity ;
     ould:consistsOf ex:environment_-_site,
         ex:house_-_site ;
-    ould:hasIFCID "IfcSite" .
+    ould:hasIFCModelID "IfcSite" .
 
 ex:environment_-_site a ould:UpdatableEntity ;
-    ould:hasIFCID "23sFQGRy90RxVbRHD9iSE2" .
+    ould:hasIFCModelID "23sFQGRy90RxVbRHD9iSE2" .
 
 ex:geo-reference a ould:UpdatableEntity ;
-    ould:hasIFCID "3Fit2Fad92zf2f6aWdJtF5" .
+    ould:hasIFCModelID "3Fit2Fad92zf2f6aWdJtF5" .
 
 ex:house_-_site a ould:UpdatableEntity ;
-    ould:hasIFCID "1Pbuu0tu59NfhrTsztVBK1" .
+    ould:hasIFCModelID "1Pbuu0tu59NfhrTsztVBK1" .
 
 ex:house_-_site_-_grass a ould:UpdatableEntity ;
-    ould:hasIFCID "3rjfgVlxX47xval0xizSlT" .
+    ould:hasIFCModelID "3rjfgVlxX47xval0xizSlT" .
 
 ex:house_-_site_-_soil a ould:UpdatableEntity ;
-    ould:hasIFCID "1tnCBP2MXBYgVII_I4SNlD" .
+    ould:hasIFCModelID "1tnCBP2MXBYgVII_I4SNlD" .
 
 ex:house_-_site_-_underground a ould:UpdatableEntity ;
-    ould:hasIFCID "2pVtmJZNb8zwPoLLLgilXw" .
+    ould:hasIFCModelID "2pVtmJZNb8zwPoLLLgilXw" .
 
 ex:tree a ould:UpdatableEntity ;
-    ould:hasIFCID "2zxheXkSbCUgmJF8PPqK6F" .
+    ould:hasIFCModelID "2zxheXkSbCUgmJF8PPqK6F" .
 

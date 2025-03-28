@@ -13,7 +13,7 @@ ex:IFC_Architecture_parsed a ould:UpdatableEntity ;
     ould:consistsOf ex:IfcBuilding,
         ex:IfcBuildingStorey ;
     ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
-    ould:hasIFCID "IFC_Architecture" .
+    ould:hasIFCModelID "IFC_Architecture" .
 
 ex:instant_DataProcurement_building a occp:DataProcurement ;
     occp:hasActualTime "2000-01-08"^^xsd:date ;
@@ -47,7 +47,7 @@ ex:IfcBuilding a ould:UpdatableEntity ;
         ex:phaseC_building,
         ex:phaseD_building,
         ex:phaseM_building ;
-    ould:hasIFCID "IfcBuilding" .
+    ould:hasIFCModelID "IfcBuilding" .
 
 ex:IfcBuildingStorey a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_storey,
@@ -57,7 +57,7 @@ ex:IfcBuildingStorey a ould:UpdatableEntity ;
         ex:phaseC_storey,
         ex:phaseD_storey,
         ex:phaseM_storey ;
-    ould:hasIFCID "IfcBuildingStorey" .
+    ould:hasIFCModelID "IfcBuildingStorey" .
 
 ex:cycleA_arch a occp:CycleA_PlanningReview ;
     occp:hasCycleNumber 3 .

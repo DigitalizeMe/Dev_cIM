@@ -415,15 +415,15 @@
 		rdfs:label "Design Life Start"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_ASTR
-    occp:Edit_ASTR rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#EditAfterSubmissionToReview
+    occp:EditAfterSubmissionToReview rdf:type owl:Class ;
 		rdfs:subClassOf occp:PhaseA_Instant ;
 		rdfs:comment "This class represents the instant marking significant changes to a planning model after submission to review (ASTR = After Submission To Review). Multiple events possible."@en ;
 		rdfs:label "Edit ASTR"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Edit_BSTR
-    occp:Edit_BSTR rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#EditBeforeSubmissionToReview
+    occp:EditBeforeSubmissionToReview rdf:type owl:Class ;
 		rdfs:subClassOf occp:PhaseA_Instant ;
 		rdfs:comment "This class represents the instant marking significant changes to a planning model before submission to review (BSTR = Before Submission To Review). Multiple events possible."@en ;
 		rdfs:label "Edit BSTR"@en .

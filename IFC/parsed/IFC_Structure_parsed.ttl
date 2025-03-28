@@ -12,80 +12,80 @@ ex:IFC_Structure_parsed a ould:UpdatableEntity ;
         ex:IfcRoof,
         ex:IfcWall ;
     ould:hasHash "8a85255355b68da4c208550ea7e4f8158e3f5fd3d823980529d65070f3bd2dcf" ;
-    ould:hasIFCID "IFC_Structure" .
+    ould:hasIFCModelID "IFC_Structure" .
 
 ex:00_groundfloor a ould:UpdatableEntity ;
-    ould:hasIFCID "1Ano2ZUxnEIvVQ_beukl8b" .
+    ould:hasIFCModelID "1Ano2ZUxnEIvVQ_beukl8b" .
 
 ex:GroupNo_21 a ould:UpdatableEntity ;
-    ould:hasIFCID "1CjP_CWub368bZVuVHeHs3" .
+    ould:hasIFCModelID "1CjP_CWub368bZVuVHeHs3" .
 
 ex:IfcBeam a ould:UpdatableEntity ;
     ould:consistsOf ex:girder ;
-    ould:hasIFCID "IfcBeam" .
+    ould:hasIFCModelID "IfcBeam" .
 
 ex:IfcBuilding a ould:UpdatableEntity ;
     ould:consistsOf ex:Single-family_house ;
-    ould:hasIFCID "IfcBuilding" .
+    ould:hasIFCModelID "IfcBuilding" .
 
 ex:IfcBuildingElementProxy a ould:UpdatableEntity ;
     ould:consistsOf ex:GroupNo_21 ;
-    ould:hasIFCID "IfcBuildingElementProxy" .
+    ould:hasIFCModelID "IfcBuildingElementProxy" .
 
 ex:IfcBuildingStorey a ould:UpdatableEntity ;
     ould:consistsOf ex:00_groundfloor ;
-    ould:hasIFCID "IfcBuildingStorey" .
+    ould:hasIFCModelID "IfcBuildingStorey" .
 
 ex:IfcChimney a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_chimney ;
-    ould:hasIFCID "IfcChimney" .
+    ould:hasIFCModelID "IfcChimney" .
 
 ex:IfcDiscreteAccessory a ould:UpdatableEntity ;
     ould:consistsOf ex:beam_shoe ;
-    ould:hasIFCID "IfcDiscreteAccessory" .
+    ould:hasIFCModelID "IfcDiscreteAccessory" .
 
 ex:IfcFooting a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_foundation ;
-    ould:hasIFCID "IfcFooting" .
+    ould:hasIFCModelID "IfcFooting" .
 
 ex:IfcRoof a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_roof ;
-    ould:hasIFCID "IfcRoof" .
+    ould:hasIFCModelID "IfcRoof" .
 
 ex:IfcWall a ould:UpdatableEntity ;
     ould:consistsOf ex:house_-_inner_wall,
         ex:house_-_outer_wall_-_house_back,
         ex:house_-_outer_wall_-_house_front,
         ex:house_-_outer_wall_-_house_front_right ;
-    ould:hasIFCID "IfcWall" .
+    ould:hasIFCModelID "IfcWall" .
 
 ex:Single-family_house a ould:UpdatableEntity ;
-    ould:hasIFCID "0c$N1CTon2BB2Sp89385G8" .
+    ould:hasIFCModelID "0c$N1CTon2BB2Sp89385G8" .
 
 ex:beam_shoe a ould:UpdatableEntity ;
-    ould:hasIFCID "2r_8UEywH9_RLHe8z$Xa8J" .
+    ould:hasIFCModelID "2r_8UEywH9_RLHe8z$Xa8J" .
 
 ex:girder a ould:UpdatableEntity ;
-    ould:hasIFCID "0fqX614OH1YO1Njdxms2$Q" .
+    ould:hasIFCModelID "0fqX614OH1YO1Njdxms2$Q" .
 
 ex:house_-_chimney a ould:UpdatableEntity ;
-    ould:hasIFCID "3dkFAzOGrAIuOzY_RdrdVv" .
+    ould:hasIFCModelID "3dkFAzOGrAIuOzY_RdrdVv" .
 
 ex:house_-_foundation a ould:UpdatableEntity ;
-    ould:hasIFCID "0pFmhV8oD1dB40_b4pscr8" .
+    ould:hasIFCModelID "0pFmhV8oD1dB40_b4pscr8" .
 
 ex:house_-_inner_wall a ould:UpdatableEntity ;
-    ould:hasIFCID "2gTJhghMT81QThk15l2VwR" .
+    ould:hasIFCModelID "2gTJhghMT81QThk15l2VwR" .
 
 ex:house_-_outer_wall_-_house_back a ould:UpdatableEntity ;
-    ould:hasIFCID "0DyViLJJ175RvWQi1rE7a6" .
+    ould:hasIFCModelID "0DyViLJJ175RvWQi1rE7a6" .
 
 ex:house_-_outer_wall_-_house_front a ould:UpdatableEntity ;
-    ould:hasIFCID "3SGBcf7Lv0r80vKtUCgOpf" .
+    ould:hasIFCModelID "3SGBcf7Lv0r80vKtUCgOpf" .
 
 ex:house_-_outer_wall_-_house_front_right a ould:UpdatableEntity ;
-    ould:hasIFCID "3oNJ9yHi5FJuFnK8yg68Yt" .
+    ould:hasIFCModelID "3oNJ9yHi5FJuFnK8yg68Yt" .
 
 ex:house_-_roof a ould:UpdatableEntity ;
-    ould:hasIFCID "2iPwJwpPDCSgMheXwk9cBT" .
+    ould:hasIFCModelID "2iPwJwpPDCSgMheXwk9cBT" .
 
