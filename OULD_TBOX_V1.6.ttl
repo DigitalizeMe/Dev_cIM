@@ -1,6 +1,7 @@
-@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
-@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix oql: <> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -26,7 +27,23 @@
         rdfs:label "consists of"@en ;
         rdfs:comment "Indicates that an entity consists of another entity as a component."@en .
 
-    
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#containsModel    
+    ould:containsModel a owl:ObjectProperty ;
+        rdfs:domain occp:Site ;
+        rdfs:range ould:UpdatableEntity ;
+        owl:inverseOf ould:containsModel ; 
+        rdfs:comment "Relates an occp:Site to the updatable entities (e.g., IFC models or components) it contains." .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasChild 
+    ould:hasChild a owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:UpdatableEntity ;
+        owl:inverseOf ould:hasParent ;
+        rdfs:comment "Indicates a hierarchical child relationship between updatable entities." .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasLinkedData
     ould:hasLinkedData rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
@@ -35,12 +52,32 @@
         rdfs:label "has linked data"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdate
-    ould:hasUpdate rdf:type owl:ObjectProperty ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewValue
+    ould:hasNewValue rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdatedValue ;
         rdfs:domain ould:UpdatableEntity ;
-        rdfs:range ould:Update ;
-        rdfs:comment "Connects an UpdatableEntity to an existing Update. If a prior Update exists, a new UpdateChain is initiated to track subsequent modifications."@en ;
-        rdfs:label "has update"@en .
+        rdfs:range owl:Thing ;
+        owl:inverseOf ould:hasPreviousValue ;
+        rdfs:comment "Links an update to the newly recorded value of a modified property."@en ;
+        rdfs:label "has new value"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNextChain
+    ould:hasNextChain rdf:type owl:ObjectProperty ;
+        owl:inverseOf ould:hasPreviousChain ;
+        rdf:type owl:TransitiveProperty ;
+        rdfs:domain ould:UpdateChain ;
+        rdfs:range ould:UpdateChain ;
+        rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance   to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
+        rdfs:label "has next chain"@en .   
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasParent
+    ould:hasParent a owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:UpdatableEntity ;
+        owl:inverseOf ould:hasChild ;
+        rdfs:comment "Indicates the parent entity in a hierarchical relationship." .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPredecessor
@@ -54,42 +91,14 @@
         rdfs:label "has predecessor"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSuccessor
-    ould:hasSuccessor rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf ould:hasUpdate ;
-        rdfs:domain ould:Update ;
-        rdfs:range ould:Update;
-        owl:inverseOf ould:hasPredecessor ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousChain
+    ould:hasPreviousChain rdf:type owl:ObjectProperty ;
+        owl:inverseOf ould:hasNextChain ;
         rdf:type owl:TransitiveProperty ;
-        rdfs:comment "Links an update to a subsequent update, enabling chronological tracking of entity changes (e.g., replacements or modifications)."@en ;
-        rdfs:label "has successor"@en .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedValue
-    ould:hasUpdatedValue rdf:type owl:ObjectProperty ;
-        rdfs:domain ould:UpdatableEntity ;
-        rdfs:range owl:Thing ;
-        rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC Model ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
-        rdfs:label "has updated value"@en .
-    
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedEvent
-    ould:hasUpdatedEvent rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf ould:hasUpdatedValue ;
-        rdfs:domain ould:UpdatableEntity ;
-        rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
-        rdfs:comment "The object property \"hasUpdatedEvent\" links a temporal entity (phase, cycle, transition, or instant) to an update typically recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
-        rdfs:label "has updated event"@en .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewValue
-    ould:hasNewValue rdf:type owl:ObjectProperty ;
-        rdfs:subPropertyOf ould:hasUpdatedValue ;
-        rdfs:domain ould:UpdatableEntity ;
-        rdfs:range owl:Thing ;
-        owl:inverseOf ould:hasPreviousValue ;
-        rdfs:comment "Links an update to the newly recorded value of a modified property."@en ;
-        rdfs:label "has new value"@en .
+        rdfs:domain ould:UpdateChain ;
+        rdfs:range ould:UpdateChain ;
+        rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles, e.g., linking sequential modifications of an IFC component."@en ;
+        rdfs:label "has previous chain"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousValue
@@ -102,25 +111,32 @@
         rdfs:label "has previous value"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousChain
-    ould:hasPreviousChain rdf:type owl:ObjectProperty ;
-        owl:inverseOf ould:hasNextChain ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSite
+    ould:hasSite a owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range occp:Site ;
+        owl:inverseOf ould:containsModel ;
+        rdfs:comment "Indicates the occp:Site to which an updatable entity belongs." .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSuccessor
+    ould:hasSuccessor rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdate ;
+        rdfs:domain ould:Update ;
+        rdfs:range ould:Update;
+        owl:inverseOf ould:hasPredecessor ;
         rdf:type owl:TransitiveProperty ;
-        rdfs:domain ould:UpdateChain ;
-        rdfs:range ould:UpdateChain ;
-        rdfs:comment "The object property \"hasPreviousChain\" links an UpdateChain instance to its predecessor, forming a chronological sequence of modifications. Due to its transitive nature, it enables deep tracking of changes across multiple update cycles, e.g., linking sequential modifications of an IFC component."@en ;
-        rdfs:label "has previous chain"@en .
+        rdfs:comment "Links an update to a subsequent update, enabling chronological tracking of entity changes (e.g., replacements or modifications)."@en ;
+        rdfs:label "has successor"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNextChain
-    ould:hasNextChain rdf:type owl:ObjectProperty ;
-        owl:inverseOf ould:hasPreviousChain ;
-        rdf:type owl:TransitiveProperty ;
-        rdfs:domain ould:UpdateChain ;
-        rdfs:range ould:UpdateChain ;
-        rdfs:comment "The object property \"hasNextChain\" links an UpdateChain instance   to its successor, enabling the structured progression of modification records. Its transitivity ensures complete traceability over multiple updates."@en ;
-        rdfs:label "has next chain"@en .    
-
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdate
+    ould:hasUpdate rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range ould:Update ;
+        rdfs:comment "Connects an UpdatableEntity to an existing Update. If a prior Update exists, a new UpdateChain is initiated to track subsequent modifications."@en ;
+        rdfs:label "has update"@en .
+  
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdateChain
     ould:hasUpdateChain rdf:type owl:ObjectProperty ;
@@ -128,6 +144,16 @@
         rdfs:range ould:UpdateChain ;
         rdfs:comment "The object property \"hasUpdateChain\" links an UpdatableEntity to an \"UpdateChain\", grouping multiple related Updates (in contrast to ould:hasUpdate for single Updates)."@en ;
         rdfs:label "has update chain"@en .  
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedEvent
+    ould:hasUpdatedEvent rdf:type owl:ObjectProperty ;
+        rdfs:subPropertyOf ould:hasUpdatedValue ;
+        rdfs:domain ould:UpdatableEntity ;
+        rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+        rdfs:comment "The object property \"hasUpdatedEvent\" links a temporal entity (phase, cycle, transition, or instant) to an update typically recorded in an MsOCCP (Model-specific OCCP) file. It enables chronological tracking of modifications to lifecycle data (e.g., updates to time:hasTime or occp:hasEstimatedEnd), ensuring the integrity of time-based records."@en ;
+        rdfs:label "has updated event"@en .
+
 
 
 #################################################################
@@ -251,6 +277,11 @@
         rdfs:subClassOf ould:UpdatableEntity ;
         rdfs:comment "Represents an external dataset, document, or reference that is linked to an IFC component. This class enables structured integration of additional information into the MsOCCP."@en ;
         rdfs:label "Linked Data"@en .
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#Site
+    ould:Site rdf:type owl:Class ;
+        rdfs:subClassOf ould:UpdatableEntity ;
+        rdfs:comment "Represents a spatial area that contains other construction models (IFC), serving as an aggregation point for chronological and update data." .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity
