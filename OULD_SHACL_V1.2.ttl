@@ -1,0 +1,581 @@
+@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+
+
+#################################################################
+#    SHACL SHAPES
+#################################################################
+
+### GENERAL SHAPE RULES
+
+    oush:GeneralDatePropertyShape a sh:PropertyShape ;     # All dates are in the xs-date format (YYYY-MM-DD).
+        sh:path [ sh:alternativePath ( time:hasTime time:hasBeginning occp:hasActualBeginning occp:hasEstimatedBeginning time:hasEnd occp:hasActualEnd occp:hasEstimatedEnd ould:hasNewTime ould:hasPreviousTime ) ] ;
+        sh:datatype xsd:date ;
+        sh:message "The date must be in the format YYYY-MM-DD." ;
+        sh:severity sh:Violation .
+
+
+### UPDATE SHAPE RULES
+
+    oush:UpdateShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each Update must have exactly one time stamp (time:hasTime) - min./max. count = 1." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+        sh:path ould:hasNewTime ;
+        sh:datatype xsd:date ;
+        sh:maxCount 1 ;
+        sh:minCount 0 ;  # Optional
+        sh:message "Each Update may have at most one ould:hasNewTime timestamp." ;
+        sh:severity sh:Violation
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousTime ;
+            sh:datatype xsd:date ;
+            sh:maxCount 1 ;
+            sh:minCount 0 ;  # Optional
+            sh:message "Each Update may have at most one ould:hasPreviousTime value." ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If hasNewTime is specified, hasPreviousTime must also be provided, and vice versa." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    { $this ould:hasNewTime ?newTime . 
+                    FILTER NOT EXISTS { $this ould:hasPreviousTime ?prevTime . } }
+                    UNION
+                    { $this ould:hasPreviousTime ?prevTime . 
+                    FILTER NOT EXISTS { $this ould:hasNewTime ?newTime . } }
+                }
+            """
+        ] ;
+        sh:property [
+            sh:path ould:hasUpdatedEvent ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each Update must reference exactly one updated event (time:instant or time:interval)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasIFCModelID ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+            sh:message "Each Update can only be linked to one IFC component via ould:hasIFCModelID." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasHash ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+            sh:message "Each Update can be linked to at most one IFC component's hash value via ould:hasHash." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "hasNewTime must be later than hasPreviousTime if both exist." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?prevTime ?newTime
+                WHERE {
+                    $this ould:hasPreviousTime ?prevTime .
+                    $this ould:hasNewTime ?newTime .
+                    FILTER (?newTime <= ?prevTime)
+                }
+            """ ;
+        ] .
+
+    oush:UpdateChainShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateChain ;
+        sh:property [
+            sh:path ould:hasNextChain ;
+            sh:class ould:UpdateChain ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain may be linked to at most one next chain." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPreviousChain ;
+            sh:class ould:UpdateChain ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain may be linked to at most one previous chain." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasUpdate ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:maxCount 21 ;
+            sh:message "Each UpdateChain must contain between 1 and 21 Updates or UpdateChainElements." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path time:hasBeginning ;
+            sh:datatype xsd:date ; 
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain must have a beginning in format xsd:date." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path time:hasEnd ;
+            sh:datatype xsd:date ; 
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateChain must have a End in format xsd:date." ;
+            sh:severity sh:Violation ;    
+        ] ;
+        sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "time:hasBeginning must match the earliest time:hasTime of its Updates." ;
+        sh:severity sh:Violation ;
+        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                      sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+        sh:select """
+            SELECT $this ?begin ?earliest
+            WHERE {
+                $this time:hasBeginning ?begin .
+                $this ould:hasUpdate ?update .
+                ?update time:hasTime ?updateTime .
+                {
+                    SELECT $this (MIN(?time) AS ?earliest)
+                    WHERE {
+                        $this ould:hasUpdate ?u .
+                        ?u time:hasTime ?time .
+                    }
+                    GROUP BY $this
+                }
+                FILTER (?begin != ?earliest)
+            }
+        """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "time:hasEnd must match the latest time:hasTime of its Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                        sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
+            sh:select """
+                SELECT $this ?end ?latest
+                WHERE {
+                    $this time:hasEnd ?end .
+                    $this ould:hasUpdate ?update .
+                    ?update time:hasTime ?updateTime .
+                    {
+                        SELECT $this (MAX(?time) AS ?latest)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?u time:hasTime ?time .
+                        }
+                        GROUP BY $this
+                    }
+                    FILTER (?end != ?latest)
+                }
+            """ ;
+        ] ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "An UpdateChain must contain all Updates of its UpdatableEntity once it exists." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?entity ?update
+                WHERE {
+                    ?entity ould:hasUpdateChain $this .
+                    ?entity ould:hasUpdate ?update .
+                    FILTER NOT EXISTS { $this ould:hasUpdate ?update . }
+                    {
+                        SELECT ?entity (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            ?entity ould:hasUpdate ?u .
+                        }
+                        GROUP BY ?entity
+                        HAVING (?updateCount > 1)
+                    }
+                }
+            """ ;
+        ] .
+
+    oush:UpdateChainContinuityConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateChain ;
+        sh:sparql [
+            sh:message "An UpdateChain must not contain more than 21 Updates." ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this ould:hasUpdate ?u .
+                }
+                GROUP BY $this
+                HAVING (COUNT(?u) > 21)
+            """
+        ] .
+
+    
+
+    oush:UpdateChainSplitConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain. After split, the old chain must have max 20 Updates." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this ?chain ?updateCount
+                WHERE {
+                    $this ould:hasUpdate ?update .
+                    $this ould:hasUpdateChain ?chain .
+                    {
+                        SELECT $this ?chain (COUNT(?u) AS ?updateCount)
+                        WHERE {
+                            $this ould:hasUpdate ?u .
+                            ?chain ould:hasUpdate ?u .
+                        }
+                        GROUP BY $this ?chain
+                        HAVING (?updateCount > 21)  
+                    }
+                }
+            """
+        ] .
+
+    oush:UpdatableEntityShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:property [
+            sh:path ould:hasIFCModelID ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each 'ould:UpdatableEntity' must have exactly one 'ould:hasIFCModelID' of type xsd:string."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:property [
+            sh:path ould:hasHash ;
+            sh:datatype xsd:string ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "Each 'ould:UpdatableEntity' can have at most one 'ould:hasHash' of type xsd:string."@en ;
+            sh:severity sh:Violation
+        ] .
+
+#    oush:UpdatableEntityBaselineShape a sh:NodeShape ;
+#        sh:targetClass ould:UpdatableEntity ;
+#        sh:sparql [
+#            a sh:SPARQLConstraint ;
+#            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCModelID." ;
+#            sh:severity sh:Violation ;
+#            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+#            sh:select """
+#                SELECT $this
+#                WHERE {
+#                    $this ould:hasUpdate ?update .
+#                    FILTER NOT EXISTS { ?update ould:hasIFCModelID ?ifcid . }
+#                }
+#            """ ;
+#        ] .
+
+    oush:UpdateReplacementShape a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:property oush:GeneralDatePropertyShape ;  # Date format YYYY-MM-DD 
+        sh:property [
+            sh:path time:hasTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each UpdateReplacement must have exactly one timestamp (time:hasTime)." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasPredecessor ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:message "Each UpdateReplacement must reference at least one predecessor Update via ould:hasPredecessor." ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ould:hasSuccessor ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "An UpdateReplacement may have at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:ReplacementChronologyConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:sparql [
+            a sh:SPARQLConstraint ;
+            sh:message "The successor UpdateReplacement must have a later timestamp than its predecessor Update." ;
+            sh:severity sh:Violation ;
+            sh:prefixes [ 
+                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+            ] ;
+            sh:select """
+                SELECT $this ?prevTime ?newTime
+                WHERE {
+                    $this ould:hasPredecessor ?prevUpdate .
+                    ?prevUpdate time:hasTime ?prevTime .
+                    $this time:hasTime ?newTime .
+                    FILTER (?prevTime > ?newTime) 
+                }
+            """ ;
+        ] .
+
+    oush:PredecessorConstraint a sh:NodeShape ;
+        sh:targetClass ould:UpdateReplacement ;
+        sh:sparql [
+            sh:message "Each UpdateReplacement must reference a valid predecessor Update that exists." ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:select """
+                SELECT $this
+                WHERE {
+                    $this a ould:UpdateReplacement .
+                    FILTER NOT EXISTS { $this ould:hasPredecessor ?pred . }
+                }
+            """
+        ] .
+
+    oush:SuccessorConstraint a sh:NodeShape ;
+        sh:targetSubjectsOf ould:hasSuccessor ;
+        sh:property [
+            sh:path ould:hasSuccessor ;
+            sh:class ould:Update ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "Each ould:Update may reference at most one successor (e.g., ould:Update or ould:UpdateReplacement)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdateEntityShape a sh:NodeShape ;
+        sh:targetSubjectsOf ould:hasUpdate ;
+        sh:property [
+            sh:path ould:hasUpdate ;
+            sh:class ould:Update ;
+            sh:minCount 1 ;
+            sh:message "Each entity with an update must be linked to at least one ould:Update instance." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdatedValueShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property [
+            sh:path ould:hasUpdatedValue ;
+            sh:minCount 1 ;
+            sh:message "Each update must reference at least one modified entity (e.g., IFC component, phase, or instant)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+    oush:UpdatedEventShape a sh:NodeShape ;
+        sh:targetClass ould:Update ;
+        sh:property [
+            sh:path ould:hasUpdatedEvent ;
+            sh:class <http://www.w3.org/2006/time#TemporalEntity> ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:message "Each update must be linked to exactly one modified temporal entity (e.g., phase, cycle, transition, or instant)." ;
+            sh:severity sh:Violation ;
+        ] .
+
+
+### LINKED DATA SHAPE RULES
+
+    oush:LinkedDataPropertyShape a sh:PropertyShape ;
+        sh:path ( ould:hasOnlineData ould:hasOfflineData ) ;
+        sh:or (
+            [ sh:datatype xsd:anyURI ]
+            [ sh:datatype xsd:string ]
+        ) ;
+        sh:message "Must be a URI (online) or string (offline)."@en ;
+        sh:severity sh:Violation .
+
+    oush:LinkedDataShape a sh:NodeShape ;
+        sh:targetClass ould:LinkedData ;
+            sh:property [
+                sh:path ould:hasDataLocation ;
+                sh:datatype xsd:string ;
+                sh:minCount 1 ;
+                sh:message "Each LinkedData must have exactly one location."@en ;
+                sh:severity sh:Violation ;
+            ] .
+
+
+### MODEL STRUCTURE SHAPE RULES
+
+    oush:ComponentShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        sh:not [
+            sh:property [
+                sh:path ould:consistsOf ;
+                sh:minCount 1
+            ]
+        ] .
+
+  oush:CompositeEntityShape a sh:NodeShape ;
+      sh:targetSubjectsOf ould:consistsOf ;  
+      sh:property [
+          sh:path ould:consistsOf ;
+          sh:minCount 1 ;
+          sh:message "Each composite entity must consist of at least one component via 'ould:consistsOf'."@en ;
+          sh:severity sh:Violation
+      ] .
+    
+    oush:ComponentHierarchyShape a sh:NodeShape ;
+        sh:targetClass ould:UpdatableEntity ;
+        # Ensure parent phase start is the earliest of all direct component phase starts
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX time: <http://www.w3.org/2006/time#>
+#                SELECT $this ?parentPhase ?compPhase ?startParent ?earliestCompStart
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasPhase ?parentPhase .
+#                    ?component occp:hasPhase ?compPhase .
+#                    # Get parent phase start (actual or estimated)
+#                    { ?parentPhase occp:hasActualBeginning ?startInstP . 
+#                    ?startInstP occp:hasActualTime ?startParent . }
+#                    UNION
+#                    { ?parentPhase occp:hasEstimatedBeginning ?startInstP . 
+#                    ?startInstP occp:hasEstimatedTime ?startParent . }
+#                    # Get earliest direct component phase start
+#                    {
+#                        SELECT ?component (MIN(?startTime) AS ?earliestCompStart)
+#                        WHERE {
+#                            ?component occp:hasPhase ?cPhase .
+#                            { ?cPhase occp:hasActualBeginning ?startInstC . 
+#                            ?startInstC occp:hasActualTime ?startTime . }
+#                            UNION
+#                            { ?cPhase occp:hasEstimatedBeginning ?startInstC . 
+#                            ?startInstC occp:hasEstimatedTime ?startTime . }
+#                        }
+#                        GROUP BY ?component
+#                    }
+#                    FILTER (?startParent > ?earliestCompStart)
+#                }
+#            """ ;
+#            sh:message "Parent phase { ?parentPhase } (start: { ?startParent }) must start at or before the earliest direct #component phase start (start: { ?earliestCompStart })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure parent phase end is the latest of all direct component phase ends
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX time: <http://www.w3.org/2006/time#>
+#                SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasPhase ?parentPhase .
+#                    ?component occp:hasPhase ?compPhase .
+#                    # Get parent phase end (actual or estimated)
+#                    { ?parentPhase occp:hasActualEnd ?endInstP . 
+#                    ?endInstP occp:hasActualTime ?endParent . }
+#                    UNION
+#                    { ?parentPhase occp:hasEstimatedEnd ?endInstP . 
+#                    ?endInstP occp:hasEstimatedTime ?endParent . }
+#                    # Get latest direct component phase end
+#                    {
+#                        SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+#                       WHERE {
+#                            ?component occp:hasPhase ?cPhase .
+#                            { ?cPhase occp:hasActualEnd ?endInstC . 
+#                            ?endInstC occp:hasActualTime ?endTime . }
+#                            UNION
+#                            { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+#                            ?endInstC occp:hasEstimatedTime ?endTime . }
+#                        }
+#                        GROUP BY ?component
+#                    }
+#                    FILTER (?endParent < ?latestCompEnd)
+#                }
+#            """ ;
+#            sh:message "Parent phase { ?parentPhase } (end: { ?endParent }) must end at or after the latest direct component phase #end (end: { ?latestCompEnd })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure parent cycle number is the sum of max direct component cycle numbers
+#        sh:sparql [
+#            sh:select """
+#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                SELECT $this ?parentCycle ?totalCompCycles ?parentCycleNum
+#                WHERE {
+#                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+#                    $this occp:hasCycle ?parentCycle .
+#                    ?parentCycle occp:hasCycleNumber ?parentCycleNum .
+#                    # Calculate sum of max cycle numbers from direct components
+#                    {
+#                        SELECT (SUM(?maxCycleNum) AS ?totalCompCycles)
+#                        WHERE {
+#                            $this ould:consistsOf ?comp .
+#                            ?comp occp:hasCycle ?compCycle .
+#                            ?compCycle occp:hasCycleNumber ?cycleNum .
+#                            {
+#                                SELECT ?comp (MAX(?cycleNum) AS ?maxCycleNum)
+#                                WHERE {
+#                                    ?comp occp:hasCycle ?cCycle .
+#                                    ?cCycle occp:hasCycleNumber ?cycleNum .
+#                                }
+#                                GROUP BY ?comp
+#                            }
+#                        }
+#                    }
+#                    FILTER (?parentCycleNum != ?totalCompCycles)
+#                }
+#            """ ;
+#            sh:message "Parent cycle { ?parentCycle } (number: { ?parentCycleNum }) must equal the sum of max direct component #cycle numbers ({ ?totalCompCycles })."@en ;
+#            sh:severity sh:Violation
+#        ] ;
+#        # Ensure CompletionOfPlanning only after all PhaseA and PhaseB of direct components are complete
+        sh:sparql [
+            sh:select """
+                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
+                WHERE {
+                    $this ould:consistsOf ?component .  # Nur direkte Kinder
+                    $this occp:hasPhase ?parentPhase .
+                    ?parentPhase a occp:CompletionOfPlanning .
+                    ?parentPhase occp:hasActualEnd ?endInstP .
+                    ?endInstP occp:hasActualTime ?endParent .
+                    ?component occp:hasPhase ?compPhase .
+                    ?compPhase a ?compPhaseType .
+                    FILTER (?compPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                    # Get latest direct component PhaseA/PhaseB end
+                    {
+                        SELECT ?component (MAX(?endTime) AS ?latestCompEnd)
+                        WHERE {
+                            ?component occp:hasPhase ?cPhase .
+                            ?cPhase a ?cPhaseType .
+                            FILTER (?cPhaseType IN (occp:PhaseA_Planning, occp:PhaseB_Review))
+                            { ?cPhase occp:hasActualEnd ?endInstC . 
+                            ?endInstC occp:hasActualTime ?endTime . }
+                            UNION
+                            { ?cPhase occp:hasEstimatedEnd ?endInstC . 
+                            ?endInstC occp:hasEstimatedTime ?endTime . }
+                        }
+                        GROUP BY ?component
+                    }
+                    FILTER (?endParent < ?latestCompEnd)
+                }
+            """ ;
+            sh:message "Parent phase CompletionOfPlanning { ?parentPhase } (end: { ?endParent }) must occur after all direct component PhaseA and PhaseB ends (latest: { ?latestCompEnd })."@en ;
+            sh:severity sh:Violation
+        ] .

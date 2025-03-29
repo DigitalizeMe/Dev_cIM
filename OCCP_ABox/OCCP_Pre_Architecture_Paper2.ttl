@@ -1,0 +1,62 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:IFC_Architecture a ould:UpdatableEntity ;
+    ould:hasSite ex:IFC_Site ;
+    ould:hasDataLocation <https://raw.githubusercontent.com/.../IFC_Architecture.ifc> ;
+    ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
+    ould:hasIFCModelID "IFC_Architecture" ;
+    ould:hasChild ex:Wall ;
+    ould:hasPhase ex:phaseA_Arch , ex:phaseC_Arch .
+
+# Simplified phase individuals of ex:IFC_Architecture
+ex:phaseA_Arch a occp:PhaseA_Planning .  # Implicitly derived from ex:Wall
+ex:phaseC_Arch a occp:PhaseC_Construction .  # Implicitly derived from ex:Wall
+
+ex:Wall a ould:UpdatableEntity ;
+    ould:hasParent ex:IFC_Architecture ;
+    ould:hasIFCModelID "ifc:Wall1" ;
+    ould:hasHash "xyz789..." ;
+    ould:hasUpdate ex:WallUpdate1 ;
+    ould:hasPhase ex:phaseA_Wall , ex:phaseC_Wall .
+
+ex:phaseA_Wall a occp:PhaseA_Planning ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_Wall ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Wall .
+
+ex:instant_BeginningOfPlanning_Wall a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2024-02-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_Wall .
+
+ex:instant_Edit_Wall a occp:EditBeforeSubmissionToReview ;
+    occp:hasActualTime "2024-02-10"^^xsd:date ;  # Event time
+    ould:hasPhase ex:phaseA_Wall .
+
+ex:instant_SubmissionToReview_Wall a occp:SubmissionToReview ;
+    occp:hasActualTime "2024-03-01"^^xsd:date ;
+    ould:hasPhase ex:phaseA_Wall .
+
+ex:instant_ReviewApproval_Wall a occp:ReviewApproval ;
+    occp:hasActualTime "2024-04-01"^^xsd:date ;
+    occp:endsPhase ex:phaseA_Wall .
+
+ex:phaseC_Wall a occp:PhaseC_Construction ;
+    occp:hasActualBeginning ex:instant_ConstructionStart_Wall ;
+    occp:hasActualEnd ex:instant_ConstructionEnd_Wall .
+
+ex:instant_ConstructionStart_Wall a occp:ConstructionStart ;
+    occp:hasActualTime "2024-08-01"^^xsd:date ;
+    occp:startsPhase ex:phaseC_Wall .
+
+ex:instant_ConstructionEnd_Wall a occp:CompletionOfConstruction ;
+    occp:hasActualTime "2024-12-01"^^xsd:date ;
+    occp:endsPhase ex:phaseC_Wall .
+
+ex:WallUpdate1 a ould:Update ;
+    occp:hasActualTime "2024-02-11"^^xsd:date ;  # Entry time
+    ould:hasUpdatedEvent ex:instant_Edit_Wall ;
+    ould:hasPreviousHash "xyz789..." ;
+    ould:hasNewHash "abc123..." .
+

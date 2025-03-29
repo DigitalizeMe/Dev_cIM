@@ -9,7 +9,7 @@ CONSTRUCT {
     }
     WHERE {
         ?phase a occp:PhaseA_Planning .
-        ?component ould:hasPhase ?phase .
+        ?component occp:hasPhase ?phase .
         OPTIONAL {
             ?startInstantActual a occp:BeginningOfPlanning ;
                                 occp:startsPhase ?phase ;
@@ -31,7 +31,7 @@ CONSTRUCT {
     }
     WHERE {
         ?phase a occp:PhaseA_Planning .
-        ?component ould:hasPhase ?phase .
+        ?component occp:hasPhase ?phase .
         OPTIONAL {
             ?startInstantEstimated a occp:BeginningOfPlanning ;
                                 occp:startsPhase ?phase ;
@@ -55,7 +55,7 @@ CONSTRUCT {
 }
 WHERE {
     ?phase a occp:PhaseB_Review .
-    ?component ould:hasPhase ?phase .
+    ?component occp:hasPhase ?phase .
     OPTIONAL {
         ?startInstantActual a ?startType ;
                            occp:startsPhase ?phase ;
@@ -97,7 +97,7 @@ CONSTRUCT {
 }
 WHERE {
     ?phase a occp:PhaseC_Construction .
-    ?component ould:hasPhase ?phase .
+    ?component occp:hasPhase ?phase .
     OPTIONAL {
         ?startInstantActual a ?startType ;
                            occp:startsPhase ?phase ;
@@ -140,14 +140,14 @@ CONSTRUCT {
 }
 WHERE {
     ?phase a occp:PhaseD_Usage .
-    ?component ould:hasPhase ?phase .
+    ?component occp:hasPhase ?phase .
 
     # Actual Beginning (direkt oder über Hierarchie)
     OPTIONAL {
         { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
         UNION
         { ?component ould:hasChild+ ?subComponent .
-          ?subComponent ould:hasPhase ?subPhase .
+          ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
         ?startInstantActual occp:hasActualTime ?startTimeActual .
@@ -159,7 +159,7 @@ WHERE {
         { ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?phase }
         UNION
         { ?component ould:hasChild+ ?subComponent .
-          ?subComponent ould:hasPhase ?subPhase .
+          ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?endInstantActual a occp:UsageEnd ; occp:endsPhase ?subPhase }
         ?endInstantActual occp:hasActualTime ?endTimeActual .
@@ -171,7 +171,7 @@ WHERE {
         { ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?phase }
         UNION
         { ?component ould:hasChild+ ?subComponent .
-          ?subComponent ould:hasPhase ?subPhase .
+          ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?startInstantEstimated a occp:UsageStart ; occp:startsPhase ?subPhase }
         ?startInstantEstimated occp:hasEstimatedTime ?startTimeEstimated .
@@ -183,7 +183,7 @@ WHERE {
         { ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?phase }
         UNION
         { ?component ould:hasChild+ ?subComponent .
-          ?subComponent ould:hasPhase ?subPhase .
+          ?subComponent occp:hasPhase ?subPhase .
           ?subPhase a occp:PhaseD_Usage .
           ?endInstantEstimated a occp:UsageEnd ; occp:endsPhase ?subPhase }
         ?endInstantEstimated occp:hasEstimatedTime ?endTimeEstimated .
@@ -212,7 +212,7 @@ CONSTRUCT {
 }
 WHERE {
     ?phase a occp:PhaseM_Deconstruction .
-    ?component ould:hasPhase ?phase .
+    ?component occp:hasPhase ?phase .
     OPTIONAL {
         ?startInstantActual a ?startType ;
                            occp:startsPhase ?phase ;
@@ -328,7 +328,7 @@ CONSTRUCT {
     ?cycle occp:hasCycleNumber ?existingNumber .
 }
 WHERE {
-    ?component ould:hasPhase ?phase .
+    ?component occp:hasPhase ?phase .
     OPTIONAL {
         ?startInstantActual a ?startType ;
                             occp:startsPhase ?phase ;
@@ -379,10 +379,10 @@ CONSTRUCT {
     ?parentPhase occp:hasActualEnd ?endInstant .
 }
 WHERE {
-    ?parentComponent ould:hasPhase ?parentPhase .
+    ?parentComponent occp:hasPhase ?parentPhase .
     ?parentPhase a ?parentPhaseType .
     ?parentComponent ould:hasChild ?childComponent .
-    ?childComponent ould:hasPhase ?childPhase .
+    ?childComponent occp:hasPhase ?childPhase .
     ?childPhase a ?childPhaseType .
     ?childPhase occp:hasActualBeginning ?startInstant .
     ?childPhase occp:hasActualEnd ?endInstant .
@@ -405,10 +405,10 @@ CONSTRUCT {
     ?parentPhase occp:hasEstimatedEnd ?endInstant .
 }
 WHERE {
-    ?parentComponent ould:hasPhase ?parentPhase .
+    ?parentComponent occp:hasPhase ?parentPhase .
     ?parentPhase a ?parentPhaseType .
     ?parentComponent ould:hasChild ?childComponent .
-    ?childComponent ould:hasPhase ?childPhase .
+    ?childComponent occp:hasPhase ?childPhase .
     ?childPhase a ?childPhaseType .
     FILTER (?parentPhaseType = ?childPhaseType)
     VALUES ?parentPhaseType {
@@ -567,9 +567,9 @@ WHERE {
                 WHERE {
                     { ?startInstantActual a occp:UsageStart ; occp:startsPhase ?phase }
                     UNION
-                    { ?component ould:hasPhase ?phase .
+                    { ?component occp:hasPhase ?phase .
                       ?component ould:hasChild ?subComponent .
-                      ?subComponent ould:hasPhase ?subPhase .
+                      ?subComponent occp:hasPhase ?subPhase .
                       ?subPhase a occp:PhaseD_Usage .
                       ?startInstantActual a occp:UsageStart ; occp:startsPhase ?subPhase }
                     ?startInstantActual occp:hasActualTime ?startTimeActual .

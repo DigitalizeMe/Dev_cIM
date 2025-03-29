@@ -69,19 +69,38 @@
 		rdfs:label "begins with"@en .
 
 
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifeCycle							
-	occp:belongsToLifeCycle rdf:type owl:ObjectProperty ;
-		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdfs:range occp:LifeCycle ;
-		rdfs:comment "This property represents the connection of a phase or instant (mainly transitions) to its lifecycle, used to link temporal entities to the overarching lifecycle they belong to."@en ;
-		rdfs:label "belongs to lifecycle"@en .								
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToCycle
+    occp:belongsToCycle rdf:type owl:ObjectProperty ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property represents the connection between a time:Instant and a cycle."@en ;
+		rdfs:label "belongs to cycle"@en .				
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToInstant
+    occp:belongsToInstant rdf:type owl:ObjectProperty ;
+		rdfs:domain occp:Phase ;
+		rdfs:range <http://www.w3.org/2006/time#Instant> ;
+		owl:inverseOf occp:belongsToPhase ;
+		rdfs:comment "This property represents the link of a occp:Phase to a time:Instant."@en ;
+		rdfs:label "belongs to instant"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifecycle
+    occp:belongsToLifecycle a rdf:Property ;
+        rdfs:domain occp:Phase ;
+        rdfs:range occp:Lifecycle ;
+		owl:inverseOf occp:isInPhase ;
+        rdfs:comment "Links a phase to a specific lifecycle." ;
+        rdfs:label "belongs to Lifecycle" .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToPhase
     occp:belongsToPhase rdf:type owl:ObjectProperty ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
 		rdfs:range occp:Phase ;
-		rdfs:comment "This property represents the connection between an instant and a phase, used to link time instants to their respective phases."@en ;
+		owl:inverseOf occp:belongsToInstant ;
+		rdfs:comment "This property represents the connection between a time:Instant and a occp:Phase."@en ;
 		rdfs:label "belongs to phase"@en .
 
 
@@ -161,13 +180,6 @@
 		rdfs:label "has actual time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycle
-    occp:hasCycle rdf:type owl:ObjectProperty ;
-		rdfs:range occp:Cycle ;
-		rdfs:comment "This property represents the connection between a model (component) and a cycle."@en ;
-		rdfs:label "has cycle"@en .
-
-
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
     occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -195,33 +207,29 @@
 		rdfs:label "has estimated time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasInstant
-    occp:hasInstant rdf:type owl:ObjectProperty ;
-		rdfs:range <http://www.w3.org/2006/time#Instant> ;
-		rdfs:comment "This property represents the link to an instant, used to connect specific lifecycle events (e.g., Submission) from the MsOCCP to components or models."@en ;
-		rdfs:label "has instant"@en .
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInCycle
+    occp:isInCycle rdf:type owl:ObjectProperty ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range occp:Cycle ;
+		owl:inverseOf occp:belongsToCycle ;
+		rdfs:comment "This property represents the embedding of a time:Instant within a occp:Cycle."@en ;
+		rdfs:label "is in Cycle"@en .
+
+	
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInLifeCycle
+    occp:isInLifeCycle rdf:type owl:ObjectProperty ;
+		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range occp:LifeCycle ;
+		owl:inverseOf occp:belongsToLifeCycle ;
+		rdfs:comment "This property represents the embedding of a time:Entity within a occp:LifeCycle."@en ;
+		rdfs:label "is in LifeCycle"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifecycle
-    occp:hasLifecycle a rdf:Property ;
-        rdfs:domain occp:Phase ;
-        rdfs:range occp:Lifecycle ;
-		owl:inverseOf occp:isInPhase ;
-        rdfs:comment "Links a phase to a specific lifecycle." ;
-        rdfs:label "has Lifecycle" .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
-    occp:hasPhase rdf:type owl:ObjectProperty ;
-		rdfs:range occp:Phase ;
-		rdfs:comment "This property represents the connection between a model (component) and a phase."@en ;
-		rdfs:label "has phase"@en .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
     occp:isInPhase rdf:type owl:ObjectProperty ;
 		rdfs:domain occp:LifeCycle ;
 		rdfs:range occp:Phase ;
+		owl:inverseOf occp:hasLifecycle ;
 		rdfs:comment "This property represents the embedding of a lifecycle within a phase, used to link a lifecycle to the overarching phase it belongs to."@en ;
 		rdfs:label "is in phase"@en .
 

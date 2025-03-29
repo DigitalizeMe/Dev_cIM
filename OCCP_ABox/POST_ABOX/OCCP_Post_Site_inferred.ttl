@@ -3,71 +3,74 @@
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:IFC_Site_parsed a ould:UpdatableEntity ;
-    occp:hasCycle ex:cycleA_site ;
-    occp:hasPhase ex:phaseA_site,
-        ex:phaseB_site,
-        ex:phaseC_site,
-        ex:phaseD_site ;
+ex:IFC_Site a ould:Site ;
+    occp:hasCycle ex:cycleA_Site ;
+    ould:containsModel ex:IFC_Architecture,
+        ex:IFC_Structure ;
+    ould:hasDataLocation <https://raw.githubusercontent.com/.../IFC_Site.ifc> ;
     ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
-    ould:hasIFCModelID "IFC_Site" .
+    ould:hasIFCModelID "IFC_Site" ;
+    ould:hasPhase ex:phaseA_Site,
+        ex:phaseB_Site,
+        ex:phaseC_Site,
+        ex:phaseD_Site .
 
-ex:instant_DataProcurement_site a occp:DataProcurement ;
+ex:instant_DataProcurement_Site a occp:DataProcurement ;
     occp:hasActualTime "2000-01-06"^^xsd:date ;
-    occp:hasPhase ex:phaseA_site .
+    ould:hasPhase ex:phaseA_Site .
 
-ex:instant_SubmissionToReview_site a occp:SubmissionToReview ;
+ex:instant_SubmissionToReview_Site a occp:SubmissionToReview ;
     occp:hasActualTime "2000-02-01"^^xsd:date ;
-    occp:hasPhase ex:phaseA_site ;
-    occp:startsCycle ex:cycleA_site .
+    occp:startsCycle ex:cycleA_Site ;
+    ould:hasPhase ex:phaseA_Site .
 
-ex:instant_BeginningOfPlanning_site a occp:BeginningOfPlanning ;
+ex:instant_BeginningOfPlanning_Site a occp:BeginningOfPlanning ;
     occp:hasActualTime "2000-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseA_site .
+    occp:startsPhase ex:phaseA_Site .
 
-ex:instant_ConstructionCompletion_site a occp:CompletionOfConstruction ;
-    occp:endsPhase ex:phaseC_site ;
+ex:instant_ConstructionCompletion_Site a occp:CompletionOfConstruction ;
+    occp:endsPhase ex:phaseC_Site ;
     occp:hasActualTime "2002-12-31"^^xsd:date .
 
-ex:instant_ConstructionStart_site a occp:ConstructionStart ;
+ex:instant_ConstructionStart_Site a occp:ConstructionStart ;
     occp:hasActualTime "2002-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseC_site .
+    occp:startsPhase ex:phaseC_Site .
 
-ex:instant_ReviewStart_site a occp:ReviewStart ;
+ex:instant_ReviewStart_Site a occp:ReviewStart ;
     occp:hasActualTime "2000-02-15"^^xsd:date ;
-    occp:startsPhase ex:phaseB_site .
+    occp:startsPhase ex:phaseB_Site .
 
-ex:instant_UsageEnd_site a occp:UsageEnd ;
-    occp:endsPhase ex:phaseD_site ;
+ex:instant_UsageEnd_Site a occp:UsageEnd ;
+    occp:endsPhase ex:phaseD_Site ;
     occp:hasEstimatedTime "2025-01-01"^^xsd:date .
 
-ex:instant_UsageStart_site a occp:UsageStart ;
+ex:instant_UsageStart_Site a occp:UsageStart ;
     occp:hasActualTime "2003-01-01"^^xsd:date ;
-    occp:startsPhase ex:phaseD_site .
+    occp:startsPhase ex:phaseD_Site .
 
-ex:cycleA_site a occp:CycleA_PlanningReview ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site33 ;
+ex:cycleA_Site a occp:CycleA_PlanningReview ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Site ;
     occp:hasCycleNumber 1 .
 
-ex:instant_ReviewApproval_site33 a occp:ReviewApproval ;
-    occp:endsCycle ex:cycleA_site ;
-    occp:endsPhase ex:phaseA_site,
-        ex:phaseB_site ;
+ex:instant_ReviewApproval_Site a occp:ReviewApproval ;
+    occp:endsCycle ex:cycleA_Site ;
+    occp:endsPhase ex:phaseA_Site,
+        ex:phaseB_Site ;
     occp:hasActualTime "2000-05-01"^^xsd:date .
 
-ex:phaseB_site a occp:PhaseB_Review ;
-    occp:hasActualBeginning ex:instant_ReviewStart_site ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site33 .
+ex:phaseB_Site a occp:PhaseB_Review ;
+    occp:hasActualBeginning ex:instant_ReviewStart_Site ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Site .
 
-ex:phaseC_site a occp:PhaseC_Construction ;
-    occp:hasActualBeginning ex:instant_ConstructionStart_site ;
-    occp:hasActualEnd ex:instant_ConstructionCompletion_site .
+ex:phaseC_Site a occp:PhaseC_Construction ;
+    occp:hasActualBeginning ex:instant_ConstructionStart_Site ;
+    occp:hasActualEnd ex:instant_ConstructionCompletion_Site .
 
-ex:phaseD_site a occp:PhaseD_Usage ;
-    occp:hasActualBeginning ex:instant_UsageStart_site ;
-    occp:hasEstimatedEnd ex:instant_UsageEnd_site .
+ex:phaseD_Site a occp:PhaseD_Usage ;
+    occp:hasActualBeginning ex:instant_UsageStart_Site ;
+    occp:hasEstimatedEnd ex:instant_UsageEnd_Site .
 
-ex:phaseA_site a occp:PhaseA_Planning ;
-    occp:hasActualBeginning ex:instant_BeginningOfPlanning_site ;
-    occp:hasActualEnd ex:instant_ReviewApproval_site33 .
+ex:phaseA_Site a occp:PhaseA_Planning ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_Site ;
+    occp:hasActualEnd ex:instant_ReviewApproval_Site .
 

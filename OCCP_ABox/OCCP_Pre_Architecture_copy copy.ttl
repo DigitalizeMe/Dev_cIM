@@ -19,16 +19,9 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
     occp:hasCycle ex:cycleA_Architecture .
 
     # Phases for ex:IFC_Architecture
-        ex:phaseA_Architecture a occp:PhaseA_Planning .
-        ex:phaseB_Architecture a occp:PhaseB_Review .
-        ex:phaseC_Architecture a occp:PhaseC_Construction .
-        ex:phaseD_Architecture a occp:PhaseD_Usage .
-        ex:phaseM_Architecture a occp:PhaseM_Deconstruction .
-
+    #...
     # Cycles for ex:IFC_Architecture
-        ex:cycleA_Architecture a occp:CycleA_PlanningReview .
-
-
+    #...
     # Building component group: ex:IfcBuilding
         ex:IfcBuilding a ould:UpdatableEntity ;
             ould:hasParent ex:IFC_Architecture ;
@@ -39,19 +32,13 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
                 ex:phaseC_IfcBuilding,
                 ex:phaseD_IfcBuilding,
                 ex:phaseM_IfcBuilding ;
-            occp:hasCycle ex:cycleA_IfcBuilding .
+            occp:hasCycle ex:cycleA_IfcBuilding ;
+            ould:hasUpdate ex:IfcBuilding_Update1 .
 
         # Phases for ex:IfcBuilding
-            ex:phaseA_IfcBuilding a occp:PhaseA_Planning .
-            ex:phaseB_IfcBuilding a occp:PhaseB_Review .
-            ex:phaseC_IfcBuilding a occp:PhaseC_Construction .
-            ex:phaseD_IfcBuilding a occp:PhaseD_Usage .
-            ex:phaseM_IfcBuilding a occp:PhaseM_Deconstruction .
-
+        #...
         # Cycles for ex:IfcBuilding
-            ex:cycleA_IfcBuilding a occp:CycleA_PlanningReview ;
-                occp:hasCycleNumber 1 .
-
+        #...
         # Instants for ex:IfcBuilding
             ex:instant_BeginningOfPlanning_IfcBuilding a occp:BeginningOfPlanning ;
                 occp:hasActualTime "2000-01-01"^^xsd:date ;  # Aligned with top-level

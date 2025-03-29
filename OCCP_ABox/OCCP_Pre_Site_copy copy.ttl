@@ -1,0 +1,28 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Top-level entity:
+ex:IFC_Site a ould:Site ;
+    ould:containsModel ex:IFC_Architecture ;
+    ould:hasDataLocation <https://raw.githubusercontent.com/.../IFC_Site.ifc> ;
+    ould:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb" ;
+    ould:hasIFCModelID "IFC_Site" ;
+    ould:hasPhase ex:phaseA_Site .
+
+ex:phaseA_Site a occp:PhaseA_Planning ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_Site ;
+    occp:hasEstimatedEnd ex:instant_ReviewApproval_Site .
+
+ex:instant_BeginningOfPlanning_Site a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_Site .
+
+ex:instant_ReviewApproval_Site a occp:ReviewApproval ;
+    occp:hasEstimatedTime "2000-02-01"^^xsd:date ;
+    occp:endsPhase ex:phaseA_Site .
+# ... (further phases and instants omitted for brevity)
+
+
+#If the MsOCCP is used to create a chronology for an entire IFC model, the structure of the IFC model is irrelevant. Only if a more detailed chronology is needed (e.g., to keep track of individual model components), these components need to be represented as individuals in the MsOCCP.

@@ -9,7 +9,7 @@
 # Building component group: ex:IfcBuildingTEMP
 ex:IfcBuilding a ould:UpdatableEntity ;
     ould:hasIFCModelID "IfcBuilding" ;
-    occp:hasPhase ex:phaseA_building,
+    ould:hasPhase ex:phaseA_building,
         ex:phaseB_building,
         ex:phaseC_building,
         ex:phaseD_building;
@@ -35,11 +35,11 @@ ex:IfcBuilding a ould:UpdatableEntity ;
 
     ex:instant_DataProcurement_building a occp:DataProcurement ;
         occp:hasActualTime "2015-01-08"^^xsd:date ;
-        occp:hasPhase ex:phaseA_building .
+        ould:hasPhase ex:phaseA_building .
 
     ex:instant_SubmissionToReview_building a occp:SubmissionToReview ;
         occp:hasActualTime "2051-02-01"^^xsd:date ;     
-        occp:hasPhase ex:phaseA_building .
+        ould:hasPhase ex:phaseA_building .
 
     ex:instant_ReviewStart_building a occp:ReviewStart ;
         occp:hasActualTime "2015-02-15"^^xsd:date ;     

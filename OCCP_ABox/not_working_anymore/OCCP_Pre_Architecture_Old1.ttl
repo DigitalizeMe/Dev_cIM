@@ -3,38 +3,35 @@
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# Top-level entity: ex:IFC_Architecture
-ex:IFC_Architecture a ould:UpdatableEntity ;
-    ould:hasSite ex:IFC_Site ;
-    ould:hasChild ex:IfcBuilding,
+# Top-level entity: ex:IFC_Architecture_parsed
+ex:IFC_Architecture_parsed a ould:UpdatableEntity ;
+    ould:containsModel ex:IfcBuilding,
         ex:IfcBuildingStorey ;
-    ould:hasDataLocation <https://raw.githubusercontent.com/.../IFC_Architecture.ifc> ;
     ould:hasHash "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
     ould:hasIFCModelID "IFC_Architecture" ;
-    occp:hasPhase ex:phaseA_Architecture,
-        ex:phaseB_Architecture,
-        ex:phaseC_Architecture,
-        ex:phaseD_Architecture,
-        ex:phaseM_Architecture ;
-    occp:hasCycle ex:cycleA_Architecture .
+    ould:hasPhase ex:phaseA_arch,
+        ex:phaseB_arch,
+        ex:phaseC_arch,
+        ex:phaseD_arch,
+        ex:phaseM_arch ;
+    occp:hasCycle ex:cycleA_arch .
 
-    # Phases for ex:IFC_Architecture
-        ex:phaseA_Architecture a occp:PhaseA_Planning .
-        ex:phaseB_Architecture a occp:PhaseB_Review .
-        ex:phaseC_Architecture a occp:PhaseC_Construction .
-        ex:phaseD_Architecture a occp:PhaseD_Usage .
-        ex:phaseM_Architecture a occp:PhaseM_Deconstruction .
+    # Phases for ex:IFC_Architecture_parsed
+        ex:phaseA_arch a occp:PhaseA_Planning .
+        ex:phaseB_arch a occp:PhaseB_Review .
+        ex:phaseC_arch a occp:PhaseC_Construction .
+        ex:phaseD_arch a occp:PhaseD_Usage .
+        ex:phaseM_arch a occp:PhaseM_Deconstruction .
 
-    # Cycles for ex:IFC_Architecture
-        ex:cycleA_Architecture a occp:CycleA_PlanningReview .
+    # Cycles for ex:IFC_Architecture_parsed
+        ex:cycleA_arch a occp:CycleA_PlanningReview .
 
 
     # Building component group: ex:IfcBuilding
         ex:IfcBuilding a ould:UpdatableEntity ;
-            ould:hasParent ex:IFC_Architecture ;
             ould:hasHash "d383f4db73bcfa0f76c8f9cf644116f65dcebd83a090091bc63ac96a7cb6228c" ;
             ould:hasIFCModelID "IfcBuilding" ;
-            occp:hasPhase ex:phaseA_IfcBuilding,
+            ould:hasPhase ex:phaseA_IfcBuilding,
                 ex:phaseB_IfcBuilding,
                 ex:phaseC_IfcBuilding,
                 ex:phaseD_IfcBuilding,
@@ -59,11 +56,11 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
 
             ex:instant_DataProcurement_IfcBuilding a occp:DataProcurement ;
                 occp:hasActualTime "2000-01-08"^^xsd:date ;
-                occp:hasPhase ex:phaseA_IfcBuilding .
+                ould:hasPhase ex:phaseA_IfcBuilding .
 
             ex:instant_SubmissionToReview_IfcBuilding a occp:SubmissionToReview ;
                 occp:hasActualTime "2000-02-01"^^xsd:date ;     # Aligned with top-level
-                occp:hasPhase ex:phaseA_IfcBuilding .
+                ould:hasPhase ex:phaseA_IfcBuilding .
 
             ex:instant_ReviewStart_IfcBuilding a occp:ReviewStart ;
                 occp:hasActualTime "2000-02-15"^^xsd:date ;     # Aligned with top-level
@@ -102,10 +99,9 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
 
     # Building component group: ex:IfcBuildingStorey
     ex:IfcBuildingStorey a ould:UpdatableEntity ;
-        ould:hasParent ex:IFC_Architecture ;
         ould:hasHash "55a60869c55f739c93986ad55cf0696bb21400b4428f5ab91636def0c8f9e593" ;
         ould:hasIFCModelID "IfcBuildingStorey" ;
-        occp:hasPhase ex:phaseA_IfcBuildingStorey,
+        ould:hasPhase ex:phaseA_IfcBuildingStorey,
             ex:phaseB_IfcBuildingStorey,
             ex:phaseC_IfcBuildingStorey,
             ex:phaseD_IfcBuildingStorey,
@@ -138,11 +134,11 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
 
             ex:instant_DataProcurement_IfcBuildingStorey a occp:DataProcurement ;
                 occp:hasActualTime "2000-01-12"^^xsd:date ;
-                occp:hasPhase ex:phaseA_IfcBuildingStorey .
+                ould:hasPhase ex:phaseA_IfcBuildingStorey .
 
             ex:instant_SubmissionToReview_IfcBuildingStorey a occp:SubmissionToReview ;
                 occp:hasActualTime "2000-02-15"^^xsd:date ;     # Later than top-level
-                occp:hasPhase ex:phaseA_IfcBuildingStorey .
+                ould:hasPhase ex:phaseA_IfcBuildingStorey .
                 
             ex:instant_ReviewStart_IfcBuildingStorey a occp:ReviewStart ;
                 occp:hasActualTime "2000-02-17"^^xsd:date ;     # Later than top-level
@@ -156,7 +152,7 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
 
             ex:instant_ReviewRejection_IfcBuildingStorey a occp:ReviewRejection ;
                 occp:hasActualTime "2000-02-18"^^xsd:date ; 
-                occp:hasPhase ex:phaseB_IfcBuildingStorey ;    
+                ould:hasPhase ex:phaseB_IfcBuildingStorey ;    
                 occp:endsCycle ex:cycleA_IfcBuildingStorey .
 
             ex:instant_ReviewApproval_IfcBuildingStorey a occp:ReviewRejection ;
@@ -174,25 +170,25 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
             ex:instant_EDIT_ASTR_IfcBuildingStorey a occp:ReviewRejection ;
                 occp:hasActualTime "2000-02-23"^^xsd:date ;
                 occp:startsCycle ex:cycleA_IfcBuildingStorey2 ;    
-                occp:hasPhase ex:phaseA_IfcBuildingStorey .
+                ould:hasPhase ex:phaseA_IfcBuildingStorey .
 
             ex:instant_SubmissionToReview_IfcBuildingStorey2 a occp:SubmissionToReview ;
                 occp:hasActualTime "2000-02-24"^^xsd:date ;
-                occp:hasPhase ex:phaseA_IfcBuildingStorey .
+                ould:hasPhase ex:phaseA_IfcBuildingStorey .
                 
             ex:instant_ReviewStart_IfcBuildingStorey3 a occp:ReviewStart ;
                 occp:hasActualTime "2000-02-25"^^xsd:date ;     
-                occp:hasPhase ex:phaseB_IfcBuildingStorey ;
+                ould:hasPhase ex:phaseB_IfcBuildingStorey ;
                 occp:startsCycle ex:cycleA_IfcBuildingStorey2 .
 
             ex:instant_ReviewStart_IfcBuildingStorey4 a occp:ReviewStart ;
                 occp:hasEstimatedTime "2000-02-25"^^xsd:date ;     
-                occp:hasPhase ex:phaseB_IfcBuildingStorey ;
+                ould:hasPhase ex:phaseB_IfcBuildingStorey ;
                 occp:startsCycle ex:cycleA_IfcBuildingStorey2 .
 
             ex:instant_ReviewStart_IfcBuildingStorey5 a occp:ReviewStart ;
                 occp:hasEstimatedTime "2000-02-24"^^xsd:date ;     
-                occp:hasPhase ex:phaseB_IfcBuildingStorey ;
+                ould:hasPhase ex:phaseB_IfcBuildingStorey ;
                 occp:startsCycle ex:cycleA_IfcBuildingStorey2 .
 
             ex:instant_ReviewApproval_IfcBuildingStorey3 a occp:ReviewApproval ;

@@ -1001,10 +1001,10 @@
             sh:targetClass occp:PhaseH_SpecialEvents ;
             # Ensure each PhaseH has at least one instant to mark specific events
             sh:property [
-                sh:path occp:hasInstant ;
+                sh:path occp:belongsToInstant ;
                 sh:class time:Instant ;
                 sh:minCount 1 ;
-                sh:message "Each 'occp:PhaseH_SpecialEvents' must have at least one instant via 'occp:hasInstant' referencing a 'time:Instant' (e.g., 'occp:GeologicalEvent', 'occp:WeatherEvent')."@en ;
+                sh:message "Each 'occp:PhaseH_SpecialEvents' must have at least one instant via 'occp:belongsToInstant' referencing a 'time:Instant' (e.g., 'occp:GeologicalEvent', 'occp:WeatherEvent')."@en ;
                 sh:severity sh:Violation
             ] ;
             # Constraint for hasActualBeginning
