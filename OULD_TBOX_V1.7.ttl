@@ -178,6 +178,14 @@
         rdfs:label "has updated event"@en .
 
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedValue
+    ould:hasUpdatedValue rdf:type owl:ObjectProperty ;
+        rdfs:domain ould:Update ;
+        rdfs:range owl:Thing ;
+        rdfs:comment "The object property \"hasUpdatedValue\" links to an update to any modified value (e.g., hash, timestamp, IFC-ID, linked data, or temporal entity) recorded in an MsOCCP context."@en ;
+        rdfs:label "has updated value"@en .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#isUpdateChainElementOf
     ould:isUpdateChainElementOf rdf:type owl:ObjectProperty ;
         rdfs:domain ould:Update ;
