@@ -3745,7 +3745,7 @@
 
 ### GENERIC TIME QUERIES
 
-    ### occp:before
+    ### time:before
     osh:BeforeTimeShape a sh:NodeShape ;
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
@@ -3753,7 +3753,7 @@
                 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other ?latestEndTime ?earliestStartTime WHERE {
-                    $this occp:before ?other .
+                    $this time:before ?other .
                     {
                         SELECT $this (MAX(?endTime) AS ?latestEndTime)
                         WHERE {
@@ -3773,11 +3773,11 @@
                     FILTER (?latestEndTime >= ?earliestStartTime)
                 }
             """ ;
-            sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) via 'occp:before'."@en ;
+            sh:message "The latest end of { $this } (time: { ?latestEndTime }) must be before the earliest beginning of { ?other } (time: { ?earliestStartTime }) via 'time:before'."@en ;
             sh:severity sh:Violation
         ] .
 
-    ### occp:after
+    ### time:after
     osh:AfterTimeShape a sh:NodeShape ;
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
@@ -3785,7 +3785,7 @@
                 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other ?earliestStartTime ?latestEndTime WHERE {
-                    $this occp:after ?other .
+                    $this time:after ?other .
                     {
                         SELECT $this (MIN(?startTime) AS ?earliestStartTime)
                         WHERE {
@@ -3805,7 +3805,7 @@
                     FILTER (?earliestStartTime <= ?latestEndTime)
                 }
             """ ;
-            sh:message "The earliest beginning of { $this } (time: { ?earliestStartTime }) must be after the latest end of { ?other } (time: { ?latestEndTime }) via 'occp:after'."@en ;
+            sh:message "The earliest beginning of { $this } (time: { ?earliestStartTime }) must be after the latest end of { ?other } (time: { ?latestEndTime }) via 'time:after'."@en ;
             sh:severity sh:Violation
         ] .
 

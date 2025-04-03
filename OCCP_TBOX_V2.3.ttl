@@ -16,27 +16,6 @@
 #    Object Properties
 #################################################################
 
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#after
-	occp:after rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#after> ;
-		owl:inverseOf occp:before ;
-		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdf:type owl:TransitiveProperty ;
-		rdfs:comment "This property represents a transitive relation between temporal entities, used to ensure that if A occurs after B and B occurs after C, then A occurs after C."@en ;
-		rdfs:label "after (transitive)"@en .
-
-
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#before
-	occp:before rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#before> ;
-		owl:inverseOf occp:after ;
-		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdf:type owl:TransitiveProperty ;
-		rdfs:comment "This property represents a transitive relation between temporal entities, used to ensure that if A occurs before B and B occurs before C, then A occurs before C."@en ;
-		rdfs:label "before (transitive)"@en .
-
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#beginsAfter
 	occp:beginsAfter rdf:type owl:ObjectProperty ;
