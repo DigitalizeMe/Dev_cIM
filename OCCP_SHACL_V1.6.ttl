@@ -1288,13 +1288,13 @@
         # PHASE ASSIGNMENT
 
             osh:PhaseAInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseA_Instant ;
+                sh:targetClass occp:PhaseA_Planning_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseA_Planning ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseA_Instant' must belong to exactly one 'occp:PhaseA_Planning' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseA_Planning_Instant' must belong to exactly one 'occp:PhaseA_Planning' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -1528,13 +1528,13 @@
         # PHASE ASSIGNMENT        
         
             osh:PhaseBInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseB_Instant ;
+                sh:targetClass occp:PhaseB_Review_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseB_Review ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseB_Instant' must belong to exactly one 'occp:PhaseB_Review' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseB_Review_Instant' must belong to exactly one 'occp:PhaseB_Review' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -1801,13 +1801,13 @@
     ### PHASE C INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseCInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseC_Instant ;
+                sh:targetClass occp:PhaseC_Construction_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseC_Construction ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseC_Instant' must belong to exactly one 'occp:PhaseC_Construction' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseC_Construction_Instant' must belong to exactly one 'occp:PhaseC_Construction' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -2110,13 +2110,13 @@
     ### PHASE D INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseDInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseD_Instant ;
+                sh:targetClass occp:PhaseD_Usage_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseD_Usage ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseD_Instant' must belong to exactly one 'occp:PhaseD_Usage' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseD_Usage_Instant' must belong to exactly one 'occp:PhaseD_Usage' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -2367,13 +2367,13 @@
     ### PHASE E INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseEInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseE_Instant ;
+                sh:targetClass occp:PhaseE_Warranty_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseE_Warranty ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseE_Instant' must belong to exactly one 'occp:PhaseE_Warranty' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseE_Warranty_Instant' must belong to exactly one 'occp:PhaseE_Warranty' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -2623,13 +2623,13 @@
     ### PHASE F INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseFInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseF_Instant ;
+                sh:targetClass occp:PhaseF_DesignLife_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseF_DesignLife ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseF_Instant' must belong to exactly one 'occp:PhaseF_DesignLife' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseF_DesignLife_Instant' must belong to exactly one 'occp:PhaseF_DesignLife' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -2901,13 +2901,13 @@
     ### PHASE G INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseGInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseG_Instant ;
+                sh:targetClass occp:PhaseG_Inspection_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseG_Inspection ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseG_Instant' must belong to exactly one 'occp:PhaseG_Inspection' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseG_Inspection_Instant' must belong to exactly one 'occp:PhaseG_Inspection' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -3123,13 +3123,13 @@
     ### PHASE H INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseHInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseH_Instant ;
+                sh:targetClass occp:PhaseH_SpecialEvents_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseH_SpecialEvents ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseH_Instant' must belong to exactly one 'occp:PhaseH_SpecialEvents' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseH_SpecialEvents_Instant' must belong to exactly one 'occp:PhaseH_SpecialEvents' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -3279,13 +3279,13 @@
     ### PHASE K INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseKInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseK_Instant ;
+                sh:targetClass occp:PhaseK_Damage_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseK_Damage ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseK_Instant' must belong to exactly one 'occp:PhaseK_Damage' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseK_Damage_Instant' must belong to exactly one 'occp:PhaseK_Damage' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 
@@ -3451,6 +3451,18 @@
 
 
     ### PHASE L INSTANTS
+        # PHASE ASSIGNMENT
+            osh:PhaseLInstantShape a sh:NodeShape ;
+                sh:targetClass occp:PhaseL_Repair_Instant ;
+                sh:property [
+                    sh:path occp:belongsToPhase ;
+                    sh:class occp:PhaseL_Repair ;
+                    sh:minCount 1 ;
+                    sh:maxCount 1 ;
+                    sh:message "Each 'occp:PhaseL_Repair_Instant' must belong to exactly one 'occp:PhaseL_Repair' via 'occp:belongsToPhase'."@en ;
+                    sh:severity sh:Violation ;
+                ] .
+
         # PHASE ASSIGNMENT
         osh:NewComponentShape a sh:NodeShape ;           # Instant New Component (Phase L - Repair)
             sh:targetClass occp:NewComponent ;
@@ -3637,13 +3649,13 @@
     ### PHASE M INSTANTS
         # PHASE ASSIGNMENT
             osh:PhaseMInstantShape a sh:NodeShape ;
-                sh:targetClass occp:PhaseM_Instant ;
+                sh:targetClass occp:PhaseM_Deconstruction_Instant ;
                 sh:property [
                     sh:path occp:belongsToPhase ;
                     sh:class occp:PhaseM_Deconstruction ;
                     sh:minCount 1 ;
                     sh:maxCount 1 ;
-                    sh:message "Each 'occp:PhaseM_Instant' must belong to exactly one 'occp:PhaseM_Deconstruction' via 'occp:belongsToPhase'."@en ;
+                    sh:message "Each 'occp:PhaseM_Deconstruction_Instant' must belong to exactly one 'occp:PhaseM_Deconstruction' via 'occp:belongsToPhase'."@en ;
                     sh:severity sh:Violation ;
                 ] .
 

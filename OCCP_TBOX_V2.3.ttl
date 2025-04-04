@@ -264,7 +264,7 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#BeginningOfPlanning
     occp:BeginningOfPlanning rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:subClassOf occp:PhaseA_Planning_Instant ;
 		rdfs:comment "This class represents the instant marking the official start of the planning phase."@en ;
 		rdfs:label "Beginning of Planning"@en .
 
@@ -292,21 +292,21 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionAcceptance
     occp:ConstructionAcceptance rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:subClassOf occp:PhaseC_Construction_Instant ;
 		rdfs:comment "This class represents the instant marking the final acceptance of a construction or component, occurring after completion or defect elimination."@en ;
 		rdfs:label "Construction Acceptance"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionCompletion
     occp:ConstructionCompletion rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:subClassOf occp:PhaseC_Construction_Instant ;
 		rdfs:comment "This class represents the instant marking the completion of construction for a model component or building."@en ;
 		rdfs:label "Construction Completion"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ConstructionStart
     occp:ConstructionStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:subClassOf occp:PhaseC_Construction_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of construction works for a model component or building."@en ;
 		rdfs:label "Construction Start"@en .
 
@@ -327,112 +327,112 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageDetection
     occp:DamageDetection rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:subClassOf occp:PhaseK_Damage_Instant ;
 		rdfs:comment "This class represents the instant marking the detection of damage affecting a component or building. Multiple events possible."@en ;
 		rdfs:label "Damage Detection"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageObservation
     occp:DamageObservation rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:subClassOf occp:PhaseK_Damage_Instant ;
 		rdfs:comment "This class represents the instant marking the observation of a known defect or damage, typically linked to inspections or monitoring systems. Multiple events possible."@en ;
 		rdfs:label "Damage Observation"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DamageRepair
     occp:DamageRepair rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseK_Instant ;
+		rdfs:subClassOf occp:PhaseK_Damage_Instant ;
 		rdfs:comment "This class represents the instant marking the repair of a defect or damage, typically coinciding with the end of repair measures."@en ;
 		rdfs:label "Damage Repair"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DataProcurement
     occp:DataProcurement rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:subClassOf occp:PhaseA_Planning_Instant ;
 		rdfs:comment "This class represents the instant marking data procurement actions, such as geodetic measures or adding data to planning models. Multiple events possible."@en ;
 		rdfs:label "Data Procurement"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionCompletion
     occp:DeconstructionCompletion rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseM_Instant ;
+		rdfs:subClassOf occp:PhaseM_Deconstruction_Instant ;
 		rdfs:comment "This class represents the instant marking the completion of deconstruction works, ending the lifecycle of a component or building."@en ;
 		rdfs:label "Deconstruction Completion"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DeconstructionStart
     occp:DeconstructionStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseM_Instant ;
+		rdfs:subClassOf occp:PhaseM_Deconstruction_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of deconstruction works for a component or building."@en ;
 		rdfs:label "Deconstruction Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimCompletion
     occp:DefectElimCompletion rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:subClassOf occp:PhaseC_Construction_Instant ;
 		rdfs:comment "This class represents the instant marking the completion of construction works related to defect elimination for a model component or building."@en ;
 		rdfs:label "Defect Elimination Completion"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DefectElimStart
     occp:DefectElimStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseC_Instant ;
+		rdfs:subClassOf occp:PhaseC_Construction_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of construction works related to defect elimination for a model component or building."@en ;
 		rdfs:label "Defect Elimination Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeChange
     occp:DesignLifeChange rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:subClassOf occp:PhaseF_DesignLife_Instant ;
 		rdfs:comment "This class represents the instant marking a change in the estimated design life due to factors like repairs or usage changes. Multiple events possible."@en ;
 		rdfs:label "Design Life Change"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeEnd
     occp:DesignLifeEnd rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:subClassOf occp:PhaseF_DesignLife_Instant ;
 		rdfs:comment "This class represents the instant marking the end of the estimated design life of a component or building. Multiple events possible due to estimation changes."@en ;
 		rdfs:label "Design Life End"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#DesignLifeStart
     occp:DesignLifeStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseF_Instant ;
+		rdfs:subClassOf occp:PhaseF_DesignLife_Instant ;
 		rdfs:comment "This class represents the instant marking the start of the estimated design life of a component or building."@en ;
 		rdfs:label "Design Life Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#EditAfterSubmissionToReview
     occp:EditAfterSubmissionToReview rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:subClassOf occp:PhaseA_Planning_Instant ;
 		rdfs:comment "This class represents the instant marking significant changes to a planning model after submission to review (ASTR = After Submission To Review). Multiple events possible."@en ;
 		rdfs:label "Edit ASTR"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#EditBeforeSubmissionToReview
     occp:EditBeforeSubmissionToReview rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:subClassOf occp:PhaseA_Planning_Instant ;
 		rdfs:comment "This class represents the instant marking significant changes to a planning model before submission to review (BSTR = Before Submission To Review). Multiple events possible."@en ;
 		rdfs:label "Edit BSTR"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#GeologicalEvent
     occp:GeologicalEvent rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:subClassOf occp:PhaseH_SpecialEvents_Instant ;
 		rdfs:comment "This class represents the instant marking a geological event (e.g., earthquake) affecting a component or building. Multiple events possible."@en ;
 		rdfs:label "Geological Event"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#InspectionExecution
     occp:InspectionExecution rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:subClassOf occp:PhaseG_Inspection_Instant ;
 		rdfs:comment "This class represents the instant marking the execution of a regular inspection. Multiple events possible over the lifecycle."@en ;
 		rdfs:label "Inspection Execution"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#IrregularInspection
     occp:IrregularInspection rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:subClassOf occp:PhaseG_Inspection_Instant ;
 		rdfs:comment "This class represents the instant marking the execution of an irregular inspection. Multiple events possible over the lifecycle."@en ;
 		rdfs:label "Irregular Inspection"@en .
 
@@ -446,21 +446,21 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent
     occp:LoadEvent rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:subClassOf occp:PhaseH_SpecialEvents_Instant ;
 		rdfs:comment "This class represents the instant marking an irregular load event affecting a component or building. Multiple events possible."@en ;
 		rdfs:label "Load Event"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NewComponent
     occp:NewComponent rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:subClassOf occp:PhaseL_Repair_Instant ;
 		rdfs:comment "This class represents the instant marking the addition of a new component to an existing structure, potentially initiating a sub-lifecycle. Multiple events possible."@en ;
 		rdfs:label "New Component"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#NextRegularInspection
     occp:NextRegularInspection rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseG_Instant ;
+		rdfs:subClassOf occp:PhaseG_Inspection_Instant ;
 		rdfs:comment "This class represents the instant marking the planned date of the next regular inspection, based on the inspection interval. Multiple events possible over the lifecycle."@en ;
 		rdfs:label "Next Regular Inspection"@en .
 
@@ -472,11 +472,11 @@
 		rdfs:label "Phase"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Instant
-    occp:PhaseA_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Planning_Instant
+    occp:PhaseA_Planning_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase A (Planning Phase), grouping all related events."@en ;
-		rdfs:label "Phase A Instant"@en .
+		rdfs:label "Phase A Planning Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseA_Planning
@@ -486,11 +486,11 @@
 		rdfs:label "Phase A Planning"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Instant
-    occp:PhaseB_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Review_Instant
+    occp:PhaseB_Review_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase B (Review Phase), grouping all related events."@en ;
-		rdfs:label "Phase B Instant"@en .
+		rdfs:label "Phase B Review Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseB_Review
@@ -507,18 +507,18 @@
 		rdfs:label "Phase C Construction"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Instant
-    occp:PhaseC_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseC_Construction_Instant
+    occp:PhaseC_Construction_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase C (Construction Phase), grouping all related events."@en ;
-		rdfs:label "Phase C Instant"@en .
+		rdfs:label "Phase C Construction Instant"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Instant
-    occp:PhaseD_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Usage_Instant
+    occp:PhaseD_Usage_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase D (Usage Phase), grouping all related events."@en ;
-		rdfs:label "Phase D Instant"@en .
+		rdfs:label "Phase D Usage Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseD_Usage
@@ -528,11 +528,11 @@
 		rdfs:label "Phase D Usage"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Instant
-    occp:PhaseE_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty_Instant
+    occp:PhaseE_Warranty_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase E (Warranty Phase), grouping all related events."@en ;
-		rdfs:label "Phase E Instant"@en .
+		rdfs:label "Phase E Warranty Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseE_Warranty
@@ -549,11 +549,11 @@
 		rdfs:label "Phase F Design Life"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_Instant
-    occp:PhaseF_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseF_DesignLife_Instant
+    occp:PhaseF_DesignLife_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase F (Design Life Phase), grouping all related events."@en ;
-		rdfs:label "Phase F Instant"@en .
+		rdfs:label "Phase F Design Life Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection
@@ -563,18 +563,18 @@
 		rdfs:label "Phase G Inspection"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Instant
-    occp:PhaseG_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseG_Inspection_Instant
+    occp:PhaseG_Inspection_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase G (Inspection Phase), grouping all related events."@en ;
-		rdfs:label "Phase G Instant"@en .
+		rdfs:label "Phase G Inspection Instant"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_Instant
-    occp:PhaseH_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_SpecialEvents_Instant
+    occp:PhaseH_SpecialEvents_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase H (Special Events Phase), grouping all related events."@en ;
-		rdfs:label "Phase H Instant"@en .
+		rdfs:label "Phase H Special Events Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseH_SpecialEvents
@@ -591,18 +591,18 @@
 		rdfs:label "Phase K Damage"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Instant
-    occp:PhaseK_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseK_Damage_Instant
+    occp:PhaseK_Damage_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase K (Damage Phase), grouping all related events."@en ;
-		rdfs:label "Phase K Instant"@en .
+		rdfs:label "Phase K Damage Instant"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Instant
-    occp:PhaseL_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair_Instant
+    occp:PhaseL_Repair_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase L (Repair Phase), grouping all related events."@en ;
-		rdfs:label "Phase L Instant"@en .
+		rdfs:label "Phase L Repair Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseL_Repair
@@ -619,44 +619,44 @@
 		rdfs:label "Phase M Deconstruction"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Instant
-    occp:PhaseM_Instant rdf:type owl:Class ;
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#PhaseM_Deconstruction_Instant
+    occp:PhaseM_Deconstruction_Instant rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase M (Deconstruction Phase), grouping all related events."@en ;
-		rdfs:label "Phase M Instant"@en .
+		rdfs:label "Phase M Deconstruction Instant"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion
     occp:RepairCompletion rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:subClassOf occp:PhaseL_Repair_Instant ;
 		rdfs:comment "This class represents the instant marking the completion of damage repair works for a component or building. Multiple events possible."@en ;
 		rdfs:label "Repair Completion"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairStart
     occp:RepairStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseL_Instant ;
+		rdfs:subClassOf occp:PhaseL_Repair_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of damage repair works for a component or building. Multiple events possible."@en ;
 		rdfs:label "Repair Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewApproval
     occp:ReviewApproval rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:subClassOf occp:Review_ ;
 		rdfs:comment "This class represents the instant marking the reviewer’s acceptance of a planning model, ending the planning and review phases."@en ;
 		rdfs:label "Review Approval"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewRejection
     occp:ReviewRejection rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:subClassOf occp:Review_ ;
 		rdfs:comment "This class represents the instant marking the reviewer’s rejection of a planning model. Multiple events possible."@en ;
 		rdfs:label "Review Rejection"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#ReviewStart
     occp:ReviewStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseB_Instant ;
+		rdfs:subClassOf occp:Review_ ;
 		rdfs:comment "This class represents the instant marking the start of the review process. Multiple events possible with rejections."@en ;
 		rdfs:label "Review Start"@en .
 
@@ -670,7 +670,7 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#SubmissionToReview
     occp:SubmissionToReview rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseA_Instant ;
+		rdfs:subClassOf occp:PhaseA_Planning_Instant ;
 		rdfs:comment "This class represents the instant marking the submission of a planning draft to the reviewer, starting Phase B. Multiple events possible."@en ;
 		rdfs:label "Submission to Review"@en .
 
@@ -684,49 +684,49 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageChange
     occp:UsageChange rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:subClassOf occp:PhaseD_Usage_Instant ;
 		rdfs:comment "This class represents the instant marking a change in usage of a component or building, potentially ending one or more usage phases and initiating new ones. Multiple events possible."@en ;
 		rdfs:label "Usage Change"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageEnd
     occp:UsageEnd rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:subClassOf occp:PhaseD_Usage_Instant ;
 		rdfs:comment "This class represents the instant marking the end of usage for a component or building. Multiple events possible."@en ;
 		rdfs:label "Usage End"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#UsageStart
     occp:UsageStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseD_Instant ;
+		rdfs:subClassOf occp:PhaseD_Usage_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of usage for a component or building. Multiple events possible."@en ;
 		rdfs:label "Usage Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyChange
     occp:WarrantyChange rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:subClassOf occp:PhaseE_Warranty_Instant ;
 		rdfs:comment "This class represents the instant marking a change in warranty due to repairs or extensions. Multiple events possible."@en ;
 		rdfs:label "Warranty Change"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyEnd
     occp:WarrantyEnd rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:subClassOf occp:PhaseE_Warranty_Instant ;
 		rdfs:comment "This class represents the instant marking the end of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
 		rdfs:label "Warranty End"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WarrantyStart
     occp:WarrantyStart rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseE_Instant ;
+		rdfs:subClassOf occp:PhaseE_Warranty_Instant ;
 		rdfs:comment "This class represents the instant marking the beginning of a warranty period for a component or building. Multiple events possible due to restarts."@en ;
 		rdfs:label "Warranty Start"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#WeatherEvent
     occp:WeatherEvent rdf:type owl:Class ;
-		rdfs:subClassOf occp:PhaseH_Instant ;
+		rdfs:subClassOf occp:PhaseH_SpecialEvents_Instant ;
 		rdfs:comment "This class represents the instant marking a weather event (e.g., flood) affecting a component or building. Multiple events possible."@en ;
 		rdfs:label "Weather Event"@en .
 
