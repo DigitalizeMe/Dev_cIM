@@ -66,12 +66,11 @@
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifecycle
-    occp:belongsToLifecycle a rdf:Property ;
-        rdfs:domain occp:Phase ;
-        rdfs:range occp:Lifecycle ;
-		owl:inverseOf occp:isInPhase ;
-        rdfs:comment "Links a phase to a specific lifecycle." ;
-        rdfs:label "belongs to Lifecycle" .
+    occp:belongsToProcess a rdf:Property ;
+        rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range occp:Process ;
+		rdfs:comment "This property represents the embedding of a time:Entity within a occp:Process."@en ;
+        rdfs:label "belongs to Process" .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToPhase
@@ -186,30 +185,11 @@
 		rdfs:label "has estimated time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInCycle
-    occp:isInCycle rdf:type owl:ObjectProperty ;
-		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-		rdfs:range occp:Cycle ;
-		owl:inverseOf occp:belongsToCycle ;
-		rdfs:comment "This property represents the embedding of a time:Instant within a occp:Cycle."@en ;
-		rdfs:label "is in Cycle"@en .
-
-	
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInLifeCycle
-    occp:isInLifeCycle rdf:type owl:ObjectProperty ;
-		rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdfs:range occp:LifeCycle ;
-		owl:inverseOf occp:belongsToLifeCycle ;
-		rdfs:comment "This property represents the embedding of a time:Entity within a occp:LifeCycle."@en ;
-		rdfs:label "is in LifeCycle"@en .
-
-
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
     occp:isInPhase rdf:type owl:ObjectProperty ;
-		rdfs:domain occp:LifeCycle ;
+		rdfs:domain occp:Process ;
 		rdfs:range occp:Phase ;
-		owl:inverseOf occp:hasLifecycle ;
-		rdfs:comment "This property represents the embedding of a lifecycle within a phase, used to link a lifecycle to the overarching phase it belongs to."@en ;
+		rdfs:comment "This property represents the embedding of a process within a phase, used to link a process to the overarching phase it belongs to."@en ;
 		rdfs:label "is in phase"@en .
 
 
@@ -244,11 +224,11 @@
 
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifeCycleID
-	occp:hasLifeCycleID rdf:type owl:DatatypeProperty ;
-		rdfs:domain occp:LifeCycle ;
+	occp:hasProcessID rdf:type owl:DatatypeProperty ;
+		rdfs:domain occp:Process ;
 		rdfs:range xsd:string ;
-		rdfs:comment "This property represents the unique identifier of a lifecycle, used to provide a distinct ID for tracking purposes."@en ;
-		rdfs:label "has lifecycle ID"@en .
+		rdfs:comment "This property represents the unique identifier of a process, used to provide a distinct ID for tracking purposes."@en ;
+		rdfs:label "has process ID"@en .
 
 
 #################################################################
@@ -437,11 +417,11 @@
 		rdfs:label "Irregular Inspection"@en .
 
 
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LifeCycle		
-	occp:LifeCycle rdf:type owl:Class ;
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Process		
+	occp:Process rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
-		rdfs:comment "This class represents a complete lifecycle (Phases A to M) within an overarching phase or another lifecycle, identified by a unique ID."@en ;
-		rdfs:label "Life Cycle"@en .
+		rdfs:comment "This class represents a complete or partial process (Phases A to M) within an overarching phase, identified by a unique ID."@en ;
+		rdfs:label "Process"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent
