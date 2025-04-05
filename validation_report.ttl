@@ -1,8 +1,36 @@
+PREFIX ex:   <http://www.example.de/example#>
+PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX osh:  <http://www.occpshape.de/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  true
+  sh:conforms  false;
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:InvalidProcess;
+                 sh:resultMessage              "Each 'occp:Process' must consist of at least two instances of 'occp:Phase' connected via 'occp:hasPhase'."@en;
+                 sh:resultPath                 occp:hasPhase;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
+                 sh:sourceShape                _:b0
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:InvalidProcess;
+                 sh:resultMessage              "For 'occp:Process': A process cannot be embedded in a phase (occp:isInPhase) that it also contains (occp:hasPhase).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:ProcessShape;
+                 sh:value                      ex:InvalidProcess
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  ex:ParentProcess;
+                 sh:resultMessage              "Each 'occp:Process' must consist of at least two instances of 'occp:Phase' connected via 'occp:hasPhase'."@en;
+                 sh:resultPath                 occp:hasPhase;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
+                 sh:sourceShape                _:b0
+               ]
 ] .

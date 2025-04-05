@@ -1,10 +1,7 @@
-# validate_shacl_34.py
-
 import os
 import subprocess
 import logging
-from rdflib import Graph, Namespace, RDF, SH
-from construct_queries import generate_post_graph  # Neue Funktion importieren
+from rdflib import Graph, Namespace, SH
 
 # Logging configuration
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,10 +14,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Paths and namespaces
-OULD_TBOX_PATH = os.path.join(BASE_DIR, "OULD_TBOX_V1.7.ttl")  
-OULD_SHAPES_PATH = os.path.join(BASE_DIR, "OULD_SHACL_V1.2.ttl")  
 OCCP_TBOX_PATH = os.path.join(BASE_DIR, "OCCP_TBOX_V2.3p.ttl")  
-OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.6.ttl")  
+OCCP_SHAPES_PATH = os.path.join(BASE_DIR, "OCCP_SHACL_V1.8.ttl")  
 ABOX_DIR = os.path.join(BASE_DIR, "OCCP_ABox")
 ABOX_POST_DIR = os.path.join(ABOX_DIR, "POST_ABOX")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
@@ -30,11 +25,22 @@ OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#
 XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
 EX = Namespace("http://www.example.de/example#")  
 
-def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OULD_SHAPES_PATH]):
+# ABox-Pfad (anpassbar, falls online oder lokal)
+ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_Test.ttl")  # Lokaler Pfad
+# Falls online verwendet werden soll:
+# ABOX_PATH = "https://raw.githubusercontent.com/DigitalizeMe/12071923_Dev/refs/heads/main/OCCP_ABox/OCCP_Pre_ABOX.ttl"
+
+def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH]):
+    """
+    Führt eine SHACL-Validierung mit Jena SHACL durch.
+    :param data_file: Pfad zur ABox-Datei
+    :param shapes_paths: Liste der SHACL-Shapes-Dateien (Standard: nur OCCP_SHAPES)
+    :return: Boolean, ob die Validierung erfolgreich war
+    """
     try:
         jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
         if not os.path.exists(jena_shacl_cmd):
-            logger.error(f"Jena SHACL-Tool not found: {jena_shacl_cmd}")
+            logger.error(f"Jena SHACL-Tool nicht gefunden: {jena_shacl_cmd}")
             return False
 
         data_file_jena = data_file.replace("\\", "/")
@@ -64,69 +70,47 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
                 seen_errors = set()
                 for s, p, o in report_graph.triples((None, SH.result, None)):
                     for result_obj in report_graph.objects(s, SH.result):
-                        message = report_graph.value(result_obj, SH.resultMessage) or "No specific message"
-                        focus_node = report_graph.value(result_obj, SH.focusNode) or "Unknown"
-                        path = report_graph.value(result_obj, SH.resultPath) or "Unknown"
-                        severity = report_graph.value(result_obj, SH.resultSeverity) or "Unknown"
+                        message = report_graph.value(result_obj, SH.resultMessage) or "Kein spezifisches Message"
+                        focus_node = report_graph.value(result_obj, SH.focusNode) or "Unbekannt"
+                        path = report_graph.value(result_obj, SH.resultPath) or "Unbekannt"
+                        severity = report_graph.value(result_obj, SH.resultSeverity) or "Unbekannt"
                         error_key = (str(message), str(focus_node), str(path), str(severity))
                         if error_key not in seen_errors:
                             seen_errors.add(error_key)
                             logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
             return conforms
         else:
-            logger.error("Jena SHACL validation failed with non-zero exit code.")
+            logger.error("Jena SHACL validation fehlgeschlagen mit nicht-null Exit-Code.")
             return False
     except Exception as e:
-        logger.error(f"Error during Jena SHACL validation: {e}")
+        logger.error(f"Fehler während der Jena SHACL-Validierung: {e}")
         return False
 
-if __name__ == "__main__":
-     
-     # Variable for testing efficiency
-    part_name3 = "Site"  
+def main():
+    """Hauptfunktion zur Validierung der ABox."""
+    logger.info("Starte SHACL-Validierung der ABox...")
 
-    ABox_Pre_file = f"OCCP_Pre_{part_name3}.ttl"
+    # Prüfen, ob die ABox existiert
+    if not os.path.exists(ABOX_PATH):
+        logger.error(f"ABox-Datei nicht gefunden: {ABOX_PATH}")
+        print(f"Fehler: ABox-Datei nicht gefunden: {ABOX_PATH}")
+        return
 
-    ABOX_PATH = os.path.join(ABOX_DIR, ABox_Pre_file)
-    
-    # Load TBox (OCCP and OULD)
-    tbox_graph = Graph()
-    tbox_graph.parse(OCCP_TBOX_PATH, format="turtle")
-    tbox_graph.parse(OULD_TBOX_PATH, format="turtle") 
+    # Validierung durchführen (nur OCCP_SHAPES, OULD optional hinzufügbar)
+    shapes_paths = [OCCP_SHAPES_PATH]  # Standard: nur OCCP_SHAPES
+    # Falls OULD_SHAPES auch verwendet werden soll, uncomment:
+    # shapes_paths.append(OULD_SHAPES_PATH)
 
-    # Load ABox
-    abox_graph = Graph()
-    abox_graph.parse(ABOX_PATH, format="turtle")
+    logger.info(f"Validiere {ABOX_PATH} gegen {shapes_paths}")
+    conforms = perform_shacl_jena_validation(ABOX_PATH, shapes_paths)
 
-
-
-    # Step 1: Apply CONSTRUCT queries using the new function
-    ABox_Post_file = f"OCCP_Post_{part_name3}_inferred.ttl"
-    inferred_file = os.path.join(ABOX_POST_DIR, ABox_Post_file)
-    construct_result = generate_post_graph(ABOX_PATH, inferred_file)
-    if len(construct_result) == 0:
-        logger.error("CONSTRUCT generated no triples – PreI-ABox or query faulty!")
-        exit(1)
-    logger.info(f"CONSTRUCT generated {len(construct_result)} triples.")
-    for s, p, o in construct_result:
-        logger.debug(f"CONSTRUCT Triple: {s} {p} {o}")
-
-    # Combine graphs: TBox (optional) + ABox + CONSTRUCT
-    inferred_graph = Graph()
-    inferred_graph += abox_graph
-    inferred_graph += construct_result
-    inferred_graph.bind("occp", OCCP)
-    inferred_graph.bind("ould", OULD)
-    inferred_graph.bind("xsd", XSD)
-    inferred_graph.bind("ex", EX)  
-
-    # Save inferred graph 
-    inferred_graph.serialize(destination=inferred_file, format="turtle")
-    logger.info(f"PostI-ABox generated: {inferred_file}")
-
-    # Step 2: SHACL validation
-    conforms = perform_shacl_jena_validation(inferred_file)
+    # Ergebnis ausgeben
     if conforms:
-        logger.info("Validation successful: PostI conforms to SHACL.")
+        logger.info("Validierung erfolgreich! Die ABox entspricht den SHACL-Shapes.")
+        print("Validierung erfolgreich! Die ABox entspricht den SHACL-Shapes.")
     else:
-        logger.error("Validation failed.")
+        logger.info("Validierung fehlgeschlagen. Siehe validation.log für Details.")
+        print("Validierung fehlgeschlagen. Siehe validation.log für Details.")
+
+if __name__ == "__main__":
+    main()
