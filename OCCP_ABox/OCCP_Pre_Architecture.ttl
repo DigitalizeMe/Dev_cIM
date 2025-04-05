@@ -1,4 +1,5 @@
 @prefix ex: <http://www.example.de/example#> .
+@prefix occP: <> .
 @prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -28,6 +29,12 @@ ex:IFC_Architecture a ould:UpdatableEntity ;
     # Cycles for ex:IFC_Architecture
         ex:cycleA_Architecture a occp:CycleA_PlanningReview .
 
+    # Transitions for ex:IFC_Architecture
+        ex:transitionA_Architecture a occp:CompletionOfPlanning .
+        ex:transitionB_Architecture a occp:BeginOfTenderingProcess . 
+        ex:transitionC_Architecture a occp:Submission .
+        ex:transitionD_Architecture a occp:CompletionOfConstruction .
+        ex:transitionE_Architecture a occp:CompletionOfDeconstruction .
 
     # Building component group: ex:IfcBuilding
         ex:IfcBuilding a ould:UpdatableEntity ;

@@ -171,15 +171,15 @@
         sh:message "Each 'occp:CycleA_PlanningReview' must have at least one end (either 'occp:hasActualEnd' or 'occp:hasEstimatedEnd') referencing 'occp:ReviewApproval' or 'occp:ReviewRejection'."@en ;
         sh:severity sh:Violation .
 
-    osh:LifeCycleShape a sh:NodeShape ;
-        sh:targetClass occp:LifeCycle ;
-        # Constraint for hasLifeCycleID
+    osh:ProcessShape a sh:NodeShape ;
+        sh:targetClass occp:Process ;
+        # Constraint for hasProcessID
         sh:property [
-            sh:path occp:hasLifeCycleID ;
+            sh:path occp:hasProcessID ;
             sh:datatype xsd:string ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:LifeCycle' must have exactly one 'occp:hasLifeCycleID' of type xsd:string to provide a unique identifier."@en ;
+            sh:message "Each 'occp:Process' must have exactly one 'occp:hasProcessID' of type xsd:string to provide a unique identifier."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for isInPhase
@@ -187,7 +187,15 @@
             sh:path occp:isInPhase ;
             sh:class occp:Phase ;
             sh:minCount 1 ;
-            sh:message "Each 'occp:LifeCycle' must be embedded in at least one 'occp:Phase' via 'occp:isInPhase'."@en ;
+            sh:message "Each 'occp:Process' can only be embedded in one 'occp:Phase' via 'occp:isInPhase'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        # Constraint for hasPhase
+        sh:property [
+            sh:path occp:hasPhase ;
+            sh:class occp:Phase ;
+            sh:minCount 2 ;
+            sh:message "Each 'occp:Process' must consist of at least two instances of 'occp:Phase', that are connected via 'occp:hasPhase'."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for beginning (at least one: actual or estimated, max 1 actualBeginning)
@@ -195,43 +203,43 @@
             sh:path occp:hasActualBeginning ;
             sh:class time:Instant ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:LifeCycle' must have at most one 'occp:hasActualBeginning' referencing a 'time:Instant'."@en ;
+            sh:message "Each 'occp:Process' must have at most one 'occp:hasActualBeginning' referencing a 'time:Instant'."@en ;
             sh:severity sh:Violation
         ] ;
         sh:or (
             [ sh:property [ sh:path occp:hasActualBeginning ; sh:minCount 1 ; sh:class time:Instant ] ]
             [ sh:property [ sh:path occp:hasEstimatedBeginning ; sh:minCount 1 ; sh:class time:Instant ] ]
         ) ;
-        sh:message "Each 'occp:LifeCycle' must have at least one beginning (either 'occp:hasActualBeginning' or 'occp:hasEstimatedBeginning') referencing a 'time:Instant'."@en ;
+        sh:message "Each 'occp:Process' must have at least one beginning (either 'occp:hasActualBeginning' or 'occp:hasEstimatedBeginning') referencing a 'time:Instant'."@en ;
         sh:severity sh:Violation ;
         # Constraint for end (at least one: actual or estimated, max 1 actualEnd)
         sh:property [
             sh:path occp:hasActualEnd ;
             sh:class time:Instant ;
             sh:maxCount 1 ;
-            sh:message "Each 'occp:LifeCycle' must have at most one 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
+            sh:message "Each 'occp:Process' must have at most one 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
             sh:severity sh:Violation
         ] ;
         sh:or (
             [ sh:property [ sh:path occp:hasActualEnd ; sh:minCount 1 ; sh:class time:Instant ] ]
             [ sh:property [ sh:path occp:hasEstimatedEnd ; sh:minCount 1 ; sh:class time:Instant ] ]
         ) ;
-        sh:message "Each 'occp:LifeCycle' must have at least one end (either 'occp:hasActualEnd' or 'occp:hasEstimatedEnd') referencing a 'time:Instant'."@en ;
+        sh:message "Each 'occp:Process' must have at least one end (either 'occp:hasActualEnd' or 'occp:hasEstimatedEnd') referencing a 'time:Instant'."@en ;
         sh:severity sh:Violation ;
-        # Constraint to ensure LifeCycle times are within the embedding Phase's times
+        # Constraint to ensure Process times are within the embedding Phase's times
         sh:sparql [
             sh:select """
                 PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?phase ?startLC ?endLC ?startPhase ?endPhase
                 WHERE {
-                    # Get LifeCycle start time (actual or estimated)
+                    # Get Process start time (actual or estimated)
                     { $this occp:hasActualBeginning ?startInstLC . 
                     ?startInstLC occp:hasActualTime ?startLC . }
                     UNION
                     { $this occp:hasEstimatedBeginning ?startInstLC . 
                     ?startInstLC occp:hasEstimatedTime ?startLC . }
-                    # Get LifeCycle end time (actual or estimated)
+                    # Get Process end time (actual or estimated)
                     { $this occp:hasActualEnd ?endInstLC . 
                     ?endInstLC occp:hasActualTime ?endLC . }
                     UNION
@@ -255,7 +263,7 @@
                     FILTER (?startLC < ?startPhase || ?endLC > ?endPhase)
                 }
             """ ;
-            sh:message "Each 'occp:LifeCycle' { $this } (start: { ?startLC }, end: { ?endLC }) must have its beginning after or equal to the beginning of its embedding phase { ?phase } (start: { ?startPhase }) and its end before or equal to the end of the phase (end: { ?endPhase })."@en ;
+            sh:message "Each 'occp:Process' { $this } (start: { ?startLC }, end: { ?endLC }) must have its beginning after or equal to the beginning of its embedding phase { ?phase } (start: { ?startPhase }) and its end before or equal to the end of the phase (end: { ?endPhase })."@en ;
             sh:severity sh:Violation
         ] .
 

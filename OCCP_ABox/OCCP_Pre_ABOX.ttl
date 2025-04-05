@@ -1,0 +1,117 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/ontologies/2022/9/cMod_V0.1#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ex:HouseLifecycle - Example of the representation of an incomplete building lifecycle
+ex:HouseLifecycle a occp:process ;
+    occp:hasProcessID "House" ;
+    occp:hasPhase ex:phaseA_House,
+        ex:phaseB_House ,
+        ex:phaseC_House ;
+    occp:hasCycle ex:cycleA_House ,
+        ex:cycleA_House2 ;
+    time:hasInstant ex:transitionA_House,
+        ex:transitionB_House ,
+        ex:transitionC_House ,
+        ex:transitionD_House .
+
+    # Phases for ex:HouseLifecycle
+        ex:phaseA_House a occp:PhaseA_Planning ;
+            occp:hasActualBeginning ex:instant_BeginningOfPlanning_House ;
+            occp:hasEstimatedEnd ex:instant_ReviewApproval_House ;
+            occp:hasActualEnd ex:instant_ReviewApproval_House. 
+        ex:phaseB_House a occp:PhaseB_Review ;
+            occp:hasActualBeginning ex:instant_ReviewStart_House ;
+            occp:hasEstimatedEnd ex:instant_ReviewApproval_House ;
+            occp:hasActualEnd ex:instant_ReviewApproval_House.  
+        ex:phaseC_House a occp:PhaseC_House ;
+            occp:hasActualBeginning ex:instant_ConstructionStart_House ;
+            occp:hasActualEnd ex:instant_CompletionOfConstruction_House .
+
+    # Cycles for ex:HouseLifecycle
+        ex:cycleA_House a occp:CycleA_PlanningReview ;
+            occp:hasActualBeginning ex:instant_ReviewStart_House ;
+            occp:hasEstimatedEnd ex:instant_ReviewApproval_House ; 
+            occp:hasActualEnd ex:instant_ReviewRejection_House ; 
+            occp:hasCycleNumber 1 .
+        ex:cycleA_House2 a occp:CycleA_PlanningReview ;
+            occp:hasActualBeginning ex:instant_ReviewStart_House2 ;
+            occp:hasActualEnd ex:instant_ReviewApproval_House ; 
+            occp:hasCycleNumber 2 .
+
+    # Transitions for ex:HouseLifecycle
+        ex:transitionA_House a occp:CompletionOfPlanning ;
+            occp:hasEstimatedTime "2000-02-23"^^xsd:date ;
+            occp:hasActualTime "2000-03-18"^^xsd:date . 
+
+        ex:transitionB_House a occp:BeginOfTenderingProcess ;
+            occp:hasActualTime "2000-04-02"^^xsd:date . 
+
+        ex:transitionC_House a occp:Submission ;
+            occp:hasActualTime "2000-04-28"^^xsd:date .
+
+        ex:transitionD_House a occp:CompletionOfHouse ;
+            occp:hasActualTime "2002-04-07"^^xsd:date . 
+
+    # Instants for ex:HouseLifecycle
+        ex:instant_BeginningOfPlanning_House a occp:BeginningOfPlanning ;
+            occp:hasActualTime "2000-01-01"^^xsd:date ; 
+            occp:startsPhase ex:phaseA_House .
+
+        ex:instant_DataProcurement_House a occp:DataProcurement ;
+            occp:hasActualTime "2000-01-08"^^xsd:date ;
+            occp:hasPhase ex:phaseA_House .
+
+        ex:instant_SubmissionToReview_House a occp:SubmissionToReview ;
+            occp:hasActualTime "2000-02-01"^^xsd:date ;     
+            occp:hasPhase ex:phaseA_House .
+
+        ex:instant_ReviewStart_House a occp:ReviewStart ;
+            occp:hasActualTime "2000-02-15"^^xsd:date ;    
+            occp:startsPhase ex:phaseB_House ;
+            occp:startsCycle ex:cycleA_House .
+
+        ex:instant_ReviewRejection_House a occp:ReviewRejection ;
+            occp:hasActualTime "2000-02-18"^^xsd:date ;    
+            occp:endsCycle ex:cycleA_House ;
+            occp:startsCycle ex:cycleA_House2 .
+
+        ex:instant_Edit_House a occp:EditAfterSubmissionToReview ;
+            occp:hasActualTime "2000-03-02"^^xsd:date ;
+            occp:hasPhase ex:phaseA_House .
+        
+        ex:instant_SubmissionToReview_House2 a occp:SubmissionToReview ;
+            occp:hasActualTime "2000-03-14"^^xsd:date ;     
+            occp:hasPhase ex:phaseA_House .
+
+        ex:instant_ReviewStart_House2 a occp:ReviewStart ;
+            occp:hasActualTime "2000-03-15"^^xsd:date ;    
+            occp:startsPhase ex:phaseB_House ;
+            occp:startsCycle ex:cycleA_House2 .
+
+        ex:instant_ReviewApproval_House a occp:ReviewApproval ;
+            occp:hasActualTime "2000-03-20"^^xsd:date ;     
+            occp:endsPhase ex:phaseA_House ;
+            occp:endsPhase ex:phaseB_House ;
+            occp:endsCycle ex:cycleA_House2 .
+
+        ex:instant_ConstructionStart_House a occp:ConstructionStart ;
+            occp:hasActualTime "2002-05-01"^^xsd:date ;     
+            occp:startsPhase ex:phaseC_House .
+
+        ex:instant_ConstructionCompletion_House a occp:ConstructionCompletion ;
+            occp:hasActualTime "2003-03-25"^^xsd:date ;     
+            occp:hasPhase ex:phaseC_House .
+
+        ex:instant_ConstructionAcceptance_House a occp:ConstructionAcceptance ;
+            occp:hasActualTime "2002-04-07"^^xsd:date ;     
+            occp:hasPhase ex:phaseC_House .
+
+        ex:instant_CompletionOfConstruction_House a occp:CompletionOfConstruction ;
+            occp:hasActualTime "2002-04-07"^^xsd:date ;     
+            occp:endsPhase ex:phaseC_House .
+
+
+
+   

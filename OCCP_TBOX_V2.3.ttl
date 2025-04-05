@@ -149,15 +149,6 @@
 		rdfs:label "has actual end"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualTime
-    occp:hasActualTime rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-		rdfs:range  xsd:date ;
-		rdfs:comment "This property represents the connection between an instant and a date, used to mark the actual point in time of an instant."@en ;
-		rdfs:label "has actual time"@en .
-
-
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
     occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -176,13 +167,12 @@
 		rdfs:label "has estimated end"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
-    occp:hasEstimatedTime rdf:type owl:ObjectProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
-		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-		rdfs:range  xsd:date ;
-		rdfs:comment "This property represents the connection between an instant and a date, used to mark the estimated point in time of an instant."@en ;
-		rdfs:label "has estimated time"@en .
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase
+	occp:hasPhase rdf:type owl:ObjectProperty ;
+        rdfs:domain occp:Process ;
+		rdfs:range occp:Phase ;
+		rdfs:comment "This property represents the connection between a occp:Process and an occp:Phase."@en ;
+		rdfs:label "has phase"@en .
 
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#isInPhase
@@ -215,12 +205,30 @@
 #    Datatype Properties
 #################################################################
 
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualTime
+    occp:hasActualTime rdf:type owl:DatatypeProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range  xsd:date ;
+		rdfs:comment "This property represents the connection between an instant and a date, used to mark the actual point in time of an instant."@en ;
+		rdfs:label "has actual time"@en .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycleNumber
     occp:hasCycleNumber rdf:type owl:DatatypeProperty ;
 		rdfs:domain occp:Cycle ;
 		rdfs:range xsd:integer ;
 		rdfs:comment "This property represents the number of iterations in a cycle, used to specify how many times a process like a planning review repeats (e.g., in CycleA_PlanningReview)."@en ;
 		rdfs:label "has cycle number"@en .
+
+
+    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
+    occp:hasEstimatedTime rdf:type owl:DatatypeProperty ;
+		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
+		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
+		rdfs:range  xsd:date ;
+		rdfs:comment "This property represents the connection between an instant and a date, used to mark the estimated point in time of an instant."@en ;
+		rdfs:label "has estimated time"@en .
 
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasLifeCycleID
@@ -658,7 +666,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Transition
     occp:Transition rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
-		rdfs:comment "This class represents key milestones or triggering events between phases, typically enabling the start of the next phase or marking phase completion."@en ;
+		rdfs:comment "This class represents key milestones or triggering events occurring between phases, typically enabling the start of the next phase or marking phase completion."@en ;
 		rdfs:label "Transition"@en .
 
 

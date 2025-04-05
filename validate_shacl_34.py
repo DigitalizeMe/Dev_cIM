@@ -83,7 +83,7 @@ def perform_shacl_jena_validation(data_file, shapes_paths=[OCCP_SHAPES_PATH, OUL
 if __name__ == "__main__":
      
      # Variable for testing efficiency
-    part_name3 = "Site"  
+    part_name3 = "ABOX"  
 
     ABox_Pre_file = f"OCCP_Pre_{part_name3}.ttl"
 
@@ -98,25 +98,7 @@ if __name__ == "__main__":
     abox_graph = Graph()
     abox_graph.parse(ABOX_PATH, format="turtle")
 
-    # Pre-check for required instants - can be expanded later
-    pre_check_query = """
-        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-        ASK {
-            ?instantStart a ?startType .
-            VALUES ?startType { occp:BeginningOfPlanning occp:SubmissionToReview }
-            { ?instantStart occp:hasActualTime ?startTime . }
-            UNION
-            { ?instantStart occp:hasEstimatedTime ?startTime . }
-            ?instantEnd a ?endType .
-            VALUES ?endType { occp:ReviewApproval occp:ReviewRejection }
-            { ?instantEnd occp:hasActualTime ?endTime . }
-            UNION
-            { ?instantEnd occp:hasEstimatedTime ?endTime . }
-        }
-    """
-    if not abox_graph.query(pre_check_query).askAnswer:
-        logger.error("PreI-ABox lacks required instants (BeginningOfPlanning and ReviewApproval)!")
-        exit(1)  
+
 
     # Step 1: Apply CONSTRUCT queries using the new function
     ABox_Post_file = f"OCCP_Post_{part_name3}_inferred.ttl"
