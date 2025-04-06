@@ -1,13 +1,17 @@
+@prefix occcp: <> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix osh: <http://www.occpshape.de/shape#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
 @base <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> .
 @prefix sh:     <http://www.w3.org/ns/shacl#> .
 @prefix time:   <http://www.w3.org/2006/time#> .
 @prefix osh:    <http://www.occpshape.de/shape#> .
-
 <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#> ;
                                                                         rdfs:comment "First workaround to implement time tracking features to models"@en .
@@ -52,7 +56,7 @@
     occp:belongsToCycle rdf:type owl:ObjectProperty ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
 		rdfs:range occp:Cycle ;
-		rdfs:comment "This property represents the connection between a time:Instant and a cycle."@en ;
+		rdfs:comment "This property links a time:Instant to an occp:Cycle."@en ;
 		rdfs:label "belongs to cycle"@en .				
 
 
@@ -61,16 +65,8 @@
 		rdfs:domain occp:Phase ;
 		rdfs:range <http://www.w3.org/2006/time#Instant> ;
 		owl:inverseOf occp:belongsToPhase ;
-		rdfs:comment "This property represents the link of a occp:Phase to a time:Instant."@en ;
+		rdfs:comment "This property links an occp:Phase to a time:Instant."@en ;
 		rdfs:label "belongs to instant"@en .
-
-
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifecycle
-    occp:belongsToProcess a rdf:Property ;
-        rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
-		rdfs:range occp:Process ;
-		rdfs:comment "This property represents the embedding of a time:Entity within a occp:Process."@en ;
-        rdfs:label "belongs to Process" .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToPhase
@@ -78,8 +74,16 @@
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
 		rdfs:range occp:Phase ;
 		owl:inverseOf occp:belongsToInstant ;
-		rdfs:comment "This property represents the connection between a time:Instant and a occp:Phase."@en ;
+		rdfs:comment "This property links a time:Instant to an occp:Phase."@en ;
 		rdfs:label "belongs to phase"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#belongsToLifecycle
+    occp:belongsToProcess a rdf:Property ;
+        rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
+		rdfs:range occp:Process ;
+		rdfs:comment "This property links a time:Entity to an occp:Process."@en ;
+        rdfs:label "belongs to process" .
 
 
 	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#endsAfter
@@ -149,6 +153,14 @@
 		rdfs:label "has actual end"@en .
 
 
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasCycle
+	occp:hasCycle rdf:type owl:ObjectProperty ;
+        rdfs:domain occp:Process ;
+		rdfs:range occp:Cycle ;
+		rdfs:comment "This property links an occp:Process to an occp:Cycle."@en ;
+		rdfs:label "has cycle"@en .
+
+
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedBeginning
     occp:hasEstimatedBeginning rdf:type owl:ObjectProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasBeginning> ;
@@ -171,7 +183,7 @@
 	occp:hasPhase rdf:type owl:ObjectProperty ;
         rdfs:domain occp:Process ;
 		rdfs:range occp:Phase ;
-		rdfs:comment "This property represents the connection between a occp:Process and an occp:Phase."@en ;
+		rdfs:comment "This property links an occp:Process to an occp:Phase."@en ;
 		rdfs:label "has phase"@en .
 
 
@@ -179,7 +191,7 @@
     occp:isInPhase rdf:type owl:ObjectProperty ;
 		rdfs:domain occp:Process ;
 		rdfs:range occp:Phase ;
-		rdfs:comment "This property represents the embedding of a process within a phase, used to link a process to the overarching phase it belongs to."@en ;
+		rdfs:comment "This property represents the embedding of a process within a phase, used to link an occp:Process to the overarching instance of occp:Phase it belongs to."@en ;
 		rdfs:label "is in phase"@en .
 
 
@@ -207,7 +219,6 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasActualTime
     occp:hasActualTime rdf:type owl:DatatypeProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
 		rdfs:range  xsd:date ;
 		rdfs:comment "This property represents the connection between an instant and a date, used to mark the actual point in time of an instant."@en ;
@@ -224,7 +235,6 @@
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasEstimatedTime
     occp:hasEstimatedTime rdf:type owl:DatatypeProperty ;
-		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
 		rdfs:range  xsd:date ;
 		rdfs:comment "This property represents the connection between an instant and a date, used to mark the estimated point in time of an instant."@en ;
