@@ -61,11 +61,11 @@ ex:HouseLifecycle a occp:process ;
 
         ex:instant_DataProcurement_House a occp:DataProcurement ;
             occp:hasActualTime "2000-01-08"^^xsd:date ;
-            occp:hasPhase ex:phaseA_House .
+            occp:belongsToPhase ex:phaseA_House .
 
         ex:instant_SubmissionToReview_House a occp:SubmissionToReview ;
             occp:hasActualTime "2000-02-01"^^xsd:date ;     
-            occp:hasPhase ex:phaseA_House .
+            occp:belongsToPhase ex:phaseA_House .
 
         ex:instant_ReviewStart_House a occp:ReviewStart ;
             occp:hasActualTime "2000-02-15"^^xsd:date ;    
@@ -79,11 +79,11 @@ ex:HouseLifecycle a occp:process ;
 
         ex:instant_Edit_House a occp:EditAfterSubmissionToReview ;
             occp:hasActualTime "2000-03-02"^^xsd:date ;
-            occp:hasPhase ex:phaseA_House .
+            occp:belongsToPhase ex:phaseA_House .
         
         ex:instant_SubmissionToReview_House2 a occp:SubmissionToReview ;
             occp:hasActualTime "2000-03-14"^^xsd:date ;     
-            occp:hasPhase ex:phaseA_House .
+            occp:belongsToPhase ex:phaseA_House .
 
         ex:instant_ReviewStart_House2 a occp:ReviewStart ;
             occp:hasActualTime "2000-03-15"^^xsd:date ;    
@@ -101,11 +101,11 @@ ex:HouseLifecycle a occp:process ;
 
         ex:instant_ConstructionCompletion_House a occp:ConstructionCompletion ;
             occp:hasActualTime "2001-03-25"^^xsd:date ;     
-            occp:hasPhase ex:phaseC_House .
+            occp:belongsToPhase ex:phaseC_House .
 
         ex:instant_ConstructionAcceptance_House a occp:ConstructionAcceptance ;
             occp:hasActualTime "2001-04-07"^^xsd:date ;     
-            occp:hasPhase ex:phaseC_House .
+            occp:belongsToPhase ex:phaseC_House .
 
         ex:instant_CompletionOfConstruction_House a occp:CompletionOfConstruction ;
             occp:hasActualTime "2001-04-07"^^xsd:date ;     

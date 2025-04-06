@@ -3,87 +3,51 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <http://www.example.de/example#> .
 
-# Parent process and phase
-ex:ParentProcess a occp:Process ;
-    occp:hasProcessID "PP001" ;
-    occp:hasPhase ex:ParentPhase ;
-    occp:hasActualBeginning ex:ParentStart ;
-    occp:hasActualEnd ex:ParentEnd .
+ex:Process10 a occp:Process ;
+    occp:hasProcessID "P010" ;
+    occp:hasPhase ex:PhaseA10, ex:PhaseB10 ;
+    time:before ex:PhaseB10 ;
+    occp:beginsBefore ex:PhaseB10 ;
+    occp:endsBefore ex:PhaseB10 ;
+    occp:hasActualBeginning ex:Proc10Start ;
+    occp:hasActualEnd ex:Proc10End .
 
-ex:ParentStart a time:Instant ;
-    occp:hasActualTime "2025-01-01"^^xsd:date .
+ex:Proc10Start a time:Instant ;
+    occp:hasActualTime "2025-10-01"^^xsd:date .
 
-ex:ParentEnd a time:Instant ;
-    occp:hasActualTime "2025-01-20"^^xsd:date .
+ex:Proc10End a time:Instant ;
+    occp:hasActualTime "2025-10-12"^^xsd:date .  # Angepasst
 
-ex:ParentPhase a occp:Phase ;
-    occp:belongsToProcess ex:ParentProcess ;
-    occp:hasActualBeginning ex:ParentPhaseStart ;
-    occp:hasActualEnd ex:ParentPhaseEnd .
+ex:PhaseA10 a occp:PhaseA_Planning ;
+    occp:belongsToProcess ex:Process10 ;
+    occp:hasActualBeginning ex:StartA10 ;
+    occp:hasActualEnd ex:EndA10 .
 
-ex:ParentPhaseStart a time:Instant ;
-    occp:hasActualTime "2025-01-02"^^xsd:date .
+ex:StartA10 a occp:BeginningOfPlanning ;
+    occp:startsPhase ex:PhaseA10 ;
+    occp:hasActualTime "2025-10-02"^^xsd:date .  # Angepasst
 
-ex:ParentPhaseEnd a time:Instant ;
-    occp:hasActualTime "2025-01-19"^^xsd:date .
+ex:EndA10 a occp:CompletionOfPlanning ;
+    occp:endsPhase ex:PhaseA10 ;
+    occp:belongsToProcess ex:Process10 ;
+    occp:hasActualTime "2025-10-05"^^xsd:date .  # Angepasst
 
-# Process embedded in ParentPhase
-ex:Process1 a occp:Process ;
-    occp:hasProcessID "P001" ;
-    occp:isInPhase ex:ParentPhase ;
-    occp:hasPhase ex:PhaseA1, ex:PhaseA2 ;
-    occp:hasActualBeginning ex:ProcStart ;
-    occp:hasActualEnd ex:ProcEnd .
+ex:PhaseB10 a occp:PhaseB_Review ;
+    occp:belongsToProcess ex:Process10 ;
+    occp:hasActualBeginning ex:StartB10 ;
+    occp:hasActualEnd ex:EndB10 .
 
-ex:ProcStart a time:Instant ;
-    occp:hasActualTime "2025-01-03"^^xsd:date .
+ex:CycleA10 a occp:CycleA_PlanningReview ;
+    occp:belongsToProcess ex:Process10 ;
+    occp:hasActualBeginning ex:StartB10 ;
+    occp:hasActualEnd ex:EndB10 .
 
-ex:ProcEnd a time:Instant ;
-    occp:hasActualTime "2025-01-15"^^xsd:date .
+ex:StartB10 a occp:ReviewStart ;
+    occp:startsPhase ex:PhaseB10 ;
+    occp:startsCycle ex:CycleA10 ;
+    occp:hasActualTime "2025-10-07"^^xsd:date .
 
-ex:PhaseA1 a occp:Phase ;
-    occp:belongsToProcess ex:Process1 ;
-    occp:hasActualBeginning ex:StartA1 ;
-    occp:hasActualEnd ex:EndA1 .
-
-ex:StartA1 a time:Instant ;
-    occp:hasActualTime "2025-01-04"^^xsd:date .
-
-ex:EndA1 a time:Instant ;
-    occp:hasActualTime "2025-01-07"^^xsd:date .
-
-ex:PhaseA2 a occp:Phase ;
-    occp:belongsToProcess ex:Process1 ;
-    occp:hasActualBeginning ex:StartA2 ;
-    occp:hasActualEnd ex:EndA2 .
-
-ex:StartA2 a time:Instant ;
-    occp:hasActualTime "2025-01-08"^^xsd:date .
-
-ex:EndA2 a time:Instant ;
-    occp:hasActualTime "2025-01-12"^^xsd:date .
-
-# Invalid process (cycle)
-ex:InvalidProcess a occp:Process ;
-    occp:hasProcessID "P002" ;
-    occp:isInPhase ex:InvalidPhase ;
-    occp:hasPhase ex:InvalidPhase ;
-    occp:hasActualBeginning ex:InvalidStart ;
-    occp:hasActualEnd ex:InvalidEnd .
-
-ex:InvalidStart a time:Instant ;
-    occp:hasActualTime "2025-01-05"^^xsd:date .
-
-ex:InvalidEnd a time:Instant ;
-    occp:hasActualTime "2025-01-10"^^xsd:date .
-
-ex:InvalidPhase a occp:Phase ;
-    occp:belongsToProcess ex:InvalidProcess ;
-    occp:hasActualBeginning ex:InvalidPhaseStart ;
-    occp:hasActualEnd ex:InvalidPhaseEnd .
-
-ex:InvalidPhaseStart a time:Instant ;
-    occp:hasActualTime "2025-01-06"^^xsd:date .
-
-ex:InvalidPhaseEnd a time:Instant ;
-    occp:hasActualTime "2025-01-09"^^xsd:date .
+ex:EndB10 a occp:ReviewApproval ;
+    occp:endsPhase ex:PhaseB10 ;
+    occp:endsCycle ex:CycleA10 ;
+    occp:hasActualTime "2025-10-12"^^xsd:date .

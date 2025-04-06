@@ -1,7 +1,4 @@
-2025-04-05 23:44:22,349 - INFO - Starte SHACL-Validierung der ABox...
-2025-04-05 23:44:22,349 - INFO - Validiere G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\OCCP_Pre_Test.ttl gegen ['G:\\Promo\\cModeler_Git\\cMM\\OCCP_Dev2\\OCCP_SHACL_V1.8.ttl']
-2025-04-05 23:44:23,498 - INFO - Conformity: False
-2025-04-05 23:44:23,498 - ERROR - Validation error: Each 'occp:Process' must consist of at least two instances of 'occp:Phase' connected via 'occp:hasPhase'. (Focus Node: http://www.example.de/example#InvalidProcess, Path: http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-04-05 23:44:23,498 - ERROR - Validation error: For 'occp:Process': A process cannot be embedded in a phase (occp:isInPhase) that it also contains (occp:hasPhase). (Focus Node: http://www.example.de/example#InvalidProcess, Path: Unbekannt, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-04-05 23:44:23,499 - ERROR - Validation error: Each 'occp:Process' must consist of at least two instances of 'occp:Phase' connected via 'occp:hasPhase'. (Focus Node: http://www.example.de/example#ParentProcess, Path: http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#hasPhase, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-04-05 23:44:23,499 - INFO - Validierung fehlgeschlagen. Siehe validation.log für Details.
+2025-04-06 03:22:15,161 - INFO - Starte SHACL-Validierung der ABox...
+2025-04-06 03:22:15,161 - INFO - Validiere G:\Promo\cModeler_Git\cMM\OCCP_Dev2\OCCP_ABox\OCCP_Pre_Test.ttl gegen ['G:\\Promo\\cModeler_Git\\cMM\\OCCP_Dev2\\OCCP_SHACL_V1.8.ttl']
+2025-04-06 03:22:16,490 - INFO - Conformity: True
+2025-04-06 03:22:16,490 - INFO - Validierung erfolgreich! Die ABox entspricht den SHACL-Shapes.
