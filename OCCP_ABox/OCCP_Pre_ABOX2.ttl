@@ -1,0 +1,16 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:HouseLifecycle a occp:Process ;
+    occp:hasProcessID "House" ;
+    occp:hasPhase ex:phaseA_House .
+
+ex:phaseA_House a occp:PhaseA_Planning ;
+    occp:belongsToProcess ex:HouseLifecycle ;
+    occp:hasActualBeginning ex:instant_BeginningOfPlanning_House .
+
+ex:instant_BeginningOfPlanning_House a occp:BeginningOfPlanning ;
+    occp:hasActualTime "2000-01-01"^^xsd:date ;
+    occp:startsPhase ex:phaseA_House .

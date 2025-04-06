@@ -26,7 +26,7 @@ XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
 EX = Namespace("http://www.example.de/example#")  
 
 # ABox-Pfad (anpassbar, falls online oder lokal)
-ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_Test.ttl")  # Lokaler Pfad
+ABOX_PATH = os.path.join(ABOX_DIR, "OCCP_Pre_ABOX.ttl")  # Lokaler Pfad
 # Falls online verwendet werden soll:
 # ABOX_PATH = "https://raw.githubusercontent.com/DigitalizeMe/12071923_Dev/refs/heads/main/OCCP_ABox/OCCP_Pre_ABOX.ttl"
 

@@ -218,8 +218,7 @@
         # Constraint for hasPhase (process contains phases)
         sh:property [
             sh:path occp:hasPhase ;
-
-            sh:minCount 2 ;
+            sh:minCount 1 ;
             sh:message "Each 'occp:Process' must consist of at least two instances of 'occp:Phase' connected via 'occp:hasPhase'."@en ;
             sh:severity sh:Violation
         ] ;
@@ -231,53 +230,7 @@
             sh:message "Each 'occp:Process' must be embedded in at most one 'occp:Phase' via 'occp:isInPhase'."@en ;
             sh:severity sh:Violation
         ] ;
-        # Constraint for beginning (at least one: actual or estimated, max 1 actualBeginning)
-        sh:property [
-            sh:path occp:hasActualBeginning ;
-            sh:class time:Instant ;
-            sh:maxCount 1 ;
-            sh:message "Each 'occp:Process' must have at most one 'occp:hasActualBeginning' referencing a 'time:Instant'."@en ;
-            sh:severity sh:Violation
-        ] ;
-        sh:property [
-            sh:path [ sh:alternativePath ( occp:hasActualBeginning occp:hasEstimatedBeginning ) ] ;
-            sh:class time:Instant ;
-            sh:minCount 1 ;
-            sh:message "Each 'occp:Process' must have at least one beginning (either 'occp:hasActualBeginning' or 'occp:hasEstimatedBeginning') referencing a 'time:Instant'."@en ;
-            sh:severity sh:Violation
-        ] ;
-        # Constraint for end (at least one: actual or estimated, max 1 actualEnd)
-        sh:property [
-            sh:path occp:hasActualEnd ;
-            sh:class time:Instant ;
-            sh:maxCount 1 ;
-            sh:message "Each 'occp:Process' must have at most one 'occp:hasActualEnd' referencing a 'time:Instant'."@en ;
-            sh:severity sh:Violation
-        ] ;
-        sh:property [
-            sh:path [ sh:alternativePath ( occp:hasActualEnd occp:hasEstimatedEnd ) ] ;
-            sh:class time:Instant ;
-            sh:minCount 1 ;
-            sh:message "Each 'occp:Process' must have at least one end (either 'occp:hasActualEnd' or 'occp:hasEstimatedEnd') referencing a 'time:Instant'."@en ;
-            sh:severity sh:Violation
-        ] ;
-        # Ensure actual beginning is before actual end
-        sh:sparql [
-            sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-                PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this
-                WHERE {
-                    $this occp:hasActualBeginning ?start .
-                    $this occp:hasActualEnd ?end .
-                    ?start occp:hasActualTime ?timeStart .
-                    ?end occp:hasActualTime ?timeEnd .
-                    FILTER (?timeStart >= ?timeEnd)
-                }
-            """ ;
-            sh:message "For 'occp:Process': Actual beginning time (occp:hasActualBeginning) must be before actual end time (occp:hasActualEnd)."@en ;
-            sh:severity sh:Violation
-        ] ;
+        # Removed shapes for beginning and end, because processes contain phases, which have beginnings and ends (should suffice)
         # Prevent inception (process cannot be in a phase it contains)
         sh:sparql [
             sh:select """
@@ -1673,11 +1626,39 @@
             osh:ReviewApprovalShape a sh:NodeShape ;
                 sh:targetClass occp:ReviewApproval ;
                 # Optional: endsPhase for PhaseB_Review, max 1
-                sh:property [
-                    sh:path occp:endsPhase ;
-                    sh:class occp:PhaseB_Review ;
-                    sh:maxCount 1 ;
+                sh:sparql [
+                    sh:select """
+                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        SELECT $this
+                        WHERE {
+                            $this occp:endsPhase ?phaseB .
+                            ?phaseB a occp:PhaseB_Review .
+                            FILTER EXISTS {
+                                $this occp:endsPhase ?otherPhaseB .
+                                ?otherPhaseB a occp:PhaseB_Review .
+                                FILTER (?otherPhaseB != ?phaseB)
+                            }
+                        }
+                    """ ;
                     sh:message "Each 'occp:ReviewApproval' must end at most one 'occp:PhaseB_Review' via 'occp:endsPhase'."@en ;
+                    sh:severity sh:Violation
+                ] ;
+                # Optional: endsPhase for PhaseA_Planning, max 1
+                sh:sparql [
+                    sh:select """
+                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        SELECT $this
+                        WHERE {
+                            $this occp:endsPhase ?phaseA .
+                            ?phaseA a occp:PhaseA_Planning .
+                            FILTER EXISTS {
+                                $this occp:endsPhase ?otherPhaseA .
+                                ?otherPhaseA a occp:PhaseA_Planning .
+                                FILTER (?otherPhaseA != ?phaseA)
+                            }
+                        }
+                    """ ;
+                    sh:message "Each 'occp:ReviewApproval' must end at most one 'occp:PhaseA_Planning' via 'occp:endsPhase'."@en ;
                     sh:severity sh:Violation
                 ] ;
                 # Optional: endsCycle for CycleA_PlanningReview, max 1
@@ -1687,7 +1668,7 @@
                     sh:maxCount 1 ;
                     sh:message "Each 'occp:ReviewApproval' must end at most one 'occp:CycleA_PlanningReview' via 'occp:endsCycle'."@en ;
                     sh:severity sh:Violation
-                ] ;
+                ] ;    
                 # Ensure ReviewApproval occurs after ReviewStart in the same phase (if ReviewStart exists)
                 sh:sparql [
                     sh:select """
