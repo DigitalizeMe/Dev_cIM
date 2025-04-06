@@ -302,7 +302,7 @@
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Cycle
     occp:Cycle rdf:type owl:Class ;
 		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
-		rdfs:comment "This class represents a recurring time span with a starting point, period, and duration, used to track iterating processes like multiple planning reviews."@en ;
+		rdfs:comment "This class represents a recurring time span with instants as starting point and end point, used to track iterating cycles within phases, like multiple planning reviews."@en ;
 		rdfs:label "Cycle"@en .
 
 
@@ -423,13 +423,6 @@
 		rdfs:subClassOf occp:PhaseG_Inspection_Instant ;
 		rdfs:comment "This class represents the instant marking the execution of an irregular inspection. Multiple events possible over the lifecycle."@en ;
 		rdfs:label "Irregular Inspection"@en .
-
-
-	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Process		
-	occp:Process rdf:type owl:Class ;
-		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
-		rdfs:comment "This class represents a complete or partial process as a combination of at least 2 different phases or intervals. Processes can be within phases or intervals."@en ;
-		rdfs:label "Process"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#LoadEvent
@@ -612,6 +605,13 @@
 		rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
 		rdfs:comment "This class represents instants within Phase M (Deconstruction Phase), grouping all related events."@en ;
 		rdfs:label "Phase M Deconstruction Instant"@en .
+
+
+	###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#Process		
+	occp:Process rdf:type owl:Class ;
+		rdfs:subClassOf <http://www.w3.org/2006/time#Interval> ;
+		rdfs:comment "This class represents a complete or partial process as a combination of phases or intervals and transitions. Processes can be within phases or intervals."@en ;
+		rdfs:label "Process"@en .
 
 
     ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#RepairCompletion
