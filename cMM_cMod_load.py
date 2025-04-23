@@ -37,5 +37,5 @@ def load_cmod(timepoint, output_path):
     return None
 
 # Test
-cma_file = load_cmod("2025-01-01", "./cmod_restored")
+cma_file = load_cmod("2025-01-02", "./cmod_restored")
 print(f"Loaded cMod with CMA: {cma_file}")

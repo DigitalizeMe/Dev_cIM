@@ -118,7 +118,7 @@ def save_cmod(cmod_input_path_IFC, cmod_input_path_LD, cmod_id, timepoint, commi
 
 # Test
 try:
-    commit_hash = save_cmod(cmod_input_path_IFC, cmod_input_path_LD, cmod_id, "2025-01-01", "Save cMod")
+    commit_hash = save_cmod(cmod_input_path_IFC, cmod_input_path_LD, cmod_id, "2025-01-02", "Save cMod")
     print(f"Saved cMod with commit hash: {commit_hash}")
 except Exception as e:
     print(f"Error: {e}")

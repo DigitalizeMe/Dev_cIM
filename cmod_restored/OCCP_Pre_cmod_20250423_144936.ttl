@@ -3,7 +3,8 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 occp:Roof_789 a occp:Component ;
-    occp:hasDatasheet occp:Datasheet_01_Sample_fdd30583 .
+    occp:hasDatasheet occp:Datasheet_01_Sample_fdd30583,
+        occp:Datasheet_02_Sample_cb04a7d4.
 
 occp:Site_123 a occp:Site ;
     occp:filePath "IFC/IFC_Architecture_a21aba9e.ifc",
@@ -15,5 +16,9 @@ occp:Site_123 a occp:Site ;
 occp:Datasheet_01_Sample_fdd30583 occp:filePath "Linked_Data/01_Sample_fdd30583.txt" ;
     occp:hasHash "fdd30583ae3157020de3dd24b68da3ca34f9896d7ddf16d7d8a0041570a097e7" .
 
-occp:State_456 time:hasTime "2025-01-01"^^xsd:date .
+occp:Datasheet_02_Sample_cb04a7d4 occp:filePath "Linked_Data/02_Sample_cb04a7d4.txt" ;
+    occp:hasHash "cb04a7d4074bb4ed5eef36afb2163f62b1f374cc05871f12f2752e4cd3f8f893" .
+
+
+occp:State_456 time:hasTime "2025-01-02"^^xsd:date .
 
