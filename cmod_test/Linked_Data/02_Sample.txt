@@ -1,0 +1,6 @@
+Some representative of a linked data file.
+
+Fictional date of creation: 02.04.2020
+Fictional date of representated status (meaning: the content of this file depicts the status of a model (component) in a specific point in time, being the date of represented status): 15.01.2020
+
+Fictional Content ... 

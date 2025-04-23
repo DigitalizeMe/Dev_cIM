@@ -1,0 +1,19 @@
+@prefix occp: <http://example.org/occp#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+occp:Roof_789 a occp:Component ;
+    occp:hasDatasheet occp:Datasheet_01_Sample_fdd30583 .
+
+occp:Site_123 a occp:Site ;
+    occp:filePath "IFC/IFC_Architecture_a21aba9e.ifc",
+        "IFC/IFC_Site_98a8b765.ifc" ;
+    occp:hasHash "98a8b765c77100c9f9749a83156789f7a63b2b9e683a7600ecee7c1aca011ecb",
+        "a21aba9e205497e9181cdae5b01c1bfe49e6e0ed845af9b70e382f621f55fd9c" ;
+    occp:hasState occp:State_456 .
+
+occp:Datasheet_01_Sample_fdd30583 occp:filePath "Linked_Data/01_Sample_fdd30583.txt" ;
+    occp:hasHash "fdd30583ae3157020de3dd24b68da3ca34f9896d7ddf16d7d8a0041570a097e7" .
+
+occp:State_456 time:hasTime "2025-01-01"^^xsd:date .
+
