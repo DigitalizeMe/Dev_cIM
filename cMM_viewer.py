@@ -21,30 +21,95 @@ if not cma_files or not ifc_files:
 cma_file = cma_files[0]
 ifc_file = ifc_files[0]
 
-# IFC-Viewer (web-ifc-viewer)
+# IFC-Viewer (openbim-components über HTTP-Server)
 st.subheader("IFC-Modell")
 html = f"""
-<div style="width: 100%; height: 500px;">
-    <canvas id="three-canvas"></canvas>
+<div style="width: 100%; height: 500px; border: 1px solid black;">
+    <canvas id="three-canvas" style="width: 100%; height: 100%;"></canvas>
 </div>
-<script src="https://unpkg.com/three@0.126.1/build/three.min.js"></script>
-<script src="https://unpkg.com/@thatopen/web-ifc-viewer@2.0.33/dist/web-ifc-viewer.min.js"></script>
-<script>
-    const container = document.getElementById('three-canvas');
-    const viewer = new WebIFCViewer.IfcViewerAPI({{ container, backgroundColor: {{ r: 0.9, g: 0.9, b: 0.9 }} }});
-    viewer.axes.setAxes();
-    viewer.grid.setGrid();
-
-    async function loadIfc() {{
-        try {{
-            const ifcUrl = '{os.path.join(cmod_path, ifc_file)}';
-            await viewer.IFC.loadIfcUrl(ifcUrl);
-            viewer.context.renderer.fitTo();
-        }} catch (e) {{
-            console.error('Fehler beim Laden des IFC-Modells:', e);
-        }}
+<script async src="http://localhost:8000/static/es-module-shims.js"></script>
+<script type="importmap">
+{{
+    "imports": {{
+        "three": "http://localhost:8000/static/three.module.min.js",
+        "three/core/": "http://localhost:8000/static/",
+        "three/addons/": "http://localhost:8000/static/addons/"
     }}
-    loadIfc();
+}}
+</script>
+<script type="module">
+    try {{
+        console.log('Starte Modul-Ladevorgang...');
+        // Prüfe WebGL-Unterstützung
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) {{
+            throw new Error('WebGL wird vom Browser nicht unterstützt');
+        }}
+        console.log('WebGL unterstützt');
+
+        // Importe
+        import * as THREE from 'three';
+        console.log('THREE geladen:', THREE);
+        const obcModule = await import('http://localhost:8000/static/components.js');
+        const obcfModule = await import('http://localhost:8000/static/components-front.js');
+        console.log('OBC-Module geladen:', obcModule, obcfModule);
+
+        const OBC = obcModule.default || obcModule;
+        const OBCF = obcfModule.default || obcfModule;
+
+        if (!THREE || !OBC) {{
+            throw new Error('THREE oder OBC nicht definiert');
+        }}
+        console.log('THREE:', THREE);
+        console.log('OBC:', OBC);
+
+        const container = document.getElementById('three-canvas');
+        if (!container) {{
+            throw new Error('Canvas-Element nicht gefunden');
+        }}
+        console.log('Canvas gefunden:', container);
+
+        const components = new OBC.Components();
+        console.log('Components initialisiert:', components);
+
+        components.scene = new OBC.SimpleScene(components);
+        components.renderer = new OBC.SimpleRenderer(components, container);
+        components.camera = new OBC.SimpleCamera(components);
+        components.raycaster = new OBC.SimpleRaycaster(components);
+        components.init();
+        console.log('Renderer initialisiert:', components.renderer);
+
+        const ifcLoader = components.tools.get(OBC.IfcLoader);
+        console.log('IFC-Loader abgerufen:', ifcLoader);
+        await ifcLoader.setup().catch(e => {{
+            throw new Error('IFC-Loader Setup fehlgeschlagen: ' + e.message);
+        }});
+        console.log('IFC-Loader bereit');
+
+        const ifcUrl = 'http://localhost:8000/cmod_restored/{ifc_file}';
+        console.log('Lade IFC von:', ifcUrl);
+
+        const response = await fetch(ifcUrl);
+        if (!response.ok) {{
+            throw new Error('Fehler beim Laden der IFC-Datei: ' + response.statusText);
+        }}
+        console.log('IFC-Antwort erhalten:', response);
+
+        const buffer = await response.arrayBuffer();
+        console.log('IFC-Daten geladen, Buffer-Größe:', buffer.byteLength);
+
+        const model = await ifcLoader.load(new Uint8Array(buffer)).catch(e => {{
+            throw new Error('Fehler beim Parsen der IFC-Datei: ' + e.message);
+        }});
+        console.log('Modell geladen:', model);
+
+        components.scene.setup();
+        components.camera.controls.setLookAt(10, 10, 10, 0, 0, 0);
+        console.log('Szene eingerichtet, Kamera positioniert');
+    }} catch (e) {{
+        console.error('Fehler beim Laden des IFC-Modells:', e);
+    }}
 </script>
 """
 st.components.v1.html(html, height=600)
@@ -53,7 +118,7 @@ st.components.v1.html(html, height=600)
 st.subheader("IFC-Metadaten")
 try:
     ifc = ifcopenshell.open(os.path.join(cmod_path, ifc_file))
-    for element in ifc.by_type("IfcElement")[:5]:  # Erste 5 Elemente
+    for element in ifc.by_type("IfcElement")[:5]:
         st.write(f"Element: {element.Name or 'Unnamed'}, GUID: {element.GlobalId}")
 except Exception as e:
     st.error(f"Fehler beim Laden der IFC-Datei: {e}")
