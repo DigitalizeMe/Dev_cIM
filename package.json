@@ -1,24 +1,24 @@
 {
-  "name": "occp_dev2",
+  "name": "cmm-viewer",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
+  "description": "cMM IFC Viewer (Standalone)",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "build": "electron-builder"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DigitalizeMe/12071923_Dev.git"
-  },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/DigitalizeMe/12071923_Dev/issues"
+  "devDependencies": {
+    "electron": "^32.3.3",
+    "electron-builder": "^24.13.3",
+    "rollup-plugin-copy": "^3.5.0",
+    "vite": "^6.3.5"
   },
-  "homepage": "https://github.com/DigitalizeMe/12071923_Dev#readme"
+  "dependencies": {
+    "@thatopen/components": "^2.4.10",
+    "@thatopen/components-front": "^2.4.10",
+    "three": "^0.175.0",
+    "web-ifc": "^0.0.68"
+  }
 }
