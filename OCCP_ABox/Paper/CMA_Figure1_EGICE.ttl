@@ -1,0 +1,30 @@
+@prefix ex: <http://example.org/> .
+@prefix https: <> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:IFC_Site a ould:Site ;
+    ould:containsModel ex:IFC_Architecture .
+ex:IFC_Architecture a ould:UpdatableEntity ;
+    ould:hasSite ex:IFC_Site ;
+    ould:hasChild ex:Wall ;
+    ould:hasPhase ex:PhaseA_Planning_Arch .
+ex:Wall a ould:UpdatableEntity ;
+    ould:hasParent ex:IFC_Architecture ;
+    ould:hasIFCModelID "ifc:Wall1" ;
+    ould:hasPhase ex:PhaseA_Planning_Arch , ex:PhaseC_Construction_Wall ;
+    ould:hasUpdate ex:Wall_Update1 ;
+    ould:hasLinkedData ex:Material_Delivery_Doc .
+ex:PhaseA_Planning_Arch a occp:PhaseA_Planning ;
+    occp:hasActualBeginning [ occp:hasActualTime "2024-12-01"^^xsd:date ] ;
+    occp:hasActualEnd [ occp:hasActualTime "2025-02-01"^^xsd:date ] .
+ex:PhaseC_Construction_Wall a occp:PhaseC_Construction ;
+    occp:hasActualBeginning [ occp:hasActualTime "2025-03-01"^^xsd:date ] ;
+    occp:hasActualEnd [ occp:hasActualTime "2025-04-01"^^xsd:date ] .
+ex:Wall_Update1 a ould:Update ;
+    time:hasTime "2025-03-06" ;
+    ould:hasUpdatedEvent [ time:hasTime "2025-03-05"^^xsd:date ] .
+ex:Material_Delivery_Doc a ould:LinkedData ;
+    ould:hasDataLocation <https://example.org/material_delivery.pdf> .

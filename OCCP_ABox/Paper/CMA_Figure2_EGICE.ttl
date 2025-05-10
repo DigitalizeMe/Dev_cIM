@@ -1,0 +1,21 @@
+@prefix ex: <http://example.org/> .
+@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+sh:sparql (
+SELECT ?update ?event ?entryTime ?eventTime
+WHERE {
+    ex:Wall ould:hasUpdate ?update .
+    ?update time:hasTime ?entryTime ;
+            ould:hasUpdatedEvent ?event .
+    ?event time:hasTime ?eventTime .
+    FILTER (?entryTime >= "2025-03-05"^^xsd:date &&
+        ?entryTime <= "2025-03-06"^^xsd:date)
+}
+)
+# Results: ex:Wall_Update1, ex:instant_Edit_Wall, "2025-03-06", "2025-03-05"
