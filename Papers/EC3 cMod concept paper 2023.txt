@@ -1,12 +1,5 @@
 INTEGRATION OF SEMANTIC TEMPORAL INFORMATION IN BIM 
 USING ONTOLOGIES
-Albrecht Vaatz1,2, Al-Hakam Hamdan3, Nidhal Al-Sadoon1, Martin Wogan1,4, Karsten Menzel1
-1Technical University, Dresden, Germany
-2DB Bahnbau Gruppe GmbH, Berlin, Germany
-32A+S Consult GmbH, Dresden, Germany
-43B/M Consult GmbH, Braunschweig, Germany
-
-
 
  
 Abstract

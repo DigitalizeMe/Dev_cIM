@@ -1,10 +1,5 @@
 INTRODUCTION OF THE ONTOLOGY FOR CHRONOLOGICAL CONSTRUCTION PROCESSES (OCCP)
-placeholder for the names of the authors
-1Technical University, Cambridge, MA
-2Another Institution, Some City, Some Country
-The names and affiliations MUST NOT be included in the draft submitted for review. 
-The header consists of 10 lines with exactly 14 point spacing.
-                                                          The last line below should be left blank 
+
  
 Abstract
 The Ontology for Chronological Construction Processes (OCCP) provides a semantic foundation for managing time-related information in the AECO sector. Based on OWL-Time (Cox et al., 2006), OCCP introduces a lifecycle-oriented concept for BIM workflows, enhancing precise timestamp management with phases, cycles, milestones, and transitions to enable traceability throughout an asset’s lifetime. This paper describes the concept and composition of OCCP, its SHACL-based validation rules, and provides an example to demonstrate its practical application.
