@@ -1,6 +1,6 @@
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix occp:  <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> .
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 
@@ -85,7 +85,7 @@
         # Ensure beginning is before end (if both exist)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?timeStart ?timeEnd
                 WHERE {
@@ -234,7 +234,7 @@
         # Prevent inception (process cannot be in a phase it contains)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 SELECT $this
                 WHERE {
                     $this occp:isInPhase ?phase .
@@ -247,7 +247,7 @@
         # Each phase can only occur once within a process - except for Phase D - Usage !!   
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 SELECT $this ?phaseType
                 WHERE {
                     $this occp:hasPhase ?phase1 .
@@ -280,7 +280,7 @@
         # Ensure PhaseA begins before PhaseB_Review in the same process (if PhaseB exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -300,7 +300,7 @@
         # Ensure PhaseA begins before PhaseC_Construction in the same process (if PhaseC exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -320,7 +320,7 @@
         # Ensure PhaseA ends before PhaseC_Construction begins in the same process (if PhaseC exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -340,7 +340,7 @@
         # Ensure PhaseA ends before CompletionOfConstruction in the same process (if Completion exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -391,7 +391,7 @@
         # Ensure PhaseB begins before PhaseC_Construction in the same process (if PhaseC exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -411,7 +411,7 @@
         # Ensure PhaseB ends before PhaseC_Construction begins in the same process (if PhaseC exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -431,7 +431,7 @@
         # Ensure PhaseB ends before or with CompletionOfPlanning in the same process (if Completion exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -482,7 +482,7 @@
         # Ensure CompletionOfPlanning occurs before BeginOfTenderingProcess in the same process (if BeginOfTenderingProcess exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -512,7 +512,7 @@
         # Ensure BeginOfTenderingProcess occurs before Submission in the same process (if Submission exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -542,7 +542,7 @@
         # Ensure Submission occurs before PhaseC_Construction in the same process (if PhaseC exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -573,7 +573,7 @@
         # Ensure PhaseC occurs after CompletionOfPlanning in the same process (if Completion exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -592,7 +592,7 @@
         # Ensure PhaseC occurs after Submission in the same process (if Submission exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -642,7 +642,7 @@
         # Ensure CompletionOfConstruction occurs after CompletionOfPlanning in the same process (if CompletionOfPlanning exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -660,7 +660,7 @@
         # Ensure CompletionOfConstruction occurs before PhaseD_Usage in the same process (if PhaseD exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -679,7 +679,7 @@
         # Ensure CompletionOfConstruction occurs before PhaseM_Deconstruction in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -710,7 +710,7 @@
         # Ensure PhaseD occurs after CompletionOfConstruction in the same process (if Completion exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -729,7 +729,7 @@
         # Ensure PhaseD ends before PhaseM_Deconstruction in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -783,7 +783,7 @@
         # Ensure PhaseE occurs after CompletionOfConstruction in the same process (if CompletionOfConstruction exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -836,7 +836,7 @@
         # Ensure PhaseF occurs after CompletionOfConstruction in the same process (if Completion exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -855,7 +855,7 @@
         # Ensure PhaseF begins before or with PhaseD_Usage in the same process (if PhaseD exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -875,7 +875,7 @@
         # Ensure PhaseF ends before PhaseM_Deconstruction begins in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -929,7 +929,7 @@
         # Ensure PhaseG begins with or after UsageStart in the same process (if UsageStart exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -948,7 +948,7 @@
         # Ensure PhaseG occurs after CompletionOfConstruction in the same process (if CompletionOfConstruction exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -967,7 +967,7 @@
         # Ensure PhaseG occurs before PhaseM_Deconstruction in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1051,7 +1051,7 @@
         # Ensure PhaseK occurs after Submission in the same process (if Submission exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1070,7 +1070,7 @@
         # Ensure PhaseK ends before CompletionOfDeconstruction in the same process (if CompletionOfDeconstruction exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1089,7 +1089,7 @@
         # Ensure PhaseK begins before PhaseL_Repair in the same process (if PhaseL exists, with flexibility)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1137,7 +1137,7 @@
         # Ensure PhaseL ends with or after PhaseK_Damage in the same process (if PhaseK exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1157,7 +1157,7 @@
         # Ensure PhaseL occurs after Submission in the same process (if Submission exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1176,7 +1176,7 @@
         # Ensure PhaseL ends before PhaseM_Deconstruction in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1224,7 +1224,7 @@
         # Ensure PhaseM occurs after CompletionOfConstruction in the same process (if CompletionOfConstruction exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1271,7 +1271,7 @@
         # Ensure CompletionOfDeconstruction occurs after or with the end of PhaseM_Deconstruction in the same process (if PhaseM exists)
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this
                 WHERE {
@@ -1320,7 +1320,7 @@
                 # Ensure BeginningOfPlanning occurs before DataProcurement in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1338,7 +1338,7 @@
                 # Ensure BeginningOfPlanning occurs before SubmissionToReview in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1368,7 +1368,7 @@
                 # Ensure DataProcurement occurs after BeginningOfPlanning in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1386,7 +1386,7 @@
                 # Ensure DataProcurement occurs before SubmissionToReview in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1416,7 +1416,7 @@
                 # Ensure EditBeforeSubmissionToReview occurs after BeginningOfPlanning in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1434,7 +1434,7 @@
                 # Ensure EditBeforeSubmissionToReview occurs before SubmissionToReview in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1464,7 +1464,7 @@
                 # Ensure SubmissionToReview occurs after EditBeforeSubmissionToReview in the same phase (if EditBefore exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1494,7 +1494,7 @@
                 # Ensure EditAfterSubmissionToReview occurs after at least one SubmissionToReview in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1514,7 +1514,7 @@
                 # Ensure EditAfterSubmissionToReview occurs before CompletionOfPlanning in the same phase (if Completion exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1570,7 +1570,7 @@
                 # Ensure ReviewStart occurs before ReviewApproval in the same phase (if ReviewApproval exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1588,7 +1588,7 @@
                 # Ensure ReviewStart occurs before ReviewRejection in the same cycle (if ReviewRejection exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1606,7 +1606,7 @@
                 # Ensure ReviewStart occurs after SubmissionToReview in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1628,7 +1628,7 @@
                 # Optional: endsPhase for PhaseB_Review, max 1
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         SELECT $this
                         WHERE {
                             $this occp:endsPhase ?phaseB .
@@ -1646,7 +1646,7 @@
                 # Optional: endsPhase for PhaseA_Planning, max 1
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         SELECT $this
                         WHERE {
                             $this occp:endsPhase ?phaseA .
@@ -1672,7 +1672,7 @@
                 # Ensure ReviewApproval occurs after ReviewStart in the same phase (if ReviewStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1702,7 +1702,7 @@
                 # Ensure ReviewRejection occurs after ReviewStart in the same cycle (if ReviewStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1747,7 +1747,7 @@
                 # Ensure ConstructionStart occurs before ConstructionCompletion in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1765,7 +1765,7 @@
                 # Ensure ConstructionStart occurs after Submission in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1796,7 +1796,7 @@
                 # Ensure ConstructionCompletion occurs after ConstructionStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1814,7 +1814,7 @@
                 # Ensure ConstructionCompletion occurs before ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1833,7 +1833,7 @@
                 # Ensure ConstructionCompletion occurs before DefectElimStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1864,7 +1864,7 @@
                 # Ensure DefectElimStart occurs after ConstructionCompletion in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1883,7 +1883,7 @@
                 # Ensure DefectElimStart occurs before DefectElimCompletion in the same phase process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1913,7 +1913,7 @@
                 # Ensure DefectElimCompletion occurs after DefectElimStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1931,7 +1931,7 @@
                 # Ensure DefectElimCompletion occurs before ConstructionAcceptance in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1961,7 +1961,7 @@
                 # Ensure ConstructionAcceptance occurs before UsageStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1980,7 +1980,7 @@
                 # Ensure ConstructionAcceptance occurs before or with CompletionOfConstruction in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -1999,7 +1999,7 @@
                 # Ensure ConstructionAcceptance occurs after ConstructionCompletion in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2018,7 +2018,7 @@
                 # Ensure ConstructionAcceptance occurs after DefectElimCompletion in the same phase (if exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2064,7 +2064,7 @@
                 # Ensure UsageStart occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2083,7 +2083,7 @@
                 # Ensure UsageStart occurs before UsageEnd in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2120,7 +2120,7 @@
                 # Ensure UsageChange occurs after CompletionOfConstruction in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2139,7 +2139,7 @@
                 # Ensure UsageChange occurs after UsageStart in the same phase (for the phase it ends)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2157,7 +2157,7 @@
                 # Ensure UsageChange occurs before UsageEnd in the same phase (for the phase it starts)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2187,7 +2187,7 @@
                 # Ensure UsageEnd occurs after UsageStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2205,7 +2205,7 @@
                 # Ensure UsageEnd occurs after UsageChange in the same phase (if UsageChange exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2251,7 +2251,7 @@
                 # Ensure WarrantyStart occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2270,7 +2270,7 @@
                 # Ensure WarrantyStart occurs before WarrantyEnd in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2309,7 +2309,7 @@
                 # Ensure WarrantyChange occurs after CompletionOfConstruction in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2328,7 +2328,7 @@
                 # Ensure WarrantyChange occurs after WarrantyStart in the same phase (ended phase)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2346,7 +2346,7 @@
                 # Ensure WarrantyChange occurs before WarrantyEnd in the same phase (started phase)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2364,7 +2364,7 @@
                 # Ensure WarrantyChange occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2395,7 +2395,7 @@
                 # Ensure WarrantyEnd occurs after WarrantyStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2413,7 +2413,7 @@
                 # Ensure WarrantyEnd occurs after WarrantyChange in the same phase (if WarrantyChange exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2431,7 +2431,7 @@
                 # Ensure WarrantyEnd occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2477,7 +2477,7 @@
                 # Ensure DesignLifeStart occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2496,7 +2496,7 @@
                 # Ensure DesignLifeStart occurs before DesignLifeChange in the same phase (if DesignLifeChange exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2514,7 +2514,7 @@
                 # Ensure DesignLifeStart occurs before DesignLifeEnd in the same phase (if DesignLifeEnd exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2553,7 +2553,7 @@
                 # Ensure DesignLifeChange occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2572,7 +2572,7 @@
                 # Ensure DesignLifeChange occurs after DesignLifeStart in the ended phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2590,7 +2590,7 @@
                 # Ensure DesignLifeChange occurs before DesignLifeEnd in the started phase (if DesignLifeEnd exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2620,7 +2620,7 @@
                 # Ensure DesignLifeEnd occurs after DesignLifeStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2638,7 +2638,7 @@
                 # Ensure DesignLifeEnd occurs after DesignLifeChange in the same phase (if DesignLifeChange exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2656,7 +2656,7 @@
                 # Ensure DesignLifeEnd occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2703,7 +2703,7 @@
                 # Ensure InspectionExecution occurs after ConstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2722,7 +2722,7 @@
                 # Ensure InspectionExecution occurs after UsageStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2740,7 +2740,7 @@
                 # Ensure InspectionExecution occurs after UsageChange in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2758,7 +2758,7 @@
                 # Ensure InspectionExecution occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2789,7 +2789,7 @@
                 # Ensure IrregularInspection occurs after UsageStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2807,7 +2807,7 @@
                 # Ensure IrregularInspection occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2838,7 +2838,7 @@
                 # Ensure NextRegularInspection occurs after InspectionExecution in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2856,7 +2856,7 @@
                 # Ensure NextRegularInspection occurs after UsageStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2874,7 +2874,7 @@
                 # Ensure NextRegularInspection occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2912,7 +2912,7 @@
                 # Ensure GeologicalEvent occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2930,7 +2930,7 @@
                 # Ensure GeologicalEvent occurs before DeconstructionStart in the same process (if DeconstructionStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2951,7 +2951,7 @@
                 # Ensure LoadEvent occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2969,7 +2969,7 @@
                 # Ensure LoadEvent occurs before DeconstructionStart in the same process (if DeconstructionStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -2990,7 +2990,7 @@
                 # Ensure LoadEvent occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3008,7 +3008,7 @@
                 # Ensure LoadEvent occurs before DeconstructionStart in the same process (if DeconstructionStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3029,7 +3029,7 @@
                 # Ensure WeatherEvent occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3047,7 +3047,7 @@
                 # Ensure WeatherEvent occurs before DeconstructionStart in the same process (if DeconstructionStart exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3093,7 +3093,7 @@
                 # Ensure DamageDetection occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3112,7 +3112,7 @@
                 # Ensure DamageDetection occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3131,7 +3131,7 @@
                 # Ensure DamageDetection occurs before DamageObservation in the same phase (if DamageObservation exists)
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3161,7 +3161,7 @@
                 # Ensure DamageObservation occurs after DamageDetection in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3179,7 +3179,7 @@
                 # Ensure DamageObservation occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3210,7 +3210,7 @@
                 # Ensure DamageRepair occurs after DamageDetection in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3228,7 +3228,7 @@
                 # Ensure DamageRepair occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3275,7 +3275,7 @@
                 # Ensure NewComponent occurs after ConstructionCompletion in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3294,7 +3294,7 @@
                 # Ensure NewComponent occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3325,7 +3325,7 @@
                 # Ensure RepairStart occurs after DamageDetection in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3344,7 +3344,7 @@
                 # Ensure RepairStart occurs before RepairCompletion in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3362,7 +3362,7 @@
                 # Ensure RepairStart occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3393,7 +3393,7 @@
                 # Ensure RepairCompletion occurs after RepairStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3411,7 +3411,7 @@
                 # Ensure RepairCompletion occurs before DeconstructionStart in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3458,7 +3458,7 @@
                 # Ensure DeconstructionStart occurs after ConstructionAcceptance in the same process
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3477,7 +3477,7 @@
                 # Ensure DeconstructionStart occurs before DeconstructionCompletion in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3507,7 +3507,7 @@
                 # Ensure DeconstructionCompletion occurs after DeconstructionStart in the same phase
                 sh:sparql [
                     sh:select """
-                        PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                        PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                         PREFIX time: <http://www.w3.org/2006/time#>
                         SELECT $this
                         WHERE {
@@ -3535,7 +3535,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3570,7 +3570,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3605,7 +3605,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3640,7 +3640,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3675,7 +3675,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3710,7 +3710,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {
@@ -3745,7 +3745,7 @@
         sh:targetClass time:TemporalEntity ;
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?other
                 WHERE {

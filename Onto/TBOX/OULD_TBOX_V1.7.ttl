@@ -1,6 +1,6 @@
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
-@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
+@prefix occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#> .
+@prefix oush: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD/shape#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -8,18 +8,18 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@base <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#> .
 
-<http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD> rdf:type owl:Ontology ;
+<http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#2016> ;
-                                                                        owl:imports <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> ;
+                                                                        owl:imports <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> ;
                                                                         rdfs:comment "First workaround to implement OCCP-based updates and version control features."@en .
 
 #################################################################
 #    Object Properties
 #################################################################
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#containsModel    
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#containsModel    
     ould:containsModel a owl:ObjectProperty ;
         rdfs:domain ould:Site ;
         rdfs:range ould:UpdatableEntity ;
@@ -28,7 +28,7 @@
         rdfs:label "contains model"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasChild 
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasChild 
     ould:hasChild a owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:UpdatableEntity ;
@@ -37,7 +37,7 @@
         rdfs:label "has child"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasLinkedData
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasLinkedData
     ould:hasLinkedData rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:LinkedData ;
@@ -45,7 +45,7 @@
         rdfs:label "has linked data"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewValue
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasNewValue
     ould:hasNewValue rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf ould:hasUpdatedValue ;
         rdfs:domain ould:UpdatableEntity ;
@@ -55,7 +55,7 @@
         rdfs:label "has new value"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNextChain
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasNextChain
     ould:hasNextChain rdf:type owl:ObjectProperty ;
         owl:inverseOf ould:hasPreviousChain ;
         rdf:type owl:TransitiveProperty ;
@@ -65,7 +65,7 @@
         rdfs:label "has next chain"@en .   
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasParent
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasParent
     ould:hasParent a owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:UpdatableEntity ;
@@ -74,7 +74,7 @@
         rdfs:label "has parent"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPhase
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPhase
     ould:hasPhase rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
 		rdfs:range occp:Phase ;
@@ -82,7 +82,7 @@
 		rdfs:label "has phase"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPredecessor
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPredecessor
     ould:hasPredecessor rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf ould:hasUpdate ;
         rdfs:domain ould:Update ;
@@ -93,7 +93,7 @@
         rdfs:label "has predecessor"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousChain
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPreviousChain
     ould:hasPreviousChain rdf:type owl:ObjectProperty ;
         owl:inverseOf ould:hasNextChain ;
         rdf:type owl:TransitiveProperty ;
@@ -103,7 +103,7 @@
         rdfs:label "has previous chain"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousValue
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPreviousValue
     ould:hasPreviousValue rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf ould:hasUpdatedValue ;
         rdfs:domain ould:UpdatableEntity ;
@@ -113,7 +113,7 @@
         rdfs:label "has previous value"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSite
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasSite
     ould:hasSite a owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:Site ;
@@ -122,7 +122,7 @@
         rdfs:label "has site"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasSuccessor
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasSuccessor
     ould:hasSuccessor rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf ould:hasUpdate ;
         rdfs:domain ould:Update ;
@@ -133,7 +133,7 @@
         rdfs:label "has successor"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatableEntity
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdatableEntity
     ould:hasUpdatableEntity rdf:type owl:ObjectProperty ;
         rdfs:domain ould:Update ;
         rdfs:range ould:UpdatableEntity ;
@@ -142,7 +142,7 @@
         rdfs:label "has UpdatableEntity"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdate
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdate
     ould:hasUpdate rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:Update ;
@@ -151,7 +151,7 @@
         rdfs:label "has update"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdateChain
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdateChain
     ould:hasUpdateChain rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range ould:UpdateChain ;
@@ -159,7 +159,7 @@
         rdfs:label "has update chain"@en .  
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdateChainElement
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdateChainElement
     ould:hasUpdateChainElement rdf:type owl:ObjectProperty ;
         rdfs:domain ould:UpdateChain ;
         rdfs:range ould:Update ;
@@ -168,7 +168,7 @@
         rdfs:label "has update chain element"@en .  
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedEvent
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdatedEvent
     ould:hasUpdatedEvent rdf:type owl:ObjectProperty ;
         rdfs:subPropertyOf ould:hasUpdatedValue ;
         rdfs:domain ould:Update ;
@@ -178,7 +178,7 @@
         rdfs:label "has updated event"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasUpdatedValue
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasUpdatedValue
     ould:hasUpdatedValue rdf:type owl:ObjectProperty ;
         rdfs:domain ould:Update ;
         rdfs:range owl:Thing ;
@@ -186,7 +186,7 @@
         rdfs:label "has updated value"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#isUpdateChainElementOf
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#isUpdateChainElementOf
     ould:isUpdateChainElementOf rdf:type owl:ObjectProperty ;
         rdfs:domain ould:Update ;
         rdfs:range ould:UpdateChain ;
@@ -195,7 +195,7 @@
         rdfs:label "is update chain element of"@en . 
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#isUpdated
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#isUpdated
     ould:isUpdated rdf:type owl:ObjectProperty ;
         rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
         rdfs:range ould:Update ;
@@ -209,7 +209,7 @@
 #################################################################
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#entryTime
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#entryTime
     ould:entryTime rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:dateTime ;
@@ -217,7 +217,7 @@
         rdfs:label "entry time"@en .
     
     
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOnlineData
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasOnlineData
     ould:hasOnlineData rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasLinkedData ; 
         rdfs:domain ould:UpdatableEntity ;
@@ -226,7 +226,7 @@
         rdfs:label "has online data"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasOfflineData
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasOfflineData
     ould:hasOfflineData rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasLinkedData ;
         rdfs:domain ould:UpdatableEntity ;
@@ -235,7 +235,7 @@
         rdfs:label "has offline data"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasDataLocation
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasDataLocation
     ould:hasDataLocation rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:LinkedData ;
         rdfs:range xsd:string ;
@@ -243,7 +243,7 @@
         rdfs:label "has data location"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasHash
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasHash
     ould:hasHash rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
@@ -251,7 +251,7 @@
         rdfs:label "has hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasIFCModelID
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasIFCModelID
     ould:hasIFCModelID rdf:type owl:DatatypeProperty ;
         rdfs:domain ould:UpdatableEntity ;
         rdfs:range xsd:string ;
@@ -259,7 +259,7 @@
         rdfs:label "has IFC Model ID"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewHash
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasNewHash
     ould:hasNewHash rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasHash ;
         rdfs:domain ould:UpdatableEntity ;
@@ -268,7 +268,7 @@
         rdfs:label "has new hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewIFCModelID
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasNewIFCModelID
     ould:hasNewIFCModelID rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasIFCModelID ;
         rdfs:domain ould:UpdatableEntity ;
@@ -277,7 +277,7 @@
         rdfs:label "has new IFC ID"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasNewTime
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasNewTime
     ould:hasNewTime rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
         rdfs:domain [ rdf:type owl:Class ;
@@ -287,7 +287,7 @@
         rdfs:label "has new time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousTime
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPreviousTime
     ould:hasPreviousTime rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
         rdfs:domain [ rdf:type owl:Class ;
@@ -297,7 +297,7 @@
         rdfs:label "has previous time"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousHash
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPreviousHash
     ould:hasPreviousHash rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasHash ;
         rdfs:domain ould:UpdatableEntity ;
@@ -306,7 +306,7 @@
         rdfs:label "has previous hash"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#hasPreviousIFCModelID
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#hasPreviousIFCModelID
     ould:hasPreviousIFCModelID rdf:type owl:DatatypeProperty ;
         rdfs:subPropertyOf ould:hasIFCModelID ;
         rdfs:domain ould:UpdatableEntity ;
@@ -320,40 +320,40 @@
 #################################################################
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#LinkedData
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#LinkedData
     ould:LinkedData rdf:type owl:Class ;
         rdfs:subClassOf ould:UpdatableEntity ;
         rdfs:comment "Represents an external dataset, document, or reference that is linked to an IFC component. This class enables structured integration of additional information into the MsOCCP."@en ;
         rdfs:label "Linked Data"@en .
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#Site
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#Site
     ould:Site rdf:type owl:Class ;
         rdfs:subClassOf ould:UpdatableEntity ;
         rdfs:comment "Represents a spatial area that contains other construction models (IFC), serving as an aggregation point for chronological and update data." .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdatableEntity
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#UpdatableEntity
     ould:UpdatableEntity rdf:type owl:Class ;
         owl:disjointWith ould:UpdateChain ;
         rdfs:comment "A superclass representing any entity that can undergo updates. This includes IFC components, MsOCCP records, temporal entities and other objects that require chronological modification tracking, e.g., attached or linked data."@en ;
         rdfs:label "Updatable Entity"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#Update
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#Update
     ould:Update rdf:type owl:Class ;
         rdfs:subClassOf <http://www.w3.org/2006/time#Instant> ;
         rdfs:comment "The class \"Update\" represents a specific modification recorded in an MsOCCP (Model-specific OCCP) file. Each instance captures a single event's transformation, including changes in timestamps, IFC component identifiers, and hash values. By linking to previous updates, it enables full traceability of modifications over time."@en ;
         rdfs:label "Update"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateChain
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#UpdateChain
     ould:UpdateChain rdf:type owl:Class ;
         owl:disjointWith ould:UpdatableEntity ;
         rdfs:comment "The class \"UpdateChain\" represents a structured sequence of consecutive updates applied to a specific IFC component or dataset. It groups related updates together, enabling an organized way to track modifications over time. Each \"UpdateChain\" instance is linked to previous and next chains, ensuring a complete versioning history. An \"UpdateChain\" is limited to 21 ould:UpdateChainElement(s) for performance reasons."@en ;
         rdfs:label "Update Chain"@en .
 
 
-    ###  http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#UpdateReplacement
+    ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#UpdateReplacement
     ould:UpdateReplacement rdf:type owl:Class ;
         rdfs:subClassOf ould:Update ;
         rdfs:comment "Represents an update that replaces one or more existing entities with a new one (e.g., replacing IFC component ifc:Wall123 with ifc:Wall456). It links the predecessor update or entry in the MsOCCP (recording the old state) via ould:hasPredecessor and tracks changes in identifiers and hash values using ould:hasPreviousIFCModelID, ould:hasNewIFCModelID, ould:hasPreviousHash, and ould:hasNewHash."@en ;

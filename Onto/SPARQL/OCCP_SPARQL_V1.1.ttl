@@ -1,6 +1,6 @@
 @prefix sh:    <http://www.w3.org/ns/shacl#> .
 @prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
-@prefix occp:  <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix occp:  <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> .
 @prefix time:  <http://www.w3.org/2006/time#> .
 @prefix osh:   <http://www.occpshape.de/shape#> .
 @prefix sparql: <http://www.example.de/sparql#> .
@@ -71,7 +71,7 @@
     
     osh:beginningOfPlanningConstruct a osh:ConstructQuery ;
         osh:queryText """
-            PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+            PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
             CONSTRUCT {
                 ?phase occp:hasActualBeginning ?instantStart .
                 ?cycle occp:hasActualBeginning ?instantStart .

@@ -1,6 +1,6 @@
 @prefix ex: <http://www.example.de/example#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
-@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@prefix occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> .
+@prefix ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ex:IFC_Site a ould:Site ;

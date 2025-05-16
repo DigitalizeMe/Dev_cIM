@@ -1,11 +1,11 @@
-@prefix oush: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD/shape#> .
-@prefix ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
-@prefix occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#> .
+@prefix oush: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD/shape#> .
+@prefix ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#> .
+@prefix occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-@base <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#> .
+@base <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#> .
 
 
 #################################################################
@@ -53,7 +53,7 @@
             a sh:SPARQLConstraint ;
             sh:message "If hasNewTime is specified, hasPreviousTime must also be provided, and vice versa." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this
                 WHERE {
@@ -92,7 +92,7 @@
             a sh:SPARQLConstraint ;
             sh:message "hasNewTime must be later than hasPreviousTime if both exist." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this ?prevTime ?newTime
                 WHERE {
@@ -147,7 +147,7 @@
         a sh:SPARQLConstraint ;
         sh:message "time:hasBeginning must match the earliest time:hasTime of its Updates." ;
         sh:severity sh:Violation ;
-        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+        sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ;
                       sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
         sh:select """
             SELECT $this ?begin ?earliest
@@ -171,7 +171,7 @@
             a sh:SPARQLConstraint ;
             sh:message "time:hasEnd must match the latest time:hasTime of its Updates." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ;
                         sh:declare [ sh:prefix "time" ; sh:namespace "http://www.w3.org/2006/time#" ] ] ;
             sh:select """
                 SELECT $this ?end ?latest
@@ -195,7 +195,7 @@
             a sh:SPARQLConstraint ;
             sh:message "An UpdateChain must contain all Updates of its UpdatableEntity once it exists." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this ?entity ?update
                 WHERE {
@@ -218,7 +218,7 @@
         sh:targetClass ould:UpdateChain ;
         sh:sparql [
             sh:message "An UpdateChain must not contain more than 21 Updates." ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this
                 WHERE {
@@ -237,7 +237,7 @@
             a sh:SPARQLConstraint ;
             sh:message "If an UpdatableEntity has more than 21 Updates, they must be split into chains with max 21 Updates each, linked via hasNextChain. After split, the old chain must have max 20 Updates." ;
             sh:severity sh:Violation ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this ?chain ?updateCount
                 WHERE {
@@ -281,7 +281,7 @@
 #            a sh:SPARQLConstraint ;
 #            sh:message "Each UpdatableEntity must have at least one Update with a hasIFCModelID." ;
 #            sh:severity sh:Violation ;
-#            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+#            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
 #            sh:select """
 #                SELECT $this
 #                WHERE {
@@ -324,7 +324,7 @@
             sh:message "The successor UpdateReplacement must have a later timestamp than its predecessor Update." ;
             sh:severity sh:Violation ;
             sh:prefixes [ 
-                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ;
+                sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ;
             ] ;
             sh:select """
                 SELECT $this ?prevTime ?newTime
@@ -341,7 +341,7 @@
         sh:targetClass ould:UpdateReplacement ;
         sh:sparql [
             sh:message "Each UpdateReplacement must reference a valid predecessor Update that exists." ;
-            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#" ] ] ;
+            sh:prefixes [ sh:declare [ sh:prefix "ould" ; sh:namespace "http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#" ] ] ;
             sh:select """
                 SELECT $this
                 WHERE {
@@ -440,8 +440,8 @@
         # Ensure parent phase start is the earliest of all direct component phase starts
 #        sh:sparql [
 #            sh:select """
-#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 #                PREFIX time: <http://www.w3.org/2006/time#>
 #                SELECT $this ?parentPhase ?compPhase ?startParent ?earliestCompStart
 #                WHERE {
@@ -476,8 +476,8 @@
 #        # Ensure parent phase end is the latest of all direct component phase ends
 #        sh:sparql [
 #            sh:select """
-#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 #                PREFIX time: <http://www.w3.org/2006/time#>
 #                SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
 #                WHERE {
@@ -512,8 +512,8 @@
 #        # Ensure parent cycle number is the sum of max direct component cycle numbers
 #        sh:sparql [
 #            sh:select """
-#                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-#                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+#                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+#                PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 #                SELECT $this ?parentCycle ?totalCompCycles ?parentCycleNum
 #                WHERE {
 #                    $this ould:consistsOf ?component .  # Nur direkte Kinder
@@ -545,8 +545,8 @@
 #        # Ensure CompletionOfPlanning only after all PhaseA and PhaseB of direct components are complete
         sh:sparql [
             sh:select """
-                PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-                PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+                PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+                PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
                 PREFIX time: <http://www.w3.org/2006/time#>
                 SELECT $this ?parentPhase ?compPhase ?endParent ?latestCompEnd
                 WHERE {
