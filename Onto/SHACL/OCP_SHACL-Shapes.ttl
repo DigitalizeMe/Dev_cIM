@@ -178,7 +178,7 @@
         sh:property [
             sh:path ocp:containsPhase ;
             sh:minCount 1 ;
-            sh:message "Each 'ocp:Process' must consist of at least two instances of 'ocp:Phase' connected via 'ocp:containsPhase'."@en ;
+            sh:message "Each 'ocp:Process' must consist of at least one instance of 'ocp:Phase' connected via 'ocp:containsPhase'."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for isInPhase (process is contained in exactly one phase, if present)
@@ -187,6 +187,20 @@
             sh:class ocp:Phase ;
             sh:maxCount 1 ;
             sh:message "Each 'ocp:Process' must be embedded in at most one 'ocp:Phase' via 'ocp:isInPhase'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        # Constraint to ensure phases belong to a process
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                SELECT $this ?phase
+                WHERE {
+                    $this ocp:containsPhase ?phase .
+                    ?phase ocp:belongsToProcess ?otherProcess .
+                    FILTER (?otherProcess != $this)
+                }
+            """ ;
+            sh:message "For 'ocp:Process': Each phase contained via 'ocp:containsPhase' must belong to the same process via 'ocp:belongsToProcess'."@en ;
             sh:severity sh:Violation
         ] ;
         # Removed shapes for beginning and end, because processes contain phases, which have beginnings and ends (should suffice)
@@ -201,6 +215,79 @@
                 }
             """ ;
             sh:message "For 'ocp:Process': A process cannot be embedded in a phase (ocp:isInPhase) that it also contains (ocp:hasPhase)."@en ;
+            sh:severity sh:Violation
+        ] .
+    
+    osh:ContainsTemporalEntityShape a sh:NodeShape ;
+        sh:targetClass ocp:Process ;
+        # Constraint for containsTemporalEntity
+        sh:property [
+            sh:path ocp:containsTemporalEntity ;
+            sh:class time:TemporalEntity ;
+            sh:message "Each 'ocp:containsTemporalEntity' must reference an instance of 'time:TemporalEntity' (e.g., time:Instant or time:Interval) that is contained in a 'ocp:Process'."@en ;
+            sh:severity sh:Violation
+        ] .
+
+    osh:ContainsProcessShape a sh:NodeShape ;
+        sh:targetClass ocp:Phase ;
+        # Constraint for containsProcess
+        sh:property [
+            sh:path ocp:containsProcess ;
+            sh:class ocp:Process ;
+            sh:message "Each 'ocp:containsProcess' must reference an instance of 'ocp:Process' that is contained in a 'ocp:Phase'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        # Prevent cycles involving containsProcess (a phase cannot indirectly contain a process that contains it)
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                SELECT $this
+                WHERE {
+                    $this ocp:containsProcess ?process .
+                    ?process ocp:containsPhase+ ?cycle .
+                    FILTER (?cycle = $this)
+                }
+            """ ;
+            sh:message "For 'ocp:Phase': A phase cannot contain a process via 'ocp:containsProcess' that indirectly contains the same phase via 'ocp:containsPhase' (no cycles allowed)."@en ;
+            sh:severity sh:Violation
+        ] .
+
+    osh:IsInProcessShape a sh:NodeShape ;
+        sh:targetClass ocp:Phase ;
+        # Constraint for isInProcess
+        sh:property [
+            sh:path ocp:isInProcess ;
+            sh:class ocp:Process ;
+            sh:maxCount 1 ;
+            sh:message "Each 'ocp:Phase' can be embedded in at most one 'ocp:Process' via 'ocp:isInProcess'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        # Ensure consistency with containsProcess or containsPhase
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                SELECT $this ?parent
+                WHERE {
+                    $this ocp:isInProcess ?parent .
+                    FILTER NOT EXISTS { ?parent ocp:containsPhase $this }
+                    FILTER NOT EXISTS { ?parent ocp:containsProcess $this }
+                }
+            """ ;
+            sh:message "For 'ocp:Phase': If embedded in a process via 'ocp:isInProcess', the parent process must contain it via 'ocp:containsPhase' or 'ocp:containsProcess'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        # Prevent cycles involving isInProcess
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                SELECT $this
+                WHERE {
+                    $this ocp:isInProcess ?process .
+                    ?process ocp:containsPhase+ ?cycle .
+                    FILTER (?cycle = $this)
+                }
+            """ ;
+            sh:message "For 'ocp:Phase': A phase cannot be embedded in a process via 'ocp:isInProcess' that indirectly contains the same phase via 'ocp:containsPhase' (no cycles allowed)."@en ;
             sh:severity sh:Violation
         ] .
 
