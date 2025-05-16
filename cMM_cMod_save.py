@@ -54,7 +54,7 @@ def save_cmod(cmod_input_path_IFC, cmod_input_path_LD, cmod_id, timepoint, commi
     OCCP = Namespace("http://example.org/occp#")
     TIME = Namespace("http://www.w3.org/2006/time#")
     XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
-    OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
+    OULD = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#")
     g.bind("occp", OCCP)
     g.bind("time", TIME)
     g.bind("ould", OULD)

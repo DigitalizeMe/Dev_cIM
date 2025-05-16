@@ -35,7 +35,7 @@ construct_query_text = str(sparql_g.query("""
         osh:beginningOfPlanningConstruct osh:queryText ?query .
     }
 """).bindings[0]["query"])
-construct_query = prepareQuery(construct_query_text, initNs={"occp": "http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#"})
+construct_query = prepareQuery(construct_query_text, initNs={"occp": "http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#"})
 
 post_g = pre_g.query(construct_query)
 post_abox = Graph()

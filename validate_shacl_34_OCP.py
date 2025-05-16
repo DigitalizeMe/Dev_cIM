@@ -26,7 +26,7 @@ ABOX_POST_DIR = os.path.join(ABOX_DIR, "POST_ABOX")
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")
 JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")
 OCP = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#")
-OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
+OULD = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#")
 XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
 EX = Namespace("http://www.example.de/example#")  
 

@@ -2,7 +2,7 @@
 from rdflib import Graph
 
 CONSTRUCT_PHASE_A1 = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -24,7 +24,7 @@ CONSTRUCT {
 """
     
 CONSTRUCT_PHASE_A2 = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
         ?phase occp:hasEstimatedBeginning ?startInstantEstimated .
         ?phase occp:hasEstimatedEnd ?endInstantEstimated .
@@ -46,7 +46,7 @@ CONSTRUCT {
 """
 
 CONSTRUCT_PHASE_B = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -88,7 +88,7 @@ WHERE {
 """
 
 CONSTRUCT_PHASE_C = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -130,8 +130,8 @@ WHERE {
 """
 
 CONSTRUCT_PHASE_D = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -203,7 +203,7 @@ WHERE {
 """
 
 CONSTRUCT_PHASE_M = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -295,8 +295,8 @@ WHERE {
 """
 
 CONSTRUCT_CYCLENUMBER = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?parentCycle occp:hasCycleNumber ?parentCycleNumber .
 }
@@ -315,7 +315,7 @@ WHERE {
 """
 
 CONSTRUCT_COMPONENTS = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .
     ?phase occp:hasActualEnd ?endInstantActual .
@@ -372,8 +372,8 @@ WHERE {
 """
 
 CONSTRUCT_PARENT_PHASES = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?parentPhase occp:hasActualBeginning ?startInstant .
     ?parentPhase occp:hasActualEnd ?endInstant .
@@ -398,8 +398,8 @@ WHERE {
 """
 
 CONSTRUCT_PARENT_PHASES_ESTIMATED = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?parentPhase occp:hasEstimatedBeginning ?startInstant .
     ?parentPhase occp:hasEstimatedEnd ?endInstant .
@@ -434,7 +434,7 @@ WHERE {
 """
 
 CONSTRUCT_PARENT_PHASES_FILTER = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 CONSTRUCT {
     ?parentPhase occp:hasActualBeginning ?earliestStartInstant .
@@ -476,8 +476,8 @@ WHERE {
 """
 
 CONSTRUCT_PARENT_CYCLES_ACTUAL = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?parentCycle occp:hasActualBeginning ?startInstant .
     ?parentCycle occp:hasActualEnd ?endInstant .
@@ -498,7 +498,7 @@ WHERE {
 """
 
 CONSTRUCT_PARENT_CYCLES_OLD = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 CONSTRUCT {
     ?cycle occp:hasActualBeginning ?startInstantActual .
     ?cycle occp:hasActualEnd ?endInstantActual .
@@ -552,8 +552,8 @@ WHERE {
 """
 
 CONSTRUCT_FILTER_ACTUAL_BEGINNING = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
-PREFIX ould: <http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
+PREFIX ould: <http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?earliestStartInstant .
 }
@@ -585,7 +585,7 @@ WHERE {
 """
 
 CONSTRUCT_FILTER_ACTUAL_END = """
-PREFIX occp: <http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#>
+PREFIX occp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 CONSTRUCT {
     ?phase occp:hasActualBeginning ?startInstantActual .

@@ -3,8 +3,8 @@ from rdflib import Graph, Literal, URIRef, Namespace
 import os
 
 # Namespaces definieren
-OCCP = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2022/9/cMod_V0.1#")
-OULD = Namespace("http://www.semanticweb.org/albrechtvaatz/ontologies/2024/OULD#")
+OCCP = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1#")
+OULD = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2024/OULD#")
 EX = Namespace("http://example.org/example#")
 RDF = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 
