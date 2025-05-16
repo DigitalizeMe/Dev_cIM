@@ -174,11 +174,11 @@
             sh:message "Each 'ocp:Process' must have exactly one 'ocp:hasProcessID' of type xsd:string to provide a unique identifier."@en ;
             sh:severity sh:Violation
         ] ;
-        # Constraint for hasPhase (process contains phases)
+        # Constraint for containsPhase (process contains phases)
         sh:property [
-            sh:path ocp:hasPhase ;
+            sh:path ocp:containsPhase ;
             sh:minCount 1 ;
-            sh:message "Each 'ocp:Process' must consist of at least two instances of 'ocp:Phase' connected via 'ocp:hasPhase'."@en ;
+            sh:message "Each 'ocp:Process' must consist of at least two instances of 'ocp:Phase' connected via 'ocp:containsPhase'."@en ;
             sh:severity sh:Violation
         ] ;
         # Constraint for isInPhase (process is contained in exactly one phase, if present)

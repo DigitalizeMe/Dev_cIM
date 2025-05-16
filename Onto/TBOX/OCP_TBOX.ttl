@@ -62,10 +62,11 @@
 
 
     ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#belongsToProcess
-    ocp:belongsToProcess a rdf:Property ;
+    ocp:belongsToProcess a rdf:ObjectProperty ;
         rdfs:domain <http://www.w3.org/2006/time#TemporalEntity> ;
 		rdfs:range ocp:Process ;
-		rdfs:comment "This property represents the embedding of a time:Entity within a ocp:Process."@en ;
+		owl:inverseOf ocp:containsTemporalEntity ;
+		rdfs:comment "This property represents the embedding of a time:TemporalEntity within a ocp:Process."@en ;
         rdfs:label "belongs to Process" .
 
 
@@ -76,6 +77,33 @@
 		owl:inverseOf ocp:belongsToInstant ;
 		rdfs:comment "This property represents the connection between a time:Instant and a ocp:Phase."@en ;
 		rdfs:label "belongs to phase"@en .
+
+
+	###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#containsPhase
+    ocp:containsPhase rdf:type owl:ObjectProperty ;
+		rdfs:domain ocp:Process ;
+		rdfs:range ocp:Phase ;
+		owl:inverseOf ocp:isInProcess ;
+		rdfs:comment "This property represents the link of a ocp:Process to the ocp:Phase it is a part of."@en ;
+        rdfs:label "contains phase"@en .
+
+
+	###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#containsProcess
+    ocp:containsProcess rdf:type owl:ObjectProperty ;
+		rdfs:domain ocp:Phase ;
+		rdfs:range ocp:Process ;
+		owl:inverseOf ocp:isInPhase ;
+		rdfs:comment "This property represents the link of a ocp:Phase to the ocp:Process it is a part of."@en ;
+        rdfs:label "contains process"@en .
+
+
+	###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#containsTemporalEntity
+    ocp:containsTemporalEntity a rdf:ObjectProperty ;
+        rdfs:domain ocp:Process ;
+		rdfs:range <http://www.w3.org/2006/time#TemporalEntity> ;
+		owl:inverseOf ocp:belongsToProcess ;
+		rdfs:comment "This property represents the link of a ocp:Process to a time:TemporalEntity."@en ;
+        rdfs:label "contains Temporal Entity"@en .
 
 
 	###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#endsAfter
@@ -169,6 +197,14 @@
 		rdfs:range ocp:Phase ;
 		rdfs:comment "This property represents the embedding of a process within a phase, used to link a process to the overarching phase it belongs to."@en ;
 		rdfs:label "is in phase"@en .
+
+
+	###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#isInProcess 
+    ocp:isInProcess rdf:type owl:ObjectProperty ;
+		rdfs:domain ocp:Phase ;
+		rdfs:range ocp:Process ;
+		rdfs:comment "This property represents the embedding of a phase within a process, used to link a phase to the overarching process it belongs to."@en ;
+		rdfs:label "is in process"@en .
 
 
     ###  http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#startsCycle

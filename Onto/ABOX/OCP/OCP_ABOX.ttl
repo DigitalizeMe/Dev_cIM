@@ -3,7 +3,13 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:ProductSellingProcess a ocp:Process .
+ex:ProductSellingProcess a ocp:Process ;
+	ocp:hasPhase ex:AcquisitionPhase ;
+	ocp:hasPhase ex:ProductionPhase ;
+	ocp:hasPhase ex:QualityManagementPhase ;
+	ocp:hasPhase ex:ShippingPhase ;
+	ocp:hasPhase ex:CustomerManagementPhase ;
+
 
 
 ex:AcquisitionPhase a ocp:Phase ;
