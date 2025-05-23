@@ -1,7 +1,7 @@
-2025-05-23 17:04:24,046 - INFO - Loaded TBox: G:\Promo\Dev_cIM\Onto/TBOX/OCP_TBOX.ttl
-2025-05-23 17:04:24,050 - INFO - Loaded ABox: G:\Promo\Dev_cIM\Onto/ABOX/OCP/OCP_ABOX_4.ttl
-2025-05-23 17:04:24,055 - INFO - Inferred ABox saved: G:\Promo\Dev_cIM\Onto/ABOX/OCP/POST_ABOX\OCP_Post_inferred.ttl
-2025-05-23 17:04:25,377 - INFO - Conformity: False
-2025-05-23 17:04:25,378 - ERROR - Validation error: For temporal entity <http://www.example.de/example#P2>: Earliest start time (2025-07-01 from instant <http://www.example.de/example#Instant3>) is not after latest end time (2026-06-30 from instant <http://www.example.de/example#Instant6>) of entity <http://www.example.de/example#P3> as required by time:after. (Focus Node: http://www.example.de/example#P2, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-05-23 17:04:25,378 - ERROR - Validation error: For temporal entity <http://www.example.de/example#P2>: Latest end time (2025-12-31 from instant <http://www.example.de/example#Instant4>) is not before earliest start time (2025-12-01 from instant <http://www.example.de/example#Instant7>) of entity <http://www.example.de/example#P4> as required by time:before. (Focus Node: http://www.example.de/example#P2, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
-2025-05-23 17:04:25,378 - ERROR - Validation failed.
+2025-05-23 19:10:34,506 - INFO - Loaded TBox: G:\Promo\Dev_cIM\Onto/TBOX/OCP_TBOX.ttl
+2025-05-23 19:10:34,510 - INFO - Loaded ABox: G:\Promo\Dev_cIM\Onto/ABOX/OCP/OCP_ABOX_10.ttl
+2025-05-23 19:10:34,515 - INFO - Inferred ABox saved: G:\Promo\Dev_cIM\Onto/ABOX/OCP/POST_ABOX\OCP_Post_inferred.ttl
+2025-05-23 19:10:35,848 - INFO - Conformity: False
+2025-05-23 19:10:35,848 - ERROR - Validation error: For 'time:TemporalEntity' <http://www.example.de/example#P3>: The time value (2026-06-30) of instant <http://www.example.de/example#Instant6> referenced by 'ocp:endsWith' does not match the time value (2026-07-01) of instant <http://www.example.de/example#Instant12> referenced by 'time:hasEnd'. (Focus Node: http://www.example.de/example#P3, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-05-23 19:10:35,849 - ERROR - Validation error: For 'time:TemporalEntity' <http://www.example.de/example#P2>: The time value (2025-07-01) of instant <http://www.example.de/example#Instant3> referenced by 'ocp:beginsWith' does not match the time value (2025-08-01) of instant <http://www.example.de/example#Instant11> referenced by 'time:hasBeginning'. (Focus Node: http://www.example.de/example#P2, Path: Unknown, Severity: http://www.w3.org/ns/shacl#Violation)
+2025-05-23 19:10:35,849 - ERROR - Validation failed.

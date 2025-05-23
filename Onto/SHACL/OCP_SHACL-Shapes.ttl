@@ -548,45 +548,46 @@
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?other ?earliestStartTime ?otherEarliestStartTime
+                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                SELECT $this ?other ?earliestStartTime ?otherTime ?startInstant
                 WHERE {
                     $this ocp:beginsBefore ?other .
                     {
-                        SELECT $this (MIN(?startTime) AS ?earliestStartTime)
-                        WHERE {
-                            { $this time:hasBeginning ?startInstant . ?startInstant ocp:hasActualTime ?startTime . }
-                            UNION
-                            { $this ocp:beginsWith ?startEntity . ?startEntity (ocp:beginsWith)* ?start .
-                            ?start a time:Instant ; ocp:hasActualTime ?startTime . }
-                            UNION
-                            { $this time:hasBeginning ?startInstant . ?startInstant ocp:hasEstimatedTime ?startTime . }
-                            UNION
-                            { $this ocp:beginsWith ?startEntity . ?startEntity (ocp:beginsWith)* ?start .
-                            ?start a time:Instant ; ocp:hasEstimatedTime ?startTime . }
-                        }
-                        GROUP BY $this
-                        HAVING (BOUND(?earliestStartTime))
+                        $this time:hasBeginning ?startInstant .
+                        { ?startInstant ocp:hasActualTime ?startTimeValue . }
+                        UNION
+                        { ?startInstant ocp:hasEstimatedTime ?startTimeValue . }
+                    }
+                    UNION
+                    {
+                        $this ocp:beginsWith ?startEntity .
+                        ?startEntity (ocp:beginsWith)* ?start .
+                        ?start a time:Instant .
+                        BIND (?start AS ?startInstant)
+                        { ?start ocp:hasActualTime ?startTimeValue . }
+                        UNION
+                        { ?start ocp:hasEstimatedTime ?startTimeValue . }
+                    }
+                    UNION
+                    {
+                        $this ocp:hasActualBeginning ?startInstant .
+                        ?startInstant a time:Instant .
+                        { ?startInstant ocp:hasActualTime ?startTimeValue . }
+                        UNION
+                        { ?startInstant ocp:hasEstimatedTime ?startTimeValue . }
                     }
                     {
-                        SELECT ?other (MIN(?otherStartTime) AS ?otherEarliestStartTime)
-                        WHERE {
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasActualTime ?otherStartTime . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasActualTime ?otherStartTime . }
-                            UNION
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasEstimatedTime ?otherStartTime . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasEstimatedTime ?otherStartTime . }
-                        }
-                        GROUP BY ?other
-                        HAVING (BOUND(?otherEarliestStartTime))
+                        ?other a time:Instant .
+                        { ?other ocp:hasActualTime ?otherTimeValue . }
+                        UNION
+                        { ?other ocp:hasEstimatedTime ?otherTimeValue . }
                     }
-                    FILTER (?earliestStartTime >= ?otherEarliestStartTime)
+                    BIND (STRDT(STR(?startTimeValue), xsd:date) AS ?earliestStartTime)
+                    BIND (STRDT(STR(?otherTimeValue), xsd:date) AS ?otherTime)
+                    FILTER (?earliestStartTime >= ?otherTime)
                 }
             """ ;
-            sh:message "For temporal entity {$this}: Earliest start time ({?earliestStartTime} via time:hasBeginning or ocp:beginsWith) must be before earliest start time ({?otherEarliestStartTime} via time:hasBeginning or ocp:beginsWith) of entity {?other} via ocp:beginsBefore."@en ;
+            sh:message "For temporal entity {$this}: Earliest start time ({?earliestStartTime} from instant {?startInstant}) is not before the time ({?otherTime}) of instant {?other} as required by ocp:beginsBefore."@en ;
             sh:severity sh:Violation
         ] .
 
@@ -597,45 +598,46 @@
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?other ?latestEndTime ?otherEarliestStartTime
+                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                SELECT $this ?other ?latestEndTime ?otherTime ?endInstant
                 WHERE {
                     $this ocp:endsBefore ?other .
                     {
-                        SELECT $this (MAX(?endTimeValue) AS ?latestEndTime)
-                        WHERE {
-                            { $this time:hasEnd ?endInstant . ?endInstant ocp:hasActualTime ?endTimeValue . }
-                            UNION
-                            { $this ocp:endsWith ?endEntity . ?endEntity (ocp:endsWith)* ?end .
-                            ?end a time:Instant ; ocp:hasActualTime ?endTimeValue . }
-                            UNION
-                            { $this time:hasEnd ?endInstant . ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
-                            UNION
-                            { $this ocp:endsWith ?endEntity . ?endEntity (ocp:endsWith)* ?end .
-                            ?end a time:Instant ; ocp:hasEstimatedTime ?endTimeValue . }
-                        }
-                        GROUP BY $this
-                        HAVING (BOUND(?latestEndTime))
+                        $this time:hasEnd ?endInstant .
+                        { ?endInstant ocp:hasActualTime ?endTimeValue . }
+                        UNION
+                        { ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
+                    }
+                    UNION
+                    {
+                        $this ocp:endsWith ?endEntity .
+                        ?endEntity (ocp:endsWith)* ?end .
+                        ?end a time:Instant .
+                        BIND (?end AS ?endInstant)
+                        { ?end ocp:hasActualTime ?endTimeValue . }
+                        UNION
+                        { ?end ocp:hasEstimatedTime ?endTimeValue . }
+                    }
+                    UNION
+                    {
+                        $this ocp:hasEstimatedEnd ?endInstant .
+                        ?endInstant a time:Instant .
+                        { ?endInstant ocp:hasActualTime ?endTimeValue . }
+                        UNION
+                        { ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
                     }
                     {
-                        SELECT ?other (MIN(?otherStartTime) AS ?otherEarliestStartTime)
-                        WHERE {
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasActualTime ?otherStartTime . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasActualTime ?otherStartTime . }
-                            UNION
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasEstimatedTime ?otherStartTime . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasEstimatedTime ?otherStartTime . }
-                        }
-                        GROUP BY ?other
-                        HAVING (BOUND(?otherEarliestStartTime))
+                        ?other a time:Instant .
+                        { ?other ocp:hasActualTime ?otherTimeValue . }
+                        UNION
+                        { ?other ocp:hasEstimatedTime ?otherTimeValue . }
                     }
-                    FILTER (?latestEndTime >= ?otherEarliestStartTime)
+                    BIND (STRDT(STR(?endTimeValue), xsd:date) AS ?latestEndTime)
+                    BIND (STRDT(STR(?otherTimeValue), xsd:date) AS ?otherTime)
+                    FILTER (?latestEndTime >= ?otherTime)
                 }
             """ ;
-            sh:message "For temporal entity {$this}: Latest end time ({?latestEndTime} via time:hasEnd or ocp:endsWith) must be before earliest start time ({?otherEarliestStartTime} via time:hasBeginning or ocp:beginsWith) of entity {?other} via ocp:endsBefore."@en ;
+            sh:message "For temporal entity {$this}: Latest end time ({?latestEndTime} from instant {?endInstant}) is not before the time ({?otherTime}) of instant {?other} as required by ocp:endsBefore."@en ;
             sh:severity sh:Violation
         ] .
 
@@ -691,97 +693,95 @@
     # Shape for ocp:beginsWith constraints
     osh:BeginsWithTimeShape a sh:NodeShape ;
         sh:targetClass time:TemporalEntity ;
+        sh:property [
+            sh:path ocp:beginsWith ;
+            sh:class time:Instant ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "For 'time:TemporalEntity': The object of 'ocp:beginsWith' must be a 'time:Instant'."@en ;
+            sh:severity sh:Violation
+        ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?other ?startTime ?otherStartTime
+                SELECT $this ?value ?timeValue
                 WHERE {
-                    $this ocp:beginsWith ?other .
-                    {
-                        SELECT $this (MIN(?startTimeValue) AS ?startTime)
-                        WHERE {
-                            { $this time:hasBeginning ?startInstant . ?startInstant ocp:hasActualTime ?startTimeValue . }
-                            UNION
-                            { $this ocp:beginsWith ?startEntity . ?startEntity (ocp:beginsWith)* ?start .
-                            ?start a time:Instant ; ocp:hasActualTime ?startTimeValue . }
-                            UNION
-                            { $this time:hasBeginning ?startInstant . ?startInstant ocp:hasEstimatedTime ?startTimeValue . }
-                            UNION
-                            { $this ocp:beginsWith ?startEntity . ?startEntity (ocp:beginsWith)* ?start .
-                            ?start a time:Instant ; ocp:hasEstimatedTime ?startTimeValue . }
-                        }
-                        GROUP BY $this
-                        HAVING (BOUND(?startTime))
-                    }
-                    {
-                        SELECT ?other (MIN(?otherStartTimeValue) AS ?otherStartTime)
-                        WHERE {
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasActualTime ?otherStartTimeValue . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasActualTime ?otherStartTimeValue . }
-                            UNION
-                            { ?other time:hasBeginning ?otherStartInstant . ?otherStartInstant ocp:hasEstimatedTime ?otherStartTimeValue . }
-                            UNION
-                            { ?other ocp:beginsWith ?otherStartEntity . ?otherStartEntity (ocp:beginsWith)* ?otherStart .
-                            ?otherStart a time:Instant ; ocp:hasEstimatedTime ?otherStartTimeValue . }
-                        }
-                        GROUP BY ?other
-                        HAVING (BOUND(?otherStartTime))
-                    }
-                    FILTER (?startTime != ?otherStartTime)
+                    $this ocp:beginsWith ?value .
+                    ?value a time:Instant .
+                    FILTER NOT EXISTS { ?value ocp:hasActualTime ?timeValue }
+                    FILTER NOT EXISTS { ?value ocp:hasEstimatedTime ?timeValue }
                 }
             """ ;
-            sh:message "For temporal entity {$this}: Start time ({?startTime} via time:hasBeginning or ocp:beginsWith) must equal start time ({?otherStartTime} via time:hasBeginning or ocp:beginsWith) of entity {?other} via ocp:beginsWith."@en ;
+            sh:message "For 'time:TemporalEntity' {$this}: The instant {$value} referenced by 'ocp:beginsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?timeValue ?otherInstant ?otherTimeValue
+                WHERE {
+                    $this ocp:beginsWith ?value .
+                    ?value a time:Instant .
+                    { ?value ocp:hasActualTime ?timeValue . }
+                    UNION
+                    { ?value ocp:hasEstimatedTime ?timeValue . }
+                    $this time:hasBeginning ?otherInstant .
+                    { ?otherInstant ocp:hasActualTime ?otherTimeValue . }
+                    UNION
+                    { ?otherInstant ocp:hasEstimatedTime ?otherTimeValue . }
+                    FILTER (?timeValue != ?otherTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:TemporalEntity' {$this}: The time value ({?timeValue}) of instant {$value} referenced by 'ocp:beginsWith' does not match the time value ({?otherTimeValue}) of instant {?otherInstant} referenced by 'time:hasBeginning'."@en ;
             sh:severity sh:Violation
         ] .
 
     # Shape for ocp:endsWith constraints
     osh:EndsWithTimeShape a sh:NodeShape ;
         sh:targetClass time:TemporalEntity ;
+        sh:property [
+            sh:path ocp:endsWith ;
+            sh:class time:Instant ;
+            sh:minCount 0 ;
+            sh:maxCount 1 ;
+            sh:message "For 'time:TemporalEntity': The object of 'ocp:endsWith' must be a 'time:Instant'."@en ;
+            sh:severity sh:Violation
+        ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?other ?endTime ?otherEndTime
+                SELECT $this ?value ?timeValue
                 WHERE {
-                    $this ocp:endsWith ?other .
-                    {
-                        SELECT $this (MAX(?endTimeValue) AS ?endTime)
-                        WHERE {
-                            { $this time:hasEnd ?endInstant . ?endInstant ocp:hasActualTime ?endTimeValue . }
-                            UNION
-                            { $this ocp:endsWith ?endEntity . ?endEntity (ocp:endsWith)* ?end .
-                            ?end a time:Instant ; ocp:hasActualTime ?endTimeValue . }
-                            UNION
-                            { $this time:hasEnd ?endInstant . ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
-                            UNION
-                            { $this ocp:endsWith ?endEntity . ?endEntity (ocp:endsWith)* ?end .
-                            ?end a time:Instant ; ocp:hasEstimatedTime ?endTimeValue . }
-                        }
-                        GROUP BY $this
-                        HAVING (BOUND(?endTime))
-                    }
-                    {
-                        SELECT ?other (MAX(?otherEndTimeValue) AS ?otherEndTime)
-                        WHERE {
-                            { ?other time:hasEnd ?otherEndInstant . ?otherEndInstant ocp:hasActualTime ?otherEndTimeValue . }
-                            UNION
-                            { ?other ocp:endsWith ?otherEndEntity . ?otherEndEntity (ocp:endsWith)* ?otherEnd .
-                            ?otherEnd a time:Instant ; ocp:hasActualTime ?otherEndTimeValue . }
-                            UNION
-                            { ?other time:hasEnd ?otherEndInstant . ?otherEndInstant ocp:hasEstimatedTime ?otherEndTimeValue . }
-                            UNION
-                            { ?other ocp:endsWith ?otherEndEntity . ?otherEndEntity (ocp:endsWith)* ?otherEnd .
-                            ?otherEnd a time:Instant ; ocp:hasEstimatedTime ?otherEndTimeValue . }
-                        }
-                        GROUP BY ?other
-                        HAVING (BOUND(?otherEndTime))
-                    }
-                    FILTER (?endTime != ?otherEndTime)
+                    $this ocp:endsWith ?value .
+                    ?value a time:Instant .
+                    FILTER NOT EXISTS { ?value ocp:hasActualTime ?timeValue }
+                    FILTER NOT EXISTS { ?value ocp:hasEstimatedTime ?timeValue }
                 }
             """ ;
-            sh:message "For temporal entity {$this}: End time ({?endTime} via time:hasEnd or ocp:endsWith) must equal end time ({?otherEndTime} via time:hasEnd or ocp:endsWith) of entity {?other} via ocp:endsWith."@en ;
+            sh:message "For 'time:TemporalEntity' {$this}: The instant {$value} referenced by 'ocp:endsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?timeValue ?otherInstant ?otherTimeValue
+                WHERE {
+                    $this ocp:endsWith ?value .
+                    ?value a time:Instant .
+                    { ?value ocp:hasActualTime ?timeValue . }
+                    UNION
+                    { ?value ocp:hasEstimatedTime ?timeValue . }
+                    $this time:hasEnd ?otherInstant .
+                    { ?otherInstant ocp:hasActualTime ?otherTimeValue . }
+                    UNION
+                    { ?otherInstant ocp:hasEstimatedTime ?otherTimeValue . }
+                    FILTER (?timeValue != ?otherTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:TemporalEntity' {$this}: The time value ({?timeValue}) of instant {$value} referenced by 'ocp:endsWith' does not match the time value ({?otherTimeValue}) of instant {?otherInstant} referenced by 'time:hasEnd'."@en ;
             sh:severity sh:Violation
         ] .
