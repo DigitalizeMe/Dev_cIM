@@ -10,27 +10,19 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 [ rdf:type     sh:ValidationReport;
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:P4;
-                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P4>: Earliest start time (2025-02-01 from instant <http://www.example.de/example#Instant5>) is not after latest end time (2025-12-31 from instant <http://www.example.de/example#Instant2>) of entity <http://www.example.de/example#P1> as required by time:after.";
+                 sh:focusNode                  ex:P2;
+                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P2>: Earliest start time (2025-07-01 from instant <http://www.example.de/example#Instant3>) is not after latest end time (2026-06-30 from instant <http://www.example.de/example#Instant6>) of entity <http://www.example.de/example#P3> as required by time:after.";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
                  sh:sourceShape                osh:AfterTimeShape;
-                 sh:value                      ex:P4
+                 sh:value                      ex:P2
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:P3;
-                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P3>: Latest end time (2025-06-30 from instant <http://www.example.de/example#Instant4>) is not before earliest start time (2025-02-01 from instant <http://www.example.de/example#Instant5>) of entity <http://www.example.de/example#P4> as required by time:before.";
+                 sh:focusNode                  ex:P2;
+                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P2>: Latest end time (2025-12-31 from instant <http://www.example.de/example#Instant4>) is not before earliest start time (2025-12-01 from instant <http://www.example.de/example#Instant7>) of entity <http://www.example.de/example#P4> as required by time:before.";
                  sh:resultSeverity             sh:Violation;
                  sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
                  sh:sourceShape                osh:BeforeTimeShape;
-                 sh:value                      ex:P3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:P1;
-                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P1>: Latest end time (2025-12-31 from instant <http://www.example.de/example#Instant2>) is not before earliest start time (2025-01-01 from instant <http://www.example.de/example#Instant1>) of entity <http://www.example.de/example#P3> as required by time:before.";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
-                 sh:sourceShape                osh:BeforeTimeShape;
-                 sh:value                      ex:P1
+                 sh:value                      ex:P2
                ]
 ] .

@@ -3,30 +3,6 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-ex:Cycle1 a ocp:Cycle ;
-    ocp:belongsToProcess ex:PR1 ;
-    ocp:hasActualBeginning ex:Instant6 ;
-    ocp:hasCycleNumber 1 ;
-    ocp:hasEstimatedEnd ex:Instant7 .
-
-ex:Instant1 a time:Instant ;
-    ocp:hasActualTime "2025-01-01"^^xsd:date .
-
-ex:Instant2 a time:Instant ;
-    ocp:hasActualTime "2025-12-31"^^xsd:date .
-
-ex:Instant4 a time:Instant ;
-    ocp:hasEstimatedTime "2025-06-30"^^xsd:date .
-
-ex:Instant5 a time:Instant ;
-    ocp:hasActualTime "2025-02-01"^^xsd:date .
-
-ex:Instant6 a time:Instant ;
-    ocp:hasActualTime "2025-03-01"^^xsd:date .
-
-ex:Instant7 a time:Instant ;
-    ocp:hasEstimatedTime "2025-04-01"^^xsd:date .
-
 ex:PR1 a ocp:Process ;
     ocp:containsPhase ex:P1,
         ex:P2,
@@ -34,32 +10,52 @@ ex:PR1 a ocp:Process ;
         ex:P4 ;
     ocp:hasProcessID "Process_1" .
 
+ex:Instant1 a time:Instant ;
+    ocp:hasActualTime "2025-01-01"^^xsd:date .
+
+ex:Instant2 a time:Instant ;
+    ocp:hasActualTime "2025-06-30"^^xsd:date .
+
 ex:Instant3 a time:Instant ;
-    ocp:hasEstimatedTime "2026-01-01"^^xsd:date .
+    ocp:hasActualTime "2025-07-01"^^xsd:date .
+
+ex:Instant4 a time:Instant ;
+    ocp:hasEstimatedTime "2025-12-31"^^xsd:date .
+
+ex:Instant5 a time:Instant ;
+    ocp:hasActualTime "2026-01-01"^^xsd:date .
+
+ex:Instant6 a time:Instant ;
+    ocp:hasEstimatedTime "2026-06-30"^^xsd:date .
+
+ex:Instant7 a time:Instant ;
+    ocp:hasActualTime "2025-12-01"^^xsd:date .
+
+ex:Instant8 a time:Instant ;
+    ocp:hasActualTime "2026-03-31"^^xsd:date .
 
 ex:P1 a ocp:Phase,
         time:TemporalEntity ;
-    ocp:beginsWith ex:P2 ;
-    ocp:endsWith ex:Instant2 ;
-    time:before ex:P3 .
-
-ex:P3 a ocp:Phase,
-        time:TemporalEntity ;
-    ocp:beginsWith ex:P2 ;
-    ocp:endsWith ex:Instant4 ;
-    time:after ex:P2 ;
-    time:before ex:P4 .
+    time:before ex:P3 ;
+    time:hasBeginning ex:Instant1 ;
+    time:hasEnd ex:Instant2 .
 
 ex:P2 a ocp:Phase,
         time:TemporalEntity ;
-    ocp:beginsWith ex:Instant1 ;
-    ocp:hasEstimatedEnd ex:Instant3 ;
-    time:after ex:P4 ;
+    ocp:beginsWith ex:Instant3 ;
+    ocp:hasEstimatedEnd ex:Instant4 ;
+    time:after ex:P3 ;
     time:before ex:P4 .
 
 ex:P4 a ocp:Phase,
         time:TemporalEntity ;
+    time:after ex:P1 ;
+    time:hasBeginning ex:Instant7 ;
+    time:hasEnd ex:Instant8 .
+
+ex:P3 a ocp:Phase,
+        time:TemporalEntity ;
     ocp:beginsWith ex:Instant5 ;
-    ocp:hasEstimatedEnd ex:Instant3 ;
-    time:after ex:P1 .
+    ocp:endsWith ex:Instant6 ;
+    time:after ex:P2 .
 

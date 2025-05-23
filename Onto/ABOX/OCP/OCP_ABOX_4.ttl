@@ -1,0 +1,55 @@
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.example.de/example#> .
+
+ex:PR1 a ocp:Process ;
+    ocp:hasProcessID "Process_1" ;
+    ocp:containsPhase ex:P1, ex:P2, ex:P3, ex:P4 .
+
+ex:P1 a ocp:Phase, time:TemporalEntity ;
+    time:hasBeginning ex:Instant1 ;
+    time:hasEnd ex:Instant2 .
+
+ex:P2 a ocp:Phase, time:TemporalEntity ;
+    ocp:beginsWith ex:Instant3 ;
+    ocp:hasEstimatedEnd ex:Instant4 .
+
+ex:P3 a ocp:Phase, time:TemporalEntity ;
+    ocp:beginsWith ex:Instant5 ;
+    ocp:endsWith ex:Instant6 .
+
+ex:P4 a ocp:Phase, time:TemporalEntity ;
+    time:hasBeginning ex:Instant7 ;
+    time:hasEnd ex:Instant8 .
+
+ex:Instant1 a time:Instant ;
+    ocp:hasActualTime "2025-01-01"^^xsd:date .
+
+ex:Instant2 a time:Instant ;
+    ocp:hasActualTime "2025-06-30"^^xsd:date .
+
+ex:Instant3 a time:Instant ;
+    ocp:hasActualTime "2025-07-01"^^xsd:date .
+
+ex:Instant4 a time:Instant ;
+    ocp:hasEstimatedTime "2025-12-31"^^xsd:date .
+
+ex:Instant5 a time:Instant ;
+    ocp:hasActualTime "2026-01-01"^^xsd:date .
+
+ex:Instant6 a time:Instant ;
+    ocp:hasEstimatedTime "2026-06-30"^^xsd:date .
+
+ex:Instant7 a time:Instant ;
+    ocp:hasActualTime "2025-12-01"^^xsd:date .
+
+ex:Instant8 a time:Instant ;
+    ocp:hasActualTime "2026-03-31"^^xsd:date .
+
+# Temporal relationships
+ex:P1 time:before ex:P3 .  # Should pass: P1 ends 2025-06-30, P3 begins 2026-01-01
+ex:P2 time:before ex:P4 .  # Should fail: P2 ends 2025-12-31, P4 begins 2025-12-01
+ex:P3 time:after ex:P2 .   # Should pass: P3 begins 2026-01-01, P2 ends 2025-12-31
+ex:P4 time:after ex:P1 .   # Should pass: P4 begins 2025-12-01, P1 ends 2025-06-30
+ex:P2 time:after ex:P3 .   # Should fail: P2 begins 2025-07-01, P3 ends 2026-06-30
