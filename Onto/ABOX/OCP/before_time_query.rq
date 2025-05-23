@@ -1,0 +1,42 @@
+PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+PREFIX time: <http://www.w3.org/2006/time#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?this ?other ?latestEndTime ?earliestStartTime ?endInstant ?startInstant
+WHERE {
+    ?this time:before ?other .
+    {
+        ?this time:hasEnd ?endInstant .
+        { ?endInstant ocp:hasActualTime ?endTimeValue . }
+        UNION
+        { ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
+    }
+    UNION
+    {
+        ?this ocp:endsWith ?endEntity .
+        ?endEntity (ocp:endsWith)* ?end .
+        ?end a time:Instant .
+        BIND (?end AS ?endInstant)
+        { ?end ocp:hasActualTime ?endTimeValue . }
+        UNION
+        { ?end ocp:hasEstimatedTime ?endTimeValue . }
+    }
+    {
+        ?other time:hasBeginning ?startInstant .
+        { ?startInstant ocp:hasActualTime ?startTimeValue . }
+        UNION
+        { ?startInstant ocp:hasEstimatedTime ?startTimeValue . }
+    }
+    UNION
+    {
+        ?other ocp:beginsWith ?startEntity .
+        ?startEntity (ocp:beginsWith)* ?start .
+        ?start a time:Instant .
+        BIND (?start AS ?startInstant)
+        { ?start ocp:hasActualTime ?startTimeValue . }
+        UNION
+        { ?start ocp:hasEstimatedTime ?startTimeValue . }
+    }
+    BIND (STRDT(STR(?endTimeValue), xsd:date) AS ?latestEndTime)
+    BIND (STRDT(STR(?startTimeValue), xsd:date) AS ?earliestStartTime)
+    FILTER (?latestEndTime >= ?earliestStartTime)
+}

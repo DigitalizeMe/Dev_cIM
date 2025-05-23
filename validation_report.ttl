@@ -1,3 +1,4 @@
+PREFIX ex:   <http://www.example.de/example#>
 PREFIX ocp:  <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
 PREFIX osh:  <http://www.ocpshape.de/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -9,191 +10,27 @@ PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 [ rdf:type     sh:ValidationReport;
   sh:conforms  false;
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/BusinessCaseDesignPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
+                 sh:focusNode                  ex:P4;
+                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P4>: Earliest start time (2025-02-01 from instant <http://www.example.de/example#Instant5>) is not after latest end time (2025-12-31 from instant <http://www.example.de/example#Instant2>) of entity <http://www.example.de/example#P1> as required by time:after.";
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/BusinessCaseDesignPhase>
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:AfterTimeShape;
+                 sh:value                      ex:P4
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/OrderHandlingCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have at least one end (either 'ocp:hasActualEnd' or 'ocp:hasEstimatedEnd') referencing a 'time:Instant'."@en;
+                 sh:focusNode                  ex:P3;
+                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P3>: Latest end time (2025-06-30 from instant <http://www.example.de/example#Instant4>) is not before earliest start time (2025-02-01 from instant <http://www.example.de/example#Instant5>) of entity <http://www.example.de/example#P4> as required by time:before.";
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:CycleShape;
-                 sh:value                      <http://example.org/OrderHandlingCycle>
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:BeforeTimeShape;
+                 sh:value                      ex:P3
                ];
   sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have at most one 'ocp:hasActualEnd' referencing a 'time:Instant'."@en;
-                 sh:resultPath                 ocp:hasActualEnd;
+                 sh:focusNode                  ex:P1;
+                 sh:resultMessage              "For temporal entity <http://www.example.de/example#P1>: Latest end time (2025-12-31 from instant <http://www.example.de/example#Instant2>) is not before earliest start time (2025-01-01 from instant <http://www.example.de/example#Instant1>) of entity <http://www.example.de/example#P3> as required by time:before.";
                  sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b0;
-                 sh:value                      <http://example.org/QualityCheckRejection>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityManagementPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/QualityManagementPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/ShippingPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/ShippingPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/OrderHandlingCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have exactly one 'ocp:hasActualBeginning' referencing a 'time:Instant' to mark its start."@en;
-                 sh:resultPath                 ocp:hasActualBeginning;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b1
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/ProductSellingProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must consist of at least one instance of 'ocp:Phase' connected via 'ocp:containsPhase'."@en;
-                 sh:resultPath                 ocp:containsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b2
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/AcquisitionPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/AcquisitionPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle2>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have exactly one 'ocp:hasActualBeginning' referencing a 'time:Instant' to mark its start."@en;
-                 sh:resultPath                 ocp:hasActualBeginning;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b1;
-                 sh:value                      <http://example.org/QualityCheckStart2>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle2>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have at least one end (either 'ocp:hasActualEnd' or 'ocp:hasEstimatedEnd') referencing a 'time:Instant'."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:CycleShape;
-                 sh:value                      <http://example.org/QualityCheckCycle2>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/MarketAnalysisProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must have exactly one 'ocp:hasProcessID' of type xsd:string to provide a unique identifier."@en;
-                 sh:resultPath                 ocp:hasProcessID;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/ProductDesignPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/ProductDesignPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/BusinessCaseValidationPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/BusinessCaseValidationPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/OrderHandlingCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must specify exactly one positive integer via 'ocp:hasCycleNumber' to indicate the number of iterations."@en;
-                 sh:resultPath                 ocp:hasCycleNumber;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                [] 
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/ProductionPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/ProductionPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/AdvertisementProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must have exactly one 'ocp:hasProcessID' of type xsd:string to provide a unique identifier."@en;
-                 sh:resultPath                 ocp:hasProcessID;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have at least one end (either 'ocp:hasActualEnd' or 'ocp:hasEstimatedEnd') referencing a 'time:Instant'."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:CycleShape;
-                 sh:value                      <http://example.org/QualityCheckCycle>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/ProductSellingProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must have exactly one 'ocp:hasProcessID' of type xsd:string to provide a unique identifier."@en;
-                 sh:resultPath                 ocp:hasProcessID;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b3
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have exactly one 'ocp:hasActualBeginning' referencing a 'time:Instant' to mark its start."@en;
-                 sh:resultPath                 ocp:hasActualBeginning;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b1;
-                 sh:value                      <http://example.org/QualityCheckStart>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/AdvertisementProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must consist of at least one instance of 'ocp:Phase' connected via 'ocp:containsPhase'."@en;
-                 sh:resultPath                 ocp:containsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b2
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/QualityCheckCycle2>;
-                 sh:resultMessage              "Each 'ocp:Cycle' must have at most one 'ocp:hasActualEnd' referencing a 'time:Instant'."@en;
-                 sh:resultPath                 ocp:hasActualEnd;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:ClassConstraintComponent;
-                 sh:sourceShape                _:b0;
-                 sh:value                      <http://example.org/QualityCheckApproval>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/CustomerManagementPhase>;
-                 sh:resultMessage              "A phase, if it has an actual beginning, must have an actual or estimated end. If it has an estimated beginning, it must have an estimated end."@en;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
-                 sh:sourceShape                osh:PhaseTimeExistenceShape;
-                 sh:value                      <http://example.org/CustomerManagementPhase>
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  <http://example.org/MarketAnalysisProcess>;
-                 sh:resultMessage              "Each 'ocp:Process' must consist of at least one instance of 'ocp:Phase' connected via 'ocp:containsPhase'."@en;
-                 sh:resultPath                 ocp:containsPhase;
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
-                 sh:sourceShape                _:b2
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:BeforeTimeShape;
+                 sh:value                      ex:P1
                ]
 ] .
