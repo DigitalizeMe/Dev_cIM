@@ -56,11 +56,6 @@
 <http://example.org/CustomerIdentificationStart> a time:Instant ;
     ocp:hasActualTime "2025-05-01"^^xsd:date .
 
-<http://example.org/CustomerManagementPhase> a ocp:Phase ;
-    ocp:beginsWith <http://example.org/ProductOrder> ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:endsWith <http://example.org/EndOfWarranty> .
-
 <http://example.org/OrderHandlingCycle> a ocp:Cycle ;
     ocp:beginsWith <http://example.org/ProductOrder> ;
     ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
@@ -90,11 +85,6 @@
     ocp:hasActualTime "2025-06-16"^^xsd:date ;
     ocp:startsPhase <http://example.org/ProductDesignPhase> .
 
-<http://example.org/ProductionPhase> a ocp:Phase ;
-    ocp:beginsWith <http://example.org/ProductionStart> ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:endsWith <http://example.org/ProductionEnd> .
-
 <http://example.org/ProductionStart> a time:Instant ;
     ocp:hasActualTime "2025-08-22"^^xsd:date .
 
@@ -111,15 +101,15 @@
 <http://example.org/ShippingPreparation> a time:Instant ;
     ocp:hasActualTime "2025-09-09"^^xsd:date .
 
-<http://example.org/AcquisitionPhase> a ocp:Phase ;
-    ocp:beginsWith <http://example.org/MarketAnalysisProcess> ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:endsWith <http://example.org/AdvertisementProcess> .
-
 <http://example.org/CustomerIdentificationPhase> a ocp:Phase ;
     ocp:belongsToProcess <http://example.org/MarketAnalysisProcess> ;
     ocp:hasActualBeginning <http://example.org/CustomerIdentificationStart> ;
     ocp:hasActualEnd <http://example.org/CustomerIdentificationEnd> .
+
+<http://example.org/CustomerManagementPhase> a ocp:Phase ;
+    ocp:beginsWith <http://example.org/ProductOrder> ;
+    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
+    ocp:endsWith <http://example.org/EndOfWarranty> .
 
 <http://example.org/EndOfProduction> a time:Instant ;
     ocp:hasEstimatedTime "2030-12-31"^^xsd:date,
@@ -141,6 +131,11 @@
     ocp:startsCycle <http://example.org/OrderHandlingCycle> ;
     time:after <http://example.org/BusinessCaseFinalization> .
 
+<http://example.org/ProductionPhase> a ocp:Phase ;
+    ocp:beginsWith <http://example.org/ProductionStart> ;
+    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
+    ocp:endsWith <http://example.org/ProductionEnd> .
+
 <http://example.org/QualityCheckStart> a time:instant ;
     ocp:after <http://example.org/ProductionEnd> ;
     ocp:before <http://example.org/VisualQualityCheck> ;
@@ -153,6 +148,11 @@
     ocp:belongsToCycle <http://example.org/QualityCheckCycle> ;
     ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
     ocp:hasActualTime "2025-08-27"^^xsd:date .
+
+<http://example.org/AcquisitionPhase> a ocp:Phase ;
+    ocp:beginsWith <http://example.org/MarketAnalysisProcess> ;
+    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
+    ocp:endsWith <http://example.org/AdvertisementProcess> .
 
 <http://example.org/ProductDesignPhase> a ocp:Phase ;
     ocp:beginsAfter <http://example.org/CustomerIdentificationPhase>,
@@ -169,11 +169,6 @@
     ocp:endsCycle <http://example.org/QualityCheckCycle> ;
     ocp:hasActualTime "2025-08-29"^^xsd:date .
 
-<http://example.org/ShippingPhase> a ocp:Phase ;
-    ocp:beginsWith <http://example.org/ShippingPreparation> ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:endsWith <http://example.org/Shipment_Delivery> .
-
 <http://example.org/BusinessCaseFinalization> a time:Instant ;
     ocp:hasActualTime "2025-07-31"^^xsd:date .
 
@@ -189,6 +184,11 @@
     ocp:hasActualEnd <http://example.org/QualityCheckApproval> ;
     ocp:hasCycleNumber 2 .
 
+<http://example.org/ShippingPhase> a ocp:Phase ;
+    ocp:beginsWith <http://example.org/ShippingPreparation> ;
+    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
+    ocp:endsWith <http://example.org/Shipment_Delivery> .
+
 <http://example.org/QualityCheckApproval> a time:instant ;
     ocp:endsCycle <http://example.org/QualityCheckCycle2> ;
     ocp:endsPhase <http://example.org/QualityManagementPhase> ;
@@ -197,10 +197,15 @@
 <http://example.org/MarketAnalysisProcess> a ocp:Process ;
     ocp:isInPhase <http://example.org/AcquisitionPhase> .
 
+<http://example.org/ProductSellingProcess> a ocp:Process ;
+    ocp:hasPhase <http://example.org/AcquisitionPhase>,
+        <http://example.org/CustomerManagementPhase>,
+        <http://example.org/ProductionPhase>,
+        <http://example.org/QualityManagementPhase>,
+        <http://example.org/ShippingPhase> .
+
 <http://example.org/QualityManagementPhase> a ocp:Phase ;
     ocp:beginsWith <http://example.org/QualityCheckStart> ;
     ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
     ocp:endsWith <http://example.org/QualityCheckApproval> .
-
-<http://example.org/ProductSellingProcess> a ocp:Process .
 

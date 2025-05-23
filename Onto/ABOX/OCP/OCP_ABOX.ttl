@@ -8,7 +8,7 @@ ex:ProductSellingProcess a ocp:Process ;
 	ocp:hasPhase ex:ProductionPhase ;
 	ocp:hasPhase ex:QualityManagementPhase ;
 	ocp:hasPhase ex:ShippingPhase ;
-	ocp:hasPhase ex:CustomerManagementPhase ;
+	ocp:hasPhase ex:CustomerManagementPhase .
 
 
 
