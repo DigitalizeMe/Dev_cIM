@@ -4,6 +4,7 @@ import os
 import subprocess
 import logging
 import tempfile
+from pathlib import Path
 from rdflib import Graph, Namespace, RDF, SH, URIRef, Literal
 from owlready2 import get_ontology, sync_reasoner_pellet, default_world, Thing
 
@@ -183,13 +184,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=OCP_SHAPES_PATH):
         bool: True if the data conforms to the SHACL shapes, False otherwise.
     """
     try:
-        # Check if Jena SHACL tool exists
-        jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
-        if not os.path.exists(jena_shacl_cmd):
-            logger.error(f"Jena SHACL-Tool not found: {jena_shacl_cmd}")
-            return False
-
-        # Create log4j2.properties to avoid URL errors
+        # Ensure log4j2.properties exists and use it explicitly as a file URI
         log4j_props = os.path.join(JENA_HOME, "log4j2.properties")
         if not os.path.exists(log4j_props):
             with open(log4j_props, "w", encoding="utf-8") as f:
@@ -210,10 +205,26 @@ rootLogger.appenderRef.stdout.ref = STDOUT
 """)
             logger.debug(f"Created Log4j2 properties: {log4j_props}")
 
-        # Prepare command for Jena SHACL validation
+        # Build command to invoke Jena SHACL via Java to avoid batch file issues
+        java_exec = JAVA_EXE if os.name == 'nt' else "java"
+        classpath = os.path.join(JENA_HOME, "lib", "*")
+        log4j_uri = Path(log4j_props).resolve().as_uri()
+
         data_file_jena = data_file.replace("\\", "/")
         shapes_path_jena = shapes_path.replace("\\", "/")
-        cmd = [jena_shacl_cmd, "validate", "--data", data_file_jena, "--shapes", shapes_path_jena]
+
+        cmd = [
+            java_exec,
+            f"-Dlog4j.configurationFile={log4j_uri}",
+            "-cp",
+            classpath,
+            "shacl.shacl",
+            "validate",
+            "--data",
+            data_file_jena,
+            "--shapes",
+            shapes_path_jena,
+        ]
         
         # Run validation and save report
         report_file = os.path.join(BASE_DIR, "validation_report.ttl").replace("\\", "/")
@@ -236,7 +247,16 @@ rootLogger.appenderRef.stdout.ref = STDOUT
         if result.returncode == 0:
             with open(report_file, "r", encoding="utf-8") as f:
                 report_data = f.read()
+
             logger.debug(f"SHACL Report: {report_data}")
+
+            # Remove any log lines before the TTL report
+            start_index = report_data.find("PREFIX")
+            if start_index == -1:
+                start_index = report_data.find("@prefix")
+            if start_index > 0:
+                report_data = report_data[start_index:]
+
             report_graph = Graph()
             try:
                 report_graph.parse(data=report_data, format="turtle")
