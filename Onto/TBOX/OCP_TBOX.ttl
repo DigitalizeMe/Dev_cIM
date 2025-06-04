@@ -4,7 +4,7 @@
 @prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://www.semanticweb.org/DigitalizeMe/ontologies/2022/9/cMod_V0.1> rdf:type owl:Ontology ;
+<http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> rdf:type owl:Ontology ;
                                                                         owl:imports <http://www.w3.org/2006/time#> ;
                                                                         rdfs:comment "Ontology for Chronological Processes (OCP) is an extension of the OWL-Time ontology, designed to better describe unfinished, iterative, and ongoing processes."@en .
 

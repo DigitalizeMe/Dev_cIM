@@ -1,28 +1,88 @@
-PREFIX ex:   <http://www.example.de/example#>
-PREFIX ocp:  <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
-PREFIX osh:  <http://www.ocpshape.de/shape#>
+2025-06-04T11:58:58.833384700Z main ERROR Invalid URL G:/Promo/Dev_cIM/apache-jena-5.3.0/log4j2.properties java.net.MalformedURLException: unknown protocol: g
+	at java.base/java.net.URL.<init>(URL.java:779)
+	at java.base/java.net.URL.of(URL.java:913)
+	at java.base/java.net.URI.toURL(URI.java:1172)
+	at org.apache.logging.log4j.core.config.ConfigurationSource.fromUri(ConfigurationSource.java:336)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:488)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:481)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:402)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory.getConfiguration(ConfigurationFactory.java:321)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:754)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:136)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:58)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:46)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:32)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:432)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:457)
+	at org.apache.jena.rdf.model.impl.PropertyImpl.<clinit>(PropertyImpl.java:47)
+	at org.apache.jena.rdf.model.ResourceFactory$Impl.createProperty(ResourceFactory.java:351)
+	at org.apache.jena.rdf.model.ResourceFactory.createProperty(ResourceFactory.java:186)
+	at org.apache.jena.vocabulary.RDF.property(RDF.java:58)
+	at org.apache.jena.vocabulary.RDF.<clinit>(RDF.java:76)
+	at org.apache.jena.sys.InitJenaCore.init(InitJenaCore.java:59)
+	at org.apache.jena.sys.InitJenaCore.start(InitJenaCore.java:32)
+	at org.apache.jena.base.module.Subsystem.lambda$initialize$1(Subsystem.java:117)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:193)
+	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:169)
+	at org.apache.jena.base.module.Subsystem.initialize(Subsystem.java:115)
+	at org.apache.jena.sys.JenaSystem$LazyInitializer.jenaSystemInitialization(JenaSystem.java:103)
+	at org.apache.jena.sys.JenaSystem$LazyInitializer.<clinit>(JenaSystem.java:96)
+	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:88)
+	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:72)
+	at shacl.shacl.<clinit>(shacl.java:31)
+
+2025-06-04T11:58:58.836384500Z main ERROR Invalid URL G:/Promo/Dev_cIM/apache-jena-5.3.0/log4j2.properties java.net.MalformedURLException: unknown protocol: g
+	at java.base/java.net.URL.<init>(URL.java:779)
+	at java.base/java.net.URL.of(URL.java:913)
+	at java.base/java.net.URI.toURL(URI.java:1172)
+	at org.apache.logging.log4j.core.config.ConfigurationSource.fromUri(ConfigurationSource.java:336)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory.getInputFromString(ConfigurationFactory.java:356)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:495)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:481)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:402)
+	at org.apache.logging.log4j.core.config.ConfigurationFactory.getConfiguration(ConfigurationFactory.java:321)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:754)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:136)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:58)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:46)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:32)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:432)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:457)
+	at org.apache.jena.rdf.model.impl.PropertyImpl.<clinit>(PropertyImpl.java:47)
+	at org.apache.jena.rdf.model.ResourceFactory$Impl.createProperty(ResourceFactory.java:351)
+	at org.apache.jena.rdf.model.ResourceFactory.createProperty(ResourceFactory.java:186)
+	at org.apache.jena.vocabulary.RDF.property(RDF.java:58)
+	at org.apache.jena.vocabulary.RDF.<clinit>(RDF.java:76)
+	at org.apache.jena.sys.InitJenaCore.init(InitJenaCore.java:59)
+	at org.apache.jena.sys.InitJenaCore.start(InitJenaCore.java:32)
+	at org.apache.jena.base.module.Subsystem.lambda$initialize$1(Subsystem.java:117)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:193)
+	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:169)
+	at org.apache.jena.base.module.Subsystem.initialize(Subsystem.java:115)
+	at org.apache.jena.sys.JenaSystem$LazyInitializer.jenaSystemInitialization(JenaSystem.java:103)
+	at org.apache.jena.sys.JenaSystem$LazyInitializer.<clinit>(JenaSystem.java:96)
+	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:88)
+	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:72)
+	at shacl.shacl.<clinit>(shacl.java:31)
+
+2025-06-04T11:58:58.838385600Z main ERROR Reconfiguration failed: No configuration found for '70dea4e' at 'null' in 'null'
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
-PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  false;
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:P3;
-                 sh:resultMessage              "For 'time:TemporalEntity' <http://www.example.de/example#P3>: The time value (2026-06-30) of instant <http://www.example.de/example#Instant6> referenced by 'ocp:endsWith' does not match the time value (2026-07-01) of instant <http://www.example.de/example#Instant12> referenced by 'time:hasEnd'.";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
-                 sh:sourceShape                osh:EndsWithTimeShape;
-                 sh:value                      ex:Instant6
-               ];
-  sh:result    [ rdf:type                      sh:ValidationResult;
-                 sh:focusNode                  ex:P2;
-                 sh:resultMessage              "For 'time:TemporalEntity' <http://www.example.de/example#P2>: The time value (2025-07-01) of instant <http://www.example.de/example#Instant3> referenced by 'ocp:beginsWith' does not match the time value (2025-08-01) of instant <http://www.example.de/example#Instant11> referenced by 'time:hasBeginning'.";
-                 sh:resultSeverity             sh:Violation;
-                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
-                 sh:sourceShape                osh:BeginsWithTimeShape;
-                 sh:value                      ex:Instant3
-               ]
+  sh:conforms  true
 ] .

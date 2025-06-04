@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 # Paths and namespaces
 OCP_TBOX_PATH = os.path.join(BASE_DIR, "Onto/TBOX/OCP_TBOX.ttl")  # Path to OCP TBOX
 OCP_SHAPES_PATH = os.path.join(BASE_DIR, "Onto/SHACL/OCP_SHACL-Shapes.ttl")  # Path to OCP SHACL shapes
-OCP_ABOX_PATH = os.path.join(BASE_DIR, "Onto/ABOX/OCP/OCP_ABOX_10.ttl")  # Path to OCP ABOX
+OCP_ABOX_PATH = os.path.join(BASE_DIR, "Onto/ABOX/OCP/OCP_ABOX_12.ttl")  # Path to OCP ABOX
 ABOX_POST_DIR = os.path.join(BASE_DIR, "Onto/ABOX/OCP/POST_ABOX")  # Directory for inferred ABOX
 JAVA_EXE = r"G:\Java\JDK_23\bin\java.exe".replace("\\", "/")  # Path to Java executable
 JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")  # Path to Jena installation

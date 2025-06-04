@@ -1,0 +1,96 @@
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://www.example.de/example#> .
+
+ex:PR1 a ocp:Process ;
+    ocp:hasProcessID "Process_1" ;
+    ocp:containsPhase ex:P1, ex:P2, ex:P3, ex:P4, ex:P5, ex:P6 .
+
+ex:P1 a ocp:Phase ;
+    time:hasBeginning ex:Instant1 ;
+    time:hasEnd ex:Instant2 .
+
+ex:P2 a ocp:Phase ;
+    ocp:beginsWith ex:Instant3 ;
+    time:hasBeginning ex:Instant11 ;  # Inkonsistente Zeitangabe
+    ocp:hasEstimatedEnd ex:Instant4 .
+
+ex:P3 a ocp:Phase ;
+    ocp:beginsWith ex:Instant5 ;
+    ocp:endsWith ex:Instant6 ;
+    time:hasEnd ex:Instant12 .        # Inkonsistente Zeitangabe
+
+ex:P4 a ocp:Phase ;
+    time:hasBeginning ex:Instant7 ;
+    ocp:endsWith ex:Instant8 .
+
+ex:P5 a ocp:Phase ;
+    ocp:beginsWith ex:Instant9 ;
+    ocp:endsWith ex:Instant10 .
+
+ex:P6 a ocp:Phase ;
+    time:hasBeginning ex:Instant13 ;
+    time:hasEnd ex:Instant14 .
+
+ex:Instant1 a time:Instant ;
+    ocp:hasActualTime "2025-01-01"^^xsd:date .
+
+ex:Instant2 a time:Instant ;
+    ocp:hasActualTime "2025-06-30"^^xsd:date .
+
+ex:Instant3 a time:Instant ;
+    ocp:hasActualTime "2025-07-01"^^xsd:date .
+
+ex:Instant4 a time:Instant ;
+    ocp:hasEstimatedTime "2025-12-31"^^xsd:date .
+
+ex:Instant5 a time:Instant ;
+    ocp:hasActualTime "2026-01-01"^^xsd:date .
+
+ex:Instant6 a time:Instant ;
+    ocp:hasEstimatedTime "2026-06-30"^^xsd:date .
+
+ex:Instant7 a time:Instant ;
+    ocp:hasActualTime "2025-12-01"^^xsd:date .
+
+ex:Instant8 a time:Instant ;
+    ocp:hasActualTime "2026-03-31"^^xsd:date .
+
+ex:Instant9 a time:Instant ;
+    ocp:hasActualTime "2024-06-01"^^xsd:date .
+
+ex:Instant10 a time:Instant ;
+    ocp:hasActualTime "2024-12-31"^^xsd:date .
+
+ex:Instant11 a time:Instant ;
+    ocp:hasActualTime "2025-08-01"^^xsd:date .  # Inkonsistent mit ex:Instant3
+
+ex:Instant12 a time:Instant ;
+    ocp:hasActualTime "2026-07-01"^^xsd:date .  # Inkonsistent mit ex:Instant6
+
+ex:Instant13 a time:Instant ;
+    ocp:hasActualTime "2024-05-01"^^xsd:date .
+
+ex:Instant14 a time:Instant ;
+    ocp:hasActualTime "2024-11-30"^^xsd:date .
+
+ex:InvalidInstant a ocp:Phase ;  # Kein time:Instant
+    ocp:hasActualTime "2024-05-01"^^xsd:date .
+
+ex:NoTimeInstant a time:Instant ;  # time:Instant ohne Zeitangabe
+    # Keine ocp:hasActualTime oder ocp:hasEstimatedTime
+.
+
+# Korrekte temporal relationships
+ex:P2 ocp:beginsWith ex:Instant3 .    # Should pass: Instant3 is a time:Instant with ocp:hasActualTime
+ex:P3 ocp:endsWith ex:Instant6 .      # Should pass: Instant6 is a time:Instant with ocp:hasEstimatedTime
+ex:P4 ocp:endsWith ex:Instant8 .      # Should pass: Instant8 is a time:Instant with ocp:hasActualTime
+ex:P5 ocp:endsWith ex:Instant10 .     # Should pass: Instant10 is a time:Instant with ocp:hasActualTime
+ex:P1 ocp:beginsBefore ex:Instant5 .  # Should pass: P1 begins 2025-01-01, Instant5 is 2026-01-01
+ex:P3 time:after ex:P2 .              # Should pass: P3 begins 2026-01-01, P2 ends 2025-12-31
+ex:P4 time:after ex:P5 .              # Should pass: P4 begins 2025-12-01, P5 ends 2024-12-31
+
+# Falsche Tripel für ocp:beginsWith und ocp:endsWith
+ex:P6 ocp:beginsWith ex:InvalidInstant .  # Should fail: InvalidInstant is not a time:Instant
+ex:P6 ocp:endsWith ex:NoTimeInstant .     # Should fail: NoTimeInstant has no ocp:hasActualTime or ocp:hasEstimatedTime
