@@ -4,6 +4,7 @@ import os
 import subprocess
 import logging
 import tempfile
+from pathlib import Path
 from rdflib import Graph, Namespace, RDF, SH, URIRef, Literal
 from owlready2 import get_ontology, sync_reasoner_pellet, default_world, Thing
 
@@ -207,7 +208,7 @@ rootLogger.appenderRef.stdout.ref = STDOUT
         # Build command to invoke Jena SHACL via Java to avoid batch file issues
         java_exec = JAVA_EXE if os.name == 'nt' else "java"
         classpath = os.path.join(JENA_HOME, "lib", "*")
-        log4j_uri = f"file:///{log4j_props.replace(os.sep, '/')}"
+        log4j_uri = Path(log4j_props).resolve().as_uri()
 
         data_file_jena = data_file.replace("\\", "/")
         shapes_path_jena = shapes_path.replace("\\", "/")
@@ -246,7 +247,16 @@ rootLogger.appenderRef.stdout.ref = STDOUT
         if result.returncode == 0:
             with open(report_file, "r", encoding="utf-8") as f:
                 report_data = f.read()
+
             logger.debug(f"SHACL Report: {report_data}")
+
+            # Remove any log lines before the TTL report
+            start_index = report_data.find("PREFIX")
+            if start_index == -1:
+                start_index = report_data.find("@prefix")
+            if start_index > 0:
+                report_data = report_data[start_index:]
+
             report_graph = Graph()
             try:
                 report_graph.parse(data=report_data, format="turtle")
