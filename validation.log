@@ -1,123 +1,19 @@
-2025-06-04 13:58:56,995 - INFO - Loaded TBox: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
-2025-06-04 13:58:56,998 - INFO - Loaded ABox: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
-2025-06-04 13:58:56,999 - DEBUG - Ensured output directory: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner
-2025-06-04 13:58:56,999 - DEBUG - Validating TBox syntax: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
-2025-06-04 13:58:57,007 - DEBUG - TBox syntax validated successfully
-2025-06-04 13:58:57,007 - DEBUG - Validating ABox syntax: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
-2025-06-04 13:58:57,011 - DEBUG - ABox syntax validated successfully
-2025-06-04 13:58:57,011 - DEBUG - Converting TBox to RDF/XML for owlready2
-2025-06-04 13:58:57,020 - DEBUG - Temporary TBox saved: C:/Users/Albrecht/AppData/Local/Temp/tmpeck_8ba3.xml
-2025-06-04 13:58:57,021 - DEBUG - Validating time.owl syntax: G:/Promo/Dev_cIM/Onto/TBOX/time.owl
-2025-06-04 13:58:57,084 - DEBUG - time.owl syntax validated successfully
-2025-06-04 13:58:57,085 - DEBUG - Converting time.owl to RDF/XML
-2025-06-04 13:58:57,104 - DEBUG - Temporary time.owl saved: C:/Users/Albrecht/AppData/Local/Temp/tmpi_hrdmes.xml
-2025-06-04 13:58:57,104 - DEBUG - Creating new owlready2 world
-2025-06-04 13:58:57,104 - DEBUG - Loading TBOX from: C:/Users/Albrecht/AppData/Local/Temp/tmpeck_8ba3.xml
-2025-06-04 13:58:57,123 - DEBUG - TBOX loaded successfully
-2025-06-04 13:58:57,123 - DEBUG - Loading ABOX from: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
-2025-06-04 13:58:57,128 - DEBUG - ABOX loaded successfully
-2025-06-04 13:58:57,128 - DEBUG - Listing loaded ABOX instances:
-2025-06-04 13:58:57,128 - DEBUG - Checking for local OWL-Time ontology: G:/Promo/Dev_cIM/Onto/TBOX/time.owl
-2025-06-04 13:58:57,128 - DEBUG - Loading local OWL-Time ontology from: C:/Users/Albrecht/AppData/Local/Temp/tmpi_hrdmes.xml
-2025-06-04 13:58:57,158 - DEBUG - Local OWL-Time ontology loaded successfully
-2025-06-04 13:58:57,158 - DEBUG - Starting Pellet reasoning
-2025-06-04 13:58:58,362 - DEBUG - Pellet reasoning completed
-2025-06-04 13:58:58,362 - DEBUG - Listing inferred classes for ABOX instances:
-2025-06-04 13:58:58,362 - DEBUG - Saving inferred ABOX to: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner/Reasoner_inferred.ttl
-2025-06-04 13:58:58,363 - INFO - Reasoner-inferred ABOX saved: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner/Reasoner_inferred.ttl
-2025-06-04 13:58:58,363 - DEBUG - Verified inferred ABOX exists: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner/Reasoner_inferred.ttl
-2025-06-04 13:58:58,363 - DEBUG - Cleaned up temporary TBox: C:/Users/Albrecht/AppData/Local/Temp/tmpeck_8ba3.xml
-2025-06-04 13:58:58,364 - DEBUG - Cleaned up temporary time.owl: C:/Users/Albrecht/AppData/Local/Temp/tmpi_hrdmes.xml
-2025-06-04 13:58:59,463 - DEBUG - SHACL Report: 2025-06-04T11:58:58.833384700Z main ERROR Invalid URL G:/Promo/Dev_cIM/apache-jena-5.3.0/log4j2.properties java.net.MalformedURLException: unknown protocol: g
-	at java.base/java.net.URL.<init>(URL.java:779)
-	at java.base/java.net.URL.of(URL.java:913)
-	at java.base/java.net.URI.toURL(URI.java:1172)
-	at org.apache.logging.log4j.core.config.ConfigurationSource.fromUri(ConfigurationSource.java:336)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:488)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:481)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:402)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory.getConfiguration(ConfigurationFactory.java:321)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:754)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
-	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
-	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
-	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:136)
-	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:58)
-	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:46)
-	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:32)
-	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:432)
-	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:457)
-	at org.apache.jena.rdf.model.impl.PropertyImpl.<clinit>(PropertyImpl.java:47)
-	at org.apache.jena.rdf.model.ResourceFactory$Impl.createProperty(ResourceFactory.java:351)
-	at org.apache.jena.rdf.model.ResourceFactory.createProperty(ResourceFactory.java:186)
-	at org.apache.jena.vocabulary.RDF.property(RDF.java:58)
-	at org.apache.jena.vocabulary.RDF.<clinit>(RDF.java:76)
-	at org.apache.jena.sys.InitJenaCore.init(InitJenaCore.java:59)
-	at org.apache.jena.sys.InitJenaCore.start(InitJenaCore.java:32)
-	at org.apache.jena.base.module.Subsystem.lambda$initialize$1(Subsystem.java:117)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:193)
-	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:169)
-	at org.apache.jena.base.module.Subsystem.initialize(Subsystem.java:115)
-	at org.apache.jena.sys.JenaSystem$LazyInitializer.jenaSystemInitialization(JenaSystem.java:103)
-	at org.apache.jena.sys.JenaSystem$LazyInitializer.<clinit>(JenaSystem.java:96)
-	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:88)
-	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:72)
-	at shacl.shacl.<clinit>(shacl.java:31)
-
-2025-06-04T11:58:58.836384500Z main ERROR Invalid URL G:/Promo/Dev_cIM/apache-jena-5.3.0/log4j2.properties java.net.MalformedURLException: unknown protocol: g
-	at java.base/java.net.URL.<init>(URL.java:779)
-	at java.base/java.net.URL.of(URL.java:913)
-	at java.base/java.net.URI.toURL(URI.java:1172)
-	at org.apache.logging.log4j.core.config.ConfigurationSource.fromUri(ConfigurationSource.java:336)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory.getInputFromString(ConfigurationFactory.java:356)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:495)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:481)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory$Factory.getConfiguration(ConfigurationFactory.java:402)
-	at org.apache.logging.log4j.core.config.ConfigurationFactory.getConfiguration(ConfigurationFactory.java:321)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:754)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
-	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
-	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
-	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:136)
-	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:58)
-	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:46)
-	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:32)
-	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:432)
-	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:457)
-	at org.apache.jena.rdf.model.impl.PropertyImpl.<clinit>(PropertyImpl.java:47)
-	at org.apache.jena.rdf.model.ResourceFactory$Impl.createProperty(ResourceFactory.java:351)
-	at org.apache.jena.rdf.model.ResourceFactory.createProperty(ResourceFactory.java:186)
-	at org.apache.jena.vocabulary.RDF.property(RDF.java:58)
-	at org.apache.jena.vocabulary.RDF.<clinit>(RDF.java:76)
-	at org.apache.jena.sys.InitJenaCore.init(InitJenaCore.java:59)
-	at org.apache.jena.sys.InitJenaCore.start(InitJenaCore.java:32)
-	at org.apache.jena.base.module.Subsystem.lambda$initialize$1(Subsystem.java:117)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
-	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:193)
-	at org.apache.jena.base.module.Subsystem.forEach(Subsystem.java:169)
-	at org.apache.jena.base.module.Subsystem.initialize(Subsystem.java:115)
-	at org.apache.jena.sys.JenaSystem$LazyInitializer.jenaSystemInitialization(JenaSystem.java:103)
-	at org.apache.jena.sys.JenaSystem$LazyInitializer.<clinit>(JenaSystem.java:96)
-	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:88)
-	at org.apache.jena.sys.JenaSystem.init(JenaSystem.java:72)
-	at shacl.shacl.<clinit>(shacl.java:31)
-
-2025-06-04T11:58:58.838385600Z main ERROR Reconfiguration failed: No configuration found for '70dea4e' at 'null' in 'null'
-PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX sh:   <http://www.w3.org/ns/shacl#>
-PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
-
-[ rdf:type     sh:ValidationReport;
-  sh:conforms  true
-] .
-
-2025-06-04 13:58:59,464 - ERROR - Failed to parse SHACL report: at line 1 of <>:
-Bad syntax (expected '.' or '}' or ']' at end of statement) at ^ in:
-"b'2025-06-04'^b'T11:58:58.833384700Z main ERROR Invalid URL G:/Promo/Dev_cIM'..."
-2025-06-04 13:58:59,464 - ERROR - Validation failed.
+2025-06-04 20:29:00,621 - INFO - Loaded TBox: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
+2025-06-04 20:29:00,625 - INFO - Loaded ABox: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
+2025-06-04 20:29:00,626 - DEBUG - Ensured output directory: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner
+2025-06-04 20:29:00,626 - DEBUG - Validating TBox syntax: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
+2025-06-04 20:29:00,634 - DEBUG - TBox syntax validated successfully
+2025-06-04 20:29:00,634 - DEBUG - Validating ABox syntax: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
+2025-06-04 20:29:00,638 - DEBUG - ABox syntax validated successfully
+2025-06-04 20:29:00,638 - DEBUG - Converting TBox to RDF/XML for owlready2
+2025-06-04 20:29:00,645 - DEBUG - Temporary TBox saved: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
+2025-06-04 20:29:00,645 - DEBUG - Validating time.owl syntax: G:/Promo/Dev_cIM/Onto/TBOX/time.owl
+2025-06-04 20:29:00,710 - DEBUG - time.owl syntax validated successfully
+2025-06-04 20:29:00,710 - DEBUG - Converting time.owl to RDF/XML
+2025-06-04 20:29:00,728 - DEBUG - Temporary time.owl saved: C:/Users/Albrecht/AppData/Local/Temp/tmppesz8nwx.xml
+2025-06-04 20:29:00,728 - DEBUG - Creating new owlready2 world
+2025-06-04 20:29:00,728 - DEBUG - Loading TBOX from: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
+2025-06-04 20:29:00,729 - ERROR - Error during Pellet reasoning: [Errno 22] Invalid argument: '/C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml'
+2025-06-04 20:29:00,729 - DEBUG - Cleaned up temporary TBox: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
+2025-06-04 20:29:00,730 - DEBUG - Cleaned up temporary time.owl: C:/Users/Albrecht/AppData/Local/Temp/tmppesz8nwx.xml
+2025-06-04 20:29:00,730 - ERROR - Reasoning failed, aborting validation.

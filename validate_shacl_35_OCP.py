@@ -4,6 +4,7 @@ import os
 import subprocess
 import logging
 import tempfile
+from pathlib import Path
 from rdflib import Graph, Namespace, RDF, SH, URIRef, Literal
 from owlready2 import get_ontology, sync_reasoner_pellet, default_world, Thing
 
@@ -93,28 +94,35 @@ def perform_reasoning(tbox_path, abox_path, output_path):
 
         # Load TBOX into owlready2
         logger.debug(f"Loading TBOX from: {temp_tbox_path}")
-        onto = world.get_ontology(f"file://{temp_tbox_path}").load()
+        tbox_uri = Path(temp_tbox_path).resolve().as_uri()
+        onto = world.get_ontology(tbox_uri).load()
         logger.debug("TBOX loaded successfully")
 
         # Load ABOX
         logger.debug(f"Loading ABOX from: {abox_path}")
         abox_temp = tempfile.NamedTemporaryFile(suffix=".ttl", delete=False)
         abox_graph.serialize(abox_temp.name, format="turtle")
-        onto.load(f"file://{abox_temp.name}", format="turtle")
+        abox_uri = Path(abox_temp.name).resolve().as_uri()
+        abox_onto = world.get_ontology(abox_uri).load()
+        onto.imported_ontologies.append(abox_onto)
         abox_temp.close()
         os.unlink(abox_temp.name)
         logger.debug("ABOX loaded successfully")
 
         # Log loaded ABOX instances
         logger.debug("Listing loaded ABOX instances:")
-        for indiv in onto.individuals():
+        abox_indivs = list(abox_onto.individuals())
+        if not abox_indivs:
+            logger.warning("No individuals found in ABOX ontology")
+        for indiv in abox_indivs:
             logger.debug(f"Individual: {indiv}, Classes: {list(indiv.is_a)}")
 
         # Load OWL-Time ontology
         logger.debug(f"Checking for local OWL-Time ontology: {TIME_OWL_PATH}")
         if temp_time_path:
             logger.debug(f"Loading local OWL-Time ontology from: {temp_time_path}")
-            onto.imported_ontologies.append(world.get_ontology(f"file://{temp_time_path}").load())
+            time_uri = Path(temp_time_path).resolve().as_uri()
+            onto.imported_ontologies.append(world.get_ontology(time_uri).load())
             logger.debug("Local OWL-Time ontology loaded successfully")
         else:
             logger.debug("Attempting to load OWL-Time ontology from web")
@@ -127,20 +135,20 @@ def perform_reasoning(tbox_path, abox_path, output_path):
 
         # Perform reasoning with Pellet
         logger.debug("Starting Pellet reasoning")
-        with onto:
+        with world:
             sync_reasoner_pellet(debug=1)
         logger.debug("Pellet reasoning completed")
 
         # Log inferred classes for ABOX instances
         logger.debug("Listing inferred classes for ABOX instances:")
-        for indiv in onto.individuals():
+        for indiv in abox_onto.individuals():
             classes = list(indiv.is_a)
             logger.debug(f"Individual: {indiv}, Inferred classes: {classes}")
 
         # Save inferred ABOX (only ABOX data)
         logger.debug(f"Saving inferred ABOX to: {output_path}")
         inferred_graph = Graph()
-        for indiv in onto.individuals():
+        for indiv in abox_onto.individuals():
             indiv_uri = URIRef(str(indiv.iri))
             for cls in indiv.is_a:
                 cls_uri = URIRef(str(cls.iri)) if hasattr(cls, "iri") else cls
@@ -153,6 +161,8 @@ def perform_reasoning(tbox_path, abox_path, output_path):
                     elif isinstance(value, (str, int, float, bool)):
                         inferred_graph.add((indiv_uri, prop_uri, Literal(value)))
         inferred_graph.serialize(output_path, format="turtle")
+        if len(inferred_graph) == 0:
+            logger.warning("Inferred ABOX graph is empty")
         logger.info(f"Reasoner-inferred ABOX saved: {output_path}")
 
         # Verify output file
@@ -183,13 +193,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=OCP_SHAPES_PATH):
         bool: True if the data conforms to the SHACL shapes, False otherwise.
     """
     try:
-        # Check if Jena SHACL tool exists
-        jena_shacl_cmd = os.path.join(JENA_HOME, "bat", "shacl.bat") if os.name == 'nt' else os.path.join(JENA_HOME, "bin", "shacl")
-        if not os.path.exists(jena_shacl_cmd):
-            logger.error(f"Jena SHACL-Tool not found: {jena_shacl_cmd}")
-            return False
-
-        # Create log4j2.properties to avoid URL errors
+        # Ensure log4j2.properties exists and use it explicitly as a file URI
         log4j_props = os.path.join(JENA_HOME, "log4j2.properties")
         if not os.path.exists(log4j_props):
             with open(log4j_props, "w", encoding="utf-8") as f:
@@ -210,11 +214,27 @@ rootLogger.appenderRef.stdout.ref = STDOUT
 """)
             logger.debug(f"Created Log4j2 properties: {log4j_props}")
 
-        # Prepare command for Jena SHACL validation
+        # Build command to invoke Jena SHACL via Java to avoid batch file issues
+        java_exec = JAVA_EXE if os.name == 'nt' else "java"
+        classpath = os.path.join(JENA_HOME, "lib", "*")
+        log4j_uri = Path(log4j_props).resolve().as_uri()
+
         data_file_jena = data_file.replace("\\", "/")
         shapes_path_jena = shapes_path.replace("\\", "/")
-        cmd = [jena_shacl_cmd, "validate", "--data", data_file_jena, "--shapes", shapes_path_jena]
-        
+
+        cmd = [
+            java_exec,
+            f"-Dlog4j.configurationFile={log4j_uri}",
+            "-cp",
+            classpath,
+            "shacl.shacl",
+            "validate",
+            "--data",
+            data_file_jena,
+            "--shapes",
+            shapes_path_jena,
+        ]
+
         # Run validation and save report
         report_file = os.path.join(BASE_DIR, "validation_report.ttl").replace("\\", "/")
         with open(report_file, "w", encoding="utf-8") as f:
@@ -236,7 +256,16 @@ rootLogger.appenderRef.stdout.ref = STDOUT
         if result.returncode == 0:
             with open(report_file, "r", encoding="utf-8") as f:
                 report_data = f.read()
+
             logger.debug(f"SHACL Report: {report_data}")
+
+            # Remove any log lines before the TTL report
+            start_index = report_data.find("PREFIX")
+            if start_index == -1:
+                start_index = report_data.find("@prefix")
+            if start_index > 0:
+                report_data = report_data[start_index:]
+
             report_graph = Graph()
             try:
                 report_graph.parse(data=report_data, format="turtle")
@@ -258,7 +287,10 @@ rootLogger.appenderRef.stdout.ref = STDOUT
                         error_key = (str(message), str(focus_node), str(path), str(severity))
                         if error_key not in seen_errors:
                             seen_errors.add(error_key)
-                            logger.error(f"Validation error: {message} (Focus Node: {focus_node}, Path: {path}, Severity: {severity})")
+                            logger.error(
+                                f"Validation error: {message} "
+                                f"(Focus Node: {focus_node}, Path: {path}, Severity: {severity})"
+                            )
             return conforms
         else:
             logger.error("Jena SHACL validation failed with non-zero exit code.")
@@ -314,7 +346,8 @@ if __name__ == "__main__":
     # Ensure POST_ABOX subdirectories exist
     os.makedirs(REASONER_DIR, exist_ok=True)
     os.makedirs(CONSTRUCT_DIR, exist_ok=True)
-    
+
     # Run validation
     conforms = load_and_validate_ocp()
     print(f"Validation Conforms: {conforms}")
+
