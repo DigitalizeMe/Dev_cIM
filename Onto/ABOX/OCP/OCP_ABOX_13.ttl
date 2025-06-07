@@ -7,29 +7,29 @@ ex:PR1 a ocp:Process ;
     ocp:hasProcessID "Process_1" ;
     ocp:containsPhase ex:P1, ex:P2, ex:P3, ex:P4, ex:P5, ex:P6 .
 
-ex:P1 a ocp:Phase, time:TemporalEntity ;
+ex:P1 a ocp:Phase ;
     time:hasBeginning ex:Instant1 ;
     time:hasEnd ex:Instant2 .
 
-ex:P2 a ocp:Phase, time:TemporalEntity ;
+ex:P2 a ocp:Phase ;
     ocp:beginsWith ex:Instant3 ;
     time:hasBeginning ex:Instant11 ;  # Inkonsistente Zeitangabe
     ocp:hasEstimatedEnd ex:Instant4 .
 
-ex:P3 a ocp:Phase, time:TemporalEntity ;
+ex:P3 a ocp:Phase ;
     ocp:beginsWith ex:Instant5 ;
     ocp:endsWith ex:Instant6 ;
     time:hasEnd ex:Instant12 .        # Inkonsistente Zeitangabe
 
-ex:P4 a ocp:Phase, time:TemporalEntity ;
+ex:P4 a ocp:Phase ;
     time:hasBeginning ex:Instant7 ;
     ocp:endsWith ex:Instant8 .
 
-ex:P5 a ocp:Phase, time:TemporalEntity ;
+ex:P5 a ocp:Phase ;
     ocp:beginsWith ex:Instant9 ;
     ocp:endsWith ex:Instant10 .
 
-ex:P6 a ocp:Phase, time:TemporalEntity ;
+ex:P6 a ocp:Phase ;
     time:hasBeginning ex:Instant13 ;
     time:hasEnd ex:Instant14 .
 

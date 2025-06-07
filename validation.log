@@ -1,19 +1,17 @@
-2025-06-04 20:29:00,621 - INFO - Loaded TBox: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
-2025-06-04 20:29:00,625 - INFO - Loaded ABox: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
-2025-06-04 20:29:00,626 - DEBUG - Ensured output directory: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner
-2025-06-04 20:29:00,626 - DEBUG - Validating TBox syntax: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl
-2025-06-04 20:29:00,634 - DEBUG - TBox syntax validated successfully
-2025-06-04 20:29:00,634 - DEBUG - Validating ABox syntax: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl
-2025-06-04 20:29:00,638 - DEBUG - ABox syntax validated successfully
-2025-06-04 20:29:00,638 - DEBUG - Converting TBox to RDF/XML for owlready2
-2025-06-04 20:29:00,645 - DEBUG - Temporary TBox saved: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
-2025-06-04 20:29:00,645 - DEBUG - Validating time.owl syntax: G:/Promo/Dev_cIM/Onto/TBOX/time.owl
-2025-06-04 20:29:00,710 - DEBUG - time.owl syntax validated successfully
-2025-06-04 20:29:00,710 - DEBUG - Converting time.owl to RDF/XML
-2025-06-04 20:29:00,728 - DEBUG - Temporary time.owl saved: C:/Users/Albrecht/AppData/Local/Temp/tmppesz8nwx.xml
-2025-06-04 20:29:00,728 - DEBUG - Creating new owlready2 world
-2025-06-04 20:29:00,728 - DEBUG - Loading TBOX from: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
-2025-06-04 20:29:00,729 - ERROR - Error during Pellet reasoning: [Errno 22] Invalid argument: '/C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml'
-2025-06-04 20:29:00,729 - DEBUG - Cleaned up temporary TBox: C:/Users/Albrecht/AppData/Local/Temp/tmprhhhxx85.xml
-2025-06-04 20:29:00,730 - DEBUG - Cleaned up temporary time.owl: C:/Users/Albrecht/AppData/Local/Temp/tmppesz8nwx.xml
-2025-06-04 20:29:00,730 - ERROR - Reasoning failed, aborting validation.
+2025-06-06 14:53:19,401 - INFO - TIME ontology loaded successfully from http://www.w3.org/2006/time# (1296 triples)
+2025-06-06 14:53:19,410 - INFO - Loaded TBox: G:/Promo/Dev_cIM/Onto/TBOX/OCP_TBOX.ttl (184 triples)
+2025-06-06 14:53:19,414 - INFO - Loaded ABox: G:/Promo/Dev_cIM/Onto/ABOX/OCP/OCP_ABOX_12.ttl (70 triples)
+2025-06-06 14:53:19,418 - INFO - Original ABOX saved for validation: G:/Promo/Dev_cIM/validated_abox.ttl
+2025-06-06 14:53:20,697 - ERROR - Error during Jena SHACL validation: at line 1 of <>:
+Bad syntax (expected '.' or '}' or ']' at end of statement) at ^ in:
+"b'2025-06-06'^b'T12:53:19.923983800Z main ERROR Invalid URL G:/Promo/Dev_cIM'..."
+2025-06-06 14:53:20,697 - WARNING - Original ABOX contains SHACL violations. Filtering invalid triples.
+2025-06-06 14:53:20,698 - INFO - Filtered ABOX contains 70 triples after removing invalid subjects
+2025-06-06 14:53:20,720 - INFO - Combined ontology created with 1550 triples
+2025-06-06 14:53:20,785 - INFO - Inferred ABOX contains 77 triples
+2025-06-06 14:53:20,788 - INFO - Inferred ABOX saved in Turtle format: G:/Promo/Dev_cIM/Onto/ABOX/OCP/POST_ABOX/Reasoner/OCP_ABOX_12_RInf.ttl
+2025-06-06 14:53:20,802 - INFO - Inferred ABOX Turtle syntax validated: 77 triples
+2025-06-06 14:53:22,092 - ERROR - Error during Jena SHACL validation: at line 1 of <>:
+Bad syntax (expected '.' or '}' or ']' at end of statement) at ^ in:
+"b'2025-06-06'^b'T12:53:21.300985800Z main ERROR Invalid URL G:/Promo/Dev_cIM'..."
+2025-06-06 14:53:22,092 - ERROR - Validation failed.
