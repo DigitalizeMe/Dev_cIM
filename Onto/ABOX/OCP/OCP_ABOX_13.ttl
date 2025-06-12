@@ -33,7 +33,7 @@ ex:P6 a ocp:Phase ;
     time:hasBeginning ex:Instant13 ;
     time:hasEnd ex:Instant14 .
 
-ex:Instant1 a time:Instant ;
+ex:Instant1 a ocp:Transition ;
     ocp:hasActualTime "2025-01-01"^^xsd:date .
 
 ex:Instant2 a time:Instant ;

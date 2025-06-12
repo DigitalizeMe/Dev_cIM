@@ -1,4 +1,4 @@
-# validate_shacl_35_OCP.py (debug extended)
+# validate_shacl_35_OCP.py 
 
 import os
 import subprocess
@@ -15,20 +15,20 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Paths and namespaces
-OCP_TBOX_PATH = os.path.join(BASE_DIR, "Onto/TBOX/OCP_TBOX.ttl")
-TIME_TBOX_PATH = os.path.join(BASE_DIR, "Onto/TBOX/time.owl")  # Pfad zur OWL-Time-Ontologie
-OCP_SHAPES_PATH = os.path.join(BASE_DIR, "Onto/SHACL/OCP_SHACL-Shapes.ttl")
-OCP_ABOX_PATH = os.path.join(BASE_DIR, "Onto/ABOX/OCP/OCP_ABOX_13.ttl")
-REASONER_OUT_DIR = os.path.join(BASE_DIR, "Onto/ABOX/OCP/POST_ABOX/Reasoner")
+# Relative Pfade zu kombinierten Dateien
+COMBINED_TBOX_PATH = os.path.join("Onto", "TBOX", "TIME+OCP_TBOX.ttl")
+OCP_SHAPES_PATH = os.path.join("Onto", "SHACL", "OCP_SHACL-Shapes.ttl")
+OCP_ABOX_PATH = os.path.join("Onto", "ABOX", "OCP", "OCP_ABOX_13.ttl")
+REASONER_OUT_DIR = os.path.join("Onto", "ABOX", "OCP", "POST_ABOX", "Reasoner")
 INFERRED_ABOX_PATH = os.path.join(REASONER_OUT_DIR, "OCP_ABOX_13_inferred.ttl")
-JENA_HOME = os.path.join(BASE_DIR, "apache-jena-5.3.0")
+JENA_HOME = os.path.join("apache-jena-5.3.0")
+
 OCP = Namespace("http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#")
 XSD = Namespace("http://www.w3.org/2001/XMLSchema#")
 EX = Namespace("http://www.example.de/example#")
 
 
-def perform_jena_reasoning(data_file, tbox_files, output_file):
+def perform_jena_reasoning(data_file, tbox_file, output_file):
     if os.name == 'nt':
         reasoner_cmd = os.path.join(JENA_HOME, "bat", "infer.bat")
     else:
@@ -38,17 +38,15 @@ def perform_jena_reasoning(data_file, tbox_files, output_file):
         logger.error(f"Jena reasoner not found at {reasoner_cmd}")
         return False
 
-    for tbox in tbox_files:
-        if not os.path.exists(tbox):
-            logger.error(f"Missing TBox file: {tbox}")
-            return False
+    if not os.path.exists(tbox_file):
+        logger.error(f"Missing combined TBox file: {tbox_file}")
+        return False
 
     if not os.path.exists(data_file):
         logger.error(f"Missing ABox file: {data_file}")
         return False
 
-    tbox_args = " ".join([f'--tbox "{t}"' for t in tbox_files])
-    cmd = f'"{reasoner_cmd}" --data "{data_file}" {tbox_args} --out TTL --output "{output_file}"'
+    cmd = f'"{reasoner_cmd}" --data "{data_file}" --tbox "{tbox_file}" --out TTL > "{output_file}"'
     logger.info(f"Starting Jena reasoning with command: {cmd}")
 
     try:
@@ -73,7 +71,7 @@ def perform_shacl_jena_validation(data_file, shapes_path=OCP_SHAPES_PATH):
         logger.error(f"Jena SHACL tool not found: {jena_shacl_cmd}")
         return False
 
-    report_file = os.path.join(BASE_DIR, "validation_report.ttl")
+    report_file = "validation_report.ttl"
     cmd = f'"{jena_shacl_cmd}" validate --data "{data_file}" --shapes "{shapes_path}"'
 
     try:
@@ -104,19 +102,16 @@ def perform_shacl_jena_validation(data_file, shapes_path=OCP_SHAPES_PATH):
 def load_and_validate_ocp():
     os.makedirs(REASONER_OUT_DIR, exist_ok=True)
 
-    if not all(os.path.exists(p) for p in [OCP_ABOX_PATH, OCP_TBOX_PATH, TIME_TBOX_PATH, OCP_SHAPES_PATH]):
+    if not all(os.path.exists(p) for p in [OCP_ABOX_PATH, COMBINED_TBOX_PATH, OCP_SHAPES_PATH]):
         logger.error("Required input file(s) missing.")
         return False
 
     logger.info("Starting reasoning and validation process...")
 
-    # Step 1: OWL Reasoning (Jena)
-    tbox_list = [OCP_TBOX_PATH, TIME_TBOX_PATH]
-    if not perform_jena_reasoning(OCP_ABOX_PATH, tbox_list, INFERRED_ABOX_PATH):
+    if not perform_jena_reasoning(OCP_ABOX_PATH, COMBINED_TBOX_PATH, INFERRED_ABOX_PATH):
         logger.error("OWL reasoning failed. Aborting validation.")
         return False
 
-    # Step 2: SHACL Validation
     conforms = perform_shacl_jena_validation(INFERRED_ABOX_PATH)
     return conforms
 
