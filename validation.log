@@ -1,19 +1,5 @@
-2025-06-11 15:01:10,842 - INFO - Starting reasoning and validation process...
-2025-06-11 15:01:10,842 - INFO - Starting Jena reasoning with command: "apache-jena-5.3.0\bat\infer.bat" --data "Onto\ABOX\OCP\OCP_ABOX_13.ttl" --tbox "Onto\TBOX\TIME+OCP_TBOX.ttl" --out TTL > "Onto\ABOX\OCP\POST_ABOX\Reasoner\OCP_ABOX_13_inferred.ttl"
-2025-06-11 15:01:11,037 - INFO - Reasoning completed successfully. Output written to: Onto\ABOX\OCP\POST_ABOX\Reasoner\OCP_ABOX_13_inferred.ttl
-2025-06-11 15:01:11,929 - WARNING - SHACL stderr: org.apache.jena.irix.IRIException: <file:///G:/Promo/Dev_cIM/Onto\SHACL\OCP_SHACL-Shapes.ttl> Code: 4/UNWISE_CHARACTER in PATH: The character matches no grammar rules of URIs/IRIs.
-	at org.apache.jena.irix.IRIProviderJenaIRI.exceptions(IRIProviderJenaIRI.java:273)
-	at org.apache.jena.irix.IRIProviderJenaIRI.newIRIxJena(IRIProviderJenaIRI.java:155)
-	at org.apache.jena.irix.IRIProviderJenaIRI.newIRIxJena(IRIProviderJenaIRI.java:151)
-	at org.apache.jena.irix.IRIProviderJenaIRI$IRIxJena.resolve(IRIProviderJenaIRI.java:86)
-	at org.apache.jena.irix.IRIs.resolve(IRIs.java:150)
-	at org.apache.jena.irix.IRIs.resolve(IRIs.java:138)
-	at org.apache.jena.shacl.Imports.withImports(Imports.java:85)
-	at shacl.shacl_validate.exec(shacl_validate.java:120)
-	at org.apache.jena.cmd.CmdMain.mainMethod(CmdMain.java:86)
-	at org.apache.jena.cmd.CmdMain.mainRun(CmdMain.java:55)
-	at org.apache.jena.cmd.CmdMain.mainRun(CmdMain.java:43)
-	at shacl.shacl_validate.main(shacl_validate.java:61)
-	at shacl.shacl.main(shacl.java:75)
-
-2025-06-11 15:01:11,935 - INFO - SHACL Validation Conformity: False
+2025-06-12 22:33:17,663 - INFO - Loaded TBox: G:\Promo\Dev_cIM\Onto/TBOX/OCP_TBOX.ttl
+2025-06-12 22:33:17,681 - INFO - Loaded ABox: Onto\ABOX\OCP\POST_ABOX\CONSTRUCT\OCP_ABOX_14_TIME.ttl
+2025-06-12 22:33:17,689 - INFO - Inferred ABox saved: G:\Promo\Dev_cIM\Onto/ABOX/OCP/POST_ABOX\OCP_Post_inferred.ttl
+2025-06-12 22:33:19,026 - INFO - Validation conformity: True
+2025-06-12 22:33:19,026 - INFO - Validation successful: ABox conforms to SHACL shapes.

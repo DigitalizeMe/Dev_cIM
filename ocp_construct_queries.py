@@ -40,7 +40,7 @@ def enrich_time_types(input_ttl, output_ttl):
     g += g.query(CONSTRUCT_TIME_TYPES).graph
     g += g.query(CONSTRUCT_TIME_TYPES_TRANSITIONS).graph
     g.serialize(output_ttl, format="turtle")
-    print(f"[INFO] Time-Typen ergänzt und gespeichert in: {output_ttl}")
+    print(f"[INFO] Added Time-classes and saved to: {output_ttl}")
 
 if __name__ == "__main__":
     import sys

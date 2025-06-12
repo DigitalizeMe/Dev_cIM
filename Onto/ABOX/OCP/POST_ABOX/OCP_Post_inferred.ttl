@@ -1,0 +1,139 @@
+@prefix ex: <http://www.example.de/example#> .
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Transition1 a ocp:Transition,
+        time:Instant,
+        time:TemporalEntity ;
+    ocp:belongsToPhase ex:Phase1 ;
+    ocp:endsBefore ex:Phase2Start ;
+    ocp:hasActualTime "2025-01-06T08:30:00"^^xsd:dateTime ;
+    ocp:hasEstimatedTime "2025-01-06T08:25:00"^^xsd:dateTime .
+
+ex:Transition2 a ocp:Transition,
+        time:Instant,
+        time:TemporalEntity ;
+    ocp:belongsToPhase ex:Phase3 ;
+    ocp:endsBefore ex:Phase1Start ;
+    ocp:hasActualTime "2025-01-15T16:30:00"^^xsd:dateTime ;
+    ocp:hasEstimatedTime "2025-01-15T16:25:00"^^xsd:dateTime .
+
+ex:Cycle1EstEnd a time:Instant ;
+    ocp:belongsToCycle ex:Cycle1 ;
+    ocp:hasEstimatedTime "2025-01-15T17:10:00"^^xsd:dateTime .
+
+ex:Cycle1EstStart a time:Instant ;
+    ocp:belongsToCycle ex:Cycle1 ;
+    ocp:hasEstimatedTime "2025-01-06T09:00:00"^^xsd:dateTime .
+
+ex:Phase1End a time:Instant ;
+    ocp:belongsToPhase ex:Phase1 ;
+    ocp:hasActualTime "2025-01-05T18:00:00"^^xsd:dateTime .
+
+ex:Phase1EstEnd a time:Instant ;
+    ocp:belongsToPhase ex:Phase1 ;
+    ocp:hasEstimatedTime "2025-01-05T18:15:00"^^xsd:dateTime .
+
+ex:Phase2End a time:Instant ;
+    ocp:belongsToPhase ex:Phase2 ;
+    ocp:hasActualTime "2025-01-10T17:00:00"^^xsd:dateTime .
+
+ex:Phase2EstEnd a time:Instant ;
+    ocp:belongsToPhase ex:Phase2 ;
+    ocp:hasEstimatedTime "2025-01-10T17:15:00"^^xsd:dateTime .
+
+ex:Phase2EstStart a time:Instant ;
+    ocp:belongsToPhase ex:Phase2 ;
+    ocp:hasEstimatedTime "2025-01-06T08:45:00"^^xsd:dateTime .
+
+ex:Phase3EstStart a time:Instant ;
+    ocp:belongsToPhase ex:Phase3 ;
+    ocp:hasEstimatedTime "2025-01-11T08:50:00"^^xsd:dateTime .
+
+ex:Cycle1End a time:Instant ;
+    ocp:belongsToCycle ex:Cycle1 ;
+    ocp:hasActualTime "2025-01-15T17:05:00"^^xsd:dateTime .
+
+ex:Cycle1Start a time:Instant ;
+    ocp:belongsToCycle ex:Cycle1 ;
+    ocp:hasActualTime "2025-01-06T09:15:00"^^xsd:dateTime .
+
+ex:Phase1EstStart a time:Instant ;
+    ocp:belongsToPhase ex:Phase1 ;
+    ocp:hasEstimatedTime "2025-01-01T07:45:00"^^xsd:dateTime .
+
+ex:Phase3End a time:Instant ;
+    ocp:belongsToPhase ex:Phase3 ;
+    ocp:hasActualTime "2025-01-15T17:00:00"^^xsd:dateTime .
+
+ex:Phase3EstEnd a time:Instant ;
+    ocp:belongsToPhase ex:Phase3 ;
+    ocp:hasEstimatedTime "2025-01-15T17:20:00"^^xsd:dateTime .
+
+ex:Phase3Start a time:Instant ;
+    ocp:belongsToPhase ex:Phase3 ;
+    ocp:hasActualTime "2025-01-11T09:00:00"^^xsd:dateTime .
+
+ex:Phase1Start a time:Instant ;
+    ocp:belongsToPhase ex:Phase1 ;
+    ocp:hasActualTime "2025-01-01T08:00:00"^^xsd:dateTime .
+
+ex:Phase2Start a time:Instant ;
+    ocp:belongsToPhase ex:Phase2 ;
+    ocp:hasActualTime "2025-01-06T09:00:00"^^xsd:dateTime .
+
+ex:Cycle1 a ocp:Cycle,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:beginsWith ex:Cycle1Start ;
+    ocp:belongsToPhase ex:Phase2 ;
+    ocp:belongsToProcess ex:Process1 ;
+    ocp:endsWith ex:Cycle1End ;
+    ocp:hasActualBeginning ex:Cycle1Start ;
+    ocp:hasActualEnd ex:Cycle1End ;
+    ocp:hasCycleNumber 1 ;
+    ocp:hasEstimatedBeginning ex:Cycle1EstStart ;
+    ocp:hasEstimatedEnd ex:Cycle1EstEnd .
+
+ex:Process1 a ocp:Process,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:containsPhase ex:Phase1,
+        ex:Phase2,
+        ex:Phase3 ;
+    ocp:hasActualBeginning ex:Phase1Start ;
+    ocp:hasActualEnd ex:Phase3End ;
+    ocp:hasEstimatedBeginning ex:Phase1EstStart ;
+    ocp:hasEstimatedEnd ex:Phase3EstEnd ;
+    ocp:hasProcessID "PROC-001"^^xsd:string .
+
+ex:Phase1 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:Process1 ;
+    ocp:endsBefore ex:Phase2Start ;
+    ocp:hasActualBeginning ex:Phase1Start ;
+    ocp:hasActualEnd ex:Phase1End ;
+    ocp:hasEstimatedBeginning ex:Phase1EstStart ;
+    ocp:hasEstimatedEnd ex:Phase1EstEnd .
+
+ex:Phase2 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:Process1 ;
+    ocp:endsBefore ex:Phase3Start ;
+    ocp:hasActualBeginning ex:Phase2Start ;
+    ocp:hasActualEnd ex:Phase2End ;
+    ocp:hasEstimatedBeginning ex:Phase2EstStart ;
+    ocp:hasEstimatedEnd ex:Phase2EstEnd .
+
+ex:Phase3 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:Process1 ;
+    ocp:hasActualBeginning ex:Phase3Start ;
+    ocp:hasActualEnd ex:Phase3End ;
+    ocp:hasEstimatedBeginning ex:Phase3EstStart ;
+    ocp:hasEstimatedEnd ex:Phase3EstEnd .
+

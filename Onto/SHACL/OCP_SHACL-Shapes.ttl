@@ -12,8 +12,8 @@
 
     osh:GeneralDatePropertyShape a sh:PropertyShape ;
         sh:path ( ocp:hasActualTime ocp:hasEstimatedTime ) ;
-        sh:datatype xsd:date ;
-        sh:message "Dates must be in YYYY-MM-DD format."@en ;
+        sh:datatype xsd:dateTime ;
+        sh:message "Dates must be in YYYY-MM-DDThh:mm:ss format."@en ;
         sh:severity sh:Violation .
 
     osh:GeneralTimeShape a sh:NodeShape ;
@@ -210,17 +210,17 @@
         sh:property [
             sh:path [ sh:alternativePath ( ocp:hasActualTime ocp:hasEstimatedTime ) ] ;
             sh:qualifiedValueShape [
-                sh:datatype xsd:date ;
+                sh:datatype xsd:dateTime ;
             ] ;
             sh:qualifiedMinCount 1 ;
-            sh:message "Each instant must have at least one timestamp (either 'ocp:hasActualTime' or 'ocp:hasEstimatedTime') of type xsd:date."@en ;
+            sh:message "Each instant must have at least one timestamp (either 'ocp:hasActualTime' or 'ocp:hasEstimatedTime') of type xsd:dateTime."@en ;
             sh:severity sh:Violation ;
         ] ;
         sh:property [
             sh:path ocp:hasActualTime ;
-            sh:datatype xsd:date ;
+            sh:datatype xsd:dateTime ;
             sh:maxCount 1 ;
-            sh:message "Each instant must have at most one actual timestamp via ocp:hasActualTime of type xsd:date."@en ;
+            sh:message "Each instant must have at most one actual timestamp via ocp:hasActualTime of type xsd:dateTime."@en ;
             sh:severity sh:Violation ;
         ] .
 
@@ -462,8 +462,8 @@
                         UNION
                         { ?endInstant ocp:hasEstimatedTime ?endTimeValue . }
                     }
-                    BIND (STRDT(STR(?startTimeValue), xsd:date) AS ?earliestStartTime)
-                    BIND (STRDT(STR(?endTimeValue), xsd:date) AS ?latestEndTime)
+                    BIND (STRDT(STR(?startTimeValue), xsd:dateTime) AS ?earliestStartTime)
+                    BIND (STRDT(STR(?endTimeValue), xsd:dateTime) AS ?latestEndTime)
                     FILTER (?earliestStartTime <= ?latestEndTime)
                 }
             """ ;
@@ -531,8 +531,8 @@
                         UNION
                         { ?startInstant ocp:hasEstimatedTime ?startTimeValue . }
                     }
-                    BIND (STRDT(STR(?endTimeValue), xsd:date) AS ?latestEndTime)
-                    BIND (STRDT(STR(?startTimeValue), xsd:date) AS ?earliestStartTime)
+                    BIND (STRDT(STR(?endTimeValue), xsd:dateTime) AS ?latestEndTime)
+                    BIND (STRDT(STR(?startTimeValue), xsd:dateTime) AS ?earliestStartTime)
                     FILTER (?latestEndTime > ?earliestStartTime)
                 }
             """ ;
@@ -582,8 +582,8 @@
                         UNION
                         { ?other ocp:hasEstimatedTime ?otherTimeValue . }
                     }
-                    BIND (STRDT(STR(?startTimeValue), xsd:date) AS ?earliestStartTime)
-                    BIND (STRDT(STR(?otherTimeValue), xsd:date) AS ?otherTime)
+                    BIND (STRDT(STR(?startTimeValue), xsd:dateTime) AS ?earliestStartTime)
+                    BIND (STRDT(STR(?otherTimeValue), xsd:dateTime) AS ?otherTime)
                     FILTER (?earliestStartTime >= ?otherTime)
                 }
             """ ;
@@ -632,8 +632,8 @@
                         UNION
                         { ?other ocp:hasEstimatedTime ?otherTimeValue . }
                     }
-                    BIND (STRDT(STR(?endTimeValue), xsd:date) AS ?latestEndTime)
-                    BIND (STRDT(STR(?otherTimeValue), xsd:date) AS ?otherTime)
+                    BIND (STRDT(STR(?endTimeValue), xsd:dateTime) AS ?latestEndTime)
+                    BIND (STRDT(STR(?otherTimeValue), xsd:dateTime) AS ?otherTime)
                     FILTER (?latestEndTime >= ?otherTime)
                 }
             """ ;

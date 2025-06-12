@@ -234,7 +234,7 @@
     ocp:hasActualTime rdf:type owl:DatatypeProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-		rdfs:range  xsd:date ;
+		rdfs:range  xsd:dateTime ;
 		rdfs:comment "This property represents the connection between an instant and a date, used to mark the actual point in time of an instant."@en ;
 		rdfs:label "has actual time"@en .
 
@@ -251,7 +251,7 @@
     ocp:hasEstimatedTime rdf:type owl:DatatypeProperty ;
 		rdfs:subPropertyOf <http://www.w3.org/2006/time#hasTime> ;
 		rdfs:domain <http://www.w3.org/2006/time#Instant> ;
-		rdfs:range  xsd:date ;
+		rdfs:range  xsd:dateTime ;
 		rdfs:comment "This property represents the connection between an instant and a date, used to mark the estimated point in time of an instant."@en ;
 		rdfs:label "has estimated time"@en .
 
