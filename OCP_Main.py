@@ -4,7 +4,7 @@ import os
 from ocp_construct_queries import enrich_time_types
 from validate_shacl_OCP import load_and_validate_ocp
 
-ABOX_FILENAME = "OCP_ABOX_R6.ttl"
+ABOX_FILENAME = "OCP_ABOX_R_invalid.ttl"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ABOX_PATH = os.path.join("Onto", "ABOX", "OCP", ABOX_FILENAME)

@@ -1,0 +1,199 @@
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ex: <http://example.org/> .
+
+# Base process for referencing
+ex:SomeProcess a ocp:Process ;
+    ocp:hasProcessID "SP1" .
+
+# Reference phase for ocp:beginsAfter 
+ex:ProductionPhase a ocp:Phase ;
+    ocp:hasActualEnd ex:ProductionEnd ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:ProductionEnd a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00Z"^^xsd:dateTime .
+
+# Error 1: Multiple actual beginnings
+# Affected Shape: osh:PhaseBeginningCardinalityShape
+# Expected Violation: "Phase ex:InvalidPhase1 must have at most one actual beginning (via ocp:hasActualBeginning or ocp:beginsWith leading to an instant with ocp:hasActualTime)."
+ex:InvalidPhase1 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart1 ;
+    ocp:hasActualBeginning ex:InvalidStart2 ;
+    ocp:hasActualEnd ex:InvalidEnd1 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart1 a time:Instant ;
+    ocp:hasActualTime "2025-08-01T00:00:00Z"^^xsd:dateTime .
+ex:InvalidStart2 a time:Instant ;
+    ocp:hasActualTime "2025-08-02T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd1 a time:Instant ;
+    ocp:hasActualTime "2025-08-03T00:00:00Z"^^xsd:dateTime .
+
+# Error 2: Multiple actual ends via ocp:endsWith
+# Affected Shape: osh:PhaseEndCardinalityShape
+# Expected Violation: "Phase ex:InvalidPhase2 must have at most one actual end (via ocp:hasActualEnd or ocp:endsWith leading to an instant with ocp:hasActualTime)."
+ex:InvalidPhase2 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart3 ;
+    ocp:hasActualEnd ex:InvalidEnd2 ;
+    ocp:endsWith ex:InvalidEndEntity ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart3 a time:Instant ;
+    ocp:hasActualTime "2025-08-04T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd2 a time:Instant ;
+    ocp:hasActualTime "2025-08-05T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEndEntity a time:TemporalEntity ;
+    ocp:endsWith ex:InvalidEnd3 .
+ex:InvalidEnd3 a time:Instant ;
+    ocp:hasActualTime "2025-08-06T00:00:00Z"^^xsd:dateTime .
+
+# Error 3: Actual beginning without end
+# Affected Shape: osh:PhaseTimeExistenceShape
+# Expected Violation: "Phase ex:InvalidPhase3 with actual beginning (via ocp:hasActualBeginning to instant ex:InvalidStart4 with ocp:hasActualTime) lacks an end (via ocp:hasActualEnd, ocp:hasEstimatedEnd, or ocp:endsWith)."
+ex:InvalidPhase3 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart4 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart4 a time:Instant ;
+    ocp:hasActualTime "2025-08-07T00:00:00Z"^^xsd:dateTime .
+
+# Error 4: Violation of ocp:beginsAfter
+# Affected Shape: osh:BeginsAfterTimeShape
+# Expected Violation: "For temporal entity ex:InvalidPhase4: Actual start time (2025-08-20T00:00:00Z) is not after actual end time (2025-08-22T00:00:00Z) of entity ex:ProductionPhase as required by ocp:beginsAfter."
+ex:InvalidPhase4 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart5 ;
+    ocp:hasActualEnd ex:InvalidEnd4 ;
+    ocp:beginsAfter ex:ProductionPhase ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart5 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd4 a time:Instant ;
+    ocp:hasActualTime "2025-08-21T00:00:00Z"^^xsd:dateTime .
+
+# Error 5: Violation of time:before
+# Affected Shape: osh:BeforeTimeShape
+# Expected Violation: "For temporal entity ex:InvalidPhase5: Actual end time (2025-08-25T00:00:00Z from instant ex:InvalidEnd5) is not before actual start time (2025-08-20T00:00:00Z from instant ex:InvalidStart6) of entity ex:InvalidPhase6 as required by time:before."
+ex:InvalidPhase5 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart7 ;
+    ocp:hasActualEnd ex:InvalidEnd5 ;
+    time:before ex:InvalidPhase6 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidPhase6 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart6 ;
+    ocp:hasActualEnd ex:InvalidEnd6 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart6 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd6 a time:Instant ;
+    ocp:hasActualTime "2025-08-26T00:00:00Z"^^xsd:dateTime .
+ex:InvalidStart7 a time:Instant ;
+    ocp:hasActualTime "2025-08-24T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd5 a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00Z"^^xsd:dateTime .
+
+# Error 6: Actual end before actual beginning
+# Affected Shape: osh:PhaseTimeOrderShape
+# Expected Violation: "For phase ex:InvalidPhase7: Actual beginning time (2025-08-25T00:00:00Z via ocp:hasActualBeginning) must be before actual end time (2025-08-20T00:00:00Z via ocp:hasActualEnd)."
+ex:InvalidPhase7 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart8 ;
+    ocp:hasActualEnd ex:InvalidEnd7 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart8 a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd7 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00Z"^^xsd:dateTime .
+
+# Error 7: Inconsistent ocp:beginsWith
+# Affected Shape: osh:BeginsWithTimeShape
+# Expected Violation: "For time:Interval ex:InvalidPhase8: Actual start time (2025-08-20T00:00:00Z) does not match actual start time (2025-08-22T00:00:00Z) of entity ex:InvalidEntityZ referenced by ocp:beginsWith."
+ex:InvalidPhase8 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart9 ;
+    ocp:hasActualEnd ex:InvalidEnd8 ;
+    ocp:beginsWith ex:InvalidEntityZ ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidEntityZ a time:TemporalEntity ;
+    ocp:hasActualBeginning ex:InvalidStart10 .
+ex:InvalidStart9 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00Z"^^xsd:dateTime .
+ex:InvalidStart10 a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd8 a time:Instant ;
+    ocp:hasActualTime "2025-08-23T00:00:00Z"^^xsd:dateTime .
+
+# Error 8: Cycle without end
+# Affected Shape: osh:CycleShape
+# Expected Violation: "Each ocp:Cycle must have at least one end (either ocp:hasActualEnd or ocp:hasEstimatedEnd) referencing a time:Instant."
+ex:InvalidCycle1 a ocp:Cycle ;
+    ocp:hasActualBeginning ex:InvalidStart11 ;
+    ocp:hasCycleNumber 1 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart11 a time:Instant ;
+    ocp:hasActualTime "2025-08-27T00:00:00Z"^^xsd:dateTime .
+
+# Error 9: Phase without process affiliation
+# Affected Shape: osh:PhaseTimeOrderShape
+# Expected Violation: "Phase ex:InvalidPhase9 must either belong to exactly one process via ocp:belongsToProcess or be contained by exactly one process via ocp:containsPhase."
+ex:InvalidPhase9 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart12 ;
+    ocp:hasActualEnd ex:InvalidEnd9 .
+ex:InvalidStart12 a time:Instant ;
+    ocp:hasActualTime "2025-08-28T00:00:00Z"^^xsd:dateTime .
+ex:InvalidEnd9 a time:Instant ;
+    ocp:hasActualTime "2025-08-29T00:00:00Z"^^xsd:dateTime .
+
+# Error 10: Cyclic process-phase relationship
+# Affected Shape: osh:ContainsProcessShape
+# Expected Violation: "For ocp:Phase: A phase cannot contain a process via ocp:containsProcess that indirectly contains the same phase via ocp:containsPhase (no cycles allowed)."
+ex:InvalidPhase10 a ocp:Phase ;
+    ocp:containsProcess ex:InvalidProcess1 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidProcess1 a ocp:Process ;
+    ocp:containsPhase ex:InvalidPhase10 ;
+    ocp:hasProcessID "IP1" .
+
+# Error 11: Invalid timestamp format
+# Affected Shape: osh:GeneralDatePropertyShape
+# Expected Violation: "Dates must be in YYYY-MM-DDThh:mm:ss format."
+ex:InvalidPhase11 a ocp:Phase ;
+    ocp:hasActualBeginning ex:InvalidStart13 ;
+    ocp:hasActualEnd ex:InvalidEnd10 ;
+    ocp:belongsToProcess ex:SomeProcess .
+ex:InvalidStart13 a time:Instant ;
+    ocp:hasActualTime "2025-08-30" . # Invalid format
+ex:InvalidEnd10 a time:Instant ;
+    ocp:hasActualTime "2025-08-31T00:00:00Z"^^xsd:dateTime .
+
+# Summary of all errors included in this A-Box
+# List of all errors/violations included in final_abox_invalid.ttl:
+#1. Error 1: Multiple actual beginnings (ex:InvalidPhase1)
+#   - Shape: osh:PhaseBeginningCardinalityShape
+#   - Violation: "Phase ex:InvalidPhase1 must have at most one actual beginning."
+#2. Error 2: Multiple actual ends via ocp:endsWith (ex:InvalidPhase2)
+#   - Shape: osh:PhaseEndCardinalityShape
+#   - Violation: "Phase ex:InvalidPhase2 must have at most one actual end."
+#3. Error 3: Actual beginning without end (ex:InvalidPhase3)
+#   - Shape: osh:PhaseTimeExistenceShape
+#   - Violation: "Phase ex:InvalidPhase3 with actual beginning lacks an end."
+#4. Error 4: Violation of ocp:beginsAfter (ex:InvalidPhase4)
+#   - Shape: osh:BeginsAfterTimeShape
+#   - Violation: "Actual start time is not after actual end time as required by ocp:beginsAfter."
+#5. Error 5: Violation of time:before (ex:InvalidPhase5)
+#   - Shape: osh:BeforeTimeShape
+#   - Violation: "Actual end time is not before actual start time as required by time:before."
+#6. Error 6: Actual end before actual beginning (ex:InvalidPhase7)
+#   - Shape: osh:PhaseTimeOrderShape
+#   - Violation: "Actual beginning time must be before actual end time."
+#7. Error 7: Inconsistent ocp:beginsWith (ex:InvalidPhase8)
+#   - Shape: osh:BeginsWithTimeShape
+#   - Violation: "Actual start time does not match actual start time of entity referenced by ocp:beginsWith."
+#8. Error 8: Cycle without end (ex:InvalidCycle1)
+#   - Shape: osh:CycleShape
+#   - Violation: "Each ocp:Cycle must have at least one end."
+#9. Error 9: Phase without process affiliation (ex:InvalidPhase9)
+#   - Shape: osh:PhaseTimeOrderShape
+#   - Violation: "Phase must belong to exactly one process."
+#10. Error 10: Cyclic process-phase relationship (ex:InvalidPhase10)
+#    - Shape: osh:ContainsProcessShape
+#    - Violation: "A phase cannot contain a process that indirectly contains the same phase."
+#11. Error 11: Invalid timestamp format (ex:InvalidPhase11)
+#    - Shape: osh:GeneralDatePropertyShape
+#    - Violation: "Dates must be in YYYY-MM-DDThh:mm:ss format."

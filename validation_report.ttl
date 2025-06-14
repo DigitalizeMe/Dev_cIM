@@ -1,8 +1,149 @@
+PREFIX ocp:  <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+PREFIX osh:  <http://www.ocpshape.de/shape#>
 PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sh:   <http://www.w3.org/ns/shacl#>
+PREFIX time: <http://www.w3.org/2006/time#>
 PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 [ rdf:type     sh:ValidationReport;
-  sh:conforms  true
+  sh:conforms  false;
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase1>;
+                 sh:resultMessage              "Each phase must have at most one actual beginning (via ocp:hasActualBeginning or ocp:beginsWith leading to an instant with ocp:hasActualTime).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:PhaseTimeExistenceShape;
+                 sh:value                      <http://example.org/InvalidPhase1>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase7>;
+                 sh:resultMessage              "For phase <http://example.org/InvalidPhase7>: Actual beginning time (2025-08-25T00:00:00+00:00 via ocp:hasActualBeginning) must be before actual end time (2025-08-20T00:00:00+00:00 via ocp:hasActualEnd).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:PhaseTimeOrderShape;
+                 sh:value                      <http://example.org/InvalidPhase7>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase5>;
+                 sh:resultMessage              "For temporal entity <http://example.org/InvalidPhase5>: Actual end time (2025-08-25T00:00:00+00:00) is not before actual start time (2025-08-20T00:00:00+00:00) of entity <http://example.org/InvalidPhase6> as required by time:before.";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:BeforeTimeShape;
+                 sh:value                      <http://example.org/InvalidPhase5>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase3>;
+                 sh:resultMessage              "Phase <http://example.org/InvalidPhase3> with actual beginning (via ocp:hasActualBeginning or ocp:beginsWith to instant <http://example.org/InvalidStart4> with ocp:hasActualTime) lacks an end (via ocp:hasActualEnd, ocp:hasEstimatedEnd, or ocp:endsWith).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:PhaseTimeExistenceShape;
+                 sh:value                      <http://example.org/InvalidPhase3>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidProcess1>;
+                 sh:resultMessage              "For 'ocp:Process': Each phase contained via 'ocp:containsPhase' must belong to the same process via 'ocp:belongsToProcess'.";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:ProcessShape;
+                 sh:value                      <http://example.org/InvalidProcess1>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase2>;
+                 sh:resultMessage              "Phase <http://example.org/InvalidPhase2> must have at most one actual end (via ocp:hasActualEnd or ocp:endsWith leading to an instant with ocp:hasActualTime).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:PhaseEndCardinalityShape;
+                 sh:value                      <http://example.org/InvalidPhase2>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidStart13>;
+                 sh:resultMessage              "Each instant must have at least one timestamp (either 'ocp:hasActualTime' or 'ocp:hasEstimatedTime') of type xsd:dateTime."@en;
+                 sh:resultPath                 [ sh:alternativePath  ( ocp:hasActualTime ocp:hasEstimatedTime )
+                                               ];
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:QualifiedMinCountConstraintComponent;
+                 sh:sourceShape                [] 
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase10>;
+                 sh:resultMessage              "For 'ocp:Phase': A phase cannot contain a process via 'ocp:containsProcess' that indirectly contains the same phase via 'ocp:containsPhase' (no cycles allowed).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:ContainsProcessShape;
+                 sh:value                      <http://example.org/InvalidPhase10>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidCycle1>;
+                 sh:resultMessage              "Each 'ocp:Cycle' must have at least one end (either 'ocp:hasActualEnd' or 'ocp:hasEstimatedEnd') referencing a 'time:Instant'."@en;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:OrConstraintComponent;
+                 sh:sourceShape                osh:CycleShape;
+                 sh:value                      <http://example.org/InvalidCycle1>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidStart13>;
+                 sh:resultMessage              "Each instant must have at most one actual timestamp via ocp:hasActualTime of type xsd:dateTime."@en;
+                 sh:resultPath                 ocp:hasActualTime;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:DatatypeConstraintComponent;
+                 sh:sourceShape                [] ;
+                 sh:value                      "2025-08-30"
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/SomeProcess>;
+                 sh:resultMessage              "Each 'ocp:Process' must consist of at least one instance of 'ocp:Phase' connected via 'ocp:containsPhase'."@en;
+                 sh:resultPath                 ocp:containsPhase;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MinCountConstraintComponent;
+                 sh:sourceShape                [] 
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase1>;
+                 sh:resultMessage              "Each entity must have at most one actual beginning via 'ocp:hasActualBeginning'."@en;
+                 sh:resultPath                 ocp:hasActualBeginning;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MaxCountConstraintComponent;
+                 sh:sourceShape                [] 
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase1>;
+                 sh:resultMessage              "Each phase must have at most one ocp:hasActualBeginning referencing a time:Instant."@en;
+                 sh:resultPath                 ocp:hasActualBeginning;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MaxCountConstraintComponent;
+                 sh:sourceShape                [] 
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase8>;
+                 sh:resultMessage              "For 'time:Interval' <http://example.org/InvalidPhase8>: Actual start time (2025-08-20T00:00:00+00:00) does not match actual start time (2025-08-22T00:00:00+00:00) of entity <http://example.org/InvalidEntityZ> referenced by 'ocp:beginsWith'.";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:BeginsWithTimeShape;
+                 sh:value                      <http://example.org/InvalidEntityZ>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase4>;
+                 sh:resultMessage              "For temporal entity <http://example.org/InvalidPhase4>: Actual start time (2025-08-20T00:00:00+00:00) is not after actual end time (2025-08-22T00:00:00+00:00) of entity <http://example.org/ProductionPhase> as required by ocp:beginsAfter.";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:BeginsAfterTimeShape;
+                 sh:value                      <http://example.org/InvalidPhase4>
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase1>;
+                 sh:resultMessage              "Each phase must have at most one ocp:hasActualBeginning referencing a time:Instant."@en;
+                 sh:resultPath                 ocp:hasActualBeginning;
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:MaxCountConstraintComponent;
+                 sh:sourceShape                [] 
+               ];
+  sh:result    [ rdf:type                      sh:ValidationResult;
+                 sh:focusNode                  <http://example.org/InvalidPhase1>;
+                 sh:resultMessage              "Phase <http://example.org/InvalidPhase1> must have at most one actual beginning (via ocp:hasActualBeginning or ocp:beginsWith leading to an instant with ocp:hasActualTime).";
+                 sh:resultSeverity             sh:Violation;
+                 sh:sourceConstraintComponent  sh:SPARQLConstraintComponent;
+                 sh:sourceShape                osh:PhaseBeginningCardinalityShape;
+                 sh:value                      <http://example.org/InvalidPhase1>
+               ]
 ] .

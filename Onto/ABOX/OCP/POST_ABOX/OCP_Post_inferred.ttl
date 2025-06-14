@@ -2,178 +2,184 @@
 @prefix time: <http://www.w3.org/2006/time#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://example.org/FunctionalQualityCheck> a time:Instant ;
-    ocp:belongsToCycle <http://example.org/QualityCheckCycle> ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-08-28T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-28T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/FunctionalQualityCheck2> a time:Instant ;
-    ocp:belongsToCycle <http://example.org/QualityCheckCycle2> ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-09-06T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-07T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/PlanningTransition> a ocp:Transition,
-        time:Instant,
-        time:TemporalEntity ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:hasActualTime "2025-08-16T00:00:00+00:00"^^xsd:dateTime ;
-    time:after <http://example.org/PlanningEnd> .
-
-<http://example.org/QualityCheckTransition> a ocp:Transition,
-        time:Instant,
-        time:TemporalEntity ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:hasActualTime "2025-09-08T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-12T00:00:00+00:00"^^xsd:dateTime ;
-    time:after <http://example.org/QualityCheckApproval> .
-
-<http://example.org/ShippingTransition> a ocp:Transition,
-        time:Instant,
-        time:TemporalEntity ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:hasActualTime "2025-09-15T00:00:00+00:00"^^xsd:dateTime ;
-    time:after <http://example.org/ShippingEnd> .
-
-<http://example.org/VisualQualityCheck> a time:Instant ;
-    ocp:belongsToCycle <http://example.org/QualityCheckCycle> ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-08-27T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-27T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/VisualQualityCheck2> a time:Instant ;
-    ocp:belongsToCycle <http://example.org/QualityCheckCycle2> ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-09-05T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-06T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/CustomerManagementPhase> a ocp:Phase,
-        time:Interval,
-        time:TemporalEntity .
-
-<http://example.org/ShippingStart> a time:Instant ;
-    ocp:hasActualTime "2025-09-08T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:startsPhase <http://example.org/ShippingPhase> .
-
-<http://example.org/MarketingEnd> a time:Instant ;
-    ocp:endsPhase <http://example.org/MarketingPhase> ;
-    ocp:hasActualTime "2025-09-10T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-12T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/MarketingStart> a time:Instant ;
-    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:startsPhase <http://example.org/MarketingPhase> .
-
-<http://example.org/PlanningEnd> a time:Instant ;
-    ocp:endsPhase <http://example.org/PlanningPhase> ;
-    ocp:hasActualTime "2025-08-15T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/PlanningPhase> a ocp:Phase,
+<http://example.org/InvalidCycle1> a ocp:Cycle,
         time:Interval,
         time:TemporalEntity ;
-    ocp:hasActualEnd <http://example.org/PlanningEnd> .
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart11> ;
+    ocp:hasCycleNumber 1 .
+
+<http://example.org/InvalidPhase1> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart1>,
+        <http://example.org/InvalidStart2> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd1> .
+
+<http://example.org/InvalidPhase11> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart13> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd10> .
+
+<http://example.org/InvalidPhase2> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:endsWith <http://example.org/InvalidEndEntity> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart3> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd2> .
+
+<http://example.org/InvalidPhase3> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart4> .
+
+<http://example.org/InvalidPhase4> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:beginsAfter <http://example.org/ProductionPhase> ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart5> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd4> .
+
+<http://example.org/InvalidPhase5> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart7> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd5> ;
+    time:before <http://example.org/InvalidPhase6> .
+
+<http://example.org/InvalidPhase7> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart8> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd7> .
+
+<http://example.org/InvalidPhase8> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:beginsWith <http://example.org/InvalidEntityZ> ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart9> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd8> .
+
+<http://example.org/InvalidPhase9> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart12> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd9> .
+
+<http://example.org/InvalidEnd1> a time:Instant ;
+    ocp:hasActualTime "2025-08-03T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd10> a time:Instant ;
+    ocp:hasActualTime "2025-08-31T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd2> a time:Instant ;
+    ocp:hasActualTime "2025-08-05T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd3> a time:Instant ;
+    ocp:hasActualTime "2025-08-06T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd4> a time:Instant ;
+    ocp:hasActualTime "2025-08-21T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd5> a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd6> a time:Instant ;
+    ocp:hasActualTime "2025-08-26T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd7> a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd8> a time:Instant ;
+    ocp:hasActualTime "2025-08-23T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEnd9> a time:Instant ;
+    ocp:hasActualTime "2025-08-29T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidEndEntity> a time:TemporalEntity ;
+    ocp:endsWith <http://example.org/InvalidEnd3> .
+
+<http://example.org/InvalidEntityZ> a time:TemporalEntity ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart10> .
+
+<http://example.org/InvalidPhase10> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:containsProcess <http://example.org/InvalidProcess1> .
+
+<http://example.org/InvalidPhase6> a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualBeginning <http://example.org/InvalidStart6> ;
+    ocp:hasActualEnd <http://example.org/InvalidEnd6> .
+
+<http://example.org/InvalidProcess1> a ocp:Process,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:containsPhase <http://example.org/InvalidPhase10> ;
+    ocp:hasProcessID "IP1" .
+
+<http://example.org/InvalidStart1> a time:Instant ;
+    ocp:hasActualTime "2025-08-01T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart10> a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart11> a time:Instant ;
+    ocp:hasActualTime "2025-08-27T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart12> a time:Instant ;
+    ocp:hasActualTime "2025-08-28T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart13> a time:Instant ;
+    ocp:hasActualTime "2025-08-30" .
+
+<http://example.org/InvalidStart2> a time:Instant ;
+    ocp:hasActualTime "2025-08-02T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart3> a time:Instant ;
+    ocp:hasActualTime "2025-08-04T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart4> a time:Instant ;
+    ocp:hasActualTime "2025-08-07T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart5> a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart6> a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart7> a time:Instant ;
+    ocp:hasActualTime "2025-08-24T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart8> a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00+00:00"^^xsd:dateTime .
+
+<http://example.org/InvalidStart9> a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
 
 <http://example.org/ProductionEnd> a time:Instant ;
-    ocp:endsPhase <http://example.org/ProductionPhase> ;
-    ocp:hasActualTime "2025-08-25T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-23T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/ProductionStart> a time:Instant ;
-    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:startsPhase <http://example.org/ProductionPhase> .
-
-<http://example.org/QualityCheckRejection> a time:Instant ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:endsCycle <http://example.org/QualityCheckCycle> ;
-    ocp:hasActualTime "2025-08-29T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-30T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/QualityCheckStart2> a time:Instant ;
-    ocp:belongsToPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-09-04T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-05T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:startsCycle <http://example.org/QualityCheckCycle2> .
-
-<http://example.org/ShippingEnd> a time:Instant ;
-    ocp:endsPhase <http://example.org/ShippingPhase> ;
-    ocp:hasActualTime "2025-09-14T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/MarketingPhase> a ocp:Phase,
-        time:Interval,
-        time:TemporalEntity ;
-    ocp:beginsWith <http://example.org/ProductionPhase> ;
-    ocp:endsAfter <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualBeginning <http://example.org/MarketingStart> ;
-    ocp:hasActualEnd <http://example.org/MarketingEnd> ;
-    ocp:hasEstimatedBeginning <http://example.org/MarketingStart> ;
-    ocp:hasEstimatedEnd <http://example.org/MarketingEnd> .
-
-<http://example.org/ShippingPhase> a ocp:Phase,
-        time:Interval,
-        time:TemporalEntity ;
-    ocp:hasActualBeginning <http://example.org/ShippingStart> ;
-    ocp:hasActualEnd <http://example.org/ShippingEnd> .
-
-<http://example.org/QualityCheckCycle> a ocp:Cycle,
-        time:Interval,
-        time:TemporalEntity ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:hasActualBeginning <http://example.org/QualityCheckStart> ;
-    ocp:hasActualEnd <http://example.org/QualityCheckRejection> ;
-    ocp:hasCycleNumber 1 ;
-    ocp:hasEstimatedBeginning <http://example.org/QualityCheckStart> ;
-    ocp:hasEstimatedEnd <http://example.org/QualityCheckRejection> .
-
-<http://example.org/QualityCheckCycle2> a ocp:Cycle,
-        time:Interval,
-        time:TemporalEntity ;
-    ocp:belongsToProcess <http://example.org/ProductSellingProcess> ;
-    ocp:hasActualBeginning <http://example.org/QualityCheckStart2> ;
-    ocp:hasActualEnd <http://example.org/QualityCheckApproval> ;
-    ocp:hasCycleNumber 2 ;
-    ocp:hasEstimatedBeginning <http://example.org/QualityCheckStart2> ;
-    ocp:hasEstimatedEnd <http://example.org/QualityCheckApproval> .
-
-<http://example.org/QualityCheckStart> a time:Instant ;
-    ocp:hasActualTime "2025-08-26T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-08-26T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:startsCycle <http://example.org/QualityCheckCycle> ;
-    ocp:startsPhase <http://example.org/QualityManagementPhase> .
-
-<http://example.org/ProductSellingProcess> a ocp:Process,
-        time:Interval,
-        time:TemporalEntity ;
-    ocp:containsPhase <http://example.org/CustomerManagementPhase>,
-        <http://example.org/MarketingPhase>,
-        <http://example.org/PlanningPhase>,
-        <http://example.org/ProductionPhase>,
-        <http://example.org/QualityManagementPhase>,
-        <http://example.org/ShippingPhase> ;
-    ocp:hasProcessID "PSP_001"^^xsd:string .
+    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime .
 
 <http://example.org/ProductionPhase> a ocp:Phase,
         time:Interval,
         time:TemporalEntity ;
-    ocp:hasActualBeginning <http://example.org/ProductionStart> ;
-    ocp:hasActualEnd <http://example.org/ProductionEnd> ;
-    ocp:hasEstimatedBeginning <http://example.org/ProductionStart> ;
-    ocp:hasEstimatedEnd <http://example.org/ProductionEnd> .
+    ocp:belongsToProcess <http://example.org/SomeProcess> ;
+    ocp:hasActualEnd <http://example.org/ProductionEnd> .
 
-<http://example.org/QualityCheckApproval> a time:Instant ;
-    ocp:endsCycle <http://example.org/QualityCheckCycle2> ;
-    ocp:endsPhase <http://example.org/QualityManagementPhase> ;
-    ocp:hasActualTime "2025-09-07T00:00:00+00:00"^^xsd:dateTime ;
-    ocp:hasEstimatedTime "2025-09-10T00:00:00+00:00"^^xsd:dateTime .
-
-<http://example.org/QualityManagementPhase> a ocp:Phase,
+<http://example.org/SomeProcess> a ocp:Process,
         time:Interval,
         time:TemporalEntity ;
-    ocp:beginsAfter <http://example.org/ProductionPhase> ;
-    ocp:hasActualBeginning <http://example.org/QualityCheckStart> ;
-    ocp:hasActualEnd <http://example.org/QualityCheckApproval> ;
-    ocp:hasEstimatedBeginning <http://example.org/QualityCheckStart> ;
-    ocp:hasEstimatedEnd <http://example.org/QualityCheckApproval> .
+    ocp:hasProcessID "SP1" .
 

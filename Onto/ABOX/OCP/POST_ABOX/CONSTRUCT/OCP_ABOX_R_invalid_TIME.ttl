@@ -1,0 +1,186 @@
+@prefix ex: <http://example.org/> .
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:InvalidCycle1 a ocp:Cycle,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart11 ;
+    ocp:hasCycleNumber 1 .
+
+ex:InvalidPhase1 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart1,
+        ex:InvalidStart2 ;
+    ocp:hasActualEnd ex:InvalidEnd1 .
+
+ex:InvalidPhase11 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart13 ;
+    ocp:hasActualEnd ex:InvalidEnd10 .
+
+ex:InvalidPhase2 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:endsWith ex:InvalidEndEntity ;
+    ocp:hasActualBeginning ex:InvalidStart3 ;
+    ocp:hasActualEnd ex:InvalidEnd2 .
+
+ex:InvalidPhase3 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart4 .
+
+ex:InvalidPhase4 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:beginsAfter ex:ProductionPhase ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart5 ;
+    ocp:hasActualEnd ex:InvalidEnd4 .
+
+ex:InvalidPhase5 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart7 ;
+    ocp:hasActualEnd ex:InvalidEnd5 ;
+    time:before ex:InvalidPhase6 .
+
+ex:InvalidPhase7 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart8 ;
+    ocp:hasActualEnd ex:InvalidEnd7 .
+
+ex:InvalidPhase8 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:beginsWith ex:InvalidEntityZ ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart9 ;
+    ocp:hasActualEnd ex:InvalidEnd8 .
+
+ex:InvalidPhase9 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:hasActualBeginning ex:InvalidStart12 ;
+    ocp:hasActualEnd ex:InvalidEnd9 .
+
+ex:InvalidEnd1 a time:Instant ;
+    ocp:hasActualTime "2025-08-03T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd10 a time:Instant ;
+    ocp:hasActualTime "2025-08-31T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd2 a time:Instant ;
+    ocp:hasActualTime "2025-08-05T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd3 a time:Instant ;
+    ocp:hasActualTime "2025-08-06T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd4 a time:Instant ;
+    ocp:hasActualTime "2025-08-21T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd5 a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd6 a time:Instant ;
+    ocp:hasActualTime "2025-08-26T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd7 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd8 a time:Instant ;
+    ocp:hasActualTime "2025-08-23T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEnd9 a time:Instant ;
+    ocp:hasActualTime "2025-08-29T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidEndEntity a time:TemporalEntity ;
+    ocp:endsWith ex:InvalidEnd3 .
+
+ex:InvalidEntityZ a time:TemporalEntity ;
+    ocp:hasActualBeginning ex:InvalidStart10 .
+
+ex:InvalidPhase10 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:containsProcess ex:InvalidProcess1 .
+
+ex:InvalidPhase6 a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualBeginning ex:InvalidStart6 ;
+    ocp:hasActualEnd ex:InvalidEnd6 .
+
+ex:InvalidProcess1 a ocp:Process,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:containsPhase ex:InvalidPhase10 ;
+    ocp:hasProcessID "IP1" .
+
+ex:InvalidStart1 a time:Instant ;
+    ocp:hasActualTime "2025-08-01T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart10 a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart11 a time:Instant ;
+    ocp:hasActualTime "2025-08-27T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart12 a time:Instant ;
+    ocp:hasActualTime "2025-08-28T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart13 a time:Instant ;
+    ocp:hasActualTime "2025-08-30" .
+
+ex:InvalidStart2 a time:Instant ;
+    ocp:hasActualTime "2025-08-02T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart3 a time:Instant ;
+    ocp:hasActualTime "2025-08-04T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart4 a time:Instant ;
+    ocp:hasActualTime "2025-08-07T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart5 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart6 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart7 a time:Instant ;
+    ocp:hasActualTime "2025-08-24T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart8 a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00+00:00"^^xsd:dateTime .
+
+ex:InvalidStart9 a time:Instant ;
+    ocp:hasActualTime "2025-08-20T00:00:00+00:00"^^xsd:dateTime .
+
+ex:ProductionEnd a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00+00:00"^^xsd:dateTime .
+
+ex:ProductionPhase a ocp:Phase,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:belongsToProcess ex:SomeProcess ;
+    ocp:hasActualEnd ex:ProductionEnd .
+
+ex:SomeProcess a ocp:Process,
+        time:Interval,
+        time:TemporalEntity ;
+    ocp:hasProcessID "SP1" .
+
