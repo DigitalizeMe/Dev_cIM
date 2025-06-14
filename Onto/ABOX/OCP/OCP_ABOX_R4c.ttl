@@ -1,0 +1,32 @@
+@prefix ex: <http://example.org/> .
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Process
+ex:ProductSellingProcess a ocp:Process ;
+    ocp:hasProcessID "PSP_001"^^xsd:string ;
+    ocp:containsPhase ex:PlanningPhase ;
+    ocp:containsPhase ex:CustomerManagementPhase .
+
+# Phases
+ex:PlanningPhase a ocp:Phase ;
+    ocp:hasEstimatedBeginning ex:PlanningStart ;
+    ocp:hasActualEnd ex:PlanningEnd .
+
+ex:CustomerManagementPhase a ocp:Phase .
+
+# Instants
+ex:PlanningStart a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-01T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:PlanningPhase .
+
+ex:PlanningEnd a time:Instant ;
+    ocp:hasActualTime "2025-08-15T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:PlanningPhase .
+
+# Transition
+ex:PlanningTransition a ocp:Transition ;
+    ocp:hasActualTime "2025-08-16T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToProcess ex:ProductSellingProcess ;
+    time:after ex:PlanningEnd .

@@ -1,0 +1,165 @@
+@prefix ex: <http://example.org/> .
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Process
+ex:ProductSellingProcess a ocp:Process ;
+    ocp:hasProcessID "PSP_001"^^xsd:string ;
+    ocp:containsPhase ex:PlanningPhase ;
+    ocp:containsPhase ex:ProductionPhase ;
+    ocp:containsPhase ex:QualityManagementPhase ;
+    ocp:containsPhase ex:ShippingPhase ;
+    ocp:containsPhase ex:MarketingPhase ;
+    ocp:containsPhase ex:CustomerManagementPhase .
+
+# Phases
+ex:PlanningPhase a ocp:Phase ;
+    ocp:hasActualEnd ex:PlanningEnd .
+
+ex:ProductionPhase a ocp:Phase ;
+    ocp:hasEstimatedBeginning ex:ProductionStart ;
+    ocp:hasActualBeginning ex:ProductionStart ;
+    ocp:hasEstimatedEnd ex:ProductionEnd ;
+    ocp:hasActualEnd ex:ProductionEnd .
+
+ex:QualityManagementPhase a ocp:Phase ;
+    ocp:hasEstimatedBeginning ex:QualityCheckStart ;
+    ocp:hasActualBeginning ex:QualityCheckStart ;
+    ocp:hasEstimatedEnd ex:QualityCheckApproval ;
+    ocp:hasActualEnd ex:QualityCheckApproval ;
+    ocp:beginsAfter ex:ProductionPhase .
+
+ex:ShippingPhase a ocp:Phase ;
+    ocp:hasActualBeginning ex:ShippingStart ;
+    ocp:hasActualEnd ex:ShippingEnd .
+
+ex:MarketingPhase a ocp:Phase ;
+    ocp:hasEstimatedBeginning ex:MarketingStart ;
+    ocp:hasActualBeginning ex:MarketingStart ;
+    ocp:hasEstimatedEnd ex:MarketingEnd ;
+    ocp:hasActualEnd ex:MarketingEnd ;
+    ocp:beginsWith ex:ProductionPhase ;
+    ocp:endsAfter ex:QualityManagementPhase .
+
+ex:CustomerManagementPhase a ocp:Phase .
+
+# Instants for PlanningPhase
+ex:PlanningEnd a time:Instant ;
+    ocp:hasActualTime "2025-08-15T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:PlanningPhase .
+
+# Instants for ProductionPhase
+ex:ProductionStart a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-20T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-22T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:ProductionPhase .
+
+ex:ProductionEnd a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-23T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-25T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:ProductionPhase .
+
+# Instants for QualityManagementPhase (First Cycle)
+ex:QualityCheckStart a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-26T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-26T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:QualityManagementPhase ;
+    ocp:startsCycle ex:QualityCheckCycle .
+
+ex:VisualQualityCheck a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-27T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-27T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase ;
+    ocp:belongsToCycle ex:QualityCheckCycle .
+
+ex:FunctionalQualityCheck a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-28T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-28T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase ;
+    ocp:belongsToCycle ex:QualityCheckCycle .
+
+ex:QualityCheckRejection a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-30T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-29T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase ;
+    ocp:endsCycle ex:QualityCheckCycle .
+
+# Instants for QualityManagementPhase (Second Cycle)
+ex:QualityCheckStart2 a time:Instant ;
+    ocp:hasEstimatedTime "2025-09-05T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-04T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsCycle ex:QualityCheckCycle2 ;
+    ocp:belongsToPhase ex:QualityManagementPhase .
+
+ex:VisualQualityCheck2 a time:Instant ;
+    ocp:hasEstimatedTime "2025-09-06T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-05T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase ;
+    ocp:belongsToCycle ex:QualityCheckCycle2 .
+
+ex:FunctionalQualityCheck2 a time:Instant ;
+    ocp:hasEstimatedTime "2025-09-07T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-06T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase ;
+    ocp:belongsToCycle ex:QualityCheckCycle2 .
+
+ex:QualityCheckApproval a time:Instant ;
+    ocp:hasEstimatedTime "2025-09-10T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-07T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:QualityManagementPhase ;
+    ocp:endsCycle ex:QualityCheckCycle2 .
+
+# Instants for ShippingPhase
+ex:ShippingStart a time:Instant ;
+    ocp:hasActualTime "2025-09-08T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:ShippingPhase .
+
+ex:ShippingEnd a time:Instant ;
+    ocp:hasActualTime "2025-09-14T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:ShippingPhase .
+
+# Instants for MarketingPhase
+ex:MarketingStart a time:Instant ;
+    ocp:hasEstimatedTime "2025-08-20T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-08-22T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:MarketingPhase .
+
+ex:MarketingEnd a time:Instant ;
+    ocp:hasEstimatedTime "2025-09-12T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-10T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:MarketingPhase .
+
+# Transitions
+ex:PlanningTransition a ocp:Transition ;
+    ocp:hasActualTime "2025-08-16T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToProcess ex:ProductSellingProcess ;
+    time:after ex:PlanningEnd .
+
+ex:QualityCheckTransition a ocp:Transition ;
+    ocp:hasEstimatedTime "2025-09-12T00:00:00Z"^^xsd:dateTime ;
+    ocp:hasActualTime "2025-09-08T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToProcess ex:ProductSellingProcess ;
+    time:after ex:QualityCheckApproval .
+
+ex:ShippingTransition a ocp:Transition ;
+    ocp:hasActualTime "2025-09-15T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToProcess ex:ProductSellingProcess ;
+    time:after ex:ShippingEnd .
+
+# Cycles
+ex:QualityCheckCycle a ocp:Cycle ;
+    ocp:hasCycleNumber 1 ;
+    ocp:hasEstimatedBeginning ex:QualityCheckStart ;
+    ocp:hasActualBeginning ex:QualityCheckStart ;
+    ocp:hasEstimatedEnd ex:QualityCheckRejection ;
+    ocp:hasActualEnd ex:QualityCheckRejection ;
+    ocp:belongsToProcess ex:ProductSellingProcess .
+
+ex:QualityCheckCycle2 a ocp:Cycle ;
+    ocp:hasCycleNumber 2 ;
+    ocp:hasEstimatedBeginning ex:QualityCheckStart2 ;
+    ocp:hasActualBeginning ex:QualityCheckStart2 ;
+    ocp:hasEstimatedEnd ex:QualityCheckApproval ;
+    ocp:hasActualEnd ex:QualityCheckApproval ;
+    ocp:belongsToProcess ex:ProductSellingProcess .

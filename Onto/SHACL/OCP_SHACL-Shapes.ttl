@@ -205,6 +205,77 @@
             sh:severity sh:Violation
         ] .
 
+
+osh:PhaseBeginningCardinalityShape a sh:NodeShape ;
+    sh:targetClass ocp:Phase ;
+    sh:sparql [
+        sh:select """
+            PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+            PREFIX time: <http://www.w3.org/2006/time#>
+            SELECT $this
+            WHERE {
+                {
+                    $this ocp:hasActualBeginning ?actualStart .
+                    $this ocp:hasEstimatedBeginning ?estimatedStart .
+                    FILTER (?actualStart != ?estimatedStart)
+                } UNION
+                {
+                    SELECT $this (COUNT(DISTINCT ?start) AS ?count)
+                    WHERE {
+                        $this ocp:hasEstimatedBeginning ?start .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 1)
+                } UNION
+                {
+                    SELECT $this (COUNT(DISTINCT ?start) AS ?count)
+                    WHERE {
+                        $this ocp:hasActualBeginning ?start .
+                    }
+                    GROUP BY $this
+                    HAVING (?count > 1)
+                }
+            }
+        """ ;
+        sh:message "Phase {$this} must have at most one beginning (either ocp:hasActualBeginning or ocp:hasEstimatedBeginning, but not both, and no duplicates)."@en ;
+        sh:severity sh:Violation
+    ] .
+
+    osh:PhaseEndCardinalityShape a sh:NodeShape ;
+        sh:targetClass ocp:Phase ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this
+                WHERE {
+                    {
+                        $this ocp:hasActualEnd ?actualEnd .
+                        $this ocp:hasEstimatedEnd ?estimatedEnd .
+                        FILTER (?actualEnd != ?estimatedEnd)
+                    } UNION
+                    {
+                        SELECT $this (COUNT(DISTINCT ?end) AS ?count)
+                        WHERE {
+                            $this ocp:hasEstimatedEnd ?end .
+                        }
+                        GROUP BY $this
+                        HAVING (?count > 1)
+                    } UNION
+                    {
+                        SELECT $this (COUNT(DISTINCT ?end) AS ?count)
+                        WHERE {
+                            $this ocp:hasActualEnd ?end .
+                        }
+                        GROUP BY $this
+                        HAVING (?count > 1)
+                    }
+                }
+            """ ;
+            sh:message "Phase {$this} must have at most one end (either ocp:hasActualEnd or ocp:hasEstimatedEnd, but not both, and no duplicates)."@en ;
+            sh:severity sh:Violation
+        ] .
+
     osh:InstantTimeShape a sh:NodeShape ;
         sh:targetClass time:Instant ;
         sh:property [
@@ -396,6 +467,46 @@
             sh:severity sh:Violation
         ] .
 
+
+    ocp:NoTransitionDomainMisuseShape
+        a sh:NodeShape ;
+        sh:targetClass ocp:Transition ;
+        sh:property [
+            sh:path ocp:belongsToPhase ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:belongsToPhase."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ocp:belongsToCycle ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:belongsToCycle."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ocp:endsPhase ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:endsPhase."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ocp:endsCycle ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:endsCycle."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ocp:startsPhase ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:startsPhase."@en ;
+            sh:severity sh:Violation ;
+        ] ;
+        sh:property [
+            sh:path ocp:startsCycle ;
+            sh:maxCount 0 ;
+            sh:message "A Transition must not use ocp:startsCycle."@en ;
+            sh:severity sh:Violation ;
+        ] .
 
 #################################################################
 #    ADDITIONAL SPARQL Queries
@@ -692,20 +803,20 @@
 
     # Shape for ocp:beginsWith constraints
     osh:BeginsWithTimeShape a sh:NodeShape ;
-        sh:targetClass time:TemporalEntity ;
+        sh:targetClass time:Interval ;
         sh:property [
             sh:path ocp:beginsWith ;
-            sh:class time:Instant ;
+            sh:class time:TemporalEntity ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
-            sh:message "For 'time:TemporalEntity': The object of 'ocp:beginsWith' must be a 'time:Instant'."@en ;
+            sh:message "The object of 'ocp:beginsWith' must be a 'time:TemporalEntity'."@en ;
             sh:severity sh:Violation
         ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?value ?timeValue
+                SELECT $this ?value
                 WHERE {
                     $this ocp:beginsWith ?value .
                     ?value a time:Instant .
@@ -713,47 +824,96 @@
                     FILTER NOT EXISTS { ?value ocp:hasEstimatedTime ?timeValue }
                 }
             """ ;
-            sh:message "For 'time:TemporalEntity' {$this}: The instant {$value} referenced by 'ocp:beginsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
+            sh:message "For 'time:Interval' {$this}: The instant {$value} referenced by 'ocp:beginsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
             sh:severity sh:Violation
         ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?value ?timeValue ?otherInstant ?otherTimeValue
+                SELECT $this ?value ?timeValue ?thisTimeValue
                 WHERE {
                     $this ocp:beginsWith ?value .
                     ?value a time:Instant .
-                    { ?value ocp:hasActualTime ?timeValue . }
-                    UNION
-                    { ?value ocp:hasEstimatedTime ?timeValue . }
-                    $this time:hasBeginning ?otherInstant .
-                    { ?otherInstant ocp:hasActualTime ?otherTimeValue . }
-                    UNION
-                    { ?otherInstant ocp:hasEstimatedTime ?otherTimeValue . }
-                    FILTER (?timeValue != ?otherTimeValue)
+                    ?value ocp:hasActualTime ?timeValue .
+                    $this ocp:hasActualBeginning ?thisInstant .
+                    ?thisInstant ocp:hasActualTime ?thisTimeValue .
+                    FILTER (?timeValue != ?thisTimeValue)
                 }
             """ ;
-            sh:message "For 'time:TemporalEntity' {$this}: The time value ({?timeValue}) of instant {$value} referenced by 'ocp:beginsWith' does not match the time value ({?otherTimeValue}) of instant {?otherInstant} referenced by 'time:hasBeginning'."@en ;
+            sh:message "For 'time:Interval' {$this}: The actual time value ({?timeValue}) of instant {$value} referenced by 'ocp:beginsWith' does not match the actual time value ({?thisTimeValue}) of instant referenced by 'ocp:hasActualBeginning'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?timeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:beginsWith ?value .
+                    ?value a time:Instant .
+                    ?value ocp:hasEstimatedTime ?timeValue .
+                    $this ocp:hasEstimatedBeginning ?thisInstant .
+                    ?thisInstant ocp:hasEstimatedTime ?thisTimeValue .
+                    FILTER (?timeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The estimated time value ({?timeValue}) of instant {$value} referenced by 'ocp:beginsWith' does not match the estimated time value ({?thisTimeValue}) of instant referenced by 'ocp:hasEstimatedBeginning'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?valueTimeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:beginsWith ?value .
+                    ?value a time:Interval .
+                    ?value ocp:hasActualBeginning ?valueInstant .
+                    ?valueInstant ocp:hasActualTime ?valueTimeValue .
+                    $this ocp:hasActualBeginning ?thisInstant .
+                    ?thisInstant ocp:hasActualTime ?thisTimeValue .
+                    FILTER (?valueTimeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The actual time value ({?valueTimeValue}) of the beginning of interval {$value} referenced by 'ocp:beginsWith' does not match the actual time value ({?thisTimeValue}) of the beginning of {$this}."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?valueTimeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:beginsWith ?value .
+                    ?value a time:Interval .
+                    ?value ocp:hasEstimatedBeginning ?valueInstant .
+                    ?valueInstant ocp:hasEstimatedTime ?valueTimeValue .
+                    $this ocp:hasEstimatedBeginning ?thisInstant .
+                    ?thisInstant ocp:hasEstimatedTime ?thisTimeValue .
+                    FILTER (?valueTimeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The estimated time value ({?valueTimeValue}) of the beginning of interval {$value} referenced by 'ocp:beginsWith' does not match the estimated time value ({?thisTimeValue}) of the beginning of {$this}."@en ;
             sh:severity sh:Violation
         ] .
 
     # Shape for ocp:endsWith constraints
     osh:EndsWithTimeShape a sh:NodeShape ;
-        sh:targetClass time:TemporalEntity ;
+        sh:targetClass time:Interval ;
         sh:property [
             sh:path ocp:endsWith ;
-            sh:class time:Instant ;
+            sh:class time:TemporalEntity ;
             sh:minCount 0 ;
             sh:maxCount 1 ;
-            sh:message "For 'time:TemporalEntity': The object of 'ocp:endsWith' must be a 'time:Instant'."@en ;
+            sh:message "The object of 'ocp:endsWith' must be a 'time:TemporalEntity'."@en ;
             sh:severity sh:Violation
         ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?value ?timeValue
+                SELECT $this ?value
                 WHERE {
                     $this ocp:endsWith ?value .
                     ?value a time:Instant .
@@ -761,27 +921,76 @@
                     FILTER NOT EXISTS { ?value ocp:hasEstimatedTime ?timeValue }
                 }
             """ ;
-            sh:message "For 'time:TemporalEntity' {$this}: The instant {$value} referenced by 'ocp:endsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
+            sh:message "For 'time:Interval' {$this}: The instant {$value} referenced by 'ocp:endsWith' must have a time value (ocp:hasActualTime or ocp:hasEstimatedTime)."@en ;
             sh:severity sh:Violation
         ] ;
         sh:sparql [
             sh:select """
                 PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
                 PREFIX time: <http://www.w3.org/2006/time#>
-                SELECT $this ?value ?timeValue ?otherInstant ?otherTimeValue
+                SELECT $this ?value ?timeValue ?thisTimeValue
                 WHERE {
                     $this ocp:endsWith ?value .
                     ?value a time:Instant .
-                    { ?value ocp:hasActualTime ?timeValue . }
-                    UNION
-                    { ?value ocp:hasEstimatedTime ?timeValue . }
-                    $this time:hasEnd ?otherInstant .
-                    { ?otherInstant ocp:hasActualTime ?otherTimeValue . }
-                    UNION
-                    { ?otherInstant ocp:hasEstimatedTime ?otherTimeValue . }
-                    FILTER (?timeValue != ?otherTimeValue)
+                    ?value ocp:hasActualTime ?timeValue .
+                    $this ocp:hasActualEnd ?thisInstant .
+                    ?thisInstant ocp:hasActualTime ?thisTimeValue .
+                    FILTER (?timeValue != ?thisTimeValue)
                 }
             """ ;
-            sh:message "For 'time:TemporalEntity' {$this}: The time value ({?timeValue}) of instant {$value} referenced by 'ocp:endsWith' does not match the time value ({?otherTimeValue}) of instant {?otherInstant} referenced by 'time:hasEnd'."@en ;
+            sh:message "For 'time:Interval' {$this}: The actual time value ({?timeValue}) of instant {$value} referenced by 'ocp:endsWith' does not match the actual time value ({?thisTimeValue}) of instant referenced by 'ocp:hasActualEnd'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?timeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:endsWith ?value .
+                    ?value a time:Instant .
+                    ?value ocp:hasEstimatedTime ?timeValue .
+                    $this ocp:hasEstimatedEnd ?thisInstant .
+                    ?thisInstant ocp:hasEstimatedTime ?thisTimeValue .
+                    FILTER (?timeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The estimated time value ({?timeValue}) of instant {$value} referenced by 'ocp:endsWith' does not match the estimated time value ({?thisTimeValue}) of instant referenced by 'ocp:hasEstimatedEnd'."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?valueTimeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:endsWith ?value .
+                    ?value a time:Interval .
+                    ?value ocp:hasActualEnd ?valueInstant .
+                    ?valueInstant ocp:hasActualTime ?valueTimeValue .
+                    $this ocp:hasActualEnd ?thisInstant .
+                    ?thisInstant ocp:hasActualTime ?thisTimeValue .
+                    FILTER (?valueTimeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The actual time value ({?valueTimeValue}) of the end of interval {$value} referenced by 'ocp:endsWith' does not match the actual time value ({?thisTimeValue}) of the end of {$this}."@en ;
+            sh:severity sh:Violation
+        ] ;
+        sh:sparql [
+            sh:select """
+                PREFIX ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#>
+                PREFIX time: <http://www.w3.org/2006/time#>
+                SELECT $this ?value ?valueTimeValue ?thisTimeValue
+                WHERE {
+                    $this ocp:endsWith ?value .
+                    ?value a time:Interval .
+                    ?value ocp:hasEstimatedEnd ?valueInstant .
+                    ?valueInstant ocp:hasEstimatedTime ?valueTimeValue .
+                    $this ocp:hasEstimatedEnd ?thisInstant .
+                    ?thisInstant ocp:hasEstimatedTime ?thisTimeValue .
+                    FILTER (?valueTimeValue != ?thisTimeValue)
+                }
+            """ ;
+            sh:message "For 'time:Interval' {$this}: The estimated time value ({?valueTimeValue}) of the end of interval {$value} referenced by 'ocp:endsWith' does not match the estimated time value ({?thisTimeValue}) of the end of {$this}."@en ;
             sh:severity sh:Violation
         ] .

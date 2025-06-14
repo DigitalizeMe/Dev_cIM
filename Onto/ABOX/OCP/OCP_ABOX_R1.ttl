@@ -1,0 +1,44 @@
+@prefix ex: <http://example.org/> .
+@prefix ocp: <http://www.semanticweb.org/DigitalizeMe/ontologies/2025/3/OCP#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Phases
+ex:ProductionPhase a ocp:Phase ;
+    ocp:hasActualBeginning ex:ProductionStart ;
+    ocp:hasActualEnd ex:ProductionEnd .
+
+ex:QualityManagementPhase a ocp:Phase ;
+    ocp:hasActualBeginning ex:QualityCheckStart ;
+    ocp:hasActualEnd ex:QualityCheckApproval .
+
+# Instants for ProductionPhase
+ex:ProductionStart a time:Instant ;
+    ocp:hasActualTime "2025-08-22T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:ProductionPhase .
+
+ex:ProductionEnd a time:Instant ;
+    ocp:hasActualTime "2025-08-25T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:ProductionPhase .
+
+# Instants for QualityManagementPhase
+ex:QualityCheckStart a time:Instant ;
+    ocp:hasActualTime "2025-08-26T00:00:00Z"^^xsd:dateTime ;
+    ocp:startsPhase ex:QualityManagementPhase .
+
+ex:VisualQualityCheck a time:Instant ;
+    ocp:hasActualTime "2025-08-27T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase .
+
+ex:FunctionalQualityCheck a time:Instant ;
+    ocp:hasActualTime "2025-08-28T00:00:00Z"^^xsd:dateTime ;
+    ocp:belongsToPhase ex:QualityManagementPhase .
+
+ex:QualityCheckApproval a time:Instant ;
+    ocp:hasActualTime "2025-09-07T00:00:00Z"^^xsd:dateTime ;
+    ocp:endsPhase ex:QualityManagementPhase .
+
+# Transition
+ex:QualityCheckTransition a ocp:Transition ;
+    ocp:hasActualTime "2025-09-08T00:00:00Z"^^xsd:dateTime ;
+    time:after ex:QualityCheckApproval .

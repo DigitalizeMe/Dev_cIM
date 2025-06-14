@@ -1,5 +1,5 @@
-2025-06-12 22:33:17,663 - INFO - Loaded TBox: G:\Promo\Dev_cIM\Onto/TBOX/OCP_TBOX.ttl
-2025-06-12 22:33:17,681 - INFO - Loaded ABox: Onto\ABOX\OCP\POST_ABOX\CONSTRUCT\OCP_ABOX_14_TIME.ttl
-2025-06-12 22:33:17,689 - INFO - Inferred ABox saved: G:\Promo\Dev_cIM\Onto/ABOX/OCP/POST_ABOX\OCP_Post_inferred.ttl
-2025-06-12 22:33:19,026 - INFO - Validation conformity: True
-2025-06-12 22:33:19,026 - INFO - Validation successful: ABox conforms to SHACL shapes.
+2025-06-13 15:59:57,883 - INFO - Loaded TBox: G:\Promo\Dev_cIM\Onto/TBOX/OCP_TBOX.ttl
+2025-06-13 15:59:57,891 - INFO - Loaded ABox: Onto\ABOX\OCP\POST_ABOX\CONSTRUCT\OCP_ABOX_R6_TIME.ttl
+2025-06-13 15:59:57,901 - INFO - Inferred ABox saved: G:\Promo\Dev_cIM\Onto/ABOX/OCP/POST_ABOX\OCP_Post_inferred.ttl
+2025-06-13 15:59:59,334 - INFO - Validation conformity: True
+2025-06-13 15:59:59,334 - INFO - Validation successful: ABox conforms to SHACL shapes.
